@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### adding idea folder ###
+Server/.idea/
