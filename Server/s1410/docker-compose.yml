@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: app
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PROD_DB_HOST=db
+      - PROD_DB_PORT=5432
+      - PROD_DB_NAME=postgres
+      - PROD_DB_USERNAME=postgres
+      - PROD_DB_PASSWORD=postgres
+    depends_on:
+      - db
+    restart: always
+  db:
+    container_name: db
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    restart: always
+  pg_admin:
+    container_name: pg_admin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    restart: always
+volumes:
+  data-postgres:
+
