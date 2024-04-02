@@ -19,4 +19,4 @@ RUN mkdir ./logs
 COPY --from=builder /app/target/s1410-0.0.1-SNAPSHOT.jar .
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "s1410-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", " ts1410-0.0.1-SNAPSHOT.jar"]
