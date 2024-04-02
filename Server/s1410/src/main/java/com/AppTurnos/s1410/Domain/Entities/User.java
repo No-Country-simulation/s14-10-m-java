@@ -7,10 +7,8 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.util.List;
 
-
-@Entity
 @Data
-@Table(name = "users")
+@MappedSuperclass
 public abstract class User {
 
     @Id
@@ -21,4 +19,5 @@ public abstract class User {
     //@OneToMany(mappedBy = "users")
     //List<Appointment> AppointmentList;
     Boolean active; // logic delete
+
 }
