@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### adding idea folder ###
-Server/.idea
+Server/.idea/
