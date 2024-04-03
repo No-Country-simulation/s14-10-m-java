@@ -1,0 +1,31 @@
+h5 {
+    overflow: hidden;
+    width: 80%; /* Ajusta el ancho según tu diseño */
+    flex-wrap: wrap;
+  }
+.input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    width: 75%; /* Ajusta el ancho según tu diseño */
+  
+    .input {
+      border: none;
+      outline: none;
+      font-size: 16px;
+      padding: 0 10px;
+      width: 100%;
+    }
+  
+    .button {
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  }
+  
