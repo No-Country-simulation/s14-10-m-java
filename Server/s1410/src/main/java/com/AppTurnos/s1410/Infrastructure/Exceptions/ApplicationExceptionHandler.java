@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 public class ApplicationExceptionHandler {
 
     @ExceptionHandler(value = {EntityNotFoundException.class})
-    public ResponseEntity<Object> handleNotFoundBusinessException(RuntimeException exception){
+    public ResponseEntity<Object> handleNotFoundBusinessException(RuntimeException exception) {
 
         HttpStatus notFound = HttpStatus.NOT_FOUND;
         ApiException apiException = new ApiException(
@@ -25,4 +25,18 @@ public class ApplicationExceptionHandler {
 
         return new ResponseEntity<>(apiException, notFound);
     }
+
+    @ExceptionHandler(value = {Exception.class})
+    public ResponseEntity<Object> handleAllOtherExceptions(Exception exception) {
+        HttpStatus internalServerError = HttpStatus.INTERNAL_SERVER_ERROR;
+        exception.printStackTrace();
+
+        ApiException apiException = new ApiException(
+                exception.getMessage(),
+                internalServerError,
+                ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"))
+        );
+
+        return new ResponseEntity<>(apiException, internalServerError);
+    };
 }
