@@ -1,4 +1,55 @@
+<div class="w-11/12 max-w-[1300px] m-auto">
 <div class="flex justify-evenly mt-5">
   <a routerLink="/auth/login">Login</a>
   <a routerLink="/auth/register">Register</a>
+</div>
+<body>
+  <div class="container-fluid">
+    <div class="p-7">
+      <h1 class="text-4xl font-bold" style="color:#000000; text-shadow:2px 2px 4px rgba(100, 99, 99, 0.5);">
+        Busca tu medico
+      </h1>
+      <h5 class="text text-gray-600 pt-5">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique libero ut dolor adipisci maxime totam aperiam consectetur sint, omnis dolorum atque, quo modi sed odio velit, eum quibusdam in id.
+      </h5>
+      <div class="input-container">
+        <input type="text" class="input" placeholder="Buscar">
+        <button class="button">Buscar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="p-7 text-center">
+      <h1 class="text-2xl font-bold" style="color:#75A5FF;">
+        ¿Cómo podemos ayudarte?
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique libero ut dolor adipisci maxime totam aperiam consectetur sint, omnis dolorum atque, quo modi sed odio velit, eum quibusdam in id.
+      </p>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="p-7 flex flex-wrap">
+      <app-card class="flex-grow"></app-card>
+      <app-card class="flex-grow"></app-card>
+      <app-card class="flex-grow"></app-card>
+
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="p-7 flex justify-between">
+      <div>
+        <img src="ruta_de_la_imagen.jpg" alt="Descripción de la imagen" style="max-width: 200px;">
+      </div>
+      <div>
+        <h2 class="text-xl font-semibold mb-2">Especialidades</h2>
+        <ul>
+          <li *ngFor="let especialidad of especialidades" class="mb-1">{{ especialidad }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
 </div>
