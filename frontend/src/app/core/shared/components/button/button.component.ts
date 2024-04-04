@@ -7,5 +7,12 @@ import { Component,Input } from '@angular/core';
 })
 export class ButtonComponent {
   @Input() color?: 'primary' | 'secondary' | 'danger';
-  @Input() buttonType: 'submit' | 'button' = 'button';
+  @Input() buttonType?: 'submit' | 'button' = 'button';
+  @Input() additionalClass?: string ;
+  @Input() endIcon?: string;
+  @Input() routerLink?: string | any;
+
+  get endIconClass() {
+    return this.endIcon ? `${this.endIcon}` : '';
+  }
 }

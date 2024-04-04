@@ -1,9 +1,14 @@
-import { Card } from "./card";
+export interface Card {
+  id?: number;
+  image?: string;
+  title?: string;
+  description?: string;
+}
 
 export const cardList: Card[] = [
     {
         id: 1,
-        image: "nurse.svg",
+        image: "Nurse.svg",
         title: "Elige un profesional",
         description: "Busca por especialidad médica o elige tu médico de preferencia entre la lista de profesionales de tu localidad.",
     },
