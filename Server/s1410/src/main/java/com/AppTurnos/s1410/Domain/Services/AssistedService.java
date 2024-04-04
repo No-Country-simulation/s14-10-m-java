@@ -10,7 +10,7 @@ public interface AssistedService {
 
     ResponseAssisted createAssisted(RequestCreateAssisted requestCreateAssisted);
     ResponseAssisted readAssisted(Long id);
-    List<ResponseAssisted> readAllAsistend();
+    List<ResponseAssisted> readAllAssisted();
     ResponseAssisted updateAssisted(RequestEditAssisted requestEditAssisted);
     Boolean deleteAssisted(Long id);
 }
