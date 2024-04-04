@@ -8,6 +8,7 @@ public record RequestCreateAssisted(
      //   String password,
         String DNI,
         LocalDate dateOfBirth
+     // Long AssistantID
 
 ) {
 }

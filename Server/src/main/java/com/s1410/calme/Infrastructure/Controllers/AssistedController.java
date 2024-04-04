@@ -5,6 +5,7 @@ import com.s1410.calme.Domain.Dtos.request.RequestEditAssisted;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssisted;
 import com.s1410.calme.Domain.Services.AssistedService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +19,16 @@ public class AssistedController {
     public final AssistedService assistedService;
 
 
-    @PostMapping("/register")
+    @PostMapping("/create-assisted")
     public ResponseEntity<ResponseAssisted> registerAssisted(@RequestBody
-                                                             RequestCreateAssisted createAssisted){
-        return null;
+                                                                 RequestCreateAssisted createAssisted)
+    {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(
+                    this.assistedService.createAssisted(createAssisted));
+        } catch (RuntimeException e) {
+            throw new RuntimeException("error");
+        }
     }
 
     @GetMapping("/id/{id}")
