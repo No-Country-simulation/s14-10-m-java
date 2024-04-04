@@ -1,10 +1,4 @@
-export interface Card {
-  id?: number;
-  image?: string;
-  title?: string;
-  description?: string;
-}
-
+import { Card } from "./interface/card.interface";
 export const cardList: Card[] = [
     {
         id: 1,
