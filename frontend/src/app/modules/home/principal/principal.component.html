@@ -1,60 +1,87 @@
 <div class="w-11/12 max-w-[1300px] m-auto">
-<div class="flex justify-evenly mt-5">
-  <a routerLink="/auth/login">Login</a>
-  <a routerLink="/auth/register">Register</a>
-</div>
-<body>
+  <div class="flex justify-evenly mt-5">
+    <a routerLink="/auth/login">Login</a>
+    <a routerLink="/auth/register">Register</a>
+  </div>
   <div class="container-fluid">
     <div class="p-7 flex justify-between">
-    <div class="p-7">
-      <h1 class="text-4xl font-bold" style="color:#000000; text-shadow:2px 2px 4px rgba(100, 99, 99, 0.5);">
-        Busca tu medico
-      </h1>
-      <h5 class="text text-gray-600 pt-5">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique libero ut dolor adipisci maxime totam aperiam consectetur sint, omnis dolorum atque, quo modi sed odio velit, eum quibusdam in id.
-      </h5>
-      <div class="input-container">
-        <input type="text" class="input" placeholder="Buscar">
-        <button class="button">Buscar</button>
+      <div class="p-7">
+        <h1
+          class="text-4xl font-bold"
+          style="
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(100, 99, 99, 0.5);
+          "
+        >
+          Busca tu medico
+        </h1>
+        <h5 class="text text-gray-600 pt-5">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique
+          libero ut dolor adipisci maxime totam aperiam consectetur sint, omnis
+          dolorum atque, quo modi sed odio velit, eum quibusdam in id.
+        </h5>
+        <div class="input-container">
+          <input type="text" class="input" placeholder="Buscar" />
+          <button class="button">Buscar</button>
+        </div>
+      </div>
+      <div class="container flex justify-center items-center">
+        <img
+          src="../../../../assets/image-png/medicos.png"
+          alt="Descripción de la imagen"
+          style="max-width: 200px"
+        />
       </div>
     </div>
-    <div class="container flex justify-center items-center">
-      <img src="../../../../assets/image-png/medicos.png" alt="Descripción de la imagen" style="max-width: 200px;">
-    </div>
-  </div>
   </div>
 
   <div class="container-fluid">
     <div class="p-7 text-center">
-      <h1 class="text-2xl font-bold" style="color:#75A5FF;">
+      <h1 class="text-2xl font-bold" style="color: #ff9d2b">
         ¿Cómo podemos ayudarte?
       </h1>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique libero ut dolor adipisci maxime totam aperiam consectetur sint, omnis dolorum atque, quo modi sed odio velit, eum quibusdam in id.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique
+        libero ut dolor adipisci maxime totam aperiam consectetur sint, omnis
+        dolorum atque, quo modi sed odio velit, eum quibusdam in id.
       </p>
     </div>
   </div>
 
-  <div class="container-fluid">
-    <div class="p-7 flex flex-wrap">
-      <app-card class="flex-grow"></app-card>
-      <app-card class="flex-grow"></app-card>
-      <app-card class="flex-grow"></app-card>
+  <div>
+      <app-card></app-card>
+  </div>
 
+  <div class="container-fluid">
+    <div class="p-7 text-center">
+      <h1 class="text-2xl font-bold" style="color: #75a5ff">
+        Descubre nuestras especialidades médicas:
+      </h1>
     </div>
   </div>
+
   <div class="container-fluid">
     <div class="p-7 flex">
+      <div class="mr-20 ml-10 mt-1 shadow-blue-light">
+        <img src="../../../../assets/image-png/especialidades.png" alt="Descripción de la imagen" style="max-width: 200px" />
+    </div>
       <div>
-        <img src="../../../../assets/image-png/especialidades.png" alt="Descripción de la imagen" style="max-width: 200px;">
-      </div>
-      <div>
-        <h2 class="text-xl font-semibold mb-2">Especialidades</h2>
         <ul>
-          <li *ngFor="let especialidad of especialidades" class="mb-1">{{ especialidad }}</li>
+          <li *ngFor="let especialidad of especialidades" class="mb-1">
+            {{ especialidad }}
+          </li>
         </ul>
       </div>
     </div>
   </div>
-</body>
+  <div class="borde-dinamic"></div>
+  <div class="mt-20 mb-20" style="background-color:#D9D9D9; width: 1240px; height: 588px; border-radius: 15px;">
+    <div class="mt-20 ml-10" style="width: 35%;  position: absolute;"> <!-- Ajusta el ancho del contenedor según tus necesidades -->
+        <h3 class="text-xl ml-8 mb-8">¿Eres profesional de la salud?</h3>
+        <p class="text-wrap-break ml-8" >
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla ipsam laboriosam, debitis eveniet nam fuga repellat quidem voluptas totam blanditiis dicta, sit ex cum esse asperiores necessitatibus repudiandae voluptatem libero.
+        </p>
+    </div>
+</div>
+
 </div>
