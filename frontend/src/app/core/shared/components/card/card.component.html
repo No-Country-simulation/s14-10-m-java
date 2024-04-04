@@ -1,7 +1,8 @@
 <div class="flex">
   <div
     *ngFor="let card of cardList"
-    class="borde-dinamic max-w-sm rounded overflow-hidden shadow-lg flex flex-col mb-8 mx-4"
+    class="borde-dinamic max-w-sm rounded overflow-hidden flex flex-col mb-8 mx-4"
+    style="height: 280px; width: 300px;"
   >
     <header class="flex px-7 pt-2">
       <div class="container flex items-center">
@@ -11,7 +12,7 @@
           alt="Atardecer más frío"
         />
       </div>
-      <h1 class="text-end"><br />asdasdf<br />
+      <h1 class="text-end"><br />{{card.id}}<br />
       <p style="color: #A7C4FA" class="text-end">___________</p>
 
       </h1>
