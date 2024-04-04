@@ -3,6 +3,7 @@ h5 {
     width: 80%; /* Ajusta el ancho según tu diseño */
     flex-wrap: wrap;
   }
+ 
 .input-container {
     display: flex;
     align-items: center;
@@ -28,4 +29,6 @@ h5 {
       cursor: pointer;
     }
   }
-  
+  .shadow-blue-light {
+    box-shadow: -5px -5px 10px rgba(117, 165, 255, 0.51);
+  }
