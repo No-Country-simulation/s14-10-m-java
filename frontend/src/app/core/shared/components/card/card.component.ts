@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { Card } from './card';
+import { Card } from './interface/card.interface';
 import { cardList } from './cards-data';
 
 @Component({
@@ -10,7 +10,7 @@ import { cardList } from './cards-data';
 export class CardComponent implements OnInit {
 
   cardList:Card[] = [];
-  
+
   ngOnInit(): void {
       this.cardList = cardList;
   }

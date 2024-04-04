@@ -1,4 +1,23 @@
 <div class="flex items-center flex-col mt-5">
-  <p>register works!</p>
-  <a routerLink="/">Back</a>
+  <h1 class="font-bold text-2xl mb-4">Register</h1>
+  <form class="flex flex-col items-start gap-4 p-4 bg-gray-100 rounded-lg shadow-md">
+    <label for="id" class="font-semibold">Id:</label>
+    <input type="text" id="id" name="id" required class="w-full py-2 px-3 border rounded-md shadow-sm focus:outline-none focus:border-blue-500">
+
+    <label for="dni" class="font-semibold">DNI:</label>
+    <input type="text" id="dni" name="dni" required class="w-full py-2 px-3 border rounded-md shadow-sm focus:outline-none focus:border-blue-500">
+
+    <label for="dateOfBirth" class="font-semibold">Date of Birth:</label>
+    <input type="date" id="dateOfBirth" name="dateOfBirth" required class="w-full py-2 px-3 border rounded-md shadow-sm focus:outline-none focus:border-blue-500">
+
+    <label for="active" class="font-semibold">
+      <input type="checkbox" id="active" name="active" class="mr-2">
+      Active
+    </label>
+
+    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+  </form>
+
+
+  <app-button color="secondary" class="mt-2" routerLink="/">Back</app-button>
 </div>
