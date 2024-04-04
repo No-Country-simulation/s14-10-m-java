@@ -26,8 +26,11 @@
     color: #888;
   }
   .borde-dinamic {
-    background-image: radial-gradient(ellipse farthest-corner at 20px 20px , #fff 20%, #B4CEFF 80%);
+    background-image: radial-gradient(ellipse farthest-corner at 0px 0px , #fff 26%, #B4CEFF 80%);
     border-radius: 32px;
   }
-  /* Si deseas estilos adicionales, puedes agregarlos aquí */
-  
+  .borde-dinamic img {
+    background-color: #d0e0ff;
+    border-radius: 50%; /* Asegura que la imagen tenga bordes redondeados */
+    padding: 5px; /* Ajusta el valor según sea necesario */
+  }
