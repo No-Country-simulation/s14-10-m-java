@@ -4,6 +4,7 @@ import { PrincipalComponent } from './principal/principal.component';
 
 import { HomeRoutingModule} from './home-routing.module'
 import { CardComponent } from 'src/app/core/shared/components/card/card.component';
+import { SharedModule } from 'src/app/core/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { CardComponent } from 'src/app/core/shared/components/card/card.componen
   ],
   imports: [
     CommonModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    SharedModule
   ],
   exports: [
     CardComponent

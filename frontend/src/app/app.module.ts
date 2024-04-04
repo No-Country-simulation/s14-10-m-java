@@ -5,8 +5,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotFoundModule } from './modules/not-found/not-found.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { HomeModule } from './modules/home/home.module';
+// import { AuthModule } from './modules/auth/auth.module';
+// import { HomeModule } from './modules/home/home.module';
 import { SharedModule } from './core/shared/shared.module';
 
 @NgModule({
