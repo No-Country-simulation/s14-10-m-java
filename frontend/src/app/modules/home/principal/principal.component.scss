@@ -1,0 +1,51 @@
+h5 {
+    overflow: hidden;
+    width: 80%; /* Ajusta el ancho según tu diseño */
+    flex-wrap: wrap;
+  }
+  .bicolor-area {
+    background-image: radial-gradient(ellipse farthest-corner at 20% 40% , #D9D9D9 50%, #B5B5B5 0%);
+  }
+  .text-p {
+    font-family: 'Poppins', sans-serif; // Utiliza la fuente Poppins
+    font-weight: 400; // Peso de la fuente 400
+    font-size: 24px; // Tamaño de la fuente 24px
+    line-height: 36px; // Altura de línea 36px
+    color:#063463;
+  }
+.text-h{
+  font-family: 'Poppins', sans-serif; // Utiliza la fuente Poppins
+    font-weight: 600; // Peso de la fuente 400
+    font-size: 26px; // Tamaño de la fuente 24px
+    line-height: 39px; // Altura de línea 36px
+    color:#063463;
+}
+.input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    width: 75%; /* Ajusta el ancho según tu diseño */
+  
+    .input {
+      border: none;
+      outline: none;
+      font-size: 16px;
+      padding: 0 10px;
+      width: 100%;
+    }
+  
+    .button {
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  }
+  .shadow-blue-light {
+    box-shadow: -20px -10px 30px #75a5ffc3;
+
+  }

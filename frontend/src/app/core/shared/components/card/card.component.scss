@@ -1,0 +1,36 @@
+/* card-general.component.scss */
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .card-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .card-body {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .card-footer {
+    font-size: 1rem;
+    color: #888;
+  }
+  .borde-dinamic {
+    background-image: radial-gradient(ellipse farthest-corner at 0px 0px , #fff 26%, #B4CEFF 80%);
+    border-radius: 32px;
+  }
+  .borde-dinamic img {
+    background-color: #d0e0ff;
+    border-radius: 50%; /* Asegura que la imagen tenga bordes redondeados */
+    padding: 5px; /* Ajusta el valor según sea necesario */
+  }
