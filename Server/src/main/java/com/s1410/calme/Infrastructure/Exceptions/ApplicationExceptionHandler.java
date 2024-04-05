@@ -16,7 +16,7 @@ public class ApplicationExceptionHandler {
     //Para Agregar una expeción a ser manejada así solo deben colocarla dentro de las llaves
     //En caso de que hagan una expeción propia, solo necesita que haga "extends" de RuntimeException
     @ExceptionHandler(value = {EntityNotFoundException.class})
-    public ResponseEntity<Object> handleNotFoundBusinessException(RuntimeException exception) {
+    public ResponseEntity<Object> handleNotFoundException(RuntimeException exception) {
 
         HttpStatus notFound = HttpStatus.NOT_FOUND;
         ApiException apiException = new ApiException(
@@ -29,7 +29,7 @@ public class ApplicationExceptionHandler {
     }
 
     @ExceptionHandler(value = {EntityExistsException.class})
-    public ResponseEntity<Object> handleEntityExistsBusinessException(RuntimeException exception) {
+    public ResponseEntity<Object> handleEntityExistsException(RuntimeException exception) {
 
         HttpStatus entityExists = HttpStatus.CONFLICT;
         ApiException apiException = new ApiException(
@@ -41,17 +41,17 @@ public class ApplicationExceptionHandler {
         return new ResponseEntity<>(apiException, entityExists);
     }
 
-    @ExceptionHandler(value = {NoResultException.class})
-    public ResponseEntity<Object> handleNoResultBusinessException(RuntimeException exception) {
+    @ExceptionHandler(value = {IllegalArgumentException.class})
+    public ResponseEntity<Object> handleWrongArgumentException(RuntimeException exception) {
 
-        HttpStatus noResult = HttpStatus.NOT_FOUND;
+        HttpStatus wrongArgument = HttpStatus.BAD_REQUEST;
         ApiException apiException = new ApiException(
                 exception.getMessage(),
-                noResult,
+                wrongArgument,
                 ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"))
         );
 
-        return new ResponseEntity<>(apiException, noResult);
+        return new ResponseEntity<>(apiException, wrongArgument);
     }
 
     //TODO: Manejar Binding Result Exceptions

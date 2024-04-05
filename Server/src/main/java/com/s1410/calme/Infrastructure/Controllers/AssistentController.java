@@ -4,6 +4,8 @@ import com.s1410.calme.Domain.Dtos.request.RequestEditAssistent;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssistent;
 import com.s1410.calme.Domain.Services.AssistentService;
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +30,7 @@ public class AssistentController {
             return ResponseEntity.status(HttpStatus.CREATED).body(
                     this.assistentService.createAssistent(createAssistent));
         }catch (EntityExistsException e){
-            throw new EntityExistsException(createAssistent.email());
+            throw new IllegalArgumentException();
             }
     }
 
@@ -50,7 +52,10 @@ public class AssistentController {
     @PutMapping("/update")
     public ResponseEntity<ResponseAssistent> updateAssistent(
             @RequestBody @Valid @NotNull RequestEditAssistent editAssistent){
+        try {
         return ResponseEntity.ok(assistentService.updateAssistent(editAssistent));
+        } catch (NoResultException e) {throw new EntityNotFoundException();
+        }
     }
 
     @DeleteMapping("/id/{id}")

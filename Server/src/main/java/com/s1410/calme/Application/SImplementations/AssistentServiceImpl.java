@@ -6,7 +6,7 @@ import com.s1410.calme.Domain.Entities.Assistent;
 import com.s1410.calme.Domain.Mapper.AssistentMapper;
 import com.s1410.calme.Domain.Repositories.AssistentRepository;
 import com.s1410.calme.Domain.Services.AssistentService;
-import jakarta.persistence.NoResultException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +24,7 @@ public class AssistentServiceImpl implements AssistentService {
     @Override
     public ResponseAssistent createAssistent(
             RequestCreateAssistent requestCreateAssistent) {
-        if(requestCreateAssistent == null){ throw new NoResultException(); }
+        if(requestCreateAssistent == null){ throw new EntityNotFoundException(); }
 
         Assistent assistent = this.assistentMapper
                 .requestCreateToAssistent(requestCreateAssistent);
@@ -36,7 +36,7 @@ public class AssistentServiceImpl implements AssistentService {
     @Override
     public ResponseAssistent readAssistent(Long id) {
         Assistent assistent = assistentRepository.findById(id).orElseThrow(
-                () -> new NoResultException("id") );
+                () -> new EntityNotFoundException("id") );
         return assistentMapper.assistentToResponse(assistent);
     }
 
@@ -55,7 +55,7 @@ public class AssistentServiceImpl implements AssistentService {
     @Override
     public ResponseAssistent updateAssistent(RequestEditAssistent requestEditAssistent) {
         Assistent assistent = this.assistentRepository.findById(requestEditAssistent.id())
-                .orElseThrow(() -> new NoResultException(requestEditAssistent.id().toString()));
+                .orElseThrow(() -> new EntityNotFoundException(requestEditAssistent.id().toString()));
 
         if (assistent.getActive()) {
             if (requestEditAssistent.DNI() != null) {
@@ -76,7 +76,7 @@ public class AssistentServiceImpl implements AssistentService {
     @Override
     public Boolean toogleDeleteAssistent(Long id) {
         Assistent assistent = assistentRepository.findById(id).orElseThrow(
-                () -> new NoResultException("id") );
+                () -> new EntityNotFoundException("id") );
 
         assistent.setActive(!assistent.getActive());
         assistentRepository.save(assistent);

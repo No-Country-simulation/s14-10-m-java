@@ -8,6 +8,8 @@ import com.s1410.calme.Domain.Entities.Assistent;
 import com.s1410.calme.Domain.Entities.RelationAA;
 import com.s1410.calme.Domain.Repositories.AssistentRepository;
 import com.s1410.calme.Domain.Services.AssistentService;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -112,16 +114,16 @@ public class AssistentControllerTest {
 
         @Test
         @DisplayName("Should return http400 when provided data NOT is valid.")
-        void createAssistentTest2() throws Exception {/*
+        void createAssistentTest2() throws Exception {
             RequestCreateAssistent requestCreateAssistent =
                     new RequestCreateAssistent(email, null, DNI, null);
 
             when(assistentService.createAssistent(any(RequestCreateAssistent.class)))
-                    .thenThrow(UserNotNullException.class);
+                    .thenThrow(IllegalArgumentException.class);
             mvc.perform(post("/assistent/register")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(requestCreateAssistent)))
-                    .andExpect(status().isBadRequest());*/
+                    .andExpect(status().isBadRequest());
         }
     }
 
@@ -156,12 +158,12 @@ public class AssistentControllerTest {
 
         @Test
         @DisplayName("Should return http404 when NOT updating user by id")
-        void updateAssistentTest2() throws Exception {/*
+        void updateAssistentTest2() throws Exception {
             RequestEditAssistent requestEditAssistent = new RequestEditAssistent(
                     id, email, password, DNI, dateOfBirth);
 
             when(assistentService.updateAssistent(requestEditAssistent))
-                    .thenThrow(UserNotFoundException.class);
+                    .thenThrow(EntityNotFoundException.class);
 
             var response = mvc.perform(put("/assistents/update")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -169,7 +171,7 @@ public class AssistentControllerTest {
                                     requestEditAssistent).getJson()))
                             .andReturn().getResponse();
 
-            assertEquals(response.getStatus(), 404);*/
+            assertEquals(404, response.getStatus());
         }
     }
 
