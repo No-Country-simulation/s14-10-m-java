@@ -1,6 +1,4 @@
 package com.s1410.calme.Domain.Entities;
-
-
 import com.s1410.calme.Domain.Utils.RelationType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

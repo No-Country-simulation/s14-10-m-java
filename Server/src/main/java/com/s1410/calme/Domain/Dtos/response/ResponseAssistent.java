@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record ResponseAssistent(
+        Long id,
         String email,
         String DNI,
         LocalDate dateOfBirth,
