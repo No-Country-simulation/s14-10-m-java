@@ -1,11 +1,11 @@
 package com.s1410.calme.Infrastructure.Exceptions;
-
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -28,9 +28,33 @@ public class ApplicationExceptionHandler {
         return new ResponseEntity<>(apiException, notFound);
     }
 
+    @ExceptionHandler(value = {EntityExistsException.class})
+    public ResponseEntity<Object> handleEntityExistsBusinessException(RuntimeException exception) {
+
+        HttpStatus entityExists = HttpStatus.CONFLICT;
+        ApiException apiException = new ApiException(
+                exception.getMessage(),
+                entityExists,
+                ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"))
+        );
+
+        return new ResponseEntity<>(apiException, entityExists);
+    }
+
+    @ExceptionHandler(value = {NoResultException.class})
+    public ResponseEntity<Object> handleNoResultBusinessException(RuntimeException exception) {
+
+        HttpStatus noResult = HttpStatus.NOT_FOUND;
+        ApiException apiException = new ApiException(
+                exception.getMessage(),
+                noResult,
+                ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"))
+        );
+
+        return new ResponseEntity<>(apiException, noResult);
+    }
 
     //TODO: Manejar Binding Result Exceptions
-
     //Maneja cualquier otra excepción que no haya sido considerada en los casos anteriores
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> handleAllOtherExceptions(Exception exception) {
@@ -44,4 +68,6 @@ public class ApplicationExceptionHandler {
 
         return new ResponseEntity<>(apiException, internalServerError);
     };
+
+
 }

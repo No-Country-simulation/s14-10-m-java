@@ -6,6 +6,7 @@ import com.s1410.calme.Domain.Entities.Assistent;
 import com.s1410.calme.Domain.Mapper.AssistentMapper;
 import com.s1410.calme.Domain.Repositories.AssistentRepository;
 import com.s1410.calme.Domain.Services.AssistentService;
+import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,22 +23,20 @@ public class AssistentServiceImpl implements AssistentService {
     @Transactional
     @Override
     public ResponseAssistent createAssistent(
-            RequestCreateAssistent requestCreateAssistent) {/*
-        if(requestCreateAssistent == null){ throw new UserNotNullException(); }
+            RequestCreateAssistent requestCreateAssistent) {
+        if(requestCreateAssistent == null){ throw new NoResultException(); }
 
         Assistent assistent = this.assistentMapper
                 .requestCreateToAssistent(requestCreateAssistent);
         assistent.setActive(Boolean.TRUE);
         var assistentAdded = assistentRepository.save(assistent);
-        return  assistentMapper.assistentToResponse(assistentAdded);*/
-        return null;
+        return  assistentMapper.assistentToResponse(assistentAdded);
     }
 
     @Override
     public ResponseAssistent readAssistent(Long id) {
         Assistent assistent = assistentRepository.findById(id).orElseThrow(
-                //() -> new UserNotFoundException(id)
-        );
+                () -> new NoResultException("id") );
         return assistentMapper.assistentToResponse(assistent);
     }
 
@@ -55,8 +54,8 @@ public class AssistentServiceImpl implements AssistentService {
     @Transactional
     @Override
     public ResponseAssistent updateAssistent(RequestEditAssistent requestEditAssistent) {
-        /*Assistent assistent = this.assistentRepository.findById(requestEditAssistent.id())
-                .orElseThrow(() -> new UserNotFoundException(requestEditAssistent.id()));
+        Assistent assistent = this.assistentRepository.findById(requestEditAssistent.id())
+                .orElseThrow(() -> new NoResultException(requestEditAssistent.id().toString()));
 
         if (assistent.getActive()) {
             if (requestEditAssistent.DNI() != null) {
@@ -69,8 +68,7 @@ public class AssistentServiceImpl implements AssistentService {
 
             this.assistentRepository.save(assistent);
         }
-        return assistentMapper.assistentToResponse(assistent);*/
-        return null;
+        return assistentMapper.assistentToResponse(assistent);
     }
 
 
@@ -78,8 +76,7 @@ public class AssistentServiceImpl implements AssistentService {
     @Override
     public Boolean toogleDeleteAssistent(Long id) {
         Assistent assistent = assistentRepository.findById(id).orElseThrow(
-                //() -> new UserNotFoundException(id)
-                );
+                () -> new NoResultException("id") );
 
         assistent.setActive(!assistent.getActive());
         assistentRepository.save(assistent);

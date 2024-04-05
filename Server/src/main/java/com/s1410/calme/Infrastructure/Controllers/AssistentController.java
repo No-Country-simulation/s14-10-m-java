@@ -3,6 +3,7 @@ import com.s1410.calme.Domain.Dtos.request.RequestCreateAssistent;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssistent;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssistent;
 import com.s1410.calme.Domain.Services.AssistentService;
+import jakarta.persistence.EntityExistsException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +24,12 @@ public class AssistentController {
     @PostMapping("/register")
     public ResponseEntity<ResponseAssistent> registerAssistent(
             @RequestBody @Valid @NotNull RequestCreateAssistent createAssistent){
-        /*try{
+        try{
             return ResponseEntity.status(HttpStatus.CREATED).body(
                     this.assistentService.createAssistent(createAssistent));
-        }catch (UserNotFoundException e){
-            throw new UserNotFoundException(createAssistent.email());
-            }*/
-        return null;
+        }catch (EntityExistsException e){
+            throw new EntityExistsException(createAssistent.email());
+            }
     }
 
     @GetMapping("/id/{id}")
