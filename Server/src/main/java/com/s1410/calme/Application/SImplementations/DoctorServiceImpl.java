@@ -18,6 +18,7 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorMapper doctorMapper;
     private final DoctorRepository doctorRepository;
 
+    //Create doctor
     @Transactional
     @Override
     public ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor) {
