@@ -3,9 +3,6 @@ import com.s1410.calme.Domain.Dtos.request.RequestCreateAssistent;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssistent;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssistent;
 import com.s1410.calme.Domain.Services.AssistentService;
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.NoResultException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequestMapping("/assistent")
 @RestController
