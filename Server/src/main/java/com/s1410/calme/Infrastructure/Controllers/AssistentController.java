@@ -26,19 +26,14 @@ public class AssistentController {
     @PostMapping("/register")
     public ResponseEntity<ResponseAssistent> registerAssistent(
             @RequestBody @Valid @NotNull RequestCreateAssistent createAssistent){
-        try{
             return ResponseEntity.status(HttpStatus.CREATED).body(
                     this.assistentService.createAssistent(createAssistent));
-        }catch (EntityExistsException e){
-            throw new IllegalArgumentException();
-            }
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<ResponseAssistent> findAssistent(@PathVariable Long id){
         return ResponseEntity.ok(assistentService.readAssistent(id));
     }
-
 
     //ej de url /assistents?active=false&page=0&size=10
     //Pulls by status and set amount of entries
@@ -52,10 +47,7 @@ public class AssistentController {
     @PutMapping("/update")
     public ResponseEntity<ResponseAssistent> updateAssistent(
             @RequestBody @Valid @NotNull RequestEditAssistent editAssistent){
-        try {
         return ResponseEntity.ok(assistentService.updateAssistent(editAssistent));
-        } catch (NoResultException e) {throw new EntityNotFoundException();
-        }
     }
 
     @DeleteMapping("/id/{id}")
