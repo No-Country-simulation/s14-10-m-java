@@ -4,6 +4,7 @@ import com.s1410.calme.Domain.Dtos.request.RequestCreateAssisted;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssisted;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssisted;
 import com.s1410.calme.Domain.Services.AssistedService;
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +21,14 @@ public class AssistedController {
 
 
     @PostMapping("/create-assisted")
-    public ResponseEntity<ResponseAssisted> registerAssisted(@RequestBody
-                                                                 RequestCreateAssisted createAssisted)
-    {
+    public ResponseEntity<ResponseAssisted> registerAssisted(
+            @RequestBody RequestCreateAssisted createAssisted
+    ) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(
                     this.assistedService.createAssisted(createAssisted));
-        } catch (RuntimeException e) {
-            throw new RuntimeException("error");
+        } catch (EntityExistsException e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 

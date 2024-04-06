@@ -4,14 +4,19 @@ import com.s1410.calme.Domain.Dtos.request.RequestCreateAssisted;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssisted;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssisted;
 import com.s1410.calme.Domain.Entities.Assisted;
+import com.s1410.calme.Domain.Entities.Assistent;
+import com.s1410.calme.Domain.Entities.RelationAA;
 import com.s1410.calme.Domain.Mapper.AssistedMapper;
 import com.s1410.calme.Domain.Repositories.AssistedRepository;
 import com.s1410.calme.Domain.Repositories.AssistentRepository;
+import com.s1410.calme.Domain.Repositories.RelationAARepository;
 import com.s1410.calme.Domain.Services.AssistedService;
+import com.s1410.calme.Domain.Utils.RelationType;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,35 +25,43 @@ public class AssistedServiceImpl implements AssistedService {
 
     private final AssistedMapper assistedMapper;
     private final AssistedRepository assistedRepository;
-
     private final AssistentRepository assistentRepository;
+    private final RelationAARepository relationAARepository;
 
     @Override
     public ResponseAssisted createAssisted(RequestCreateAssisted requestCreateAssisted) {
+
         // Check that requestCreateAssisted is not null.
         if (requestCreateAssisted == null) {
-            throw new RuntimeException("User cannot be null");
+            throw new EntityNotFoundException("User cannot be null");
         }
 
-        // Search if the assistant user exists in DB to link with assisted, otherwise launch an exception
-        /* Assistent assistent = assistentRepository.findById(assistantID).orElseThrow(
-                () -> new RuntimeException("Assistant with ID " + assistantID + " not Found.")
-        );
-        */
+        Long assistantId = requestCreateAssisted.AssistantID();
 
+        // Search if the assistant user exists in DB to link with assisted, otherwise launch an exception
+        Assistent assistent = assistentRepository.findById(assistantId).orElseThrow(
+                () -> new EntityNotFoundException("Assistant with ID " + assistantId + " not Found."));
+
+        //Map DTO request to assisted.
         Assisted assisted = this.assistedMapper
                 .requestCreateToAssisted(requestCreateAssisted);
 
-        /*
-        Assisted existingAssisted = assistedRepository.findByDNI(assisted.getDNI());
-        if (existingAssisted == null) {
-            // CREAR
-            // VINCULAR
-        } else {
-            // SOLO VINCULAR
-        }
-*/
-        return this.assistedMapper.assistedToResponse(assistedRepository.save(assisted));
+        // Get relation type value between assisted and assistant.
+        RelationType relationType = RelationType.valueOf(requestCreateAssisted.relationTypeWithAssistant());
+
+        // Create relation between the assistant and the new assisted
+        RelationAA relationAA = new RelationAA(
+                null,
+                assisted,
+                assistent,
+                relationType
+                );
+
+
+        this.assistedRepository.save(assisted);
+        this.relationAARepository.save(relationAA);
+
+        return this.assistedMapper.assistedToResponse(assisted);
     }
 
     @Override
