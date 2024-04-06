@@ -27,10 +27,10 @@
   }
   .borde-dinamic {
     background-image: radial-gradient(ellipse farthest-corner at 0px 0px , #fff 26%, #B4CEFF 80%);
-    border-radius: 32px;
+    border-radius: 40px;
   }
   .borde-dinamic img {
-    background-color: #d0e0ff;
-    border-radius: 50%; /* Asegura que la imagen tenga bordes redondeados */
-    padding: 5px; /* Ajusta el valor según sea necesario */
+    border-radius: 50%;
+    padding: 5px;
+    background: radial-gradient(circle, #87b1ff36, #6a9eff60);
   }
