@@ -15,8 +15,8 @@ import com.s1410.calme.Domain.Utils.RelationType;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -74,9 +74,25 @@ public class AssistedServiceImpl implements AssistedService {
         return null;
     }
 
+    @Transactional
     @Override
     public ResponseAssisted updateAssisted(RequestEditAssisted requestEditAssisted) {
-        return null;
+
+        Assisted assisted = this.assistedRepository.findById(requestEditAssisted.id())
+                .orElseThrow(() -> new EntityNotFoundException(requestEditAssisted.id().toString()));
+
+       // if (assisted.getActive()) {
+            if (requestEditAssisted.DNI() != null) {
+                assisted.setDNI(requestEditAssisted.DNI());
+            }
+
+            if (requestEditAssisted.dateOfBirth() != null) {
+                assisted.setDateOfBirth(requestEditAssisted.dateOfBirth());
+            }
+
+            this.assistedRepository.save(assisted);
+       // }
+        return assistedMapper.assistedToResponse(assisted);
     }
 
     @Override
@@ -85,4 +101,3 @@ public class AssistedServiceImpl implements AssistedService {
     }
 
 }
-

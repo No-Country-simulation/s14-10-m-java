@@ -5,6 +5,10 @@ import com.s1410.calme.Domain.Dtos.request.RequestEditAssisted;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssisted;
 import com.s1410.calme.Domain.Services.AssistedService;
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
+import jakarta.validation.Valid;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +47,14 @@ public class AssistedController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ResponseAssisted> updateAssisted(@RequestBody
-                                                           RequestEditAssisted editAssisted){
-        return null;
+    public ResponseEntity<ResponseAssisted> updateAssisted(
+            @RequestBody @Valid @NonNull RequestEditAssisted editAssisted){
+
+        try {
+            return ResponseEntity.ok(assistedService.updateAssisted(editAssisted));
+        } catch (NoResultException e) {throw new EntityNotFoundException();
+        }
+
     }
 
     @DeleteMapping("/id/{id}")
