@@ -1,10 +1,10 @@
-<div style="background-color: #75a5ff;">
+<div class="home-principal">
   <div class="flex justify-end py-8 w-11/12 max-w-[1300px] m-auto">
     <app-button color="primary" buttonType="button" routerLink="/auth/login">Inicia Sesión</app-button>
   </div>
 
-  <div class="container-fluid w-11/12 max-w-[1300px] m-auto"
-  style="height: 588px;background-color: #75a5ff;">
+  <div class="container-fluid w-11/12 max-w-[1300px] m-auto home-secondary mt-20"
+  style="height: 800px;background-color: #75a5ff;">
   <div class="flex justify-between">
     <div class="flex flex-col space-y-12">
       <h1 style="font-family: 'Dela Gothic One', sans-serif; font-weight: 400; font-size: 46px; line-height: 66.61px; color: #ffffff; text-shadow: 2px 2px 4px rgba(100, 99, 99, 0.5);">
@@ -15,14 +15,11 @@
       </h5>
       <app-search-bar></app-search-bar>
     </div>
-    <div class="container flex justify-center items-center">
       <img
-      src="../../../../assets/image-png/medicos.png"
+      src="../../../../assets/image-png/home1.png"
       alt="Descripción de la imagen"
-      style="max-width: 200px"
       />
     </div>
-  </div>
   </div>
 
 </div>
@@ -100,18 +97,50 @@
     </div>
   </div>
   <div
-    class="bicolor-area mt-20 mb-20"
-    style="width: 1240px; height: 588px; border-radius: 15px"
-  >
-    <div class="mt-20 ml-16" style="width: 35%; position: absolute">
+    class="mt-20 mb-20"
+  ><div class="mt-20 flex" style="width: 100; color: #75A5FF;">
+    
       <!-- Ajusta el ancho del contenedor según tus necesidades -->
-      <h3 class="text-h ml-8 mb-8">¿Eres profesional de la salud?</h3>
-      <p class="text-p">
+      <div class="mt-20">
+      <h3 
+      class="text-h mb-8"
+      style="
+          font-family: 'Dela Gothic One', sans-serif;
+          font-weight: 400;
+          font-size: 32px;
+          line-height: 46.34px;
+          color: #75A5FF;
+        ">¿Eres profesional de la salud?</h3>
+      <p 
+      style="
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 36px;
+      color: #063463;
+      ">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla ipsam
         laboriosam, debitis eveniet nam fuga repellat quidem voluptas totam
         blanditiis dicta, sit ex cum esse asperiores necessitatibus repudiandae
         voluptatem libero.
       </p>
+      <div class="py-2 w-[270px] mt-10 rounded-full bg-accent-light text-primary-dark font-poppins text-base font-semibold flex justify-center items-center">
+        <button buttonType="button" routerLink="/auth/login">
+          <p style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            font-size: 20px;
+            line-height: 30px;
+            color: #063463;
+          ">Trabaja con nosotros</p>
+        </button>
+      </div>
     </div>
+     <img class="right"
+    src="../../../../assets/image-png/home2.png"
+    alt="Descripción de la imagen"
+    />
   </div>
-</div>
+  </div>
+    
+  </div>
