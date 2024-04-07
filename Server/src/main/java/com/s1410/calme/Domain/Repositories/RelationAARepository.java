@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RelationAARepository extends JpaRepository<RelationAA, Long> {
 
+    boolean existsByAssistedId(Long assistedId);
+
 }

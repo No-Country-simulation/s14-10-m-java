@@ -24,14 +24,15 @@ public class AssistedController {
     public final AssistedService assistedService;
 
     @PostMapping("/create-assisted")
-    public ResponseEntity<ResponseAssisted> registerAssisted(
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseAssisted registerAssisted(
             @RequestBody
             @Valid
             RequestCreateAssisted createAssisted
     ) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(
-                    this.assistedService.createAssisted(createAssisted));
+            return this.assistedService.createAssisted(createAssisted);
         } catch (EntityExistsException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -59,8 +60,14 @@ public class AssistedController {
 
     }
 
-    @DeleteMapping("/id/{id}")
-    public ResponseEntity<Boolean> deleteAssisted(@PathVariable Long id) {
-        return null;
+    @DeleteMapping("/{relationId}")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public Boolean removeAssistedToAssistant(@PathVariable Long id) {
+        try {
+            return this.assistedService.unlinkAssistedFromAssistant(id);
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException(e.getMessage());
+        }
     }
 }

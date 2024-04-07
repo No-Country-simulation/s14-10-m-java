@@ -11,5 +11,5 @@ public interface AssistedService {
     ResponseAssisted readAssisted(Long id);
     List<ResponseAssisted> readAllAssisted();
     ResponseAssisted updateAssisted(RequestEditAssisted requestEditAssisted);
-    Boolean deleteAssisted(Long id);
+    Boolean unlinkAssistedFromAssistant(Long id);
 }

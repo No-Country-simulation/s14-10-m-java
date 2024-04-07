@@ -28,6 +28,7 @@ public class AssistedServiceImpl implements AssistedService {
     private final AssistentRepository assistentRepository;
     private final RelationAARepository relationAARepository;
 
+    @Transactional
     @Override
     public ResponseAssisted createAssisted(RequestCreateAssisted requestCreateAssisted) {
 
@@ -51,6 +52,8 @@ public class AssistedServiceImpl implements AssistedService {
                 assistent,
                 relationType
                 );
+
+        assisted.setActive(true);
 
         this.assistedRepository.save(assisted);
         this.relationAARepository.save(relationAA);
@@ -89,9 +92,26 @@ public class AssistedServiceImpl implements AssistedService {
         return assistedMapper.assistedToResponse(assisted);
     }
 
+    @Transactional
     @Override
-    public Boolean deleteAssisted(Long id) {
-        return null;
+    public Boolean unlinkAssistedFromAssistant(Long id) {
+
+        // Get relation between Assisted and Assistant.
+        RelationAA relation = this.relationAARepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Relation with id " + id + " not Found."));
+
+        // Delete relation.
+        this.relationAARepository.deleteById(id);
+
+        // Verify if the assisted  has relation with other assistant.
+        Assisted assisted = relation.getAssisted();
+        if (!this.relationAARepository.existsByAssistedId(assisted.getId())) {
+            // If the assistant does not have any related assistant, it is inactive
+            assisted.setActive(false);
+            this.assistedRepository.save(assisted);
+        }
+
+        return true;
     }
 
 }
