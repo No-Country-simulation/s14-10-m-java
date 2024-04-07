@@ -60,12 +60,12 @@ public class AssistedController {
 
     }
 
-    @DeleteMapping("/{relationId}")
+    @DeleteMapping("/{relationAAId}")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public Boolean removeAssistedToAssistant(@PathVariable Long id) {
+    public Boolean removeAssistedToAssistant(@PathVariable Long relationAAId) {
         try {
-            return this.assistedService.unlinkAssistedFromAssistant(id);
+            return this.assistedService.unlinkAssistedFromAssistant(relationAAId);
         } catch (EntityNotFoundException e) {
             throw new EntityNotFoundException(e.getMessage());
         }
