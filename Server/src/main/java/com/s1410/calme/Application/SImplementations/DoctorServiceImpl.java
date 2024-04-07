@@ -8,11 +8,12 @@ import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import com.s1410.calme.Domain.Services.DoctorService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
-import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +45,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<ResponseDoctor> readAllDoctors(boolean active, Pageable paging) {
+    public Page<ResponseDoctor> readAllDoctors(boolean active,Pageable paging) {
         return null;
     }
 
@@ -54,13 +55,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public Boolean deleteDoctor(Long id) {
-
-        Doctor doctor = doctorRepository.findById(id).orElseThrow( ()->
-                new EntityNotFoundException("The doctor with id: "+ id+" was not found"));
-
-        doctor.setActive(!doctor.getActive());
-        doctorRepository.save(doctor);
-        return doctor.getActive();
+    public Boolean toogleDeleteDoctor(Long id) {
+        return null;
     }
 }
