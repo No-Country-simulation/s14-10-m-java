@@ -31,11 +31,6 @@ public class AssistedServiceImpl implements AssistedService {
     @Override
     public ResponseAssisted createAssisted(RequestCreateAssisted requestCreateAssisted) {
 
-        // Check that requestCreateAssisted is not null.
-        if (requestCreateAssisted == null) {
-            throw new EntityNotFoundException("User cannot be null");
-        }
-
         Long assistantId = requestCreateAssisted.AssistantID();
 
         // Search if the assistant user exists in DB to link with assisted, otherwise launch an exception
@@ -56,7 +51,6 @@ public class AssistedServiceImpl implements AssistedService {
                 assistent,
                 relationType
                 );
-
 
         this.assistedRepository.save(assisted);
         this.relationAARepository.save(relationAA);

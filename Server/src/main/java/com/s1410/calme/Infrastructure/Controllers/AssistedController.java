@@ -23,10 +23,11 @@ public class AssistedController {
 
     public final AssistedService assistedService;
 
-
     @PostMapping("/create-assisted")
     public ResponseEntity<ResponseAssisted> registerAssisted(
-            @RequestBody RequestCreateAssisted createAssisted
+            @RequestBody
+            @Valid
+            RequestCreateAssisted createAssisted
     ) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -37,28 +38,29 @@ public class AssistedController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<ResponseAssisted> findAssisted(@PathVariable Long id){
+    public ResponseEntity<ResponseAssisted> findAssisted(@PathVariable Long id) {
         return null;
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ResponseAssisted>> findAllAssisted(){
+    public ResponseEntity<List<ResponseAssisted>> findAllAssisted() {
         return null;
     }
 
     @PutMapping("/update")
     public ResponseEntity<ResponseAssisted> updateAssisted(
-            @RequestBody @Valid @NonNull RequestEditAssisted editAssisted){
+            @RequestBody @Valid @NonNull RequestEditAssisted editAssisted) {
 
         try {
             return ResponseEntity.ok(assistedService.updateAssisted(editAssisted));
-        } catch (NoResultException e) {throw new EntityNotFoundException();
+        } catch (NoResultException e) {
+            throw new EntityNotFoundException();
         }
 
     }
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<Boolean> deleteAssisted(@PathVariable Long id){
+    public ResponseEntity<Boolean> deleteAssisted(@PathVariable Long id) {
         return null;
     }
 }
