@@ -1,0 +1,46 @@
+.contenedor-imagenes {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+
+  .specialty-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+
+  @for $i from 7 through 14 {
+    > .flex-shrink-0:nth-child(#{$i}) {
+      display: none;
+    }
+  }
+}
+  
+.carrusel  {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.botones {
+  display: flex;
+  width: 70%;
+
+.boton-anterior,
+.boton-siguiente {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ccc;
+  }
+}
+}
+
+  .specialty-name {
+    display: none;
+  }
+
+  
+  

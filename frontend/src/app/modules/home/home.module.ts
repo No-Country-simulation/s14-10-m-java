@@ -6,11 +6,13 @@ import { HomeRoutingModule} from './home-routing.module'
 import { CardComponent } from 'src/app/core/shared/components/card/card.component';
 import { SharedModule } from 'src/app/core/shared/shared.module';
 import { SearchBarModule } from 'src/app/core/shared/components/search-bar/search-bar.module';
+import { SpecialtyComponent } from 'src/app/core/shared/components/specialties/specialties.component';
 
 @NgModule({
   declarations: [
     PrincipalComponent,
-    CardComponent
+    CardComponent,
+    SpecialtyComponent,
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,7 @@ import { SearchBarModule } from 'src/app/core/shared/components/search-bar/searc
     SearchBarModule
   ],
   exports: [
-    CardComponent
+    CardComponent,
   ]
 })
 export class HomeModule { }

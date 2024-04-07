@@ -5,14 +5,13 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 import { RouterModule } from '@angular/router';
-import { SpecialtiesComponent } from './components/specialties/specialties.component'; // Importa RouterModule
 
 @NgModule({
   declarations: [
     ButtonComponent,
     NavbarComponent,
-    FooterComponent,
-    SpecialtiesComponent
+    FooterComponent
+    
   ],
   imports: [
     CommonModule,

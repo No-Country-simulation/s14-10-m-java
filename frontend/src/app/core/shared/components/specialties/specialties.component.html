@@ -1,1 +1,13 @@
-<p>specialties works!</p>
+
+    <div class="carrusel">
+      <div class="botones">
+        <button class="boton-anterior">Anterior</button>
+        </div>
+      <div *ngFor="let specialty of specialties" class="contenedor-imagenes">
+        <img class="specialty-image" src="../../../../../assets/icons-svg/{{specialty.image}}" />
+        <h1 class="specialty-name">{{specialty.name}}</h1>
+      </div>
+      <div class="botones">
+        <button class="boton-siguiente">Siguiente</button>
+      </div>
+    </div>
