@@ -6,11 +6,11 @@ COPY .mvn/ .mvn
 COPY mvnw ./
 COPY pom.xml ./
 
-RUN ./mvnw dependency:go-offline
+RUN chmod +x mvnw && ./mvnw dependency:go-offline
 
 COPY src/ ./src
 
-RUN chmod +x mvnw && ./mvnw clean package -DskipTests
+RUN ./mvnw clean package -DskipTests
 
 FROM openjdk:17-jdk-slim
 
