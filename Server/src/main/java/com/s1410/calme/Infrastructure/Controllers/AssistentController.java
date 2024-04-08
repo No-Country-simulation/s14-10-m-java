@@ -3,6 +3,7 @@ import com.s1410.calme.Domain.Dtos.request.RequestCreateAssistent;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssistent;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssistent;
 import com.s1410.calme.Domain.Services.AssistentService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class AssistentController {
                     this.assistentService.createAssistent(createAssistent));
     }
 
+    //@SecurityRequirement(name = "Bearer")
     @GetMapping("/id/{id}")
     public ResponseEntity<ResponseAssistent> findAssistent(@PathVariable Long id){
         return ResponseEntity.ok(assistentService.readAssistent(id));

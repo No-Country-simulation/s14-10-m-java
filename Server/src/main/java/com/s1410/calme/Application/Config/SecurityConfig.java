@@ -37,8 +37,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest ->
                         authRequest.requestMatchers("/assistent/register",
                                         "/doctor/register", "/login").permitAll()
-                                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**",
-                                        "/swagger-ui.html").permitAll()
+                                .requestMatchers("/v3/**","/swagger-ui/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 //authRequest.anyRequest().permitAll()) /*Este se descomenta para probar sin JWT*/
