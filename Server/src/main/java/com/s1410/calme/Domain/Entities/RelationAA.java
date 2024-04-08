@@ -1,4 +1,5 @@
 package com.s1410.calme.Domain.Entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.s1410.calme.Domain.Utils.RelationType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,10 +19,13 @@ public class RelationAA {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assisted_id")
+    @JsonBackReference
     Assisted assisted;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assistent_id")
+    @JsonBackReference
     Assistent assistent;
 
     RelationType relationType;
