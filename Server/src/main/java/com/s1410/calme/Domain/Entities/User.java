@@ -18,6 +18,6 @@ public abstract class User {
     LocalDate dateOfBirth;
     //@OneToMany(mappedBy = "users")
     //List<Appointment> AppointmentList;
-    Boolean active; // logic delete
+    Boolean active = true; // logic delete
 
 }

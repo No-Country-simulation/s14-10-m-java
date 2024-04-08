@@ -1,5 +1,6 @@
 package com.s1410.calme.Infrastructure.Controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.s1410.calme.Application.SImplementations.AssistentServiceImpl;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAssistent;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssistent;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssistent;
@@ -21,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -37,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest //Test de SpringBoot porque Controller.
 @AutoConfigureMockMvc //Configura el manejo de endpoints (post, put, get, delete, patch).
-//@WithMockUser //Habilita la autenticación (evita el error 403)
+@WithMockUser //Habilita la autenticación (evita el error 403)
 @AutoConfigureJsonTesters //Permite manejarse con DTO en lugar de requerir JSON.
 public class AssistentControllerTest {
 
@@ -52,7 +54,7 @@ public class AssistentControllerTest {
     @Autowired
     private JacksonTester<ResponseAssistent> responseAssistentJacksonTester;
     @MockBean //Suplanta el service y evita hacer la llamada a base de datos original.
-    private AssistentService assistentService;
+    private AssistentServiceImpl assistentServiceImpl;
 
     Long id;
     String email;
@@ -92,13 +94,13 @@ public class AssistentControllerTest {
     class CreateAssistentTests {
 
         @Test
-        @DisplayName("Should return http200 when provided data is valid.")
+        @DisplayName("Should return http201 when provided data is valid.")
         void createAssistentTest1() throws Exception {
             RequestCreateAssistent requestCreateAssistent =
                     new RequestCreateAssistent(email, password, DNI, dateOfBirth);
             ResponseAssistent responseAssistent =
                     new ResponseAssistent(id,email, DNI, dateOfBirth, relationsAA);
-            when(assistentService.createAssistent(any(RequestCreateAssistent.class)))
+            when(assistentServiceImpl.createAssistent(any(RequestCreateAssistent.class)))
                     .thenReturn(responseAssistent);
             mvc.perform(post("/assistent/register")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -118,7 +120,7 @@ public class AssistentControllerTest {
             RequestCreateAssistent requestCreateAssistent =
                     new RequestCreateAssistent(email, null, DNI, null);
 
-            when(assistentService.createAssistent(any(RequestCreateAssistent.class)))
+            when(assistentServiceImpl.createAssistent(any(RequestCreateAssistent.class)))
                     .thenThrow(IllegalArgumentException.class);
             mvc.perform(post("/assistent/register")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -140,7 +142,7 @@ public class AssistentControllerTest {
             ResponseAssistent responseAssistent = new ResponseAssistent(
                     id,email, DNI, dateOfBirth, relationsAA);
 
-            when(assistentService.updateAssistent(requestEditAssistent))
+            when(assistentServiceImpl.updateAssistent(requestEditAssistent))
                     .thenReturn(responseAssistent);
 
             var response = mvc.perform(put("/assistent/update")
@@ -162,10 +164,10 @@ public class AssistentControllerTest {
             RequestEditAssistent requestEditAssistent = new RequestEditAssistent(
                     id, email, password, DNI, dateOfBirth);
 
-            when(assistentService.updateAssistent(requestEditAssistent))
-                    .thenThrow(EntityNotFoundException.class);
+            when(assistentServiceImpl.updateAssistent(requestEditAssistent)).thenThrow(
+                    EntityNotFoundException.class);
 
-            var response = mvc.perform(put("/assistents/update")
+            var response = mvc.perform(put("/assistent/update")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(requestEditAssistentJacksonTester.write(
                                     requestEditAssistent).getJson()))

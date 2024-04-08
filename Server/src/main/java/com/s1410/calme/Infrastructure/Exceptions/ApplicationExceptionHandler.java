@@ -1,7 +1,6 @@
 package com.s1410.calme.Infrastructure.Exceptions;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.NoResultException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,7 +15,7 @@ public class ApplicationExceptionHandler {
     //Para Agregar una expeción a ser manejada así solo deben colocarla dentro de las llaves
     //En caso de que hagan una expeción propia, solo necesita que haga "extends" de RuntimeException
     @ExceptionHandler(value = {EntityNotFoundException.class})
-    public ResponseEntity<Object> handleNotFoundException(RuntimeException exception) {
+    public ResponseEntity<Object> handleNotFoundException(EntityNotFoundException exception) {
 
         HttpStatus notFound = HttpStatus.NOT_FOUND;
         ApiException apiException = new ApiException(
@@ -29,7 +28,7 @@ public class ApplicationExceptionHandler {
     }
 
     @ExceptionHandler(value = {EntityExistsException.class})
-    public ResponseEntity<Object> handleEntityExistsException(RuntimeException exception) {
+    public ResponseEntity<Object> handleEntityExistsException(EntityExistsException exception) {
 
         HttpStatus entityExists = HttpStatus.CONFLICT;
         ApiException apiException = new ApiException(
@@ -42,7 +41,7 @@ public class ApplicationExceptionHandler {
     }
 
     @ExceptionHandler(value = {IllegalArgumentException.class})
-    public ResponseEntity<Object> handleWrongArgumentException(RuntimeException exception) {
+    public ResponseEntity<Object> handleWrongArgumentException(IllegalArgumentException exception) {
 
         HttpStatus wrongArgument = HttpStatus.BAD_REQUEST;
         ApiException apiException = new ApiException(
