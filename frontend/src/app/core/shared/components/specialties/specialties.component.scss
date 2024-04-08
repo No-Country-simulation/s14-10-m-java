@@ -11,8 +11,8 @@
 }
 
 .specialty-image {
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
 }
 
@@ -21,25 +21,10 @@
   transition: transform 0.5s ease;
 }
 
-.botones {
-  display: flex;
-  width: 70%;
 
-.boton-anterior,
-.boton-siguiente {
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #ccc;
-  }
-}
-}
 
 .background-image{
-  background-image: radial-gradient(ellipse farthest-corner at 75px 30px , #fff 35%, #B4CEFF 100%);
+  background-image: radial-gradient(ellipse farthest-corner at 120% 20% , #ffffff 12%,#93b9ff7a 80%, #87b1ff 100%);
     border-radius: 50%;
 }
 
