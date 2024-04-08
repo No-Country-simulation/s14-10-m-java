@@ -8,20 +8,8 @@ import { RouterModule } from '@angular/router';
 import { SpecialtiesComponent } from './components/specialties/specialties.component'; // Importa RouterModule
 
 @NgModule({
-  declarations: [
-    ButtonComponent,
-    NavbarComponent,
-    FooterComponent,
-    SpecialtiesComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule
-  ],
-  exports: [
-    ButtonComponent,
-    NavbarComponent,
-    FooterComponent
-  ]
+  declarations: [ButtonComponent, NavbarComponent, FooterComponent, SpecialtiesComponent],
+  imports: [CommonModule, RouterModule],
+  exports: [ButtonComponent, NavbarComponent, FooterComponent],
 })
-export class SharedModule { }
+export class SharedModule {}
