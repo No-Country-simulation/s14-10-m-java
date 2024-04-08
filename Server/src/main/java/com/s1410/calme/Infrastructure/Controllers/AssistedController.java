@@ -39,8 +39,8 @@ public class AssistedController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<ResponseAssisted> findAssisted(@PathVariable Long id) {
-        return null;
+    public ResponseEntity<ResponseAssisted> findAssisted(@PathVariable Long id){
+        return ResponseEntity.ok(assistedService.readAssisted(id));
     }
 
     @GetMapping("/all/{assistantID}")

@@ -64,7 +64,9 @@ public class AssistedServiceImpl implements AssistedService {
 
     @Override
     public ResponseAssisted readAssisted(Long id) {
-        return null;
+        Assisted assisted = assistedRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("id"));
+        return assistedMapper.assistedToResponse(assisted);
     }
 
     @Override
