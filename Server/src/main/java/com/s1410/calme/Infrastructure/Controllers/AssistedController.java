@@ -25,7 +25,7 @@ public class AssistedController {
 
     public final AssistedService assistedService;
 
-    @PostMapping("/create-assisted")
+    @PostMapping("/register")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseAssisted registerAssisted(
