@@ -46,16 +46,33 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public Page<ResponseDoctor> readAllDoctors(boolean active,Pageable paging) {
-        return null;
+        return doctorRepository.findAllByActive(active,paging)
+                .map(doctorMapper::doctorToResponse);
     }
 
+    //Revisar datos a editar
+    //No se contemplan los de la superclass User
     @Override
     public ResponseDoctor updateDoctor(RequestEditDoctor requestEditDoctor) {
-        return null;
+
+        Doctor doctor = doctorRepository.findById(requestEditDoctor.id()).orElseThrow(()->
+                new EntityNotFoundException(requestEditDoctor.id().toString()));
+
+        if (doctor.getActive()){
+            if (requestEditDoctor.specialty() != null){
+                doctor.setSpecialty(requestEditDoctor.specialty());
+            }
+        }
+
+        return doctorMapper.doctorToResponse(doctor);
     }
 
     @Override
     public Boolean toogleDeleteDoctor(Long id) {
-        return null;
+        Doctor doctor = doctorRepository.findById(id).orElseThrow(
+        ()-> new EntityNotFoundException("Could not find the doctor with id: "+id));
+
+        doctor.setActive(!doctor.getActive());
+        return doctor.getActive();
     }
 }
