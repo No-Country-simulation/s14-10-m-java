@@ -22,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -38,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest //Test de SpringBoot porque Controller.
 @AutoConfigureMockMvc //Configura el manejo de endpoints (post, put, get, delete, patch).
-//@WithMockUser //Habilita la autenticación (evita el error 403)
+@WithMockUser //Habilita la autenticación (evita el error 403)
 @AutoConfigureJsonTesters //Permite manejarse con DTO en lugar de requerir JSON.
 public class AssistentControllerTest {
 

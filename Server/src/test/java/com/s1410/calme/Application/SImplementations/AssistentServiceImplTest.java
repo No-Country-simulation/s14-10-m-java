@@ -12,6 +12,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -29,6 +30,8 @@ public class AssistentServiceImplTest {
     private AssistentRepository assistentRepository;
     @Autowired
     private AssistentMapper assistentMapper;
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     AssistentServiceImpl assistentServiceImpl;
     Long id;
@@ -64,7 +67,8 @@ public class AssistentServiceImplTest {
 
     @BeforeEach
     public void setUpUserService() {
-        assistentServiceImpl = new AssistentServiceImpl(assistentMapper, assistentRepository);
+        assistentServiceImpl = new AssistentServiceImpl(assistentMapper,
+                assistentRepository, passwordEncoder);
     }
 
     @Nested
