@@ -75,7 +75,7 @@ public class AssistedServiceImpl implements AssistedService {
         Assistent assistant = this.assistentRepository.findById(assistantId)
                 .orElseThrow(() -> new EntityNotFoundException("Assistant with ID " + assistantId + " not Found."));
 
-        if (!assistant.getActive()) throw new RuntimeException();
+        if (!assistant.getActive()) throw new IllegalArgumentException("Assistant with ID " + assistantId + " is inactive.");
 
         List<ResponseAssisted> responseAssistedsList = new ArrayList<>();
 
