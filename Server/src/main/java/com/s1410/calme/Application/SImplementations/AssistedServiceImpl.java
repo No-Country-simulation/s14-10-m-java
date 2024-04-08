@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -67,8 +68,24 @@ public class AssistedServiceImpl implements AssistedService {
     }
 
     @Override
-    public List<ResponseAssisted> readAllAssisted() {
-        return null;
+    public List<ResponseAssisted> readAllAssistedFromAssistant(Long assistantId) {
+
+        Assistent assistant = this.assistentRepository.findById(assistantId)
+                .orElseThrow(() -> new EntityNotFoundException("Assistant with ID " + assistantId + " not Found."));
+
+        if (!assistant.getActive()) throw new RuntimeException();
+
+        List<ResponseAssisted> responseAssistedsList = new ArrayList<>();
+
+        for (RelationAA relation:
+        this.relationAARepository.findAllByAssistentId(assistantId)) {
+
+            responseAssistedsList.add(this.assistedMapper.assistedToResponse(relation.getAssisted()));
+
+        }
+
+        return responseAssistedsList;
+
     }
 
     @Transactional

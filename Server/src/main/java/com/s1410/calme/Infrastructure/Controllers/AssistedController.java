@@ -43,9 +43,15 @@ public class AssistedController {
         return null;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<ResponseAssisted>> findAllAssisted() {
-        return null;
+    @GetMapping("/all/{assistantID}")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public List<ResponseAssisted> findAllAssistedFromAssistant(@PathVariable Long assistantID) {
+        try {
+            return this.assistedService.readAllAssistedFromAssistant(assistantID);
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException(e.getMessage());
+        }
     }
 
     @PutMapping("/update")
