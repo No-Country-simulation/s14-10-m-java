@@ -1,13 +1,18 @@
 package com.s1410.calme.Domain.Dtos.request;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public record RequestCreateAssisted(
-
-     //   String email,
-     //   String password,
+        @NotNull(message = "DNI cannot be null")
+        @Pattern(regexp = "\\d+", message = "DNI must be a positive number.")
+        @Size(max = 9, min = 7)
         String DNI,
-        LocalDate dateOfBirth
-
-) {
-}
+        @NotNull(message = "dateOfBirth cannot be null")
+        LocalDate dateOfBirth,
+        Long AssistantID,
+        String relationTypeWithAssistant
+){}

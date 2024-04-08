@@ -13,10 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "assisted")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Assisted extends User {
 
     @OneToMany(mappedBy = "assisted" , fetch = FetchType.LAZY)
-    List<RelationAA> relationsAA; //relation assistent to assisted
+    List<RelationAA> relationsAA; //relation assistant to assisted
 
 }
