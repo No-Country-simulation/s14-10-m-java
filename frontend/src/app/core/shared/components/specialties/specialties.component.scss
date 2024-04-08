@@ -3,19 +3,19 @@
   height: 100%;
   transition: transform 0.5s ease-in-out;
 
-  .specialty-image {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-  }
-
-  @for $i from 7 through 14 {
+  @for $i from 8 through 14 {
     > .flex-shrink-0:nth-child(#{$i}) {
       display: none;
     }
   }
 }
-  
+
+.specialty-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
 .carrusel  {
   display: flex;
   transition: transform 0.5s ease;
@@ -38,6 +38,13 @@
 }
 }
 
+.background-image{
+  background-image: radial-gradient(ellipse farthest-corner at 75px 30px , #fff 35%, #B4CEFF 100%);
+    border-radius: 50%;
+}
+
+  
+  
   .specialty-name {
     display: none;
   }

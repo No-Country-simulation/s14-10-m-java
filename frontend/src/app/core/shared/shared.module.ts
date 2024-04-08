@@ -5,12 +5,14 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 import { RouterModule } from '@angular/router';
+import { SliderComponent } from './components/slider/slider.component';
 
 @NgModule({
   declarations: [
     ButtonComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    SliderComponent
     
   ],
   imports: [
