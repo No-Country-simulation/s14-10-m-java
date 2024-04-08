@@ -3,6 +3,7 @@ package com.s1410.calme.Infrastructure.Controllers;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAssisted;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssisted;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssisted;
+import com.s1410.calme.Domain.Dtos.response.ResponseAssistent;
 import com.s1410.calme.Domain.Services.AssistedService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -38,10 +39,12 @@ public class AssistedController {
         }
     }
 
+
     @GetMapping("/id/{id}")
-    public ResponseEntity<ResponseAssisted> findAssisted(@PathVariable Long id) {
-        return null;
+    public ResponseEntity<ResponseAssisted> findAssisted(@PathVariable Long id){
+        return ResponseEntity.ok(assistedService.readAssisted(id));
     }
+
 
     @GetMapping("/all")
     public ResponseEntity<List<ResponseAssisted>> findAllAssisted() {
