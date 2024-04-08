@@ -3,9 +3,7 @@ import com.s1410.calme.Domain.Dtos.request.RequestCreateAssistent;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssistent;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssistent;
 import com.s1410.calme.Domain.Services.AssistentService;
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.NoResultException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequestMapping("/assistent")
 @RestController
@@ -26,19 +22,15 @@ public class AssistentController {
     @PostMapping("/register")
     public ResponseEntity<ResponseAssistent> registerAssistent(
             @RequestBody @Valid @NotNull RequestCreateAssistent createAssistent){
-        try{
             return ResponseEntity.status(HttpStatus.CREATED).body(
                     this.assistentService.createAssistent(createAssistent));
-        }catch (EntityExistsException e){
-            throw new IllegalArgumentException();
-            }
     }
 
+    //@SecurityRequirement(name = "Bearer")
     @GetMapping("/id/{id}")
     public ResponseEntity<ResponseAssistent> findAssistent(@PathVariable Long id){
         return ResponseEntity.ok(assistentService.readAssistent(id));
     }
-
 
     //ej de url /assistents?active=false&page=0&size=10
     //Pulls by status and set amount of entries
@@ -52,10 +44,7 @@ public class AssistentController {
     @PutMapping("/update")
     public ResponseEntity<ResponseAssistent> updateAssistent(
             @RequestBody @Valid @NotNull RequestEditAssistent editAssistent){
-        try {
         return ResponseEntity.ok(assistentService.updateAssistent(editAssistent));
-        } catch (NoResultException e) {throw new EntityNotFoundException();
-        }
     }
 
     @DeleteMapping("/id/{id}")
