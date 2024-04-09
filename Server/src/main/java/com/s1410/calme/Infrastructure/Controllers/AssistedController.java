@@ -5,6 +5,7 @@ import com.s1410.calme.Domain.Dtos.request.RequestEditAssisted;
 import com.s1410.calme.Domain.Dtos.request.RequestEditRelationAA;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssisted;
 import com.s1410.calme.Domain.Services.AssistedService;
+import com.s1410.calme.Infrastructure.Exceptions.BindingResultException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
@@ -13,6 +14,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -28,8 +30,12 @@ public class AssistedController {
     public ResponseEntity<ResponseAssisted> registerAssisted(
             @RequestBody
             @Valid
-            RequestCreateAssisted createAssisted
+            RequestCreateAssisted createAssisted,
+            BindingResult bindingResult
     ) {
+        if (bindingResult.hasErrors()){
+              throw new BindingResultException(bindingResult);
+            }
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(this.assistedService.createAssisted(createAssisted));
@@ -47,8 +53,12 @@ public class AssistedController {
 
     @PutMapping("/update")
     public ResponseEntity<ResponseAssisted> updateAssisted(
-            @RequestBody @Valid @NonNull RequestEditAssisted editAssisted) {
+            @RequestBody @Valid @NonNull RequestEditAssisted editAssisted, BindingResult bindingResult) {
+
         try {
+            if (bindingResult.hasErrors()){
+                throw new BindingResultException(bindingResult);
+            }
             return ResponseEntity.ok(assistedService.updateAssisted(editAssisted));
         } catch (NoResultException e) {
             throw new EntityNotFoundException();
