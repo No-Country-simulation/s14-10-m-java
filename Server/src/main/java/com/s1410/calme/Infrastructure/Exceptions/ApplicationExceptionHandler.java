@@ -65,7 +65,7 @@ public class ApplicationExceptionHandler {
         BindingResultErrorDetails apiException = new BindingResultErrorDetails(
                 errorMessages,
                 badRequest,
-                ZonedDateTime.now(ZoneId.of("Z"))
+                ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"))
         );
 
         return new ResponseEntity<>(apiException, badRequest);
