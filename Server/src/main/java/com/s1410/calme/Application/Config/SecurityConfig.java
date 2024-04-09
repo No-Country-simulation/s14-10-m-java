@@ -34,29 +34,44 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authProvider;
 
+    private static final String[] FREE_ENDPOINTS = {
+            "/api/v1/company/create",
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            //others
+            "/authenticate/**",
+            "/api/security/auth/**", "/styles/**", "/assets/**", "/scripts/**"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-            http
-                .csrf(AbstractHttpConfigurer::disable).cors((cors) -> cors
-                            .configurationSource(corsConfigurationSource())
-                    )
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authRequest ->
                         authRequest.requestMatchers(
-                                        "/assistent/register",
+                                        FREE_ENDPOINTS
+                                )
+                                .permitAll()
+                                .requestMatchers("/assistent/register",
                                         "/doctor/register",
-                                        "/login"
-                                ).permitAll()
+                                        "/login").permitAll()
                                 .requestMatchers("/v3/**","/swagger-ui/**").permitAll()
                                 .anyRequest().authenticated()
                 )
-                //authRequest.anyRequest().permitAll()) /*Este se descomenta para probar sin JWT*/
                 .sessionManagement(sessionManager ->
                         sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     @Bean
@@ -75,6 +90,8 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+}
 
 
 
