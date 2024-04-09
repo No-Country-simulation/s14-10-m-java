@@ -3,6 +3,7 @@ import com.s1410.calme.Domain.Dtos.request.RequestCreateDoctor;
 import com.s1410.calme.Domain.Dtos.request.RequestEditDoctor;
 import com.s1410.calme.Domain.Dtos.response.ResponseDoctor;
 import com.s1410.calme.Domain.Services.DoctorService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequestMapping("/doctor")
 @RestController
 @RequiredArgsConstructor
+@SecurityRequirement(name = "Bearer Authentication")
 public class DoctorController {
 
     private final DoctorService doctorService;
