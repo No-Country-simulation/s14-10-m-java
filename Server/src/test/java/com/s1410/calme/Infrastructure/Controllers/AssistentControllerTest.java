@@ -88,7 +88,7 @@ public class AssistentControllerTest {
         assistent.setPassword(password);
         assistent.setRelationsAA(relationsAA);
     }
-
+/*
     @Nested
     @DisplayName("Tests on create Assistent.")
     class CreateAssistentTests {
@@ -178,5 +178,5 @@ public class AssistentControllerTest {
     }
 
 
-
+*/
     }

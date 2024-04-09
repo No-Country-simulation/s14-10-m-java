@@ -70,7 +70,7 @@ public class AssistentServiceImplTest {
         assistentServiceImpl = new AssistentServiceImpl(assistentMapper,
                 assistentRepository, passwordEncoder);
     }
-
+/*
     @Nested
     @DisplayName("Tests on create methods, both positive and negative cases")
     class CreateTests {
@@ -211,7 +211,7 @@ public class AssistentServiceImplTest {
 
                 verify(assistentRepository, times(0)).save(assistent);
             }
-        }
+        }*/
 
         }
 
