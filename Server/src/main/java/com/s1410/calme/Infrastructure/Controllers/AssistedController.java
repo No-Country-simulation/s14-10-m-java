@@ -64,9 +64,12 @@ public class AssistedController {
 
     @PutMapping("/update")
     public ResponseEntity<ResponseAssisted> updateAssisted(
-            @RequestBody @Valid @NonNull RequestEditAssisted editAssisted) {
+            @RequestBody @Valid @NonNull RequestEditAssisted editAssisted, BindingResult bindingResult) {
 
         try {
+            if (bindingResult.hasErrors()){
+                throw new BindingResultException(bindingResult);
+            }
             return ResponseEntity.ok(assistedService.updateAssisted(editAssisted));
         } catch (NoResultException e) {
             throw new EntityNotFoundException();

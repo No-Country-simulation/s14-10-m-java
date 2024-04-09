@@ -59,7 +59,6 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(value = BindingResultException.class)
     public ResponseEntity<Object> handleBindingResultException(BindingResultException exception){
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
-        exception.printStackTrace();
         List<String> errorMessages = new ArrayList<>();
         exception.getBindingResult().getAllErrors().forEach(error -> errorMessages.add(error.getDefaultMessage()));
 
