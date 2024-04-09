@@ -5,9 +5,7 @@ import com.s1410.calme.Domain.Dtos.request.RequestEditAssisted;
 import com.s1410.calme.Domain.Dtos.request.RequestEditRelationAA;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssisted;
 import com.s1410.calme.Domain.Services.AssistedService;
-import com.s1410.calme.Domain.Utils.RelationType;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.validation.Valid;
@@ -27,34 +25,24 @@ public class AssistedController {
     public final AssistedService assistedService;
 
     @PostMapping("/register")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseAssisted registerAssisted(
+    public ResponseEntity<ResponseAssisted> registerAssisted(
             @RequestBody
             @Valid
             RequestCreateAssisted createAssisted
     ) {
-        try {
-            return this.assistedService.createAssisted(createAssisted);
-        } catch (EntityExistsException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(this.assistedService.createAssisted(createAssisted));
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<ResponseAssisted> findAssisted(@PathVariable Long id){
+    public ResponseEntity<ResponseAssisted> findAssisted(@PathVariable Long id) {
         return ResponseEntity.ok(assistedService.readAssisted(id));
     }
 
     @GetMapping("/all/{assistantID}")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    public List<ResponseAssisted> findAllAssistedFromAssistant(@PathVariable Long assistantID) {
-        try {
-            return this.assistedService.readAllAssistedFromAssistant(assistantID);
-        } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException(e.getMessage());
-        }
+    public ResponseEntity<List<ResponseAssisted>> findAllAssistedFromAssistant(@PathVariable Long assistantID) {
+        return ResponseEntity.ok(this.assistedService.readAllAssistedFromAssistant(assistantID));
     }
 
     @PutMapping("/update")
@@ -74,14 +62,8 @@ public class AssistedController {
            .updateRelationAA(dto.assistantId(), dto.assistedId(), dto.relationType()));
     }
 
-    @DeleteMapping("/{relationAAId}")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    public Boolean removeAssistedToAssistant(@PathVariable Long relationAAId) {
-        try {
-            return this.assistedService.unlinkAssistedFromAssistant(relationAAId);
-        } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException(e.getMessage());
-        }
+    @DeleteMapping("/id/{relationAAId}")
+    public ResponseEntity<Boolean> removeAssistedToAssistant(@PathVariable Long relationAAId) {
+        return ResponseEntity.ok(this.assistedService.unlinkAssistedFromAssistant(relationAAId));
     }
 }

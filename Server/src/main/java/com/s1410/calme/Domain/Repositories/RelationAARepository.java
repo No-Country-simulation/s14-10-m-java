@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface RelationAARepository extends JpaRepository<RelationAA, Long> {
     boolean existsByAssistedId(Long assistedId);
+    boolean existsByAssistentIdAndAssistedId(Long assistentId, Long assistedId);
     List<RelationAA> findAllByAssistentId(Long assistentId);
     Optional<RelationAA> findByAssistentIdAndAssistedId(Long assistentId, Long assistedId);
 

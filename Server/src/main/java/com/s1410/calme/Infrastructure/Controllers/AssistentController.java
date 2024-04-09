@@ -27,7 +27,7 @@ public class AssistentController {
                     this.assistentService.createAssistent(createAssistent));
     }
 
-    //@SecurityRequirement(name = "Bearer")
+
     @GetMapping("/id/{id}")
     public ResponseEntity<ResponseAssistent> findAssistent(@PathVariable Long id){
         return ResponseEntity.ok(assistentService.readAssistent(id));
