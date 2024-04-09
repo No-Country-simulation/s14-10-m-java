@@ -19,8 +19,6 @@ public abstract class User {
     String firstName;
     String secondName;
     String lastName;
-    //@OneToMany(mappedBy = "users")
-    //List<Appointment> AppointmentList;
     Boolean active = true; // logic delete
 
 }
