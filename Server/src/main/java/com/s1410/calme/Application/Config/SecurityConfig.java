@@ -60,9 +60,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable).cors((cors) -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(request ->
+                .authorizeHttpRequests(request -> //comentar desde aqui para quitar el jwt
                         request.requestMatchers(FREE_ENDPOINTS).permitAll()
-                                .anyRequest().authenticated()
+                                .anyRequest().authenticated() //Hasta aqui!!
                 )
                 //authRequest.anyRequest().permitAll()) /*Este se descomenta para probar sin JWT*/
                 .sessionManagement(sessionManager ->
