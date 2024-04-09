@@ -11,6 +11,11 @@ public record RequestCreateAssisted(
         @Pattern(regexp = "\\d+", message = "DNI must be a positive number.")
         @Size(max = 9, min = 7)
         String DNI,
+        @NotNull(message = "firstName cannot be null")
+        String firstName,
+        String secondName,
+        @NotNull(message = "lastName cannot be null")
+        String lastName,
         @NotNull(message = "dateOfBirth cannot be null")
         LocalDate dateOfBirth,
         Long AssistantID,
