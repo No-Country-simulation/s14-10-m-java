@@ -38,6 +38,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     //TODO: Hacer el código más lindo si es posible
     //TODO: Chequear que la fecha del appointment sea mayor a la actual
+    //TODO: Chequear que las fechas esten dentro de las 9AM y 10PM
+    //TODO: Assisted puede ser nulo
+    //TODO: Chequear que no choquen fechas del appointment:
+    //  - El turno empieza 30 minutos después del último
+    //  - El turno empieza 30 minutos antes del siguiente
+    //TODO: Chequear que el doctor este disponible a esa hora (mismo que el anterior) (opcional)
     @Override
     public ResponseEntity<ResponseAppointment> createAppointment(RequestCreateAppointment requestCreateAppointment) {
         Long doctorId = requestCreateAppointment.doctorId();
