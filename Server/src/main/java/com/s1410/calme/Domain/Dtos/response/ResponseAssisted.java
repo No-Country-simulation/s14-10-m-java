@@ -5,8 +5,10 @@ import java.time.LocalDate;
 public record ResponseAssisted(
 
         String DNI,
+        String firstName,
+        String secondName,
+        String lastName,
         LocalDate dateOfBirth
         // List<RelationAA> relationsAA,
-        // List<Appointment> appointmentList
 ) {
 }

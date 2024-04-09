@@ -30,7 +30,7 @@ public class AssistentServiceImpl implements AssistentService {
         if(requestCreateAssistent == null){ throw new EntityNotFoundException(); }
 
         var assistentAlreadyExists = assistentRepository.findByEmail(requestCreateAssistent.email());
-        if(assistentAlreadyExists.isPresent()){ throw new EntityExistsException(); }
+        if(assistentAlreadyExists.isPresent()){ throw new EntityExistsException("Email already in use"); }
 
         Assistent assistent = this.assistentMapper
                 .requestCreateToAssistent(requestCreateAssistent);

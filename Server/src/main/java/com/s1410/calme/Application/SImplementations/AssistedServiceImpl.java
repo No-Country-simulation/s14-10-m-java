@@ -16,9 +16,9 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,26 +35,35 @@ public class AssistedServiceImpl implements AssistedService {
 
         Long assistantId = requestCreateAssisted.AssistantID();
 
-        // Search if the assistant user exists in DB to link with assisted, otherwise launch an exception
+        // Search if the assistant user exists in DB to link with assisted, otherwise launch an exception.
         Assistent assistent = assistentRepository.findById(assistantId).orElseThrow(
                 () -> new EntityNotFoundException("Assistant with ID " + assistantId + " not Found."));
 
-        //Map DTO request to assisted.
-        Assisted assisted = this.assistedMapper
-                .requestCreateToAssisted(requestCreateAssisted);
+        // Search if there is an assisted with the same DNI in db.
+        Assisted assisted = this.assistedRepository.findByDNI(requestCreateAssisted.DNI());
+
+        // If it does not exist in DB, initialize with data from the request
+        if (assisted == null) {
+            //Map DTO request to assisted.
+            assisted = this.assistedMapper
+                    .requestCreateToAssisted(requestCreateAssisted);
+
+            assisted.setActive(true);
+        } else if // If assisted already exists, check if it has a relation with the assistant
+        (this.relationAARepository.existsByAssistentIdAndAssistedId(assistent.getId(), assisted.getId())) {
+            throw new IllegalArgumentException("Assisted and assistant already have a relation between them");
+        }
 
         // Get relation type value between assisted and assistant.
         RelationType relationType = RelationType.valueOf(requestCreateAssisted.relationTypeWithAssistant());
 
-        // Create relation between the assistant and the new assisted
+        // Create relation between the assistant and the new assisted.
         RelationAA relationAA = new RelationAA(
                 null,
                 assisted,
                 assistent,
                 relationType
                 );
-
-        assisted.setActive(true);
 
         this.assistedRepository.save(assisted);
         this.relationAARepository.save(relationAA);
@@ -72,19 +81,24 @@ public class AssistedServiceImpl implements AssistedService {
     @Override
     public List<ResponseAssisted> readAllAssistedFromAssistant(Long assistantId) {
 
+        // Get assistant from db.
         Assistent assistant = this.assistentRepository.findById(assistantId)
                 .orElseThrow(() -> new EntityNotFoundException("Assistant with ID " + assistantId + " not Found."));
 
-        if (!assistant.getActive()) throw new RuntimeException();
+        // Validate if the assistant is active.
+        if (!assistant.getActive()) throw new IllegalArgumentException("Assistant with ID " + assistantId + " is inactive.");
 
+        //Set assisted list for response.
         List<ResponseAssisted> responseAssistedsList = new ArrayList<>();
 
-        for (RelationAA relation:
-        this.relationAARepository.findAllByAssistentId(assistantId)) {
-
-            responseAssistedsList.add(this.assistedMapper.assistedToResponse(relation.getAssisted()));
-
-        }
+        /*Se espera una lista de respuesta de assisted. Se mapea a través del mapstruct
+        entre ambas listas buscando en el repo de relaciónAA todas las relaciones del assistant
+        y luego... stream() permite transformar la lista, map() funciona como el for, y collect()
+        lo hace lista. */
+        responseAssistedsList = assistedMapper
+                .assistedListToResponseList(this.relationAARepository
+                        .findAllByAssistentId(assistantId)
+                        .stream().map(RelationAA::getAssisted).collect(Collectors.toList()));
 
         return responseAssistedsList;
 
@@ -97,7 +111,7 @@ public class AssistedServiceImpl implements AssistedService {
         Assisted assisted = this.assistedRepository.findById(requestEditAssisted.id())
                 .orElseThrow(() -> new EntityNotFoundException(requestEditAssisted.id().toString()));
 
-       // if (assisted.getActive()) {
+       if (assisted.getActive()) {
             if (requestEditAssisted.DNI() != null) {
                 assisted.setDNI(requestEditAssisted.DNI());
             }
@@ -107,8 +121,24 @@ public class AssistedServiceImpl implements AssistedService {
             }
 
             this.assistedRepository.save(assisted);
-       // }
+        }
         return assistedMapper.assistedToResponse(assisted);
+    }
+
+    @Transactional
+    @Override
+    public boolean updateRelationAA(Long assistantId, Long assistedId, RelationType relationType){
+        Assisted assisted = this.assistedRepository.findById(assistedId)
+                .orElseThrow(() -> new EntityNotFoundException(assistedId.toString()));
+        Assistent assistant = this.assistentRepository.findById(assistantId)
+                .orElseThrow(() -> new EntityNotFoundException(assistantId.toString()));
+
+        var relationAA = relationAARepository.findByAssistentIdAndAssistedId(assistantId, assistedId)
+                .orElseThrow(() -> new EntityNotFoundException("La relación no existe"));
+        relationAA.setRelationType(relationType);
+
+        relationAARepository.save(relationAA);
+        return true;
     }
 
     @Transactional

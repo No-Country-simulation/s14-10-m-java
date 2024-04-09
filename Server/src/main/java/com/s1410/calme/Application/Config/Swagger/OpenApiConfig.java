@@ -12,41 +12,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
     @Configuration
-/*    @OpenAPIDefinition(
-            servers = {@Server(
-                    url = "https://trucking-jebius.koyeb.app/api/v1/",
-                    description = "production server"),
-                    @Server(
-                            url = "http://127.0.0.1:8080/api/v1/",
-                            description = "development server"),
-                    @Server(url="http://181.15.143.132:9896/api/v1/",
-                            description= "dev server don web")
-            })*/
-/*    @SecurityScheme(
-            name = "bearerAuth",
-            type = SecuritySchemeType.HTTP,
-            bearerFormat = "JWT",
-            scheme = "bearer",
-            description = "Enter JWT Bearer token",
-            in = SecuritySchemeIn.HEADER
-    )*/
+    @OpenAPIDefinition(
+            servers = {
+                    @Server(url = "https://s14-10-m-java-production.up.railway.app/", description = "Prod Server")
+            }
+    )
     public class OpenApiConfig {
-/*
-        @Bean
-        public OpenAPI customOpenAPI() {
-            return new OpenAPI()
-                    .info(new Info()
-                            .title("Trucking API")
-                            .version("1.0")
-                            .description("Documentation Trucking API v1.0")
-                            .termsOfService("http://swagger.io/terms/")
-                            .license(new License()
-                                    .name("Apache 2.0")
-                                    .url("http://springdoc.org"))
-                            .contact(new Contact()
-                                    .name("TRUCKING API TEAM")
-                                    .url("https://s12-14-t-java-react.vercel.app"))
-                    );
 
-        }*/
     }
