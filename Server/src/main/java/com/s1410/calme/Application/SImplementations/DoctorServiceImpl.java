@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorMapper doctorMapper;
     private final DoctorRepository doctorRepository;
+    private final PasswordEncoder passwordEncoder;
 
     //Create doctor
     @Transactional
@@ -30,6 +32,7 @@ public class DoctorServiceImpl implements DoctorService {
     if (requestCreateDoctor == null){throw new EntityNotFoundException();}
 
     Doctor doctor = doctorMapper.requestCreateToDoctor(requestCreateDoctor);
+        doctor.setPassword(passwordEncoder.encode(requestCreateDoctor.password()));
     doctor.setActive(true);
     doctorRepository.save(doctor);
 
@@ -50,8 +53,6 @@ public class DoctorServiceImpl implements DoctorService {
                 .map(doctorMapper::doctorToResponse);
     }
 
-    //Revisar datos a editar
-    //No se contemplan los de la superclass User
     @Override
     public ResponseDoctor updateDoctor(RequestEditDoctor requestEditDoctor) {
 
@@ -59,6 +60,21 @@ public class DoctorServiceImpl implements DoctorService {
                 new EntityNotFoundException(requestEditDoctor.id().toString()));
 
         if (doctor.getActive()){
+            if (requestEditDoctor.firstName() != null) {
+                doctor.setFirstName(requestEditDoctor.firstName());
+            }
+            if (requestEditDoctor.secondName() != null) {
+                doctor.setSecondName(requestEditDoctor.secondName());
+            }
+            if (requestEditDoctor.lastName() != null) {
+                doctor.setLastName(requestEditDoctor.lastName());
+            }
+            if (requestEditDoctor.DNI() != null) {
+                doctor.setDNI(requestEditDoctor.DNI());
+            }
+            if (requestEditDoctor.dateOfBirth() != null) {
+                doctor.setDateOfBirth(requestEditDoctor.dateOfBirth());
+            }
             if (requestEditDoctor.specialty() != null){
                 doctor.setSpecialty(requestEditDoctor.specialty());
             }
