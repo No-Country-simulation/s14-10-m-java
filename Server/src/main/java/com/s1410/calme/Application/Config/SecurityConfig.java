@@ -34,15 +34,34 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authProvider;
 
+    private static final String[] FREE_ENDPOINTS = {
+            "/api/v1/company/create",
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            //others
+            "/authenticate/**",
+            "/api/security/auth/**", "/styles/**", "/assets/**", "/scripts/**",
+            //login
+            "/login",
+            //register
+            "/assistent/register",
+            "/doctor/register",
 
+    };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable).cors((cors) -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(authRequest -> //comentar desde aqui para quitar el jwt
-                        authRequest.requestMatchers("/assistent/register",
-                                        "/doctor/register", "/login").permitAll()
-                                .requestMatchers("/v3/**","/swagger-ui/**").permitAll()
+                .authorizeHttpRequests(request -> //comentar desde aqui para quitar el jwt
+                        request.requestMatchers(FREE_ENDPOINTS).permitAll()
                                 .anyRequest().authenticated() //Hasta aqui!!
                 )
                 //authRequest.anyRequest().permitAll()) /*Este se descomenta para probar sin JWT*/
