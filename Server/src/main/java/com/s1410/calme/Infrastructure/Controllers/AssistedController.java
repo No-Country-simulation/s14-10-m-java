@@ -4,6 +4,7 @@ import com.s1410.calme.Domain.Dtos.request.RequestCreateAssisted;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssisted;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssisted;
 import com.s1410.calme.Domain.Services.AssistedService;
+import com.s1410.calme.Infrastructure.Exceptions.BindingResultException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,6 +14,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,9 +33,13 @@ public class AssistedController {
     public ResponseAssisted registerAssisted(
             @RequestBody
             @Valid
-            RequestCreateAssisted createAssisted
+            RequestCreateAssisted createAssisted,
+            BindingResult bindingResult
     ) {
         try {
+            if (bindingResult.hasErrors()){
+                throw new BindingResultException(bindingResult);
+            }
             return this.assistedService.createAssisted(createAssisted);
         } catch (EntityExistsException e) {
             throw new IllegalArgumentException(e.getMessage());

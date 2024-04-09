@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestControllerAdvice
 public class ApplicationExceptionHandler {
@@ -53,7 +55,24 @@ public class ApplicationExceptionHandler {
         return new ResponseEntity<>(apiException, wrongArgument);
     }
 
-    //TODO: Manejar Binding Result Exceptions
+
+    @ExceptionHandler(value = BindingResultException.class)
+    public ResponseEntity<Object> handleBindingResultException(BindingResultException exception){
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        exception.printStackTrace();
+        List<String> errorMessages = new ArrayList<>();
+        exception.getBindingResult().getAllErrors().forEach(error -> errorMessages.add(error.getDefaultMessage()));
+
+        BindingResultErrorDetails apiException = new BindingResultErrorDetails(
+                errorMessages,
+                badRequest,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, badRequest);
+    }
+
+
     //Maneja cualquier otra excepción que no haya sido considerada en los casos anteriores
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> handleAllOtherExceptions(Exception exception) {
