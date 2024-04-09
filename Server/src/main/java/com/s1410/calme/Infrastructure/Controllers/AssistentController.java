@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/assistent")
 @RestController
 @RequiredArgsConstructor
+@SecurityRequirement(name = "Bearer Authentication")
 public class AssistentController {
     public final AssistentService assistentService;
 
@@ -26,7 +27,7 @@ public class AssistentController {
                     this.assistentService.createAssistent(createAssistent));
     }
 
-    //@SecurityRequirement(name = "Bearer")
+
     @GetMapping("/id/{id}")
     public ResponseEntity<ResponseAssistent> findAssistent(@PathVariable Long id){
         return ResponseEntity.ok(assistentService.readAssistent(id));
