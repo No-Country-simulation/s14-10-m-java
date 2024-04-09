@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/doctor")
 @RestController
 @RequiredArgsConstructor
-@SecurityRequirement(name = "Bearer")
+@SecurityRequirement(name = "Bearer Authentication")
 public class DoctorController {
 
     private final DoctorService doctorService;
