@@ -41,11 +41,14 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable).cors((cors) -> cors
                             .configurationSource(corsConfigurationSource())
                     )
-                .authorizeHttpRequests(authRequest -> //comentar desde aqui para quitar el jwt
-                        authRequest.requestMatchers("/assistent/register",
-                                        "/doctor/register", "/login").permitAll()
+                .authorizeHttpRequests(authRequest ->
+                        authRequest.requestMatchers(
+                                        "/assistent/register",
+                                        "/doctor/register",
+                                        "/login"
+                                ).permitAll()
                                 .requestMatchers("/v3/**","/swagger-ui/**").permitAll()
-                                .anyRequest().authenticated() //Hasta aqui!!
+                                .anyRequest().authenticated()
                 )
                 //authRequest.anyRequest().permitAll()) /*Este se descomenta para probar sin JWT*/
                 .sessionManagement(sessionManager ->
