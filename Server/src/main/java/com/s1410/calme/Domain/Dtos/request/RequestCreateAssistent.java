@@ -1,9 +1,6 @@
 package com.s1410.calme.Domain.Dtos.request;
 import jakarta.persistence.UniqueConstraint;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import java.time.LocalDate;
@@ -24,6 +21,7 @@ public record RequestCreateAssistent(
         @Pattern(regexp = "\\d+", message = "DNI must be a positive number.")
         @Size(max = 9, min = 7)
         String DNI,
+        @Past
         @NotNull(message = "dateOfBirth cannot be null")
         LocalDate dateOfBirth
 

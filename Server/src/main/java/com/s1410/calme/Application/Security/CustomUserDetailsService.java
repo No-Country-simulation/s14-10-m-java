@@ -28,10 +28,10 @@ public class CustomUserDetailsService implements UserDetailsService {
             return user;
         }
 
-        found = doctorRepository.findByEmail(email);
-        if (found.isPresent()) {
+        var found2 = doctorRepository.findByEmail(email);
+        if (found2.isPresent()) {
             var user = User.builder().username(email)
-                    .password(found.get().getPassword()).build();
+                    .password(found2.get().getPassword()).build();
             return user;
         }
 

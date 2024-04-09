@@ -24,8 +24,8 @@ public class AuthenticationService {
     public String login(RequestLogin data) {
         var user = assistentRepository.findByEmail(data.email());
         if (!user.isPresent()) {
-            user = doctorRepository.findByEmail(data.email());
-            if (!user.isPresent()) {
+            var user2 = doctorRepository.findByEmail(data.email());
+            if (!user2.isPresent()) {
                 throw new EntityNotFoundException(data.email());
             }
         }
@@ -34,7 +34,7 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken(data.email(),
                         data.password()));
 
-        String token = jwtService.getToken(user.get().getEmail());
+        String token = jwtService.getToken(data.email());
         return token;
     }
     }

@@ -14,7 +14,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     @Query("SELECT d FROM Doctor d WHERE d.specialty = :specialty")
     Doctor findBySpecialty(@Param("specialty") Specialty specialty);
-    Optional<Assistent> findByEmail(String email);
+    Optional<Doctor> findByEmail(String email);
 
     Page<Doctor> findAllByActive(Boolean active, Pageable paging);
 

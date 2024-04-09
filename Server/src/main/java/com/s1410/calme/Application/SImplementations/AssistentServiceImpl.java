@@ -64,6 +64,15 @@ public class AssistentServiceImpl implements AssistentService {
                 .orElseThrow(() -> new EntityNotFoundException(requestEditAssistent.id().toString()));
 
         if (assistent.getActive()) {
+            if (requestEditAssistent.firstName() != null) {
+                assistent.setFirstName(requestEditAssistent.firstName());
+            }
+            if (requestEditAssistent.secondName() != null) {
+                assistent.setSecondName(requestEditAssistent.secondName());
+            }
+            if (requestEditAssistent.lastName() != null) {
+                assistent.setLastName(requestEditAssistent.lastName());
+            }
             if (requestEditAssistent.DNI() != null) {
                 assistent.setDNI(requestEditAssistent.DNI());
             }
