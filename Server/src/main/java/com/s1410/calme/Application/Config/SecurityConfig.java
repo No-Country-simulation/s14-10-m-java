@@ -49,24 +49,22 @@ public class SecurityConfig {
             //others
             "/authenticate/**",
             "/api/security/auth/**", "/styles/**", "/assets/**", "/scripts/**"
-    };
+            //login
+            "/login",
+            //register
+            "/assistent/register",
+            "/doctor/register",
 
+    };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(authRequest ->
-                        authRequest.requestMatchers(
-                                        FREE_ENDPOINTS
-                                )
-                                .permitAll()
-                                .requestMatchers("/assistent/register",
-                                        "/doctor/register",
-                                        "/login").permitAll()
-                                .requestMatchers("/v3/**","/swagger-ui/**").permitAll()
+                .csrf(AbstractHttpConfigurer::disable).cors((cors) -> cors.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(request ->
+                        request.requestMatchers(FREE_ENDPOINTS).permitAll()
                                 .anyRequest().authenticated()
                 )
+                //authRequest.anyRequest().permitAll()) /*Este se descomenta para probar sin JWT*/
                 .sessionManagement(sessionManager ->
                         sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)
@@ -83,7 +81,6 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowCredentials(true);
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
@@ -91,5 +88,7 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+
 
 }
