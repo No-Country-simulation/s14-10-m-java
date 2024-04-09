@@ -2,16 +2,20 @@ package com.s1410.calme.Domain.Services;
 
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAppointment;
 import com.s1410.calme.Domain.Dtos.response.ResponseAppointment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+
 
 public interface AppointmentService {
 
     ResponseEntity<ResponseAppointment> createAppointment(RequestCreateAppointment requestCreateAppointment);
-
+    //TODO: pasar getAllAppointments a un Pageable
+    ResponseEntity<List<ResponseAppointment>> getAllAppointments(Integer page);
 
     //TODO: Implement Methods
-    //Get All
-    //Post Appointment
     //Delete Appointment
     //DeActivate Appointment
     //Activate Appointment

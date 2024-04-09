@@ -14,9 +14,16 @@ import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import com.s1410.calme.Domain.Services.AppointmentService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +35,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AssistentRepository assistentRepository;
     private final DoctorRepository doctorRepository;
 
+
+    //TODO: Hacer el código más lindo si es posible
+    //TODO: Chequear que la fecha del appointment sea mayor a la actual
     @Override
     public ResponseEntity<ResponseAppointment> createAppointment(RequestCreateAppointment requestCreateAppointment) {
         Long doctorId = requestCreateAppointment.doctorId();
@@ -60,5 +70,20 @@ public class AppointmentServiceImpl implements AppointmentService {
         var appointmentSaved = appointmentRepository.save(appointment);
         ResponseAppointment responseAppointment = appointmentMapper.appointmentToResponse(appointmentSaved);
         return new ResponseEntity<>(responseAppointment, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<ResponseAppointment>> getAllAppointments(Integer page) {
+
+        Integer size = 2;
+
+        //Default Page Number for wrong inputs
+        if (page <= 0) page = 1;
+
+        Pageable pageable = PageRequest.of(page-1, size);
+        Page<Appointment> pageAppointment = appointmentRepository.findAll(pageable);
+        return new ResponseEntity<>(pageAppointment.getContent()
+                .stream().map(appointmentMapper::appointmentToResponse).collect(Collectors.toList()),
+                HttpStatus.OK);
     }
 }
