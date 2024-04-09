@@ -48,7 +48,7 @@ public class SecurityConfig {
             "/swagger-ui/**",
             //others
             "/authenticate/**",
-            "/api/security/auth/**", "/styles/**", "/assets/**", "/scripts/**"
+            "/api/security/auth/**", "/styles/**", "/assets/**", "/scripts/**",
             //login
             "/login",
             //register
