@@ -4,6 +4,8 @@ import com.s1410.calme.Domain.Dtos.request.RequestCreateAssisted;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssisted;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssisted;
 import com.s1410.calme.Domain.Services.AssistedService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.validation.Valid;
@@ -18,11 +20,12 @@ import java.util.List;
 @RequestMapping("/assisted")
 @RestController
 @RequiredArgsConstructor
+@SecurityRequirement(name = "Bearer Authentication")
 public class AssistedController {
 
     public final AssistedService assistedService;
 
-    @PostMapping("/create-assisted")
+    @PostMapping("/register")
     public ResponseEntity<ResponseAssisted> registerAssisted(
             @RequestBody
             @Valid
