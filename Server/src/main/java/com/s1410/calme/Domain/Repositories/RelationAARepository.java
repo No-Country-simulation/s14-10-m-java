@@ -11,6 +11,8 @@ public interface RelationAARepository extends JpaRepository<RelationAA, Long> {
 
     boolean existsByAssistedId(Long assistedId);
 
+    boolean existsByAssistentIdAndAssistedId(Long assistentId, Long assistedId);
+
     List<RelationAA> findAllByAssistentId(Long assistentId);
 
 }
