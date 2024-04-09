@@ -35,7 +35,7 @@ public class AssistedServiceImpl implements AssistedService {
 
         Long assistantId = requestCreateAssisted.AssistantID();
 
-        // Search if the assistant user exists in DB to link with assisted, otherwise launch an exception
+        // Search if the assistant user exists in DB to link with assisted, otherwise launch an exception.
         Assistent assistent = assistentRepository.findById(assistantId).orElseThrow(
                 () -> new EntityNotFoundException("Assistant with ID " + assistantId + " not Found."));
 
@@ -46,7 +46,7 @@ public class AssistedServiceImpl implements AssistedService {
         // Get relation type value between assisted and assistant.
         RelationType relationType = RelationType.valueOf(requestCreateAssisted.relationTypeWithAssistant());
 
-        // Create relation between the assistant and the new assisted
+        // Create relation between the assistant and the new assisted.
         RelationAA relationAA = new RelationAA(
                 null,
                 assisted,
@@ -72,19 +72,18 @@ public class AssistedServiceImpl implements AssistedService {
     @Override
     public List<ResponseAssisted> readAllAssistedFromAssistant(Long assistantId) {
 
+        // Get assistant from db.
         Assistent assistant = this.assistentRepository.findById(assistantId)
                 .orElseThrow(() -> new EntityNotFoundException("Assistant with ID " + assistantId + " not Found."));
 
+        // Validate if the assistant is active.
         if (!assistant.getActive()) throw new IllegalArgumentException("Assistant with ID " + assistantId + " is inactive.");
 
+        //Set assisted list for response.
         List<ResponseAssisted> responseAssistedsList = new ArrayList<>();
-
-        for (RelationAA relation:
-        this.relationAARepository.findAllByAssistentId(assistantId)) {
-
-            responseAssistedsList.add(this.assistedMapper.assistedToResponse(relation.getAssisted()));
-
-        }
+        this.relationAARepository.findAllByAssistentId(assistantId)
+                .forEach((RelationAA relation) -> responseAssistedsList
+                        .add(this.assistedMapper.assistedToResponse(relation.getAssisted())));
 
         return responseAssistedsList;
 
