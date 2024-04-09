@@ -38,11 +38,11 @@ public class AppointmentController {
     TODO Endpoints:
         - DeActivate Appointment
         - Activate Appointment
-        - Change Appointment Date
+        - Change Appointment Date (must check if date is available aswell)
         - Filter All GETs by DoctorID, AssistentID, ¿AssistedID?
         - Get All Appointments by Date
         - Get All Appointments between 2 Dates
-        -
+        - Add Active param on every request (if false return both active and inactive)
      */
 
 }
