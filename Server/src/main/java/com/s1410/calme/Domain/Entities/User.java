@@ -16,6 +16,9 @@ public abstract class User {
     Long Id;
     String DNI; // Example 38518932 (without dots)
     LocalDate dateOfBirth;
+    String firstName;
+    String secondName;
+    String lastName;
     //@OneToMany(mappedBy = "users")
     //List<Appointment> AppointmentList;
     Boolean active = true; // logic delete
