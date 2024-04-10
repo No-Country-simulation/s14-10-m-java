@@ -1,19 +1,32 @@
 package com.s1410.calme.Domain.Dtos.request;
+import com.s1410.calme.Domain.Utils.Availability;
 import com.s1410.calme.Domain.Utils.Specialty;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
 public record RequestCreateDoctor(
 
+        @Email
+        @NotNull(message = "Email cannot be null")
         String email,
+        @NotNull(message = "Password cannot be null")
+        @Size(min = 7, message = "Password must have at least 8 characters.")
         String password,
+        @NotNull(message = "firstName cannot be null")
         String firstName,
         String secondName,
-        String firstLastName,
-        String secondLastName,
+        @NotNull(message = "lastName cannot be null")
+        String lastName,
+        @NotNull(message = "DNI cannot be null")
+        @Pattern(regexp = "\\d+", message = "DNI must be a positive number.")
+        @Size(max = 9, min = 7, message = "DNI must be between 7 and 9 numbers in length")
         String DNI,
         Specialty specialty,
-        LocalDate dateOfBirth
+        @Past
+        @NotNull(message = "dateOfBirth cannot be null")
+        LocalDate dateOfBirth,
+        Availability availability
 
 ) {
 }

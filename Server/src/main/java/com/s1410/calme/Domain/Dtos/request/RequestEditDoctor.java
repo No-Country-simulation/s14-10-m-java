@@ -1,5 +1,6 @@
 package com.s1410.calme.Domain.Dtos.request;
 
+import com.s1410.calme.Domain.Utils.Availability;
 import com.s1410.calme.Domain.Utils.Specialty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -20,7 +21,8 @@ public record RequestEditDoctor(
         String DNI,
         @Past
         LocalDate dateOfBirth,
-        Specialty specialty
+        Specialty specialty,
+        Availability availability
 
 ) {
 }

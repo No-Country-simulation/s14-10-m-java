@@ -14,8 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 @Service
 @RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
@@ -77,6 +75,9 @@ public class DoctorServiceImpl implements DoctorService {
             }
             if (requestEditDoctor.specialty() != null){
                 doctor.setSpecialty(requestEditDoctor.specialty());
+            }
+            if (requestEditDoctor.availability() != null) {
+                doctor.setAvailability(requestEditDoctor.availability());
             }
         }
 
