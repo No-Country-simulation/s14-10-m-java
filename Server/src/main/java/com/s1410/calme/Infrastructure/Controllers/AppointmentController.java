@@ -54,7 +54,6 @@ public class AppointmentController {
 
     /*
     TODO Endpoints:
-        - Change Appointment Date (must check if date is available aswell)
         - Filter All GETs by DoctorID, AssistentID, ¿AssistedID?
      */
 
