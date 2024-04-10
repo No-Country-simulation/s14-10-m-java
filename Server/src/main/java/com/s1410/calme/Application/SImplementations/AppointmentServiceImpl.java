@@ -1,6 +1,7 @@
 package com.s1410.calme.Application.SImplementations;
 
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAppointment;
+import com.s1410.calme.Domain.Dtos.request.RequestDateAppointment;
 import com.s1410.calme.Domain.Dtos.response.ResponseAppointment;
 import com.s1410.calme.Domain.Entities.Appointment;
 import com.s1410.calme.Domain.Entities.Assisted;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AssistedRepository assistedRepository;
     private final AssistentRepository assistentRepository;
     private final DoctorRepository doctorRepository;
+
+    private final Integer DEFAULT_PAGE_SIZE = 5;
 
 
     //TODO: Hacer el código más lindo si es posible
@@ -82,12 +86,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public ResponseEntity<List<ResponseAppointment>> getAllAppointments(Integer page, Boolean active) {
 
-        Integer size = 4;
 
         //Default Page Number for wrong inputs
         if (page <= 0) page = 1;
 
-        Pageable pageable = PageRequest.of(page-1, size);
+        Pageable pageable = PageRequest.of(page-1, DEFAULT_PAGE_SIZE);
 
         Page<Appointment> pageAppointment = appointmentRepository.findAppointmentsByActivePageable(active, pageable);
 
@@ -118,5 +121,23 @@ public class AppointmentServiceImpl implements AppointmentService {
         ResponseAppointment response = appointmentMapper.appointmentToResponse(appointmentStored);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(RequestDateAppointment dates, Integer page) {
+
+        if (page <= 0) page = 1;
+
+        Pageable pageable = PageRequest.of(page-1, DEFAULT_PAGE_SIZE);
+
+        LocalDateTime startDate = dates.startDate();
+        LocalDateTime finishDate = dates.finishDate();
+
+        Page<Appointment> pageAppointment = appointmentRepository.findAllByDateGreaterThanEqualAndDateLessThanEqual(startDate, finishDate, pageable);
+
+        return new ResponseEntity<>(pageAppointment.getContent()
+                .stream().map(appointmentMapper::appointmentToResponse).
+                collect(Collectors.toList()),
+                HttpStatus.OK);
     }
 }

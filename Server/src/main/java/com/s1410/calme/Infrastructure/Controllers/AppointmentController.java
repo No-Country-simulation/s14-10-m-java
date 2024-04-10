@@ -1,6 +1,7 @@
 package com.s1410.calme.Infrastructure.Controllers;
 
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAppointment;
+import com.s1410.calme.Domain.Dtos.request.RequestDateAppointment;
 import com.s1410.calme.Domain.Dtos.response.ResponseAppointment;
 import com.s1410.calme.Domain.Services.AppointmentService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,11 @@ public class AppointmentController {
     @PutMapping("/{id}")
     public ResponseEntity<ResponseAppointment> changeAppointmentActiveValue(@PathVariable Long id){
         return appointmentService.changeAppointmentActiveValue(id);
+    }
+
+    @GetMapping("/date")
+    public ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(@RequestBody RequestDateAppointment dates, @RequestParam Integer page){
+        return appointmentService.getAppointmentsBetweenDates(dates, page);
     }
 
 

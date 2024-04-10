@@ -1,6 +1,7 @@
 package com.s1410.calme.Domain.Services;
 
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAppointment;
+import com.s1410.calme.Domain.Dtos.request.RequestDateAppointment;
 import com.s1410.calme.Domain.Dtos.response.ResponseAppointment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,8 @@ public interface AppointmentService {
     ResponseEntity<ResponseAppointment> getAppointmentById(Long id);
 
     ResponseEntity<ResponseAppointment> changeAppointmentActiveValue(Long id);
+
+    ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(RequestDateAppointment dates, Integer page);
 
     //TODO: Implement Methods
     //Delete Appointment
