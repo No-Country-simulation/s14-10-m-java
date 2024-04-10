@@ -15,8 +15,12 @@ export class SpecialtyComponent implements OnInit, AfterViewInit {
   elementsToShow = 1;
   sliderWidth = 0;
   sliderMarginLeft = 0;
+  totalSlides = 0;  // Track total slides considering infinite loop
+  currentSlideIndex = 0;  // Keep track of current slide position (circular)
 
 
+  @ViewChild('slideContainer')
+  slideContainer!: ElementRef;
 
   @HostListener('window:resize', ['$event'])
   onScreenResize(event: any){
@@ -24,50 +28,57 @@ export class SpecialtyComponent implements OnInit, AfterViewInit {
   }
 
   constructor(){}
-  @ViewChild('slideContainer')
-  slideContainer!: ElementRef;
+
+
   ngAfterViewInit(): void {
     this.setUpSlider();
   }
 
   ngOnInit(): void {
-    this.specialties = Specialties;
-  }
+    this.specialties = Specialties.concat(Specialties);
+    }
 
 
   setUpSlider(){
-    if(window.innerWidth<600)
+    if(window.innerWidth<800){
       this.elementsToShow = 1;
-    else if(window.innerWidth<1000)
-      this.elementsToShow = 3;
-    else if(window.innerWidth<1200)
-      this.elementsToShow = 5;
-    else 
-      this.elementsToShow = 7;
+      }else if(window.innerWidth<1200){
+        this.elementsToShow = 3;
+        }else if(window.innerWidth<1600){
+          this.elementsToShow = 5;
+          }else {
+            this.elementsToShow = 7;
+          }
 
     let container = this.slideContainer.nativeElement as HTMLElement;
 
     this.sliderContainerWidth = container.clientWidth;
     this.slideWidth = this.sliderContainerWidth/this.elementsToShow;
+
     this.sliderWidth = this.slideWidth*this.specialties.length;
+    
+    // Calculate total slides considering infinite loop
+    this.totalSlides = this.specialties.length - (this.specialties.length/2);
+  
   }
 
   prev(){
-    if(this.sliderMarginLeft===0){
-      return
-    }
-    this.sliderMarginLeft = this.sliderMarginLeft+this.slideWidth;
-
+   
+    // Handle circular movement
+    this.currentSlideIndex = (this.currentSlideIndex - 1 + this.totalSlides) % this.totalSlides;
+    this.updateSliderPosition();
   }
 
   next(){
-    const notShowingElementsCount = this.specialties.length-this.elementsToShow;
-    const possibleMargin = -(notShowingElementsCount*this.slideWidth);
 
-    if(this.sliderMarginLeft <= possibleMargin){
-      return
-    }
-    this.sliderMarginLeft = this.sliderMarginLeft-this.slideWidth;
+      // Handle circular movement
+      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.totalSlides;
+      this.updateSliderPosition();
   }
+
+  updateSliderPosition() {
+    this.sliderMarginLeft = -this.currentSlideIndex * this.slideWidth;
+  }
+
 }
   
