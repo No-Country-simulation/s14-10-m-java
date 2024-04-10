@@ -1,6 +1,7 @@
 package com.s1410.calme.Domain.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ import java.util.List;
 public class Assisted extends User {
 
     @OneToMany(mappedBy = "assisted" , fetch = FetchType.LAZY)
+    @JsonManagedReference
     List<RelationAA> relationsAA; //relation assistant to assisted
 
 }
