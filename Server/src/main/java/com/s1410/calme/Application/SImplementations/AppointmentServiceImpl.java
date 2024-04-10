@@ -124,7 +124,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(RequestDateAppointment dates, Integer page) {
+    public ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(RequestDateAppointment dates, Integer page, Boolean active) {
 
         if (page <= 0) page = 1;
 
@@ -133,7 +133,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         LocalDateTime startDate = dates.startDate();
         LocalDateTime finishDate = dates.finishDate();
 
-        Page<Appointment> pageAppointment = appointmentRepository.findAllByDateGreaterThanEqualAndDateLessThanEqual(startDate, finishDate, pageable);
+        Page<Appointment> pageAppointment = appointmentRepository.findAppointmentsBetweenDates(active, startDate, finishDate, pageable);
 
         return new ResponseEntity<>(pageAppointment.getContent()
                 .stream().map(appointmentMapper::appointmentToResponse).

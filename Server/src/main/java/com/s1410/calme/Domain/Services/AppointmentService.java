@@ -19,7 +19,7 @@ public interface AppointmentService {
 
     ResponseEntity<ResponseAppointment> changeAppointmentActiveValue(Long id);
 
-    ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(RequestDateAppointment dates, Integer page);
+    ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(RequestDateAppointment dates, Integer page, Boolean active);
 
     //TODO: Implement Methods
     //Delete Appointment

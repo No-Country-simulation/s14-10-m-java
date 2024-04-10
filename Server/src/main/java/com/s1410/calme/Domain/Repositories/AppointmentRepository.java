@@ -14,7 +14,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
             countQuery = "SELECT count(*) FROM Appointment a WHERE a.active = ?1")
     Page<Appointment> findAppointmentsByActivePageable(Boolean active, Pageable pageable);
 
-    Page<Appointment> findAllByDateGreaterThanEqualAndDateLessThanEqual(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
-
+    @Query(value = "SELECT a FROM Appointment  a where  a.active = ?1 AND a.date between ?2 AND ?3 ")
+    Page<Appointment> findAppointmentsBetweenDates(Boolean active, LocalDateTime startDate, LocalDateTime finishDate,  Pageable pageable);
 
 }

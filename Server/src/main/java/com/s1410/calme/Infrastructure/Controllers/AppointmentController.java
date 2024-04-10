@@ -39,8 +39,10 @@ public class AppointmentController {
     }
 
     @GetMapping("/date")
-    public ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(@RequestBody RequestDateAppointment dates, @RequestParam Integer page){
-        return appointmentService.getAppointmentsBetweenDates(dates, page);
+    public ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(@RequestBody RequestDateAppointment dates,
+                                                                                 @RequestParam Integer page,
+                                                                                 @RequestParam Boolean active){
+        return appointmentService.getAppointmentsBetweenDates(dates, page, active);
     }
 
 
@@ -50,8 +52,6 @@ public class AppointmentController {
     TODO Endpoints:
         - Change Appointment Date (must check if date is available aswell)
         - Filter All GETs by DoctorID, AssistentID, ¿AssistedID?
-        - Get All Appointments by Date
-        - Get All Appointments between 2 Dates
      */
 
 }
