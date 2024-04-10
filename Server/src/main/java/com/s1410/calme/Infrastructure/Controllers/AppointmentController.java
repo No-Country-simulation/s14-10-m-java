@@ -23,8 +23,8 @@ public class AppointmentController {
         return appointmentService.createAppointment(requestCreateAppointment);
     }
     @GetMapping("/all")
-    public ResponseEntity<List<ResponseAppointment>> getAllAppointments(@RequestParam Integer page){
-        return appointmentService.getAllAppointments(page);
+    public ResponseEntity<List<ResponseAppointment>> getAllAppointments(@RequestParam Integer page, @RequestParam Boolean active){
+        return appointmentService.getAllAppointments(page, active);
     }
 
     @GetMapping("/all/active")

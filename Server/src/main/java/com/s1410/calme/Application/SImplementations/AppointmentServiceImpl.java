@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,17 +80,20 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public ResponseEntity<List<ResponseAppointment>> getAllAppointments(Integer page) {
+    public ResponseEntity<List<ResponseAppointment>> getAllAppointments(Integer page, Boolean active) {
 
-        Integer size = 2;
+        Integer size = 4;
 
         //Default Page Number for wrong inputs
         if (page <= 0) page = 1;
 
         Pageable pageable = PageRequest.of(page-1, size);
-        Page<Appointment> pageAppointment = appointmentRepository.findAll(pageable);
+
+        Page<Appointment> pageAppointment = appointmentRepository.findAppointmentsByActivePageable(active, pageable);
+
         return new ResponseEntity<>(pageAppointment.getContent()
-                .stream().map(appointmentMapper::appointmentToResponse).collect(Collectors.toList()),
+                .stream().map(appointmentMapper::appointmentToResponse).
+                collect(Collectors.toList()),
                 HttpStatus.OK);
     }
 }
