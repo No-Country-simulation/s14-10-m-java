@@ -96,4 +96,27 @@ public class AppointmentServiceImpl implements AppointmentService {
                 collect(Collectors.toList()),
                 HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<ResponseAppointment> getAppointmentById(Long id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No Appointment found with id: " + id));
+        ResponseAppointment response = appointmentMapper.appointmentToResponse(appointment);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseAppointment> changeAppointmentActiveValue(Long id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No Appointment found with id: " + id));
+
+        //Change active value to opposite
+        appointment.setActive(!appointment.getActive());
+
+        Appointment appointmentStored = appointmentRepository.save(appointment);
+
+        ResponseAppointment response = appointmentMapper.appointmentToResponse(appointmentStored);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

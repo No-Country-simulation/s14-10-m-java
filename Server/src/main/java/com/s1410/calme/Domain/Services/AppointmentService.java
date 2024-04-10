@@ -14,6 +14,9 @@ public interface AppointmentService {
     ResponseEntity<ResponseAppointment> createAppointment(RequestCreateAppointment requestCreateAppointment);
     //TODO: pasar getAllAppointments a un Pageable
     ResponseEntity<List<ResponseAppointment>> getAllAppointments(Integer page, Boolean active);
+    ResponseEntity<ResponseAppointment> getAppointmentById(Long id);
+
+    ResponseEntity<ResponseAppointment> changeAppointmentActiveValue(Long id);
 
     //TODO: Implement Methods
     //Delete Appointment

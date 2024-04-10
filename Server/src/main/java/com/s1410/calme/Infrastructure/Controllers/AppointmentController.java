@@ -27,10 +27,16 @@ public class AppointmentController {
         return appointmentService.getAllAppointments(page, active);
     }
 
-    @GetMapping("/all/active")
-    public ResponseEntity<List<ResponseAppointment>> getAllActiveAppointments(@RequestParam Integer page){
-        return null;
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseAppointment> getAppointmentsById(@PathVariable Long id){
+        return appointmentService.getAppointmentById(id);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseAppointment> changeAppointmentActiveValue(@PathVariable Long id){
+        return appointmentService.changeAppointmentActiveValue(id);
+    }
+
 
 
 
