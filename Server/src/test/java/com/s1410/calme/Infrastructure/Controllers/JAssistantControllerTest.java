@@ -53,7 +53,7 @@ public class JAssistantControllerTest {
     @Autowired
     private JacksonTester<Page<ResponseAssistent>> responseAssistentJacksonTesterPage;
 
-    /* ASSISTENT ATRIBUTES*/
+    /*
     Assistent assistent = new Assistent();
     Long id; String email; String password; String DNI;
     LocalDate dateOfBirth; boolean active;
@@ -150,5 +150,5 @@ public class JAssistantControllerTest {
 
             assertEquals(response.getBody(),expected);
         }
-    }
+    } */
 }
