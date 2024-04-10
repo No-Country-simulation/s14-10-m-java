@@ -2,6 +2,7 @@ package com.s1410.calme.Infrastructure.Controllers;
 
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAppointment;
 import com.s1410.calme.Domain.Dtos.request.RequestDateAppointment;
+import com.s1410.calme.Domain.Dtos.request.RequestEditAppointmentDate;
 import com.s1410.calme.Domain.Dtos.response.ResponseAppointment;
 import com.s1410.calme.Domain.Services.AppointmentService;
 import lombok.RequiredArgsConstructor;
@@ -45,8 +46,11 @@ public class AppointmentController {
         return appointmentService.getAppointmentsBetweenDates(dates, page, active);
     }
 
-
-
+    @PutMapping("/{id}/date")
+    public ResponseEntity<ResponseAppointment> updateAppointmentDate(@RequestBody RequestEditAppointmentDate updatedDate,
+                                                                     @PathVariable Long id){
+        return appointmentService.updateAppointmentDate(updatedDate, id);
+    }
 
     /*
     TODO Endpoints:

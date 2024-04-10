@@ -2,6 +2,7 @@ package com.s1410.calme.Application.SImplementations;
 
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAppointment;
 import com.s1410.calme.Domain.Dtos.request.RequestDateAppointment;
+import com.s1410.calme.Domain.Dtos.request.RequestEditAppointmentDate;
 import com.s1410.calme.Domain.Dtos.response.ResponseAppointment;
 import com.s1410.calme.Domain.Entities.Appointment;
 import com.s1410.calme.Domain.Entities.Assisted;
@@ -116,9 +117,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         //Change active value to opposite
         appointment.setActive(!appointment.getActive());
 
-        Appointment appointmentStored = appointmentRepository.save(appointment);
+        Appointment stored = appointmentRepository.save(appointment);
 
-        ResponseAppointment response = appointmentMapper.appointmentToResponse(appointmentStored);
+        ResponseAppointment response = appointmentMapper.appointmentToResponse(stored);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -139,5 +140,19 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .stream().map(appointmentMapper::appointmentToResponse).
                 collect(Collectors.toList()),
                 HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseAppointment> updateAppointmentDate(RequestEditAppointmentDate updatedDate, Long id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No Appointment found with id: " + id));
+
+        appointment.setDate(updatedDate.newDate());
+
+        Appointment stored = appointmentRepository.save(appointment);
+
+        ResponseAppointment response = appointmentMapper.appointmentToResponse(stored);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
