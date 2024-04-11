@@ -52,6 +52,11 @@ public class AppointmentController {
         return appointmentService.updateAppointmentDate(updatedDate, id);
     }
 
+    @GetMapping("/doctor-appointments/{id}")
+    public  ResponseEntity<List<ResponseAppointment>> getDoctorAppointments(@RequestParam Integer page, @RequestParam Boolean active, @PathVariable Long id){
+        return appointmentService.getAppointmentByDoctorID(id, active, page);
+    }
+
     /*
     TODO Endpoints:
         - Filter All GETs by DoctorID, AssistentID, ¿AssistedID?
