@@ -26,6 +26,7 @@ public interface AppointmentService {
 
     ResponseEntity<List<ResponseAppointment>> getAppointmentByDoctorID(Long id, Boolean active, Integer page);
 
+    ResponseEntity<List<ResponseAppointment>> getAppointmentByAssistentID(Long id, Boolean active, Integer page);
 
     //TODO: Implement Methods
     //Delete Appointment

@@ -23,14 +23,14 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
     Page<Appointment> findAppointmentByDoctorId(Long doctorId, Boolean active, Pageable pageable);
 
     @Query("SELECT a FROM Appointment a WHERE a.assistent.id = :assistantId AND a.active = :active")
-    Page<Appointment> findAppointmentAssistantById(Long assistantId, Boolean active, Pageable pageable);
+    Page<Appointment> findAppointmentByAssistantById(Long assistantId, Boolean active, Pageable pageable);
 
-    @Query("SELECT a FROM Appointment a WHERE a.assisted.id = :assistedId AND a.active = :active")
-    Page<Appointment> findApppointmentAssistedById(Long assistedId, Boolean active, Pageable pageable);
+//    @Query("SELECT a FROM Appointment a WHERE a.assisted.id = :assistedId AND a.active = :active")
+//    Page<Appointment> findApppointmentAssistedById(Long assistedId, Boolean active, Pageable pageable);
 
-    @Query("SELECT a FROM Appointment a WHERE a.doctor.id = :doctorId AND a.active = :active AND a.date BETWEEN :startDate AND :finishDate")
-    Page<Appointment> findAppointmentDoctorByBetweenDates(Long doctorId, Boolean active,
-                                                   LocalDateTime startDate, LocalDateTime finishDate, Pageable pageable);
+//    @Query("SELECT a FROM Appointment a WHERE a.doctor.id = :doctorId AND a.active = :active AND a.date BETWEEN :startDate AND :finishDate")
+//    Page<Appointment> findAppointmentDoctorByBetweenDates(Long doctorId, Boolean active,
+//                                                   LocalDateTime startDate, LocalDateTime finishDate, Pageable pageable);
 
 
 }
