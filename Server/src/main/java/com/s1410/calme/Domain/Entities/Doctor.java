@@ -1,5 +1,4 @@
 package com.s1410.calme.Domain.Entities;
-import com.s1410.calme.Domain.Utils.Availability;
 import com.s1410.calme.Domain.Utils.Specialty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,6 +18,8 @@ public class Doctor extends User{
     private Specialty specialty;
     private String email;
     private String password;
-    private Availability availability;
+    private Boolean morning;
+    private Boolean afternoon;
+    private Boolean night;
 
 }

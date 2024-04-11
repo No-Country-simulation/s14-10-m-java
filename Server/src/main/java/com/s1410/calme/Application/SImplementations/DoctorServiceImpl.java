@@ -76,9 +76,22 @@ public class DoctorServiceImpl implements DoctorService {
             if (requestEditDoctor.specialty() != null){
                 doctor.setSpecialty(requestEditDoctor.specialty());
             }
-            if (requestEditDoctor.availability() != null) {
-                doctor.setAvailability(requestEditDoctor.availability());
+            if (requestEditDoctor.phoneNumber() != null){
+                doctor.setPhoneNumber(requestEditDoctor.phoneNumber());
             }
+            if (requestEditDoctor.morning() != null){
+                doctor.setMorning(requestEditDoctor.morning());
+            }
+            if (requestEditDoctor.afternoon() != null){
+                doctor.setAfternoon(requestEditDoctor.afternoon());
+            }
+            if (requestEditDoctor.night() != null){
+                doctor.setNight(requestEditDoctor.night());
+            }
+
+/*            if (requestEditDoctor.availability() != null) {
+                doctor.setAvailability(requestEditDoctor.availability());
+            }*/
         }
 
         return doctorMapper.doctorToResponse(doctor);
