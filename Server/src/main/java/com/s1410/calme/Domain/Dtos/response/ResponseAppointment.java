@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 
 public record ResponseAppointment(
         Long id,
-        Doctor doctor,
-        Assistent assistent,
-        Assisted assisted,
+        ResponseDoctor doctor,
+        ResponseAssistent assistent,
+        ResponseAssisted assisted,
         LocalDateTime date,
         Boolean active
 ) {
