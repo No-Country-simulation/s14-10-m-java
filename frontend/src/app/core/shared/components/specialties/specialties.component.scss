@@ -34,5 +34,10 @@
     display: none;
   }
 
-  
+  .center-element {
+    transform: scale(1.15); /* Ajusta el tamaño del elemento al 115% */
+    transition: transform 0.5s ease; /* Aplica una transición suave */
+    background-image: radial-gradient(ellipse farthest-corner at 120% 20% , #b7d0ff2e 30%, #ffcd937b 80%);
+   
+  }
   
