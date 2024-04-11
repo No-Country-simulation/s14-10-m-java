@@ -1,18 +1,40 @@
 package com.s1410.calme.Domain.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "appointment")
 public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long Id;
-    String cualquiera;
-    //User user;
+    private Long id;
+
+    private LocalDateTime date;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "assisted_id")
+    private Assisted assisted;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "assistent_id")
+    private Assistent assistent;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
+
+    private String observations;
+
+    private Boolean active;
+
 }

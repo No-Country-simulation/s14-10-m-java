@@ -5,4 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AssistedRepository extends JpaRepository <Assisted, Long>{
+
+    Assisted findByDNI(String dni);
+
 }
