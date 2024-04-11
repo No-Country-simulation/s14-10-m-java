@@ -54,6 +54,8 @@ public class SecurityConfig {
             //register
             "/assistent/register",
             "/doctor/register",
+            //Endpoint para obtener lista de doctores y mostrar en front
+            "/doctor/all/{active}"
 
     };
     @Bean
