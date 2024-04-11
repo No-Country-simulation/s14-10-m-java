@@ -1,10 +1,20 @@
-<div style="background-color: #75a5ff">
-  <shared-navbar></shared-navbar>
-  <div
-    class="container-fluid w-11/12 max-w-[1300px] m-auto"
-    style="height: 588px; background-color: #75a5ff"
-  >
-    <div class="flex justify-between">
+<div
+  class="home-principal"
+  style="
+    height: 880px;
+    background-image: radial-gradient(
+      ellipse farthest-corner at 20% 0%,
+      #ffffff83 10%,
+      #93b9ff15 22%
+    );
+  "
+>
+  <div>
+    <shared-navbar></shared-navbar>
+  </div>
+
+  <div class="container-fluid w-11/12 max-w-[1300px] m-auto home-secondary">
+    <div class="flex justify-between mt-20">
       <div class="flex flex-col space-y-12">
         <h1
           style="
@@ -13,7 +23,6 @@
             font-size: 46px;
             line-height: 66.61px;
             color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(100, 99, 99, 0.5);
           "
         >
           Busca tu médico
@@ -33,13 +42,10 @@
         </h5>
         <app-search-bar></app-search-bar>
       </div>
-      <div class="container flex justify-center items-center">
-        <img
-          src="../../../../assets/image-png/medicos.png"
-          alt="Descripción de la imagen"
-          style="max-width: 200px"
-        />
-      </div>
+      <img
+        src="../../../../assets/image-png/home1.png"
+        alt="Descripción de la imagen"
+      />
     </div>
   </div>
 </div>
@@ -68,8 +74,9 @@
           font-size: 18px;
           line-height: 27px;
           text-align: center;
-          max-width: 40%;
+          max-width: 50%;
           margin: 0 auto;
+          color: #063463;
         "
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -91,49 +98,110 @@
           font-size: 40px;
           line-height: 57.92px;
           color: #75a5ff;
-          text-align: center;
+          text-align: start;
         "
       >
-        Descubre nuestras especialidades médicas:
+        Nuestras especialidades:
       </h1>
     </div>
   </div>
-
-  <div class="container-fluid">
-    <div class="p-7 flex">
-      <div class="mr-20 ml-10 mt-1 shadow-blue-light">
+  <div>
+    <app-specialties></app-specialties>
+  </div>
+  <div
+    class="container-fluid mt-10 shadow-blue-light"
+    style="border-radius: 40px"
+  >
+    <div
+      class="p-7 flex"
+      style="
+        border-radius: 40px;
+        background-image: radial-gradient(
+          ellipse farthest-corner at 0px 0px,
+          #ffffff 20%,
+          #e0eafecc 82%
+        );
+      "
+    >
+      <div class="mr-20 ml-10 mt-1">
         <img
           src="../../../../assets/image-png/especialidades.png"
           alt="Descripción de la imagen"
-          style="max-width: 400px"
+          style="max-width: 300px"
         />
       </div>
       <div>
         <ul>
-          <li *ngFor="let especialidad of especialidades" class="mb-1 text-h">
-            . {{ especialidad }}
+          <li *ngFor="let especialidad of especialidades" class="mb-1 text-h"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 47px;
+            color: #063463;
+          ">
+            {{ especialidad }}
           </li>
         </ul>
       </div>
     </div>
   </div>
-  <div
-    class="bicolor-area mt-20 mb-20"
-    style="width: 1240px; height: 588px; border-radius: 15px"
-  >
-    <div class="mt-20 ml-16" style="width: 35%; position: absolute">
+  <div class="mt-20 mb-20">
+    <div class="mt-20 flex" style="width: 100; color: #75a5ff">
       <!-- Ajusta el ancho del contenedor según tus necesidades -->
-      <h3 class="text-h ml-8 mb-8">¿Eres profesional de la salud?</h3>
-      <p class="text-p">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla ipsam
-        laboriosam, debitis eveniet nam fuga repellat quidem voluptas totam
-        blanditiis dicta, sit ex cum esse asperiores necessitatibus repudiandae
-        voluptatem libero.
-      </p>
+      <div class="mt-20">
+        <h3
+          class="text-h mb-8"
+          style="
+            font-family: 'Dela Gothic One', sans-serif;
+            font-weight: 400;
+            font-size: 32px;
+            line-height: 46.34px;
+            color: #75a5ff;
+          "
+        >
+          ¿Eres profesional de la salud?
+        </h3>
+        <p
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 36px;
+            color: #063463;
+          "
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla ipsam
+          laboriosam, debitis eveniet nam fuga repellat quidem voluptas totam
+          blanditiis dicta, sit ex cum esse asperiores necessitatibus
+          repudiandae voluptatem libero.
+        </p>
+        <div
+          class="py-2 w-[270px] mt-10 rounded-full bg-accent-light text-primary-dark font-poppins text-base font-semibold flex justify-center items-center"
+        >
+          <button buttonType="button" routerLink="/auth/login">
+            <p
+              style="
+                font-family: 'Poppins', sans-serif;
+                font-weight: 300;
+                font-size: 20px;
+                line-height: 30px;
+                color: #063463;
+              "
+            >
+              Trabaja con nosotros
+            </p>
+          </button>
+        </div>
+      </div>
+      <img
+        class="right"
+        src="../../../../assets/image-png/home2.png"
+        alt="Descripción de la imagen"
+      />
     </div>
   </div>
 </div>
-
 <div class="bg-calme-light-blue h-[8.25rem] rounded-t-3xl">
   <shared-footer></shared-footer>
 </div>
