@@ -72,8 +72,8 @@ public class AssistedController {
            .updateRelationAA(dto.assistantId(), dto.assistedId(), dto.relationType()));
     }
 
-    @DeleteMapping("/id/{relationAAId}")
-    public ResponseEntity<Boolean> removeAssistedToAssistant(@PathVariable Long relationAAId) {
-        return ResponseEntity.ok(this.assistedService.unlinkAssistedFromAssistant(relationAAId));
+    @DeleteMapping("/deleteRelation/{assistantId}/{assistedId}")
+    public ResponseEntity<Boolean> removeAssistedToAssistant(@PathVariable Long assistantId, @PathVariable Long assistedId ) {
+        return ResponseEntity.ok(this.assistedService.unlinkAssistedFromAssistant(assistantId, assistedId));
     }
 }

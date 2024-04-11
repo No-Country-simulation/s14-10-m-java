@@ -30,4 +30,6 @@ public class RelationAA {
 
     RelationType relationType;
 
+    Boolean active = true; // logic delete
+
 }
