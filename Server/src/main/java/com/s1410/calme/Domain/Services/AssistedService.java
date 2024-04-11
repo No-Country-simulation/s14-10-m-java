@@ -13,5 +13,5 @@ public interface AssistedService {
     List<ResponseAssisted> readAllAssistedFromAssistant(Long assistantId);
     ResponseAssisted updateAssisted(RequestEditAssisted requestEditAssisted);
     boolean updateRelationAA(Long assistantId, Long assistedId, RelationType relationType);
-    Boolean unlinkAssistedFromAssistant(Long id);
+    Boolean unlinkAssistedFromAssistant(Long assistantId, Long assistedId );
 }
