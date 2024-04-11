@@ -1,3 +1,4 @@
+/*
 package com.s1410.calme.Domain.Utils;
 
 public enum Availability {
@@ -5,3 +6,4 @@ public enum Availability {
     AFTERNOON,
     NIGHT
 }
+*/
