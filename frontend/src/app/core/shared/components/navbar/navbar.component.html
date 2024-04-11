@@ -2,9 +2,14 @@
   class="flex flex-wrap justify-between py-8 w-11/12 max-w-[1440px] m-auto"
 >
   <div>
-    <img class="w-[8.81rem] object-contain" [src]="showLogo" alt="calme logo" />
+    <a routerLink="/"
+      ><img
+        class="w-[8.81rem] object-contain"
+        [src]="showLogo"
+        alt="calme logo"
+    /></a>
   </div>
-  <div class="flex flex-row">
+  <div class="flex flex-row" *ngIf="showOptions">
     <ul class="flex flex-wrap items-center mt-3 sm:mt-0">
       <li>
         <a
