@@ -15,8 +15,8 @@ export class SpecialtyComponent implements OnInit, AfterViewInit {
   elementsToShow = 1;
   sliderWidth = 0;
   sliderMarginLeft = 0;
-  totalSlides = 0;  // Track total slides considering infinite loop
   currentSlideIndex = 0;  // Keep track of current slide position (circular)
+  centerIndex = 3;
 
 
   @ViewChild('slideContainer')
@@ -58,27 +58,36 @@ export class SpecialtyComponent implements OnInit, AfterViewInit {
     this.sliderWidth = this.slideWidth*this.specialties.length;
     
     // Calculate total slides considering infinite loop
-    this.totalSlides = this.specialties.length - (this.specialties.length/2);
   
   }
 
-  prev(){
-   
-    // Handle circular movement
-    this.currentSlideIndex = (this.currentSlideIndex - 1 + this.totalSlides) % this.totalSlides;
-    this.updateSliderPosition();
-  }
-
-  next(){
-
-      // Handle circular movement
-      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.totalSlides;
-      this.updateSliderPosition();
-  }
 
   updateSliderPosition() {
     this.sliderMarginLeft = -this.currentSlideIndex * this.slideWidth;
+    if(this.sliderMarginLeft>0){
+      this.sliderMarginLeft -= 1670;
+    }
   }
 
+  selectSpecialty(specialty: Specialty) {
+    const selectedIndex = this.specialties.findIndex(s => s === specialty);
+    
+    let movementsNeeded = this.centerIndex - selectedIndex;
+    this.centerIndex -= movementsNeeded;
+
+    if(movementsNeeded>0){
+      this.currentSlideIndex = (this.currentSlideIndex - movementsNeeded);
+
+    } else {
+      this.currentSlideIndex = (this.currentSlideIndex - movementsNeeded);
+
+    }
+    
+    // Actualizamos la posición del carrusel
+    this.updateSliderPosition();
+  }
+  isCenter(index: number): boolean {
+   return index === this.centerIndex;
+  }
 }
   
