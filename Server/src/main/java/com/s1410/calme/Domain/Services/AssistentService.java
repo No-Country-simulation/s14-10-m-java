@@ -11,7 +11,7 @@ public interface AssistentService {
 
     ResponseAssistent createAssistent(RequestCreateAssistent requestCreateAssistent);
     ResponseAssistent readAssistent(Long id);
-    Page<ResponseAssistent> readAllAsistents(boolean active, Pageable paging);
+    Page<ResponseAssistent> readAllAsistents(Boolean active, Pageable paging);
     List<ResponseAssistent> readAllAssistentFromAssisted(Long assistedId);
     ResponseAssistent updateAssistent(RequestEditAssistent requestEditAssistent);
     Boolean toogleDeleteAssistent(Long id);

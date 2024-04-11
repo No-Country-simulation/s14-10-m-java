@@ -1,0 +1,35 @@
+package com.s1410.calme.Infrastructure.Controllers;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.s1410.calme.Domain.Dtos.whatsapp.MessageBodyDTO;
+import com.s1410.calme.Domain.Dtos.whatsapp.ResponseWhatsapp;
+import com.s1410.calme.Domain.Services.ApiWhatsappService;
+import com.s1410.calme.Domain.Services.AssistentService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/whatsapp")
+@RequiredArgsConstructor
+@SecurityRequirement(name = "Bearer Authentication")
+public class WhatsappController {
+
+    public final ApiWhatsappService apiWhatsappService;
+
+    /* just accepted number 543517707973 (number by Juan Ortega)
+    *{
+    "number" : "543517707973",
+    "message" : "recordatorio"
+    * */
+
+    @PostMapping("/enviar")
+    ResponseWhatsapp sendMessage(@RequestBody MessageBodyDTO payload) throws JsonProcessingException {
+        System.out.println("sendMessage ok");
+        return apiWhatsappService.sendMessage(payload);
+    }
+
+}
