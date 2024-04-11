@@ -1,6 +1,8 @@
 package com.s1410.calme.Infrastructure.Controllers;
 
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAppointment;
+import com.s1410.calme.Domain.Dtos.request.RequestDateAppointment;
+import com.s1410.calme.Domain.Dtos.request.RequestEditAppointmentDate;
 import com.s1410.calme.Domain.Dtos.response.ResponseAppointment;
 import com.s1410.calme.Domain.Services.AppointmentService;
 import lombok.RequiredArgsConstructor;
@@ -23,26 +25,36 @@ public class AppointmentController {
         return appointmentService.createAppointment(requestCreateAppointment);
     }
     @GetMapping("/all")
-    public ResponseEntity<List<ResponseAppointment>> getAllAppointments(@RequestParam Integer page){
-        return appointmentService.getAllAppointments(page);
+    public ResponseEntity<List<ResponseAppointment>> getAllAppointments(@RequestParam Integer page, @RequestParam Boolean active){
+        return appointmentService.getAllAppointments(page, active);
     }
 
-    @GetMapping("/all/active")
-    public ResponseEntity<List<ResponseAppointment>> getAllActiveAppointments(@RequestParam Integer page){
-        return null;
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseAppointment> getAppointmentsById(@PathVariable Long id){
+        return appointmentService.getAppointmentById(id);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseAppointment> changeAppointmentActiveValue(@PathVariable Long id){
+        return appointmentService.changeAppointmentActiveValue(id);
+    }
 
+    @GetMapping("/date")
+    public ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(@RequestBody RequestDateAppointment dates,
+                                                                                 @RequestParam Integer page,
+                                                                                 @RequestParam Boolean active){
+        return appointmentService.getAppointmentsBetweenDates(dates, page, active);
+    }
+
+    @PutMapping("/{id}/date")
+    public ResponseEntity<ResponseAppointment> updateAppointmentDate(@RequestBody RequestEditAppointmentDate updatedDate,
+                                                                     @PathVariable Long id){
+        return appointmentService.updateAppointmentDate(updatedDate, id);
+    }
 
     /*
     TODO Endpoints:
-        - DeActivate Appointment
-        - Activate Appointment
-        - Change Appointment Date (must check if date is available aswell)
         - Filter All GETs by DoctorID, AssistentID, ¿AssistedID?
-        - Get All Appointments by Date
-        - Get All Appointments between 2 Dates
-        - Add Active param on every request (if false return both active and inactive)
      */
 
 }

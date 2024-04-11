@@ -1,6 +1,8 @@
 package com.s1410.calme.Application.SImplementations;
 
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAppointment;
+import com.s1410.calme.Domain.Dtos.request.RequestDateAppointment;
+import com.s1410.calme.Domain.Dtos.request.RequestEditAppointmentDate;
 import com.s1410.calme.Domain.Dtos.response.ResponseAppointment;
 import com.s1410.calme.Domain.Entities.Appointment;
 import com.s1410.calme.Domain.Entities.Assisted;
@@ -21,6 +23,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,15 +39,16 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AssistentRepository assistentRepository;
     private final DoctorRepository doctorRepository;
 
+    private final Integer DEFAULT_PAGE_SIZE = 5;
 
-    //TODO: Hacer el código más lindo si es posible
+
+    //TODO: Hacer el código más lindo si es posible y necesario
     //TODO: Chequear que la fecha del appointment sea mayor a la actual
-    //TODO: Chequear que las fechas esten dentro de las 9AM y 10PM
     //TODO: Assisted puede ser nulo
-    //TODO: Chequear que no choquen fechas del appointment:
+    //TODO: Validaciones de turnos para assistent y doctor:
     //  - El turno empieza 30 minutos después del último
     //  - El turno empieza 30 minutos antes del siguiente
-    //TODO: Chequear que el doctor este disponible a esa hora (mismo que el anterior) (opcional)
+    //TODO: Chequear que las fechas correspondan con los horarios laborales de los doctores
     @Override
     public ResponseEntity<ResponseAppointment> createAppointment(RequestCreateAppointment requestCreateAppointment) {
         Long doctorId = requestCreateAppointment.doctorId();
@@ -79,17 +84,74 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public ResponseEntity<List<ResponseAppointment>> getAllAppointments(Integer page) {
+    public ResponseEntity<List<ResponseAppointment>> getAllAppointments(Integer page, Boolean active) {
 
-        Integer size = 2;
 
         //Default Page Number for wrong inputs
         if (page <= 0) page = 1;
 
-        Pageable pageable = PageRequest.of(page-1, size);
-        Page<Appointment> pageAppointment = appointmentRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(page-1, DEFAULT_PAGE_SIZE);
+
+        Page<Appointment> pageAppointment = appointmentRepository.findAppointmentsByActivePageable(active, pageable);
+
         return new ResponseEntity<>(pageAppointment.getContent()
-                .stream().map(appointmentMapper::appointmentToResponse).collect(Collectors.toList()),
+                .stream().map(appointmentMapper::appointmentToResponse).
+                collect(Collectors.toList()),
                 HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseAppointment> getAppointmentById(Long id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No Appointment found with id: " + id));
+        ResponseAppointment response = appointmentMapper.appointmentToResponse(appointment);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseAppointment> changeAppointmentActiveValue(Long id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No Appointment found with id: " + id));
+
+        //Change active value to opposite
+        appointment.setActive(!appointment.getActive());
+
+        Appointment stored = appointmentRepository.save(appointment);
+
+        ResponseAppointment response = appointmentMapper.appointmentToResponse(stored);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(RequestDateAppointment dates, Integer page, Boolean active) {
+
+        if (page <= 0) page = 1;
+
+        Pageable pageable = PageRequest.of(page-1, DEFAULT_PAGE_SIZE);
+
+        LocalDateTime startDate = dates.startDate();
+        LocalDateTime finishDate = dates.finishDate();
+
+        Page<Appointment> pageAppointment = appointmentRepository.findAppointmentsBetweenDates(active, startDate, finishDate, pageable);
+
+        return new ResponseEntity<>(pageAppointment.getContent()
+                .stream().map(appointmentMapper::appointmentToResponse).
+                collect(Collectors.toList()),
+                HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseAppointment> updateAppointmentDate(RequestEditAppointmentDate updatedDate, Long id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No Appointment found with id: " + id));
+
+        appointment.setDate(updatedDate.newDate());
+
+        Appointment stored = appointmentRepository.save(appointment);
+
+        ResponseAppointment response = appointmentMapper.appointmentToResponse(stored);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
