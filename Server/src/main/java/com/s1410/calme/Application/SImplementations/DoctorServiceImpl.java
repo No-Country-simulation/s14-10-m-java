@@ -6,6 +6,7 @@ import com.s1410.calme.Domain.Entities.Doctor;
 import com.s1410.calme.Domain.Mapper.DoctorMapper;
 import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import com.s1410.calme.Domain.Services.DoctorService;
+import com.s1410.calme.Domain.Utils.Specialty;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -104,5 +105,28 @@ public class DoctorServiceImpl implements DoctorService {
 
         doctor.setActive(!doctor.getActive());
         return doctor.getActive();
+    }
+    @Override
+    public Page<ResponseDoctor> readAllDoctorBySpecialty (String specialty,Pageable paging){
+        return doctorRepository.findBySpecialty(Specialty.valueOf(specialty),paging).map(doctorMapper::doctorToResponse);
+    }
+
+    @Override
+    public Page<ResponseDoctor> readAllDoctorsByAvailability(String availability, Pageable paging) {
+
+        if (availability != null && !availability.isEmpty()){
+            return switch (availability) {
+                case "morning" -> doctorRepository.findByMorningAvailabilityAndEnabled(paging)
+                        .map(doctorMapper::doctorToResponse);
+                case "afternoon" -> doctorRepository.findByAfternoonAvailabilityAndEnabled(paging)
+                        .map(doctorMapper::doctorToResponse);
+                case "night" -> doctorRepository.findByNightAvailabilityAndEnabled(paging)
+                        .map(doctorMapper::doctorToResponse);
+                default -> throw new IllegalStateException("Unexpected value: " + availability);
+            };
+        }else {
+            return doctorRepository.findAllByActive(true,paging).map(doctorMapper::doctorToResponse);
+        }
+
     }
 }
