@@ -2,7 +2,7 @@ import { Card } from "./interface/card.interface";
 export const cardList: Card[] = [
     {
         id: 1,
-        image: "Nurse.svg",
+        image: "nurse.svg",
         title: "Elige un profesional",
         description: "Busca por especialidad médica o elige tu médico de preferencia entre la lista de profesionales de tu localidad.",
     },

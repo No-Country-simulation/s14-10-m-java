@@ -26,11 +26,9 @@
     color: #888;
   }
   .borde-dinamic {
-    background-image: radial-gradient(ellipse farthest-corner at 0px 0px , #fff 26%, #B4CEFF 80%);
-    border-radius: 32px;
+    background-image: radial-gradient(ellipse farthest-corner at 0px 0px , #fff 20%, #D4E1F8 100%, #b4ceffa1 100%);
+    border-radius: 40px;
   }
   .borde-dinamic img {
-    background-color: #d0e0ff;
-    border-radius: 50%; /* Asegura que la imagen tenga bordes redondeados */
-    padding: 5px; /* Ajusta el valor según sea necesario */
+    padding: 5px;
   }
