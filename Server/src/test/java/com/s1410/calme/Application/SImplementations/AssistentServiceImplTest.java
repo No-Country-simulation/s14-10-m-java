@@ -5,7 +5,9 @@ import com.s1410.calme.Domain.Entities.Appointment;
 import com.s1410.calme.Domain.Entities.Assistent;
 import com.s1410.calme.Domain.Entities.RelationAA;
 import com.s1410.calme.Domain.Mapper.AssistentMapper;
+import com.s1410.calme.Domain.Repositories.AssistedRepository;
 import com.s1410.calme.Domain.Repositories.AssistentRepository;
+import com.s1410.calme.Domain.Repositories.RelationAARepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.*;
@@ -13,12 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -30,6 +30,10 @@ public class AssistentServiceImplTest {
     private AssistentRepository assistentRepository;
     @Autowired
     private AssistentMapper assistentMapper;
+    @Autowired
+    private AssistedRepository assistedRepository;
+    @Autowired
+    private RelationAARepository relationAARepository;
     @MockBean
     private PasswordEncoder passwordEncoder;
 
@@ -37,6 +41,9 @@ public class AssistentServiceImplTest {
     Long id;
     String email;
     String password;
+    String firstName;
+    String secondName;
+    String lastName;
     String DNI;
     LocalDate dateOfBirth;
     boolean active;
@@ -50,6 +57,9 @@ public class AssistentServiceImplTest {
         id = 1l;
         email = "pedropascal123@gmail.com";
         password = "Pedro123!";
+        firstName = "Pedro";
+        secondName = "Roberto";
+        lastName = "Pascal";
         DNI = "12345678";
         dateOfBirth = LocalDate.of(1980, Month.JULY, 23);
         active = true;
@@ -68,7 +78,7 @@ public class AssistentServiceImplTest {
     @BeforeEach
     public void setUpUserService() {
         assistentServiceImpl = new AssistentServiceImpl(assistentMapper,
-                assistentRepository, passwordEncoder);
+                assistentRepository, assistedRepository, relationAARepository, passwordEncoder);
     }
 
     @Nested
@@ -77,7 +87,7 @@ public class AssistentServiceImplTest {
         @Test
         void shouldCreateAssistent() {
             RequestCreateAssistent requestCreateAssistent = new RequestCreateAssistent(
-                    email, password, DNI, dateOfBirth);
+                    email, password, firstName, secondName, lastName, DNI, dateOfBirth);
 
             Assistent assistent = new Assistent(email, password, relationsAA);
             assistent.setId(id);
@@ -92,6 +102,9 @@ public class AssistentServiceImplTest {
             verify(assistentRepository, times(1)).save(any());
             assertEquals(assistent.getEmail(), result.email());
             assertEquals(assistent.getDNI(), result.DNI());
+            assertEquals(assistent.getFirstName(), result.firstName());
+            assertEquals(assistent.getSecondName(), result.secondName());
+            assertEquals(assistent.getLastName(), result.lastName());
             assertEquals(assistent.getDateOfBirth(), result.dateOfBirth());
         }
 
@@ -106,7 +119,7 @@ public class AssistentServiceImplTest {
         @Test
         void shouldNotCreateAssistentWhenAlreadyExists() {
             RequestCreateAssistent requestCreateAssistent = new RequestCreateAssistent(
-                    email, password, DNI, dateOfBirth);
+                    email, password, firstName, secondName, lastName, DNI, dateOfBirth);
 
             Assistent assistent = new Assistent(email, password, relationsAA);
             assistent.setId(id);
@@ -123,42 +136,47 @@ public class AssistentServiceImplTest {
         }
     }
 
-        @Nested
-        @DisplayName("Tests on update methods, both positive and negative cases")
-        class UpdateTests {
 
-            @Test
-            void shouldUpdateAssistent() {
-                RequestEditAssistent requestEditAssistent = new RequestEditAssistent(id, email,
-                        password, DNI, dateOfBirth);
+    @Nested
+    @DisplayName("Tests on update methods, both positive and negative cases")
+    class UpdateTests {
 
-                Assistent assistent = new Assistent(email, password, relationsAA);
-                assistent.setId(id);
-                assistent.setDNI("12345678");
-                assistent.setDateOfBirth(LocalDate.of(1979, Month.JUNE, 20));
-                //assistent.setAppointmentList(appointmentList);
-                assistent.setActive(true);
+        @Test
+        void shouldUpdateAssistent() {
+            RequestEditAssistent requestEditAssistent = new RequestEditAssistent(id,
+                    firstName, secondName, lastName, DNI, dateOfBirth);
 
-                when(assistentRepository.findById(any())).thenReturn(Optional.of(assistent));
-                when(assistentRepository.save(any())).thenReturn(assistent);
-                var result = assistentServiceImpl.updateAssistent(requestEditAssistent);
+            Assistent assistent = new Assistent(email, password, relationsAA);
+            assistent.setId(id);
+            assistent.setDNI("12345678");
+            assistent.setDateOfBirth(LocalDate.of(1979, Month.JUNE, 20));
+            //assistent.setAppointmentList(appointmentList);
+            assistent.setActive(true);
 
-                verify(assistentRepository, times(1)).save(assistent);
-                assertEquals(assistent.getId(), requestEditAssistent.id());
-                assertEquals(assistent.getEmail(), result.email());
-                assertEquals(assistent.getPassword(), requestEditAssistent.password());
-                assertEquals(assistent.getDNI(), result.DNI());
-                assertEquals(assistent.getDateOfBirth(), result.dateOfBirth());
-            }
+            when(assistentRepository.findById(any())).thenReturn(Optional.of(assistent));
+            when(assistentRepository.save(any())).thenReturn(assistent);
+            var result = assistentServiceImpl.updateAssistent(requestEditAssistent);
+
+            verify(assistentRepository, times(1)).save(assistent);
+            assertEquals(assistent.getId(), requestEditAssistent.id());
+            assertEquals(assistent.getFirstName(), result.firstName());
+            assertEquals(assistent.getSecondName(), result.secondName());
+            assertEquals(assistent.getLastName(), result.lastName());
+            assertEquals(assistent.getDNI(), result.DNI());
+            assertEquals(assistent.getDateOfBirth(), result.dateOfBirth());
+        }
 
             @Test
             void shouldNotUpdateAttributesToNull() {
                 RequestEditAssistent requestEditAssistent = new RequestEditAssistent(id,
-                        null, null,
+                        null, null, null,
                         null, null);
 
                 Assistent assistent = new Assistent(email, password, relationsAA);
                 assistent.setId(id);
+                assistent.setFirstName(firstName);
+                assistent.setSecondName(secondName);
+                assistent.setLastName(lastName);
                 assistent.setDNI("12345678");
                 assistent.setDateOfBirth(LocalDate.of(1979, Month.JUNE, 20));
                 //assistent.setAppointmentList(appointmentList);
@@ -171,14 +189,17 @@ public class AssistentServiceImplTest {
                 verify(assistentRepository, times(1)).save(assistent);
                 assertEquals(assistent.getId(), requestEditAssistent.id());
                 assertNotNull(result.email());
+                assertNotNull(result.firstName());
+                assertNotNull(result.secondName());
+                assertNotNull(result.lastName());
                 assertNotNull(result.DNI());
                 assertNotNull(result.dateOfBirth());
             }
 
             @Test
             void shouldNotUpdateAssistentWithNotFoundId() {
-                RequestEditAssistent requestEditAssistent = new RequestEditAssistent(id, email,
-                        password, DNI, dateOfBirth);
+                RequestEditAssistent requestEditAssistent = new RequestEditAssistent(id,
+                        firstName, secondName, lastName, DNI, dateOfBirth);
 
                 Assistent assistent = new Assistent(email, password, relationsAA);
                 assistent.setId(132456789L);
@@ -196,8 +217,8 @@ public class AssistentServiceImplTest {
 
             @Test
             void shouldNotUpdateAssistentIfIsNotActive() {
-                RequestEditAssistent requestEditAssistent = new RequestEditAssistent(id, email,
-                        password, DNI, dateOfBirth);
+                RequestEditAssistent requestEditAssistent = new RequestEditAssistent(id,
+                        firstName, secondName, lastName, DNI, dateOfBirth);
 
                 Assistent assistent = new Assistent(email, password, relationsAA);
                 assistent.setId(132456789L);
@@ -212,7 +233,6 @@ public class AssistentServiceImplTest {
                 verify(assistentRepository, times(0)).save(assistent);
             }
         }
-
-        }
+}
 
 

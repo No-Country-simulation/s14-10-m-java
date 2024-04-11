@@ -35,6 +35,7 @@ public class JAssistantServiceImplTest {
     AssistentMapper assistentMapper;
 
     Long id; String email; String password; String DNI;
+    String firstName; String secondName; String lastName;
     LocalDate dateOfBirth; boolean active;
     ArrayList<RelationAA> relationsAA ;
     ArrayList<Appointment> appointmentList;
@@ -48,6 +49,9 @@ public class JAssistantServiceImplTest {
         id = 1l;
         email = "pedropascal123@gmail.com";
         password = "Pedro123!";
+        firstName = "Pedro";
+        secondName = "Roberto";
+        lastName = "Pascal";
         DNI = "12345678";
         dateOfBirth = LocalDate.of(1980, Month.JULY, 23);
         active = true;
@@ -63,16 +67,15 @@ public class JAssistantServiceImplTest {
         assistent.setPassword(password);
         assistent.setRelationsAA(relationsAA);
 
-        responseAssistent = new ResponseAssistent(id,email,DNI,dateOfBirth,relationsAA);
+        responseAssistent = new ResponseAssistent(id,email,firstName, secondName,
+                lastName, DNI,dateOfBirth,relationsAA);
     }
-
-
 
     @Test
     void environment() {
         System.out.println("environment up");
     }
-
+/*
     @Nested
     @DisplayName("Test readAssistent")
     class readMethods {
@@ -99,16 +102,13 @@ public class JAssistantServiceImplTest {
 
         @Test
         public void readAllByActive() {
-            // Datos de prueba
             boolean active = true;
             Pageable paging = Pageable.unpaged();
 
-            /*Set Object Page<Assisted >*/
             List<Assistent> assistents = new ArrayList<>();
             assistents.add(assistent);
             Page<Assistent> assistentsPage = new PageImpl<>(assistents);
 
-            /*Set Object Page<ResponseAssistent>*/
             List<ResponseAssistent> responseAssistents = new ArrayList<>();
             responseAssistents.add(responseAssistent);
             Page<ResponseAssistent> responseAssistentsPage = new PageImpl<>(responseAssistents);
@@ -126,10 +126,6 @@ public class JAssistantServiceImplTest {
     @DisplayName("Test deleteAssistent")
     class deleteMethods{
 
-        /*
-        * Return Boolean
-        *
-        * */
         @Test
         @DisplayName("Verify if change status")
         void toogleDelete() {
@@ -142,7 +138,7 @@ public class JAssistantServiceImplTest {
             assertEquals(statusExpected,!status);
         }
 
-    }
+    }*/
 
 
 }

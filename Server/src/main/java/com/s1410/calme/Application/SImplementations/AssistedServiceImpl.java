@@ -89,18 +89,18 @@ public class AssistedServiceImpl implements AssistedService {
         if (!assistant.getActive()) throw new IllegalArgumentException("Assistant with ID " + assistantId + " is inactive.");
 
         //Set assisted list for response.
-        List<ResponseAssisted> responseAssistedsList = new ArrayList<>();
+        List<ResponseAssisted> responseAssistedList = new ArrayList<>();
 
         /*Se espera una lista de respuesta de assisted. Se mapea a través del mapstruct
         entre ambas listas buscando en el repo de relaciónAA todas las relaciones del assistant
         y luego... stream() permite transformar la lista, map() funciona como el for, y collect()
         lo hace lista. */
-        responseAssistedsList = assistedMapper
+        responseAssistedList = assistedMapper
                 .assistedListToResponseList(this.relationAARepository
                         .findAllByAssistentId(assistantId)
                         .stream().map(RelationAA::getAssisted).collect(Collectors.toList()));
 
-        return responseAssistedsList;
+        return responseAssistedList;
 
     }
 
