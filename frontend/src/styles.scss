@@ -4,21 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-@layer components {
-    .et-p-btn {
-        @apply relative h-12 w-40 overflow-hidden rounded-md border border-gray-800 text-gray-700 transition-all;
-        position: relative;
-        &::before {
-            @apply absolute right-0 top-0 h-12 w-6 translate-x-12 rotate-6 bg-white opacity-10 duration-700;
-            content: '';
-        }
-        &:hover::before {
-            @apply -translate-x-40;
-        }
-        .dela-gothic one-regular {
-            font-family: "Dela Gothic One", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-        }
-    }
+
+// ICONS
+.icon-search {
+  background-image: url("./assets/icons-svg/Vector.svg");
+
+  width: 24px;
+  height: 22px;
+
+  background-size: cover;
+  background-repeat: no-repeat;
 }

@@ -6,8 +6,8 @@ import { Router } from '@angular/router';
 
 import { emailValidator } from 'src/app/core/utils/validator';
 //import Swal from 'sweetalert2';
-import { LoginService } from 'src/app/services/login.service';
-import { NotifyService } from 'src/app/services/notify.service';
+import { LoginService } from 'src/app/modules/auth/services/login.service';
+import { NotifyService } from 'src/app/modules/auth/services/notify.service';
 import { ToastrService } from 'ngx-toastr';
 import { Login } from '../../../../core/models/login.model';
 
