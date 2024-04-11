@@ -2,26 +2,28 @@
   class="flex flex-wrap justify-between py-8 w-11/12 max-w-[1440px] m-auto"
 >
   <div>
-    <img
-      class="w-[8.81rem] object-contain"
-      src="./assets/icons-svg/logo.svg"
-      alt="calme logo"
-    />
+    <img class="w-[8.81rem] object-contain" [src]="showLogo" alt="calme logo" />
   </div>
   <div class="flex flex-row">
     <ul class="flex flex-wrap items-center mt-3 sm:mt-0">
       <li>
-        <a class="mr-4 text-base font-medium text-white md:mr-6 cursor-pointer"
+        <a
+          class="mr-4 text-base font-medium text-white md:mr-6 cursor-pointer"
+          [ngClass]="{ 'text-calme-dark-blue': activeBlue }"
           >¿Cómo podemos ayudarte?</a
         >
       </li>
       <li>
-        <a class="mr-4 text-base font-medium text-white md:mr-6 cursor-pointer"
+        <a
+          class="mr-4 text-base font-medium text-white md:mr-6 cursor-pointer"
+          [ngClass]="{ 'text-calme-dark-blue': activeBlue }"
           >Especialidades</a
         >
       </li>
       <li>
-        <a class="mr-4 text-base font-medium text-white md:mr-6 cursor-pointer"
+        <a
+          class="mr-4 text-base font-medium text-white md:mr-6 cursor-pointer"
+          [ngClass]="{ 'text-calme-dark-blue': activeBlue }"
           >Trabaja con nosotros</a
         >
       </li>
