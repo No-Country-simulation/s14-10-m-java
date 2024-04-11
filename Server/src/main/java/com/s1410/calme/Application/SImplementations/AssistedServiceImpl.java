@@ -157,9 +157,6 @@ public class AssistedServiceImpl implements AssistedService {
     @Override
     public Boolean unlinkAssistedFromAssistant(Long assistantId, Long assistedId) {
 
-        System.out.println("el id de assistant es: " + assistantId);
-        System.out.println("el id de assisted es: " + assistedId);
-
         // Get relation between Assisted and Assistant.
         RelationAA relation = this.relationAARepository.findByAssistentIdAndAssistedId(assistantId, assistedId)
                 .orElseThrow(() -> new EntityNotFoundException("Relation with assistantId " + assistantId + " and assistedId " + assistedId + " not Found."));
