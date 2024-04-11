@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Login } from '../core/models/login.model';
+import { Login } from '../../../core/models/login.model';
 import { Router } from '@angular/router';
 
 @Injectable({
