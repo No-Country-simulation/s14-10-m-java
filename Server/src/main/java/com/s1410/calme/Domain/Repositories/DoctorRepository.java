@@ -1,7 +1,5 @@
 package com.s1410.calme.Domain.Repositories;
-import com.s1410.calme.Domain.Entities.Assistent;
 import com.s1410.calme.Domain.Entities.Doctor;
-import com.s1410.calme.Domain.Utils.Availability;
 import com.s1410.calme.Domain.Utils.Specialty;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,11 +11,17 @@ import java.util.Optional;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
-    @Query("SELECT d FROM Doctor d WHERE d.specialty = :specialty")
-    Doctor findBySpecialty(@Param("specialty") Specialty specialty);
+    @Query("SELECT d FROM Doctor d WHERE d.active = true AND d.specialty = :specialty")
+    Page<Doctor> findBySpecialty(@Param("specialty") Specialty specialty,Pageable paging);
 
-    @Query("SELECT d FROM Doctor d WHERE d.availability = :availability")
-    Doctor findByAvailability(@Param("availability")Availability availability);
+    @Query("SELECT d FROM Doctor d WHERE d.active = true AND d.morning = true")
+    Page<Doctor> findByMorningAvailabilityAndEnabled(Pageable paging);
+
+    @Query("SELECT d FROM Doctor d WHERE d.active = true AND d.afternoon = true")
+    Page<Doctor> findByAfternoonAvailabilityAndEnabled(Pageable paging);
+
+    @Query("SELECT d FROM Doctor d WHERE d.active = true AND d.night = :night")
+    Page<Doctor> findByNightAvailabilityAndEnabled(Pageable paging);
 
     Optional<Doctor> findByEmail(String email);
     Page<Doctor> findAllByActive(Boolean active, Pageable paging);

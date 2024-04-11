@@ -12,4 +12,8 @@ public interface DoctorService {
     Page<ResponseDoctor> readAllDoctors(boolean active, Pageable paging);
     ResponseDoctor updateDoctor(RequestEditDoctor requestEditDoctor);
     Boolean toogleDeleteDoctor(Long id);
+
+    Page<ResponseDoctor> readAllDoctorBySpecialty(String specialty, Pageable paging);
+
+    Page<ResponseDoctor> readAllDoctorsByAvailability(String availability, Pageable paging);
 }
