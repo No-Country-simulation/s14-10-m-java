@@ -60,7 +60,7 @@ public class AssistentServiceImpl implements AssistentService {
     *pageable pulls 20 entries by default
     * */
     @Override
-    public Page<ResponseAssistent> readAllAsistents(boolean active,Pageable paging) {
+    public Page<ResponseAssistent> readAllAsistents(Boolean active,Pageable paging) {
         return assistentRepository.findAllByActive(active,paging)
                 .map(assistentMapper::assistentToResponse);
     }
