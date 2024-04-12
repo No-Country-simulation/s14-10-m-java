@@ -9,6 +9,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 
 @Service
@@ -17,20 +19,24 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;
 
+    private final TemplateEngine templateEngine;
+
     @Transactional
     @Override
     public void sendMail (EmailDTO email) throws MessagingException {
 
         try {
-            MimeMessage message =
-                    javaMailSender.createMimeMessage();
-            MimeMessageHelper helper =
-                    new MimeMessageHelper(message,
-                            true, "UTF-8");
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message,true,"UTF-8");
 
             helper.setTo(email.toAddress());
             helper.setSubject(email.subject());
-            helper.setText(email.body());
+
+            // Procesar la plantilla Thymeleaf
+            String htmlBody = templateEngine.process("email", prepareContext(email));
+
+            // Establecer el cuerpo del mensaje como HTML
+            helper.setText(htmlBody, true);
 
             javaMailSender.send(message);
 
@@ -39,4 +45,11 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    private Context prepareContext(EmailDTO email) {
+        Context context = new Context();
+        // Agregar variables de contexto para la plantilla Thymeleaf
+        context.setVariable("message", email.body());
+        // Agregar más variables según sea necesario
+        return context;
+    }
 }
