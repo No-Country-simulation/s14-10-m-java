@@ -21,6 +21,8 @@ public record RequestCreateAssistent(
         @Pattern(regexp = "\\d+", message = "DNI must be a positive number.")
         @Size(max = 9, min = 7, message = "DNI must be between 7 and 9 numbers in length")
         String DNI,
+        @NotNull
+        Long phoneNumber,
         @Past
         @NotNull(message = "dateOfBirth cannot be null")
         LocalDate dateOfBirth

@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -49,15 +50,18 @@ public class AssistentController {
 
     @PutMapping("/update")
     public ResponseEntity<ResponseAssistent> updateAssistent(
-            @RequestBody @Valid @NotNull RequestEditAssistent editAssistent, BindingResult bindingResult){
+            @RequestBody @Valid @NotNull RequestEditAssistent editAssistent,
+            BindingResult bindingResult,
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String tokenUser){
         if (bindingResult.hasErrors()){
             throw new BindingResultException(bindingResult);
         }
-        return ResponseEntity.ok(assistentService.updateAssistent(editAssistent));
+        return ResponseEntity.ok(assistentService.updateAssistent(editAssistent, tokenUser));
     }
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<Boolean> deleteAssistent(@PathVariable Long id){
-        return ResponseEntity.ok(assistentService.toogleDeleteAssistent(id));
+    public ResponseEntity<Boolean> deleteAssistent(@PathVariable Long id,
+       @RequestHeader(HttpHeaders.AUTHORIZATION) String tokenUser){
+        return ResponseEntity.ok(assistentService.toogleDeleteAssistent(id, tokenUser));
     }
 }

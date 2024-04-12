@@ -21,7 +21,6 @@ public record RequestEditDoctor(
         @Past
         LocalDate dateOfBirth,
         Specialty specialty,
-        @Pattern(regexp = "\\d+", message = "Phone number must be a positive number.")
         Long phoneNumber,
         Boolean morning,
         Boolean afternoon,
