@@ -60,11 +60,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable).cors((cors) -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(request -> //comentar desde aqui para quitar el jwt
-                        request.requestMatchers(FREE_ENDPOINTS).permitAll()
-                                .anyRequest().authenticated() //Hasta aqui!!
-                )
-                //authRequest.anyRequest().permitAll()) /*Este se descomenta para probar sin JWT*/
+          //      .authorizeHttpRequests(request -> //comentar desde aqui para quitar el jwt
+      //                 request.requestMatchers(FREE_ENDPOINTS).permitAll()
+      //                         .anyRequest().authenticated() //Hasta aqui!!
+      //         )
+      //         //authRequest.anyRequest().permitAll()) /*Este se descomenta para probar sin JWT*/
                 .sessionManagement(sessionManager ->
                         sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)
