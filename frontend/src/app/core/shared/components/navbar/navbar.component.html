@@ -1,1 +1,43 @@
-<p>navbar works!</p>
+<header
+  class="flex flex-wrap justify-between py-8 w-11/12 max-w-[1440px] m-auto"
+>
+  <div>
+    <a routerLink="/"
+      ><img
+        class="w-[8.81rem] object-contain"
+        [src]="showLogo"
+        alt="calme logo"
+    /></a>
+  </div>
+  <div class="flex flex-row" *ngIf="showOptions">
+    <ul class="flex flex-wrap items-center mt-3 sm:mt-0">
+      <li>
+        <a
+          class="mr-4 text-base font-medium text-white md:mr-6 cursor-pointer"
+          [ngClass]="{ 'text-calme-dark-blue': activeBlue }"
+          >¿Cómo podemos ayudarte?</a
+        >
+      </li>
+      <li>
+        <a
+          class="mr-4 text-base font-medium text-white md:mr-6 cursor-pointer"
+          [ngClass]="{ 'text-calme-dark-blue': activeBlue }"
+          >Especialidades</a
+        >
+      </li>
+      <li>
+        <a
+          class="mr-4 text-base font-medium text-white md:mr-6 cursor-pointer"
+          [ngClass]="{ 'text-calme-dark-blue': activeBlue }"
+          >Trabaja con nosotros</a
+        >
+      </li>
+    </ul>
+
+    <app-button color="primary" buttonType="button" (click)="onLogin()"
+      >Inicia Sesión</app-button
+    >
+  </div>
+</header>
+
+<!-- <button (click)="onRegister()">Agenda un turno</button> -->
