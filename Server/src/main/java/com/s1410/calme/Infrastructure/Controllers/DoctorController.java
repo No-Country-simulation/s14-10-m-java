@@ -13,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -53,21 +54,40 @@ public class DoctorController {
         return ResponseEntity.ok(doctorService.readAllDoctors(active, paging));
     }
 
+    @GetMapping("/findByAvailability/{availability}")
+    public ResponseEntity<Page<ResponseDoctor>> readAllDoctorByAvailability(
+            @PathVariable String availability, Pageable pageable) {
+        return ResponseEntity.ok(doctorService.readAllDoctorsByAvailability(availability, pageable));
+    }
+
+    @GetMapping("/findByPostalCode")
+    public ResponseEntity<Page<ResponseDoctor>> readAllDoctorsBySamePostalCode(@RequestParam int postalCode, Pageable pageable) {
+        return ResponseEntity.ok(doctorService.readAllDoctorsBySamePostalCode(postalCode, pageable));
+    }
+
+    @GetMapping("/findBySpeciality")
+    public ResponseEntity<Page<ResponseDoctor>> readAllDoctorBySpecialty(@RequestParam String specialty, Pageable pageable) {
+        return ResponseEntity.ok(doctorService.readAllDoctorBySpecialty(specialty, pageable));
+    }
+
     @PutMapping("/update")
-    public ResponseEntity<ResponseDoctor> updateDoctor(@RequestBody @Valid @NotNull RequestEditDoctor editDoctor,
-                                                       BindingResult bindingResult){
+    public ResponseEntity<ResponseDoctor> updateDoctor(
+            @RequestBody @Valid @NotNull RequestEditDoctor editDoctor,
+            BindingResult bindingResult,
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String tokenUser){
         try {
             if (bindingResult.hasErrors()){
                 throw new BindingResultException(bindingResult);
             }
-            return ResponseEntity.ok(doctorService.updateDoctor(editDoctor));
+            return ResponseEntity.ok(doctorService.updateDoctor(editDoctor, tokenUser));
         } catch (NoResultException e) {
             throw new EntityNotFoundException();
         }
     }
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<Boolean> deleteDoctor(@PathVariable Long id){
-        return ResponseEntity.ok(doctorService.toogleDeleteDoctor(id));
+    public ResponseEntity<Boolean> deleteDoctor(@PathVariable Long id,
+          @RequestHeader(HttpHeaders.AUTHORIZATION) String tokenUser){
+        return ResponseEntity.ok(doctorService.toogleDeleteDoctor(id, tokenUser));
     }
 }

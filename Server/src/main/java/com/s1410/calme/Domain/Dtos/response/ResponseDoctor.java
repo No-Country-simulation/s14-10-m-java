@@ -1,5 +1,4 @@
 package com.s1410.calme.Domain.Dtos.response;
-import com.s1410.calme.Domain.Utils.Availability;
 import com.s1410.calme.Domain.Utils.Specialty;
 
 public record ResponseDoctor(
@@ -10,8 +9,11 @@ public record ResponseDoctor(
         String lastName,
         String DNI,
         Specialty specialty,
-        Availability availability
-
+        Long phoneNumber,
+        Boolean morning,
+        Boolean afternoon,
+        Boolean night,
+        int postalCode
 ) {
 }
 

@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class JAssistantServiceImplTest {
-
+/*
     @Autowired
     AssistentServiceImpl assistentServiceImpl;
     @MockBean

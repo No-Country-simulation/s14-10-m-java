@@ -19,6 +19,7 @@ public abstract class User {
     String firstName;
     String secondName;
     String lastName;
+    Long phoneNumber;
     Boolean active = true; // logic delete
 
 }

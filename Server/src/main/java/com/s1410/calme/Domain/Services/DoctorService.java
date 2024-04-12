@@ -10,6 +10,9 @@ public interface DoctorService {
     ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor);
     ResponseDoctor readDoctor(Long id);
     Page<ResponseDoctor> readAllDoctors(boolean active, Pageable paging);
-    ResponseDoctor updateDoctor(RequestEditDoctor requestEditDoctor);
-    Boolean toogleDeleteDoctor(Long id);
+    ResponseDoctor updateDoctor(RequestEditDoctor requestEditDoctor, String tokenUser);
+    Boolean toogleDeleteDoctor(Long id, String tokenUser);
+    Page<ResponseDoctor> readAllDoctorBySpecialty(String specialty, Pageable paging);
+    Page<ResponseDoctor> readAllDoctorsByAvailability(String availability, Pageable paging);
+    Page<ResponseDoctor> readAllDoctorsBySamePostalCode(int postalCode, Pageable pageable);
 }

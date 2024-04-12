@@ -1,4 +1,5 @@
 package com.s1410.calme.Application.SImplementations;
+import com.s1410.calme.Application.Security.JwtService;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAssistent;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssistent;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssistent;
@@ -30,6 +31,7 @@ public class AssistentServiceImpl implements AssistentService {
     private final AssistedRepository assistedRepository;
     private final RelationAARepository relationAARepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Transactional
     @Override
@@ -84,9 +86,15 @@ public class AssistentServiceImpl implements AssistentService {
 
     @Transactional
     @Override
-    public ResponseAssistent updateAssistent(RequestEditAssistent requestEditAssistent) {
+    public ResponseAssistent updateAssistent(RequestEditAssistent requestEditAssistent,
+                                             String tokenUser) {
+        String email = jwtService.getUsernameFromToken(tokenUser.substring(7));
+
         Assistent assistent = this.assistentRepository.findById(requestEditAssistent.id())
                 .orElseThrow(() -> new EntityNotFoundException(requestEditAssistent.id().toString()));
+
+        if (!email.equals(assistent.getEmail())) { throw new IllegalArgumentException(
+                "Logged user cannot edit this user!"); }
 
         if (assistent.getActive()) {
             if (requestEditAssistent.firstName() != null) {
@@ -101,6 +109,9 @@ public class AssistentServiceImpl implements AssistentService {
             if (requestEditAssistent.DNI() != null) {
                 assistent.setDNI(requestEditAssistent.DNI());
             }
+            if (requestEditAssistent.phoneNumber() != null){
+                assistent.setPhoneNumber(requestEditAssistent.phoneNumber());
+            }
             if (requestEditAssistent.dateOfBirth() != null) {
                 assistent.setDateOfBirth(requestEditAssistent.dateOfBirth());
             }
@@ -113,9 +124,14 @@ public class AssistentServiceImpl implements AssistentService {
 
     @Transactional
     @Override
-    public Boolean toogleDeleteAssistent(Long id) {
-        Assistent assistent = assistentRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("id") );
+    public Boolean toogleDeleteAssistent(Long id, String tokenUser) {
+            String email = jwtService.getUsernameFromToken(tokenUser.substring(7));
+
+            Assistent assistent = this.assistentRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException(id.toString()));
+
+            if (!email.equals(assistent.getEmail())) { throw new IllegalArgumentException(
+                    "Logged user cannot edit this user!"); }
 
         assistent.setActive(!assistent.getActive());
         assistentRepository.save(assistent);

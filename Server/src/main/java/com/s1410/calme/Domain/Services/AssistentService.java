@@ -13,6 +13,6 @@ public interface AssistentService {
     ResponseAssistent readAssistent(Long id);
     Page<ResponseAssistent> readAllAsistents(Boolean active, Pageable paging);
     List<ResponseAssistent> readAllAssistentFromAssisted(Long assistedId);
-    ResponseAssistent updateAssistent(RequestEditAssistent requestEditAssistent);
-    Boolean toogleDeleteAssistent(Long id);
+    ResponseAssistent updateAssistent(RequestEditAssistent requestEditAssistent, String tokenUser);
+    Boolean toogleDeleteAssistent(Long id, String tokenUser);
 }

@@ -64,7 +64,7 @@ public class AppointmentController {
 
     /*
     TODO Endpoints:
-        - Filter All GETs by AssistentID, ¿AssistedID?
+        - Filter All GETs by ¿AssistedID?
      */
 
 }
