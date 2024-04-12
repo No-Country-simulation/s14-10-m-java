@@ -6,6 +6,7 @@ import com.s1410.calme.Domain.Entities.Doctor;
 import com.s1410.calme.Domain.Mapper.DoctorMapper;
 import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import com.s1410.calme.Domain.Services.DoctorService;
+import com.s1410.calme.Domain.Utils.Specialty;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -76,9 +80,22 @@ public class DoctorServiceImpl implements DoctorService {
             if (requestEditDoctor.specialty() != null){
                 doctor.setSpecialty(requestEditDoctor.specialty());
             }
-            if (requestEditDoctor.availability() != null) {
-                doctor.setAvailability(requestEditDoctor.availability());
+            if (requestEditDoctor.phoneNumber() != null){
+                doctor.setPhoneNumber(requestEditDoctor.phoneNumber());
             }
+            if (requestEditDoctor.morning() != null){
+                doctor.setMorning(requestEditDoctor.morning());
+            }
+            if (requestEditDoctor.afternoon() != null){
+                doctor.setAfternoon(requestEditDoctor.afternoon());
+            }
+            if (requestEditDoctor.night() != null){
+                doctor.setNight(requestEditDoctor.night());
+            }
+
+/*            if (requestEditDoctor.availability() != null) {
+                doctor.setAvailability(requestEditDoctor.availability());
+            }*/
         }
 
         return doctorMapper.doctorToResponse(doctor);
@@ -91,5 +108,33 @@ public class DoctorServiceImpl implements DoctorService {
 
         doctor.setActive(!doctor.getActive());
         return doctor.getActive();
+    }
+    @Override
+    public Page<ResponseDoctor> readAllDoctorBySpecialty (String specialty,Pageable paging){
+        return doctorRepository.findBySpecialty(Specialty.valueOf(specialty),paging).map(doctorMapper::doctorToResponse);
+    }
+
+    @Override
+    public Page<ResponseDoctor> readAllDoctorsByAvailability(String availability, Pageable paging) {
+
+        if (availability != null && !availability.isEmpty()){
+            return switch (availability) {
+                case "morning" -> doctorRepository.findByMorningAvailabilityAndEnabled(paging)
+                        .map(doctorMapper::doctorToResponse);
+                case "afternoon" -> doctorRepository.findByAfternoonAvailabilityAndEnabled(paging)
+                        .map(doctorMapper::doctorToResponse);
+                case "night" -> doctorRepository.findByNightAvailabilityAndEnabled(paging)
+                        .map(doctorMapper::doctorToResponse);
+                default -> throw new IllegalStateException("Unexpected value: " + availability);
+            };
+        }else {
+            return doctorRepository.findAllByActive(true,paging).map(doctorMapper::doctorToResponse);
+        }
+
+    }
+
+    @Override
+    public Page<ResponseDoctor> readAllDoctorsBySamePostalCode (int postalCode, Pageable pageable){
+        return doctorRepository.readAllDoctorsBySamePostalCode(postalCode, pageable).map(doctorMapper::doctorToResponse);
     }
 }
