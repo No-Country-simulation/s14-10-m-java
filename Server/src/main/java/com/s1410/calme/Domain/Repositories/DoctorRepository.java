@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
@@ -25,5 +26,8 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     Optional<Doctor> findByEmail(String email);
     Page<Doctor> findAllByActive(Boolean active, Pageable paging);
+
+    @Query("SELECT d FROM Doctor d WHERE d.active = true AND d.postalCode = :postalCode")
+    Page<Doctor> readAllDoctorsBySamePostalCode(@Param("postalCode") int postalCode, Pageable pageable);
 
 }

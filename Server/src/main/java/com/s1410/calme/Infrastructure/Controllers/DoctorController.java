@@ -53,6 +53,16 @@ public class DoctorController {
         return ResponseEntity.ok(doctorService.readAllDoctors(active, paging));
     }
 
+    @GetMapping("/findBySpeciality")
+    public ResponseEntity<Page<ResponseDoctor>> readAllDoctorBySpecialty(@RequestParam String specialty, Pageable pageable) {
+        return ResponseEntity.ok(doctorService.readAllDoctorBySpecialty(specialty, pageable));
+    }
+
+    @GetMapping("/findByPostalCode")
+    public ResponseEntity<Page<ResponseDoctor>> readAllDoctorsBySamePostalCode(@RequestParam int postalCode, Pageable pageable) {
+        return ResponseEntity.ok(doctorService.readAllDoctorsBySamePostalCode(postalCode, pageable));
+    }
+
     @PutMapping("/update")
     public ResponseEntity<ResponseDoctor> updateDoctor(@RequestBody @Valid @NotNull RequestEditDoctor editDoctor,
                                                        BindingResult bindingResult){

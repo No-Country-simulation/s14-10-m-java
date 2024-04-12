@@ -15,6 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
@@ -128,5 +131,10 @@ public class DoctorServiceImpl implements DoctorService {
             return doctorRepository.findAllByActive(true,paging).map(doctorMapper::doctorToResponse);
         }
 
+    }
+
+    @Override
+    public Page<ResponseDoctor> readAllDoctorsBySamePostalCode (int postalCode, Pageable pageable){
+        return doctorRepository.readAllDoctorsBySamePostalCode(postalCode, pageable).map(doctorMapper::doctorToResponse);
     }
 }

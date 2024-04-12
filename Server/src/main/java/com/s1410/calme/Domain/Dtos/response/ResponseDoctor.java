@@ -9,11 +9,11 @@ public record ResponseDoctor(
         String lastName,
         String DNI,
         Specialty specialty,
-
         Long phoneNumber,
         Boolean morning,
         Boolean afternoon,
-        Boolean night
+        Boolean night,
+        int postalCode
 ) {
 }
 
