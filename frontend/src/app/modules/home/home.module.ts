@@ -10,7 +10,7 @@ import { SpecialtyComponent } from 'src/app/core/shared/components/specialties/s
 
 @NgModule({
   declarations: [PrincipalComponent, CardComponent, SpecialtyComponent],
-  imports: [CommonModule, HomeRoutingModule, SharedModule, SearchBarModule],
+  imports: [CommonModule, HomeRoutingModule, ],
   exports: [CardComponent],
 })
 export class HomeModule {}

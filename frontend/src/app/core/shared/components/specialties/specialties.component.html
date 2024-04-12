@@ -8,8 +8,7 @@
         [style.marginLeft.px]="this.sliderMarginLeft"
       > <ng-container *ngFor="let specialty of specialties; let index = index">
         <li
-        [ngClass]="{ 'center-element': isCenter(index) }"
-          
+          [ngClass]="{ 'center-element': isCenter(index) }"
           class="mx-auto background-image"
           style="box-shadow: 0px 0px 20px #75a5ff98"
           (click)="selectSpecialty(specialty)"

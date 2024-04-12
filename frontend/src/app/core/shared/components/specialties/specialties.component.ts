@@ -57,7 +57,6 @@ export class SpecialtyComponent implements OnInit, AfterViewInit {
 
     this.sliderWidth = this.slideWidth*this.specialties.length;
     
-    // Calculate total slides considering infinite loop
   
   }
 
@@ -87,6 +86,13 @@ export class SpecialtyComponent implements OnInit, AfterViewInit {
     this.updateSliderPosition();
   }
   isCenter(index: number): boolean {
+    if(index==9 && this.centerIndex== 0){
+      return true;
+    }else if(index==10 && this.centerIndex== 1){
+      return true;
+    }else if(index==11 && this.centerIndex== 2){
+      return true;
+    }
    return index === this.centerIndex;
   }
 }
