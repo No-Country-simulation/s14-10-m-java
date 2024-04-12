@@ -12,9 +12,6 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Doctor extends User{
 
-    private Long licenseNumber;
-    private String address;
-    private int postalCode;
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
     private String email;
@@ -22,5 +19,8 @@ public class Doctor extends User{
     private Boolean morning;
     private Boolean afternoon;
     private Boolean night;
+    private Integer postalCode;
+    private Long licenseNumber;
+    private String address;
 
 }

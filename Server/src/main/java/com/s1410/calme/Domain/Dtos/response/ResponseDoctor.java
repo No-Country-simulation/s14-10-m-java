@@ -13,7 +13,9 @@ public record ResponseDoctor(
         Boolean morning,
         Boolean afternoon,
         Boolean night,
-        int postalCode
+        Integer postalCode,
+        Long licenseNumber,
+        String address
 ) {
 }
 
