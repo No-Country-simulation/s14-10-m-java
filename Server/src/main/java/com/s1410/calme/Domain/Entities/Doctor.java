@@ -14,6 +14,7 @@ public class Doctor extends User{
 
     private Long licenseNumber;
     private String address;
+    private int postalCode;
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
     private String email;
