@@ -1,27 +1,96 @@
-# Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.13.
+[![Logo](./src/assets/icons-svg/calme-logo-azul.png)](https://s14-10-m-java.web.app)
+<br>
 
-## Development server
+Calme es un calendario médico webapp, desarrollado para ofrecer una solución adaptada a las personas mayores que requieren solicitar turnos médicos con la ayuda de un asistente que gestiona sus turnos, para que las personas mayores no tengan que preocuparse por recordar contraseñas.
+<br><br>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+[![App Screenshot](./src/assets/img/screenshot-demo.png)](https://s14-10-m-java.web.app)
 
-## Code scaffolding
+<br><br>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 🔗 Deployment
+<br>
 
-## Build
+### Client: https://s14-10-m-java.web.app/
+### Server: [Swagger](https://s14-10-m-java-production.up.railway.app/swagger-ui/index.html#/)
+### Design: [Figma](https://figma.com/file/5ZKP1KyKwLW4vfkJbBZolz/Proyecto?type=design&node-id=330-153&mode=design&t=KKqaD6BxMKy2RTEm-0)
+<br><br>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🛠 Tech Stack
+<br>
 
-## Running unit tests
+**Front:** Angular, TypeScript, Tailwind
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+**Back:** Java, Springboot, Postgress, Docker
 
-## Running end-to-end tests
+**Design:** Figma
+<br><br>
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🙌 Equipo: s14-10-m-java
+<br>
 
-## Further help
+### Frontend
+<br>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/elcicode)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/elcicode) Elcira Ibarra
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/felix-andres-betancur-9389ab1a5/)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/SwatColombia) Felix Andres Betancur Sanchez
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/facundo-la-bionda-a31866286/)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/facuu142) Facundo La Bionda
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/juanoscco/)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/jcom-dev) Juan Oscco
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/jaobisgreat/)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/Alexiz0r0) Alexis Oroya
+
+<br>
+
+### Backend
+<br>
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/guillermo-divan/)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/GuillermoDivan) Guillermo Diván
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/juan0rtega/)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/Full-Juan-Ortega) Juan Ortega
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/nicolassepertino/)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/NicoSeper89) Nicolás Sepertino
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/lucasvonelm/)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/xlucasve) Lucas Von Elm
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/luciarmn/)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/CodeLuDev) Lucía Romano
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/nestorduqueduque/)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/nestorduqueduque) Néstor Duque
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/alejandrodev2019/)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/calderonic) Alexis Alejandro Calderón
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/agustin-gomez-develop/)
+[![github](./src/assets/icons-svg/github-icon.svg)](https://github.com/Agustingomez98) Agustin Gomez
+<br><br>
+
+### UX/UI
+<br>
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/anto-staffolani/) Antonella Staffolani
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/vanesa-casaubon/)
+Vanesa Casaubon
+<br><br>
+
+### QA Tester
+<br>
+
+[![linkedin](./src/assets/icons-svg/linkedin-icon.svg)](https://www.linkedin.com/in/ivankarnos/)
+ Iván Karnos
+
+<br><br>
