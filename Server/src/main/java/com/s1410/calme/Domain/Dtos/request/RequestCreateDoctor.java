@@ -25,7 +25,7 @@ public record RequestCreateDoctor(
         @Past
         @NotNull(message = "dateOfBirth cannot be null")
         LocalDate dateOfBirth,
-        @Pattern(regexp = "\\d+", message = "Phone number must be a positive number.")
+        @NotNull
         Long phoneNumber,
         Boolean morning,
         Boolean afternoon,
