@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
 import { Specialty } from './interface/specialty.interface';
 import { Specialties } from './specialties-data';
 
 @Component({
-  selector: 'app-specialties',
-  templateUrl: './specialties.component.html',
-  styleUrls: ['./specialties.component.scss']
+  selector: 'app-slider',
+  templateUrl: './slider.component.html',
+  styleUrls: ['./slider.component.scss']
 })
-export class SpecialtyComponent implements OnInit, AfterViewInit {
+export class SliderComponent implements OnInit, AfterViewInit {
 
   specialties: Specialty[] = [];
   sliderContainerWidth = 0;
@@ -17,7 +17,9 @@ export class SpecialtyComponent implements OnInit, AfterViewInit {
   sliderMarginLeft = 0;
   currentSlideIndex = 0;  // Keep track of current slide position (circular)
   centerIndex = 3;
+  @Output() selectedSpecialty = new EventEmitter<Specialty>();
 
+  
 
   @ViewChild('slideContainer')
   slideContainer!: ElementRef;
@@ -36,6 +38,7 @@ export class SpecialtyComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.specialties = Specialties.concat(Specialties);
+
     }
 
 
@@ -82,6 +85,8 @@ export class SpecialtyComponent implements OnInit, AfterViewInit {
 
     }
     
+    this.selectedSpecialty.emit(specialty);
+
     // Actualizamos la posición del carrusel
     this.updateSliderPosition();
   }

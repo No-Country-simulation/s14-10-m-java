@@ -1,0 +1,29 @@
+<div>
+    <div class="flex w-full justify-between">
+      <div #slideContainer class="w-full overflow-hidden">
+        <ul
+          #slider
+          class="flex transition-all duration-100 m-8"
+          [style.width.px]="this.sliderWidth"
+          [style.marginLeft.px]="this.sliderMarginLeft"
+        > <ng-container *ngFor="let specialty of specialties; let index = index">
+          <li
+            [ngClass]="{ 'center-element': isCenter(index) }"
+            class="mx-auto background-image"
+            style="box-shadow: 0px 0px 20px #75a5ff98"
+            (click)="selectSpecialty(specialty)"
+          >
+            <div class="m-5">
+              <img
+                class="specialty-image"
+                src="../../../../../assets/icons-svg/{{ specialty.image }}"
+              />
+            </div>
+            <h1 class="specialty-name">{{ specialty.name }}</h1>
+          </li>
+        </ng-container>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
