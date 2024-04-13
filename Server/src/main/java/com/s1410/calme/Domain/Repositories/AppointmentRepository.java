@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
 
@@ -24,6 +25,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
 
     @Query("SELECT a FROM Appointment a WHERE a.assistent.id = :assistantId AND a.active = :active")
     Page<Appointment> findAppointmentByAssistantById(Long assistantId, Boolean active, Pageable pageable);
+
+    @Query(value = "SELECT a FROM Appointment a where a.active = :active AND year(a.date) = :year " +
+            " AND month(a.date) = :month AND day(a.date) = :day")
+    List<Appointment> findAppointmentsByDateByActive(Boolean active, int day, int month, int year);
 
 //    @Query("SELECT a FROM Appointment a WHERE a.assisted.id = :assistedId AND a.active = :active")
 //    Page<Appointment> findApppointmentAssistedById(Long assistedId, Boolean active, Pageable pageable);
