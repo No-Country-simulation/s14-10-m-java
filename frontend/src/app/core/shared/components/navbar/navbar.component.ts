@@ -12,6 +12,9 @@ export class NavbarComponent {
   @Input()
   activeBlue: boolean = false;
 
+  @Input()
+  showOptions: boolean = true;
+
   onLogin() {
     this.router.navigateByUrl('/auth/login');
   }
