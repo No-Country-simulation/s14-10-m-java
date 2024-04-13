@@ -119,18 +119,53 @@
               </div>
 
               <div class="flex flex-col gap-2">
-                <label for="availability">Disponibilidad:</label>
-                <select
-                  id="availability"
-                  [(ngModel)]="formDataStep2.availability"
+                <label for="phoneNumber">Celular:</label>
+                <input
+                  type="text"
+                  id="phoneNumber"
+                  [(ngModel)]="formDataStep2.phoneNumber"
                   class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-                >
-                  <option value="" disabled>Seleccione disponibilidad:</option>
-                  <option value="MORNING">Mañana</option>
-                  <option value="AFTERNOON">Tarde</option>
-                  <option value="EVENING">Noche</option>
-                  <!-- Agrega más opciones según tus necesidades -->
-                </select>
+                  required
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="postalCode">Postal Code:</label>
+                <input
+                  type="text"
+                  id="postalCode"
+                  [(ngModel)]="formDataStep2.postalCode"
+                  class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                  required
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <h1>Disponibilidad</h1>
+                <div class="flex justify-between items-center">
+                  <label for="morning">Mañana:</label>
+                  <input
+                    type="checkbox"
+                    id="morning"
+                    [(ngModel)]="formDataStep2.morning"
+                  />
+                </div>
+
+                <div class="flex justify-between items-center">
+                  <label for="afternoon">Tarde:</label>
+                  <input
+                    type="checkbox"
+                    id="afternoon"
+                    [(ngModel)]="formDataStep2.afternoon"
+                  />
+                </div>
+
+                <div class="flex justify-between items-center">
+                  <label for="night">Noche:</label>
+                  <input
+                    type="checkbox"
+                    id="night"
+                    [(ngModel)]="formDataStep2.night"
+                  />
+                </div>
               </div>
             </div>
             <div class="flex justify-center items-center">
