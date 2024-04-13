@@ -10,6 +10,9 @@ import { LoginService } from 'src/app/modules/auth/services/login.service';
 import { NotifyService } from 'src/app/modules/auth/services/notify.service';
 import { ToastrService } from 'ngx-toastr';
 import { Login } from '../../../../core/models/login.model';
+import { TokenService } from 'src/app/core/shared/services/token.service';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -23,10 +26,8 @@ export class LoginComponent {
 
   constructor(
     private readonly loginService: LoginService,
-    private toastr: ToastrService,
     private readonly fb: FormBuilder,
-    private notifySvc: NotifyService,
-    private readonly router: Router
+    private readonly router: Router,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, emailValidator]],
@@ -42,21 +43,18 @@ export class LoginComponent {
 
   login() {
     //temporalmente para q el formulario fue tocado
-    /* if (this.loginForm.invalid) {
+    if (this.loginForm.invalid) {
       return this.loginForm.markAllAsTouched();
-    } */
-    //if (this.loginForm.value) {
-    //this.notifySvc.showError('Error al iniciar sesión');
-    //}
+    }
     this.loginService.Login(this.loginForm.value).subscribe((res: any) => {
-      this.loginService.id = res.id;
-      this.loginService.token = res.token;
-      localStorage.setItem('id', res.id);
-      localStorage.setItem('token', res.token);
-    });
-  }
-
-  //this.notifySvc.showSuccess('formulario enviado correctamente');
+    },
+    (error) => {
+      console.log(error)
+      this.loginService.id = error.error.id;
+      localStorage.setItem('id', error.error.id);
+      this.router.navigate(['/']);
+    }
+    )
 
   /* this.loginService.Login(this.loginForm.value).subscribe({
           next: () => {
@@ -78,7 +76,8 @@ export class LoginComponent {
           },
         }); */
 
-  handleShowPassword(): void {
-    this.showPassword = !this.showPassword;
+    // handleShowPassword(): void {
+    //   this.showPassword = !this.showPassword;
+    // }
   }
 }
