@@ -32,3 +32,22 @@ button {
 span {
     color: red;
 }
+
+.contenedor {
+    position: relative;
+    /* Permite posicionar elementos dentro */
+}
+
+.logo {
+    position: absolute;
+    /* Posiciona el logo de forma absoluta */
+    top: 0;
+    /* Posiciona el borde superior del logo en el borde superior del div */
+    right: 0;
+    /* Posiciona el borde izquierdo del logo en el borde izquierdo del div */
+    width: 100px;
+    /* Ajusta el ancho del logo */
+    height: 100px;
+    /* Ajusta la altura del logo */
+    background-image: url("./../../../../../assets/image-png/CALME.png");
+}

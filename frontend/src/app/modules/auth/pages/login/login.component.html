@@ -2,6 +2,9 @@
   <div
     class="container-full flex h-screen px-40 py-20 bg-gradient-to-br from-blue-400 via-blue-200 to-blue-10"
   >
+    <div class="contenedor">
+      <img class="logo" src="../assets/image-png/calme.png" alt="calme logo" />
+    </div>
     <div
       class="flex w-full items-center justify-center lg:justify-between border border-x-stone-300 bg-gradient-to-br from-gray-10 to-gray-50"
     >
@@ -17,7 +20,7 @@
         <form
           class="md:w-6/12 lg:w-10/12 flex-wrap items-center flex-justify-center pl-20"
           [formGroup]="loginForm"
-          (ngSubmit)="login()"
+          (ngSubmit)="Login()"
         >
           <!-- Email input -->
           <div class="relative mb-6" data-twe-input-wrapper-init>
@@ -89,7 +92,6 @@
           </div>
           <button
             type="submit"
-            (click)="login()"
             class="w-56 bg-stone-300 hover:bg-yellow-400 text-blue-800 font-bold py-2 rounded-full mb-6"
           >
             INGRESAR

@@ -19,16 +19,16 @@ export class LoginService {
     if (localStorage.getItem('token')) {
       this.isLogedIn.next(true);
     }
+    console.log(this.token);
     if (localStorage.getItem('id')) {
       this.id = Number(localStorage.getItem('id'));
     }
-
-    console.log(this.token);
   }
-  Login(login: Login): Observable<any> {
+  login(login: Login): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, login);
   }
   logout() {
     this.router.navigate(['/auth/login']);
+    //console.log(this.Login);
   }
 }
