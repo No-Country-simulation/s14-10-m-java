@@ -24,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,6 +51,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public ResponseEntity<ResponseAppointment> createAppointment(RequestCreateAppointment requestCreateAppointment) {
         Long doctorId = requestCreateAppointment.doctorId();
+        LocalDateTime date = requestCreateAppointment.date();
         Long assistentId = 0L;
         Long assistedId = 0L;
 
@@ -65,6 +67,11 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .orElseThrow(
                         () -> new EntityNotFoundException("No Doctor found with id: " + doctorId)
                 );
+
+        //Comprobobar si el doctor esta ocupado ese dia
+        if(isDoctorBusy(doctorId, assistentId, date)){
+            throw new EntityNotFoundException("The doctor has an appointment already");
+        }
 
         //Corrobora primero cuál de los dos es el que va y sólo da error si no está ninguno.
         Assistent assistent = assistentRepository.findById(assistentId).orElse(null);
@@ -193,6 +200,13 @@ public class AppointmentServiceImpl implements AppointmentService {
                     .stream().map(appointmentMapper::appointmentToResponse)
                     .collect(Collectors.toList()),
                     HttpStatus.OK);
+    }
+
+
+    //Metodo para saber si el doctor esta ocupado o no ese dia
+    @Override
+    public boolean isDoctorBusy(Long doctorID, Long assistentId, LocalDateTime date) {
+        return appointmentRepository.existsByDoctorIdAndDate(doctorID, assistentId ,date);
     }
 
 

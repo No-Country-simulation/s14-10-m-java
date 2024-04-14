@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,9 +34,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
     @Query("SELECT a FROM Appointment a WHERE a.assisted.id = :assistedId AND a.active = :active")
     Page<Appointment> findAppointmentByAssistedById(Long assistedId, Boolean active, Pageable pageable);
 
-//    @Query("SELECT a FROM Appointment a WHERE a.doctor.id = :doctorId AND a.active = :active AND a.date BETWEEN :startDate AND :finishDate")
-//    Page<Appointment> findAppointmentDoctorByBetweenDates(Long doctorId, Boolean active,
-//                                                   LocalDateTime startDate, LocalDateTime finishDate, Pageable pageable);
-
-
+    @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM appointment WHERE doctor_id = :doctorId AND assistent_id = :assistentId AND DATE(appointment.date) = DATE(:date)", nativeQuery = true)
+    boolean existsByDoctorIdAndDate(@Param("doctorId") Long doctorId,@Param("assistentId") Long assistentId,@Param("date") LocalDateTime date);
 }
