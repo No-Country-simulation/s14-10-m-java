@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -118,8 +120,10 @@ public class DoctorServiceImpl implements DoctorService {
         return doctor.getActive();
     }
     @Override
-    public Page<ResponseDoctor> readAllDoctorBySpecialty (String specialty,Pageable paging){
-        return doctorRepository.findBySpecialty(Specialty.valueOf(specialty),paging).map(doctorMapper::doctorToResponse);
+    public List<ResponseDoctor> readAllDoctorBySpecialty (String specialty){
+        return doctorRepository.findBySpecialty(Specialty.valueOf(specialty))
+                .stream()
+                .map(doctorMapper::doctorToResponse).collect(Collectors.toList());
     }
 
     @Override
@@ -142,7 +146,9 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public Page<ResponseDoctor> readAllDoctorsBySamePostalCode (int postalCode, Pageable pageable){
-        return doctorRepository.readAllDoctorsBySamePostalCode(postalCode, pageable).map(doctorMapper::doctorToResponse);
+    public List<ResponseDoctor> readAllDoctorsBySamePostalCode (Integer postalCode){
+        return doctorRepository.readAllDoctorsBySamePostalCode(postalCode)
+                .stream()
+                .map(doctorMapper::doctorToResponse).collect(Collectors.toList());
     }
 }
