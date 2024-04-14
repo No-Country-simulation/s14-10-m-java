@@ -2,16 +2,15 @@ package com.s1410.calme.Domain.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Table(name = "appointment")
 public class Appointment {
 

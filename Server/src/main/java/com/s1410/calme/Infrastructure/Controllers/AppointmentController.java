@@ -72,10 +72,4 @@ public class AppointmentController {
             @PathVariable Boolean active){
         return appointmentService.getAppointmentsByDate(date, active);
     }
-
-    /*
-    TODO Endpoints:
-        - Filter All GETs by ¿AssistedID?
-     */
-
 }

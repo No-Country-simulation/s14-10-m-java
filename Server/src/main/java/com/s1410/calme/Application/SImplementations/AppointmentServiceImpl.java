@@ -24,9 +24,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +40,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AssistentRepository assistentRepository;
     private final DoctorRepository doctorRepository;
 
-    private final Integer DEFAULT_PAGE_SIZE = 5;
+    private final Integer DEFAULT_PAGE_SIZE = 10;
 
 
     //TODO: Hacer el código más lindo si es posible y necesario
@@ -67,6 +68,8 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .orElseThrow(
                         () -> new EntityNotFoundException("No Doctor found with id: " + doctorId)
                 );
+
+        checkDoctorAvailability(doctor, date);
 
         //TODO: cambiar la respuesta de 404 a badrequest
         //Comprobar si el doctor esta ocupado ese dia
@@ -229,6 +232,30 @@ public class AppointmentServiceImpl implements AppointmentService {
         List<ResponseAppointment> response = appointmentMapper
                 .appointmentListToResponseList(appointmentList);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    private void checkDoctorAvailability(Doctor doctor, LocalDateTime dateTime){
+
+        LocalDateTime starDate =  LocalDate.of(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth()).atStartOfDay();
+        LocalDateTime endDate =  LocalDate.of(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth()).atTime(23,59,59);
+
+        System.out.println("START DATE: " + starDate);
+        System.out.println("END DATE: " + endDate);
+
+        Pageable pageable = PageRequest.of(0, 15);
+
+        Page<Appointment> pageApp = appointmentRepository.findAppointmentsBetweenDates(true, starDate, endDate, pageable);
+
+        List<Appointment> appointments = pageApp.getContent();
+
+
+        for (Appointment appointment: appointments){
+            System.out.println(dateTime.until(appointment.getDate(), ChronoUnit.MINUTES));
+            long diff = dateTime.until(appointment.getDate(), ChronoUnit.MINUTES);
+            if (diff < 30 && diff >= 0 ){
+                throw new EntityNotFoundException("Times dont apply here wowowoow");
+            }
+        }
     }
 
 
