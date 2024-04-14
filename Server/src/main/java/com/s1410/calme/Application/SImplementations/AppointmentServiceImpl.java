@@ -1,7 +1,8 @@
 package com.s1410.calme.Application.SImplementations;
 
+import com.s1410.calme.Domain.Dtos.request.RequestAppointmentDate;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAppointment;
-import com.s1410.calme.Domain.Dtos.request.RequestDateAppointment;
+import com.s1410.calme.Domain.Dtos.request.RequestAppointmentBetweenDates;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAppointmentDate;
 import com.s1410.calme.Domain.Dtos.response.ResponseAppointment;
 import com.s1410.calme.Domain.Entities.Appointment;
@@ -23,9 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +43,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     //TODO: Hacer el código más lindo si es posible y necesario
     //TODO: Chequear que la fecha del appointment sea mayor a la actual
-    //TODO: Assisted puede ser nulo
     //TODO: Validaciones de turnos para assistent y doctor:
     //  - El turno empieza 30 minutos después del último
     //  - El turno empieza 30 minutos antes del siguiente
@@ -52,31 +50,36 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public ResponseEntity<ResponseAppointment> createAppointment(RequestCreateAppointment requestCreateAppointment) {
         Long doctorId = requestCreateAppointment.doctorId();
-        Long assistentId = requestCreateAppointment.assistentId();
-        Long assistedId = requestCreateAppointment.assistedId();
+        Long assistentId = 0L;
+        Long assistedId = 0L;
+
+        //Saltaba error porque long no podía ser null.
+        if (requestCreateAppointment.assistentId() != null) {
+            assistentId = requestCreateAppointment.assistentId();
+        }
+        if (requestCreateAppointment.assistedId() != null) {
+            assistedId = requestCreateAppointment.assistedId();
+        }
 
         Doctor doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("No Doctor found with id: " + doctorId)
                 );
 
-        Assistent assistent = assistentRepository.findById(assistentId)
-                .orElseThrow(
-                        () -> new EntityNotFoundException("No Assistent found with id: " + assistentId)
-                );
+        //Corrobora primero cuál de los dos es el que va y sólo da error si no está ninguno.
+        Assistent assistent = assistentRepository.findById(assistentId).orElse(null);
+        Assisted assisted = assistedRepository.findById(assistedId).orElse(null);
+        if (assisted == null && assistent == null) { throw new
+                EntityNotFoundException("No se encontró paciente con ese id"); }
 
-        Assisted assisted = assistedRepository.findById(assistedId)
-                .orElseThrow(
-                        () -> new EntityNotFoundException("No Assisted found with id: " + assistedId)
-                );
 
         Appointment appointment = new Appointment();
         appointment.setActive(true);
         appointment.setDate(requestCreateAppointment.date());
         appointment.setObservations(requestCreateAppointment.observations());
         appointment.setDoctor(doctor);
-        appointment.setAssistent(assistent);
-        appointment.setAssisted(assisted);
+        if (assistent != null) {appointment.setAssistent(assistent); }
+        if (assisted != null) {appointment.setAssisted(assisted); }
 
         var appointmentSaved = appointmentRepository.save(appointment);
         ResponseAppointment responseAppointment = appointmentMapper.appointmentToResponse(appointmentSaved);
@@ -124,7 +127,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(RequestDateAppointment dates, Integer page, Boolean active) {
+    public ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(RequestAppointmentBetweenDates dates, Integer page, Boolean active) {
 
         if (page <= 0) page = 1;
 
@@ -179,4 +182,18 @@ public class AppointmentServiceImpl implements AppointmentService {
                     collect(Collectors.toList()),
                     HttpStatus.OK);
         }
+
+    @Override
+    public ResponseEntity<List<ResponseAppointment>> getAppointmentsByDate(
+            RequestAppointmentDate date, Boolean active) {
+        int day = date.date().getDayOfMonth();
+        int month = date.date().getMonthValue();
+        int year = date.date().getYear();
+        List<Appointment> appointmentList = appointmentRepository
+                .findAppointmentsByDateByActive(active, day, month, year);
+        List<ResponseAppointment> response = appointmentMapper
+                .appointmentListToResponseList(appointmentList);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     }

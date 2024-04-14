@@ -1,5 +1,4 @@
 package com.s1410.calme.Infrastructure.Controllers;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.s1410.calme.Domain.Dtos.whatsapp.MessageBodyDTO;
 import com.s1410.calme.Domain.Dtos.whatsapp.ResponseWhatsapp;
@@ -26,10 +25,9 @@ public class WhatsappController {
     "message" : "recordatorio"
     * */
 
-    @PostMapping("/enviar")
-    ResponseWhatsapp sendMessage(@RequestBody MessageBodyDTO payload) throws JsonProcessingException {
-        System.out.println("sendMessage ok");
-        return apiWhatsappService.sendMessage(payload);
+    @PostMapping("/reminder")
+    boolean sendMessage() throws JsonProcessingException {
+        return apiWhatsappService.sendMessage();
     }
 
 }
