@@ -30,6 +30,8 @@ public interface AppointmentService {
 
     ResponseEntity<List<ResponseAppointment>> getAppointmentsByDate(RequestAppointmentDate date, Boolean active);
 
+    ResponseEntity<List<ResponseAppointment>> getAppointmentByAssistedId(Long id, Boolean active, Integer page);
+
 
     //TODO: Implement Methods
     //Delete Appointment

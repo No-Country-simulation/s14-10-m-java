@@ -30,8 +30,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
             " AND month(a.date) = :month AND day(a.date) = :day")
     List<Appointment> findAppointmentsByDateByActive(Boolean active, int day, int month, int year);
 
-//    @Query("SELECT a FROM Appointment a WHERE a.assisted.id = :assistedId AND a.active = :active")
-//    Page<Appointment> findApppointmentAssistedById(Long assistedId, Boolean active, Pageable pageable);
+    @Query("SELECT a FROM Appointment a WHERE a.assisted.id = :assistedId AND a.active = :active")
+    Page<Appointment> findAppointmentByAssistedById(Long assistedId, Boolean active, Pageable pageable);
 
 //    @Query("SELECT a FROM Appointment a WHERE a.doctor.id = :doctorId AND a.active = :active AND a.date BETWEEN :startDate AND :finishDate")
 //    Page<Appointment> findAppointmentDoctorByBetweenDates(Long doctorId, Boolean active,
