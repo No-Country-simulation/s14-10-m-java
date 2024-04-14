@@ -33,12 +33,12 @@ public interface AppointmentService {
 
     ResponseEntity<List<ResponseAppointment>> getAppointmentByAssistedId(Long id, Boolean active, Integer page);
 
-    boolean isDoctorBusy(Long doctorID, Long assistentId, LocalDateTime date);
+    boolean isDoctorBusyAssistent(Long doctorID, Long assistentId, LocalDateTime date);
+
+    boolean isDoctorBusyAssisted(Long doctorId, Long assistedId, LocalDateTime date);
 
     //TODO: Implement Methods
     //Delete Appointment
     //DeActivate Appointment
-    //Activate Appointment
-    //Update Appointment
-    //Get Appointment By Id
+
 }

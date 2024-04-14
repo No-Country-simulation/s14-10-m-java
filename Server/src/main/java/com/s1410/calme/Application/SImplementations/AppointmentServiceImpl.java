@@ -68,8 +68,11 @@ public class AppointmentServiceImpl implements AppointmentService {
                         () -> new EntityNotFoundException("No Doctor found with id: " + doctorId)
                 );
 
-        //Comprobobar si el doctor esta ocupado ese dia
-        if(isDoctorBusy(doctorId, assistentId, date)){
+        //TODO: cambiar la respuesta de 404 a badrequest
+        //Comprobar si el doctor esta ocupado ese dia
+        if(isDoctorBusyAssistent(doctorId, assistentId, date)){
+            throw new EntityNotFoundException("The doctor has an appointment already");
+        } else if (isDoctorBusyAssisted(doctorId, assistedId, date)) {
             throw new EntityNotFoundException("The doctor has an appointment already");
         }
 
@@ -205,8 +208,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     //Metodo para saber si el doctor esta ocupado o no ese dia
     @Override
-    public boolean isDoctorBusy(Long doctorID, Long assistentId, LocalDateTime date) {
-        return appointmentRepository.existsByDoctorIdAndDate(doctorID, assistentId ,date);
+    public boolean isDoctorBusyAssistent(Long doctorID, Long assistentId, LocalDateTime date) {
+        return appointmentRepository.existsByDoctorAndAssistent(doctorID, assistentId, date);
+    }
+
+    @Override
+    public boolean isDoctorBusyAssisted(Long doctorId, Long assistedId, LocalDateTime date) {
+        return appointmentRepository.existsByDoctorAndAssisted(doctorId, assistedId, date);
     }
 
 

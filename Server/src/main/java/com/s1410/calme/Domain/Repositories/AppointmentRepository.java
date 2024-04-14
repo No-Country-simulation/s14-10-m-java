@@ -35,5 +35,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
     Page<Appointment> findAppointmentByAssistedById(Long assistedId, Boolean active, Pageable pageable);
 
     @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM appointment WHERE doctor_id = :doctorId AND assistent_id = :assistentId AND DATE(appointment.date) = DATE(:date)", nativeQuery = true)
-    boolean existsByDoctorIdAndDate(@Param("doctorId") Long doctorId,@Param("assistentId") Long assistentId,@Param("date") LocalDateTime date);
+    boolean existsByDoctorAndAssistent(@Param("doctorId") Long doctorId,@Param("assistentId") Long assistentId,@Param("date") LocalDateTime date);
+
+    @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM appointment WHERE doctor_id = :doctorId AND assisted_id = :assistedId AND DATE(appointment.date) = DATE(:date)", nativeQuery = true)
+    boolean existsByDoctorAndAssisted(@Param("doctorId") Long doctorId,@Param("assistedId") Long assistedId,@Param("date") LocalDateTime date);
 }
