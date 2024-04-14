@@ -5,6 +5,9 @@ import com.s1410.calme.Domain.Dtos.response.ResponseDoctor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface DoctorService {
 
     ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor);
@@ -12,7 +15,7 @@ public interface DoctorService {
     Page<ResponseDoctor> readAllDoctors(boolean active, Pageable paging);
     ResponseDoctor updateDoctor(RequestEditDoctor requestEditDoctor, String tokenUser);
     Boolean toogleDeleteDoctor(Long id, String tokenUser);
-    Page<ResponseDoctor> readAllDoctorBySpecialty(String specialty, Pageable paging);
+    List<ResponseDoctor> readAllDoctorBySpecialty(String specialty);
     Page<ResponseDoctor> readAllDoctorsByAvailability(String availability, Pageable paging);
-    Page<ResponseDoctor> readAllDoctorsBySamePostalCode(int postalCode, Pageable pageable);
+    List<ResponseDoctor> readAllDoctorsBySamePostalCode(Integer postalCode);
 }

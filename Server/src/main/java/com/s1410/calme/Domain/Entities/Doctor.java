@@ -22,5 +22,4 @@ public class Doctor extends User{
     private Integer postalCode;
     private Long licenseNumber;
     private String address;
-
 }
