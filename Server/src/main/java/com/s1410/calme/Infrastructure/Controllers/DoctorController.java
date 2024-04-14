@@ -73,6 +73,12 @@ public class DoctorController {
         return ResponseEntity.ok(doctors);
     }
 
+    @GetMapping("/findBySurname/{asc}")
+    public ResponseEntity<Page<ResponseDoctor>> readAllDoctorBySurname(
+            @PathVariable Boolean asc, Pageable pageable) {
+        return ResponseEntity.ok(doctorService.readAllDoctorsBySurname(asc, pageable));
+    }
+
 
     @PutMapping("/update")
     public ResponseEntity<ResponseDoctor> updateDoctor(

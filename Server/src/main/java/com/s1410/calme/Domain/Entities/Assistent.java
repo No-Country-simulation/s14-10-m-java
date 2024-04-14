@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "assistents")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public final class Assistent extends User {
-
+    @Column(unique = true)
     String email;
     String password;
 
