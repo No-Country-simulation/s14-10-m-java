@@ -6,20 +6,28 @@
         <article class="flex flex-col items-start gap-3">
           <h1 class="text-2xl text-white">Registrate como paciente</h1>
           <form
-            #myForm="ngForm"
-            (ngSubmit)="submitForm(myForm)"
+            [formGroup]="formData"
+            (ngSubmit)="submitForm()"
             class="flex flex-col gap-2"
           >
             <div class="flex flex-col gap-2">
-              <label for="firstName">Primer nombre</label>
+              <label for="firstName">Primer nombre:</label>
               <input
                 type="text"
                 id="firstName"
-                name="firstName"
-                [(ngModel)]="formData.firstName"
-                required
+                formControlName="firstName"
                 class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
               />
+              <div
+                *ngIf="
+                  f.firstName.invalid &&
+                  (f.firstName.dirty || f.firstName.touched)
+                "
+              >
+                <div *ngIf="f.firstName.errors.required">
+                  First Name es requerido
+                </div>
+              </div>
             </div>
 
             <div class="flex flex-col gap-2">
@@ -27,10 +35,19 @@
               <input
                 type="text"
                 id="secondName"
-                name="secondName"
-                [(ngModel)]="formData.secondName"
+                formControlName="secondName"
                 class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
               />
+              <div
+                *ngIf="
+                  f.secondName.invalid &&
+                  (f.secondName.dirty || f.secondName.touched)
+                "
+              >
+                <div *ngIf="f.secondName.errors.required">
+                  Second Name es requerido
+                </div>
+              </div>
             </div>
 
             <div class="flex flex-col gap-2">
@@ -38,11 +55,18 @@
               <input
                 type="text"
                 id="lastName"
-                name="lastName"
-                [(ngModel)]="formData.lastName"
-                required
+                formControlName="lastName"
                 class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
               />
+              <div
+                *ngIf="
+                  f.lastName.invalid && (f.lastName.dirty || f.lastName.touched)
+                "
+              >
+                <div *ngIf="f.lastName.errors.required">
+                  Last Name es requerido
+                </div>
+              </div>
             </div>
 
             <div class="flex flex-col gap-2">
@@ -50,33 +74,77 @@
               <input
                 type="text"
                 id="DNI"
-                name="DNI"
-                [(ngModel)]="formData.DNI"
-                required
+                formControlName="DNI"
                 class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
               />
+              <div *ngIf="f.DNI.invalid && (f.DNI.dirty || f.DNI.touched)">
+                <div *ngIf="f.DNI.errors.required">DNI es requerido</div>
+                <div *ngIf="f.DNI.errors.pattern">
+                  DNI debe tener 7 dígitos numéricos
+                </div>
+              </div>
             </div>
             <div class="flex flex-col gap-2">
-              <label for="dateOfBirth">Fecha de nacimiento:</label>
+              <label for="phoneNumber">Numero de Telefono:</label>
+              <input
+                type="text"
+                id="phoneNumber"
+                formControlName="phoneNumber"
+                class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+              />
+              <div
+                *ngIf="
+                  f.phoneNumber.invalid &&
+                  (f.phoneNumber.dirty || f.phoneNumber.touched)
+                "
+              >
+                <div *ngIf="f.phoneNumber.errors.required">
+                  Phone Number es requerido
+                </div>
+                <div *ngIf="f.phoneNumber.errors.pattern">
+                  Phone Number debe ser de 7 digitos
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <!-- DateOfBirth -->
+              <label for="dateOfBirth">Dia de nacimiento:</label>
               <input
                 type="date"
                 id="dateOfBirth"
-                name="dateOfBirth"
-                [(ngModel)]="formData.dateOfBirth"
-                required
+                formControlName="dateOfBirth"
                 class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
               />
+              <div
+                *ngIf="
+                  f.dateOfBirth.invalid &&
+                  (f.dateOfBirth.dirty || f.dateOfBirth.touched)
+                "
+              >
+                <div *ngIf="f.dateOfBirth.errors.required">
+                  Date of Birth es requerido
+                </div>
+                <div *ngIf="f.dateOfBirth.errors.futureDate">
+                  La fecha de nacimiento no puede ser futura
+                </div>
+              </div>
             </div>
             <div class="flex flex-col gap-2">
               <label for="email">Email:</label>
               <input
                 type="email"
                 id="email"
-                name="email"
-                [(ngModel)]="formData.email"
-                required
+                formControlName="email"
                 class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
               />
+              <div
+                *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)"
+              >
+                <div *ngIf="f.email.errors.required">Email es requerido</div>
+                <div *ngIf="f.email.errors.email">
+                  Formato de email inválido
+                </div>
+              </div>
             </div>
 
             <div class="flex flex-col gap-2">
@@ -84,22 +152,47 @@
               <input
                 type="password"
                 id="password"
-                name="password"
-                [(ngModel)]="formData.password"
-                required
+                formControlName="password"
                 class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
               />
+              <div
+                *ngIf="
+                  f.password.invalid && (f.password.dirty || f.password.touched)
+                "
+              >
+                <div *ngIf="f.password.errors.required">
+                  Password es requerido
+                </div>
+                <div *ngIf="f.password.errors.minlength">
+                  Password debe tener al menos 6 caracteres
+                </div>
+              </div>
             </div>
 
             <div class="flex gap-3">
-              <input type="checkbox" />
-              <p>Acepto los Términos y Condiciones</p>
+              <input
+                type="checkbox"
+                id="aceptoTerminos"
+                formControlName="aceptoTerminos"
+              />
+              <label for="aceptoTerminos"
+                >Acepto los Términos y Condiciones</label
+              >
             </div>
 
             <div class="flex justify-center">
-              <app-button color="primary" buttonType="submit"
-                >Crear cuenta</app-button
+              <button
+                type="submit"
+                class="px-5 py-3 rounded-full flex items-center justify-center gap-3"
+                [ngClass]="{
+                  'bg-accent-light text-primary-dark font-poppins text-base font-semibold':
+                    !isDisabled,
+                  'bg-[#D7D7D7] text-gray-600 cursor-not-allowed': isDisabled
+                }"
+                [disabled]="isDisabled"
               >
+                Crear cuenta
+              </button>
             </div>
           </form>
         </article>
