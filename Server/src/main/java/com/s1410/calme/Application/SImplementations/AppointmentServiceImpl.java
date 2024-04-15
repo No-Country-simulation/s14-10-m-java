@@ -45,9 +45,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     //TODO: Hacer el código más lindo si es posible y necesario
     //TODO: Chequear que la fecha del appointment sea mayor a la actual
-    //TODO: Validaciones de turnos para assistent y doctor:
-    //  - El turno empieza 30 minutos después del último
-    //  - El turno empieza 30 minutos antes del siguiente
     //TODO: Chequear que las fechas correspondan con los horarios laborales de los doctores
     @Override
     public ResponseEntity<ResponseAppointment> createAppointment(RequestCreateAppointment requestCreateAppointment) {
@@ -70,13 +67,15 @@ public class AppointmentServiceImpl implements AppointmentService {
                 );
 
         checkDoctorAvailability(doctorId, date);
+        checkAssistentAvailability(assistentId, date);
+        checkAssistedAvailability(assistedId, date);
 
         //TODO: cambiar la respuesta de 404 a badrequest
         //Comprobar si el doctor esta ocupado ese dia
         if(isDoctorBusyAssistent(doctorId, assistentId, date)){
-            throw new EntityNotFoundException("The doctor has an appointment already with you on this da");
+            throw new EntityNotFoundException("The doctor has an appointment already with you on this day");
         } else if (isDoctorBusyAssisted(doctorId, assistedId, date)) {
-            throw new EntityNotFoundException("The doctor has an appointment already with you on this da");
+            throw new EntityNotFoundException("The doctor has an appointment already with you on this day");
         }
 
         //Corrobora primero cuál de los dos es el que va y sólo da error si no está ninguno.
@@ -209,12 +208,12 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
 
-    //Metodo para saber si el doctor esta ocupado o no ese dia
+    //Metodo para saber si ya el assistent tiene cita con el doctor ese dia
     @Override
     public boolean isDoctorBusyAssistent(Long doctorID, Long assistentId, LocalDateTime date) {
         return appointmentRepository.existsByDoctorAndAssistent(doctorID, assistentId, date);
     }
-
+    //Metodo para saber si ya el assisted tiene cita con el doctor ese dia
     @Override
     public boolean isDoctorBusyAssisted(Long doctorId, Long assistedId, LocalDateTime date) {
         return appointmentRepository.existsByDoctorAndAssisted(doctorId, assistedId, date);
@@ -258,6 +257,52 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
     }
 
+    private void checkAssistentAvailability(Long assistentId, LocalDateTime dateTime){
 
+        LocalDateTime starDate =  LocalDate.of(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth()).atStartOfDay();
+        LocalDateTime endDate =  LocalDate.of(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth()).atTime(23,59,59);
+
+        System.out.println("START DATE: " + starDate);
+        System.out.println("END DATE: " + endDate);
+
+        Pageable pageable = PageRequest.of(0, 15);
+
+        Page<Appointment> pageApp = appointmentRepository.findAppointmentsByAssistentIdAndDateRange(assistentId, starDate, endDate , true, pageable);
+
+        List<Appointment> appointments = pageApp.getContent();
+
+
+        for (Appointment appointment: appointments){
+            System.out.println(dateTime.until(appointment.getDate(), ChronoUnit.MINUTES));
+            long diff = dateTime.until(appointment.getDate(), ChronoUnit.MINUTES);
+            if (diff < 30 && diff >= 0 ){
+                throw new EntityNotFoundException("You Have an appointment on this hour");
+            }
+        }
+    }
+
+    private void checkAssistedAvailability(Long assistedId, LocalDateTime dateTime) {
+
+        LocalDateTime starDate = LocalDate.of(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth()).atStartOfDay();
+        LocalDateTime endDate = LocalDate.of(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth()).atTime(23, 59, 59);
+
+        System.out.println("START DATE: " + starDate);
+        System.out.println("END DATE: " + endDate);
+
+        Pageable pageable = PageRequest.of(0, 15);
+
+        Page<Appointment> pageApp = appointmentRepository.findAppointmentsByAssistedIdAndDateRange(assistedId, starDate, endDate, true, pageable);
+
+        List<Appointment> appointments = pageApp.getContent();
+
+
+        for (Appointment appointment : appointments) {
+            System.out.println(dateTime.until(appointment.getDate(), ChronoUnit.MINUTES));
+            long diff = dateTime.until(appointment.getDate(), ChronoUnit.MINUTES);
+            if (diff < 30 && diff >= 0) {
+                throw new EntityNotFoundException("You Have an appointment on this hour");
+            }
+        }
+    }
 
 }

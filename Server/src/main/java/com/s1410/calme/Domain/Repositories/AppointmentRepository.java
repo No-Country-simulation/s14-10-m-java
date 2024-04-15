@@ -31,6 +31,28 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
             Pageable pageable
     );
 
+    @Query(value = "SELECT * FROM appointment WHERE assistent_id = :assistentId " +
+            "AND active = :active AND date BETWEEN :startDate AND :endDate",
+            nativeQuery = true)
+    Page<Appointment> findAppointmentsByAssistentIdAndDateRange(
+            @Param("assistentId") Long assistentId,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate,
+            @Param("active") Boolean active,
+            Pageable pageable
+    );
+
+    @Query(value = "SELECT * FROM appointment WHERE assisted_id= :assistedId " +
+            "AND active = :active AND date BETWEEN :startDate AND :endDate",
+            nativeQuery = true)
+    Page<Appointment> findAppointmentsByAssistedIdAndDateRange(
+            @Param("assistedId") Long assistedId,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate,
+            @Param("active") Boolean active,
+            Pageable pageable
+    );
+
     @Query("SELECT a FROM Appointment a WHERE a.doctor.id = :doctorId AND a.active = :active")
     Page<Appointment> findAppointmentByDoctorId(Long doctorId, Boolean active, Pageable pageable);
 
