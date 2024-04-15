@@ -13,6 +13,8 @@ import { NotFoundModule } from './modules/not-found/not-found.module';
 import { AuthModule } from './modules/auth/auth.module';
 // import { HomeModule } from './modules/home/home.module';
 import { SharedModule } from './core/shared/shared.module';
+import { TokenResponseInterceptor } from './core/shared/interceptors/token-response.interceptor';
+import { TokenInterceptor } from './core/shared/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +30,10 @@ import { SharedModule } from './core/shared/shared.module';
     // HomeModule,
     SharedModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenResponseInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

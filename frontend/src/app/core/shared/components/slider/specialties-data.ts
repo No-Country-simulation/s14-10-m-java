@@ -14,7 +14,7 @@ export const Specialties: Specialty[] = [
         image: "neurologia.svg",
     },
     {
-        name: "Cardiologia",
+        name: "CARDIOLOGY",
         image: "cardiologia.svg",
     },
     {
@@ -26,7 +26,7 @@ export const Specialties: Specialty[] = [
         image: "pediatria.svg",
     },
     {
-        name: "Cirugía",
+        name: "GERIATRICS",
         image: "cirugia.svg",
     },
     {
