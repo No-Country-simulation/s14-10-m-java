@@ -1,0 +1,112 @@
+<div
+  style="
+    height: 900px;
+    background-image: radial-gradient(
+      circle at 8% -8%,
+      #ffdeb766 15%,
+      #ffffff 22%
+    );
+  "
+>
+  <div
+    style="
+      height: 149px;
+      background-color: #75a5ff;
+      border-radius: 0px 0px 24px 24px;
+      background-image: radial-gradient(
+        circle at 12% -10%,
+        #ffdeb766 4%,
+        #ffffff15 24%
+      );
+    "
+  >
+    <shared-navbar class="mt-10"></shared-navbar>
+  </div>
+  <div class="flex">
+    <div>
+      <h3
+      style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 700;
+          font-size: 32px;
+          line-height: 48px;
+          color: #FF9D2B;
+        ">Datos de la consulta</h3>
+      <p
+      style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          color: #000000;
+        ">
+        Has seleccionado un turno con el Dr. Macetas. Lee con atención la
+        siguiente información y completa los campos requeridos para confirmar tu
+        turno:
+      </p>
+      <h3>
+        Motivo de la consulta
+        <p>(Máximo 160 caracteres)</p>
+      </h3>
+      <input
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          width: 418px;
+          height: 56px;
+          border-radius: 8px;
+          border: 1px solid #dde1eb;
+        "
+        type="text"
+        placeholder="Ingresa el motivo de tu turno"
+      />
+      <h3>¿Este turno es para vos?</h3>
+      <div class="container">
+        <label>
+          <input type="radio" name="opcion" value="opcion1" checked />
+          Si
+        </label>
+        <label>
+          <input type="radio" name="opcion" value="opcion2" />
+          No, es para alguien más
+        </label>
+      </div>
+      <h3>Selecciona quien es el titular del turno</h3>
+      <input
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          width: 418px;
+          height: 56px;
+          border-radius: 8px;
+          border: 1px solid #dde1eb;
+        "
+        type="text"
+        placeholder="Selecciona a la persona que asistes"
+      />
+      <h3>Ingresa un teléfono de contacto</h3>
+      <input
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          width: 418px;
+          height: 56px;
+          border-radius: 8px;
+          border: 1px solid #dde1eb;
+        "
+        type="text"
+        placeholder="Código de área + número de celular sin el 15"
+      />
+    </div>
+
+    <div>
+      <app-appointment></app-appointment>
+    </div>
+  </div>
+</div>

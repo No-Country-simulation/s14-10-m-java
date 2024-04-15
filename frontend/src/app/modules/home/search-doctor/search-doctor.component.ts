@@ -6,9 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./search-doctor.component.scss']
 })
 export class SearchDoctorComponent {
-  selectedFilter: string = '';
+  selectedSpecialtyFilter: string = '';
+  selectedAvailabilityFilter: string = '';
 
   applySpecialtyFilter(filter: string) {
-    this.selectedFilter = filter;
+    this.selectedSpecialtyFilter = filter;
+  }
+  applyAvailabilityFilter(filter: string) {
+    this.selectedAvailabilityFilter = filter;
   }
 }

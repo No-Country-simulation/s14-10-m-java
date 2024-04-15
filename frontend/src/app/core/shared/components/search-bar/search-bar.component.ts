@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class SearchBarComponent {
 
+  constructor(private router: Router) { }
+
+  redirectToAppointmentConfirmation() {
+    this.router.navigate(['/search-doctor']);
+  }
 }
