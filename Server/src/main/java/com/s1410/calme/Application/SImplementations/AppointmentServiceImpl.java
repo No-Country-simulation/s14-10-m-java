@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -254,7 +255,16 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         List<Appointment> appointments = pageApp.getContent();
 
+        boolean check = checkHourRange(doctor, dateTime);
 
+        //Si no se comprobo que esta dentro de un rango de horario del doctor
+        //Entonces se desecha directamente
+        if (!check){
+            throw new AppointmentAvailabilityException("Doctor does not work in those hours");
+        }
+
+
+        //Comprueba que el turno ocurro 30 minutos después del próximo
         for (Appointment appointment: appointments){
             System.out.println(dateTime.until(appointment.getDate(), ChronoUnit.MINUTES));
             long diff = dateTime.until(appointment.getDate(), ChronoUnit.MINUTES);
@@ -262,6 +272,44 @@ public class AppointmentServiceImpl implements AppointmentService {
                 throw new AppointmentAvailabilityException("The doctor with id: " + doctor.getId() + " is not available at that time");
             }
         }
+
+
+    }
+
+    private static boolean checkHourRange(Doctor doctor, LocalDateTime dateTime) {
+        LocalTime appointmentTime = dateTime.toLocalTime();
+
+        LocalTime morningStart = LocalTime.parse("07:59");
+        LocalTime morningEnd = LocalTime.parse("12:00");
+        LocalTime afternoonStart = LocalTime.parse("11:59");
+        LocalTime afternoonEnd = LocalTime.parse("16:00");
+        LocalTime nightStart = LocalTime.parse("15:59");
+        LocalTime nightEnd = LocalTime.parse("20:00");
+
+
+        //Comprueba que el turno este dentro de 1 de los rangos horarios del doctor disponible
+        boolean check = false;
+        if (doctor.getMorning() != null){
+            if (doctor.getMorning() &&
+                    (appointmentTime.isAfter(morningStart) && appointmentTime.isBefore(morningEnd))){
+               check = true;
+            }
+        }
+        if(doctor.getAfternoon() != null) {
+
+            if (doctor.getAfternoon() &&
+                    (appointmentTime.isAfter(afternoonStart) && appointmentTime.isBefore(afternoonEnd))) {
+                check = true;
+            }
+        }
+        if(doctor.getNight() != null) {
+
+            if (doctor.getNight() &&
+                    (appointmentTime.isAfter(nightStart) && appointmentTime.isBefore(nightEnd))) {
+                check = true;
+            }
+        }
+        return check;
     }
 
     private void checkAssistentAvailability(Long assistentId, LocalDateTime dateTime, LocalDateTime startDate, LocalDateTime endDate){
