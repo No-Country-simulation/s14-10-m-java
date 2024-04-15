@@ -8,6 +8,7 @@ import com.s1410.calme.Domain.Dtos.response.ResponseAppointment;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -30,11 +31,14 @@ public interface AppointmentService {
 
     ResponseEntity<List<ResponseAppointment>> getAppointmentsByDate(RequestAppointmentDate date, Boolean active);
 
+    ResponseEntity<List<ResponseAppointment>> getAppointmentByAssistedId(Long id, Boolean active, Integer page);
+
+    boolean isDoctorBusyAssistent(Long doctorID, Long assistentId, LocalDateTime date);
+
+    boolean isDoctorBusyAssisted(Long doctorId, Long assistedId, LocalDateTime date);
 
     //TODO: Implement Methods
     //Delete Appointment
     //DeActivate Appointment
-    //Activate Appointment
-    //Update Appointment
-    //Get Appointment By Id
+
 }

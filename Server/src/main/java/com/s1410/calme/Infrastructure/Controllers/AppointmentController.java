@@ -61,16 +61,15 @@ public class AppointmentController {
         return appointmentService.getAppointmentByAssistentID(id, active, page);
     }
 
+    @GetMapping("/assisted/{id}")
+    public  ResponseEntity<List<ResponseAppointment>> getAssistedApponintments(@RequestParam Integer page, @RequestParam Boolean active, @PathVariable Long id){
+        return appointmentService.getAppointmentByAssistedId(id, active, page);
+    }
+
     @GetMapping("/date/{active}")
     public ResponseEntity<List<ResponseAppointment>> getAppointmentByDate(
             @RequestBody RequestAppointmentDate date,
             @PathVariable Boolean active){
         return appointmentService.getAppointmentsByDate(date, active);
     }
-
-    /*
-    TODO Endpoints:
-        - Filter All GETs by ¿AssistedID?
-     */
-
 }
