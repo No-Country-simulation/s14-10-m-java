@@ -69,14 +69,14 @@ public class AppointmentServiceImpl implements AppointmentService {
                         () -> new EntityNotFoundException("No Doctor found with id: " + doctorId)
                 );
 
-        checkDoctorAvailability(doctor, date);
+        checkDoctorAvailability(doctorId, date);
 
         //TODO: cambiar la respuesta de 404 a badrequest
         //Comprobar si el doctor esta ocupado ese dia
         if(isDoctorBusyAssistent(doctorId, assistentId, date)){
-            throw new EntityNotFoundException("The doctor has an appointment already");
+            throw new EntityNotFoundException("The doctor has an appointment already with you on this da");
         } else if (isDoctorBusyAssisted(doctorId, assistedId, date)) {
-            throw new EntityNotFoundException("The doctor has an appointment already");
+            throw new EntityNotFoundException("The doctor has an appointment already with you on this da");
         }
 
         //Corrobora primero cuál de los dos es el que va y sólo da error si no está ninguno.
@@ -234,7 +234,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    private void checkDoctorAvailability(Doctor doctor, LocalDateTime dateTime){
+    private void checkDoctorAvailability(Long doctorId, LocalDateTime dateTime){
 
         LocalDateTime starDate =  LocalDate.of(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth()).atStartOfDay();
         LocalDateTime endDate =  LocalDate.of(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth()).atTime(23,59,59);
@@ -244,7 +244,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         Pageable pageable = PageRequest.of(0, 15);
 
-        Page<Appointment> pageApp = appointmentRepository.findAppointmentsBetweenDates(true, starDate, endDate, pageable);
+        Page<Appointment> pageApp = appointmentRepository.findAppointmentsByDoctorIdAndDateRange(doctorId, starDate, endDate , true, pageable);
 
         List<Appointment> appointments = pageApp.getContent();
 
@@ -253,7 +253,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             System.out.println(dateTime.until(appointment.getDate(), ChronoUnit.MINUTES));
             long diff = dateTime.until(appointment.getDate(), ChronoUnit.MINUTES);
             if (diff < 30 && diff >= 0 ){
-                throw new EntityNotFoundException("Times dont apply here wowowoow");
+                throw new EntityNotFoundException("The doctor already has this time busy");
             }
         }
     }
