@@ -30,4 +30,10 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     @Query("SELECT d FROM Doctor d WHERE d.active = true AND d.postalCode = :postalCode")
     List<Doctor> readAllDoctorsBySamePostalCode(@Param("postalCode") Integer postalCode);
 
+    @Query("SELECT d FROM Doctor d WHERE d.active = true ORDER BY d.lastName ASC")
+    Page<Doctor> findBySurnameAsc(Pageable paging);
+
+    @Query("SELECT d FROM Doctor d WHERE d.active = true ORDER BY d.lastName DESC")
+    Page<Doctor> findBySurnameDesc(Pageable paging);
+
 }
