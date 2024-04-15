@@ -1,4 +1,5 @@
 package com.s1410.calme.Infrastructure.Exceptions;
+import com.s1410.calme.Infrastructure.Exceptions.custom.AppointmentAvailabilityException;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -70,6 +71,19 @@ public class ApplicationExceptionHandler {
 
         return new ResponseEntity<>(apiException, badRequest);
     }
+
+    @ExceptionHandler(value = AppointmentAvailabilityException.class)
+    public ResponseEntity<Object> handleBadRequestExceptions(Exception exception) {
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+
+        ApiException apiException = new ApiException(
+                exception.getMessage(),
+                badRequest,
+                ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"))
+        );
+
+        return new ResponseEntity<>(apiException, badRequest);
+    };
 
 
     //Maneja cualquier otra excepción que no haya sido considerada en los casos anteriores
