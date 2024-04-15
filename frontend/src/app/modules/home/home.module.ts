@@ -8,9 +8,12 @@ import { SharedModule } from 'src/app/core/shared/shared.module';
 import { SearchBarModule } from 'src/app/core/shared/components/search-bar/search-bar.module';
 import { SliderComponent } from 'src/app/core/shared/components/slider/slider.component';
 import { SpecialtiesBoxComponent } from 'src/app/core/shared/components/specialties-box/specialties-box.component';
+import { SearchDoctorComponent } from './search-doctor/search-doctor.component';
+import { DoctorSearchCardComponent } from 'src/app/core/shared/components/doctor-search-card/doctor-search-card.component';
+import { SearchFiltersComponent } from 'src/app/core/shared/components/search-filters/search-filters.component';
 
 @NgModule({
-  declarations: [PrincipalComponent, CardComponent, SliderComponent,SpecialtiesBoxComponent],
+  declarations: [PrincipalComponent, CardComponent, SliderComponent,SpecialtiesBoxComponent, SearchDoctorComponent,DoctorSearchCardComponent,SearchFiltersComponent],
   imports: [CommonModule, HomeRoutingModule, SharedModule, SearchBarModule],
   exports: [CardComponent],
 })

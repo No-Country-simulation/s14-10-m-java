@@ -2,15 +2,15 @@ import { Specialty } from './interface/specialty.interface';
 
 export const Specialties: Specialty[] = [
     {
-        name: "Odontologia",
+        name: "ODONTOLOGY",
         image: "odontologia.svg",
     },
     {
-        name: "Traumatologia",
+        name: "TRAUMATOLOGY",
         image: "traumatologia.svg",
     },
     {
-        name: "Neurología",
+        name: "NEUROLOGY",
         image: "neurologia.svg",
     },
     {
@@ -18,11 +18,11 @@ export const Specialties: Specialty[] = [
         image: "cardiologia.svg",
     },
     {
-        name: "Neumología",
+        name: "PNEUMOLOGY",
         image: "neumologia.svg",
     },
     {
-        name: "Pediatría",
+        name: "PEDIATRICS",
         image: "pediatria.svg",
     },
     {
@@ -30,11 +30,11 @@ export const Specialties: Specialty[] = [
         image: "cirugia.svg",
     },
     {
-        name: "Cirugía",
+        name: "DERMATOLOGY",
         image: "cirugia.svg",
     },
     {
-        name: "Cirugía",
+        name: "HEMATOLOGY",
         image: "cirugia.svg",
     }
 ]

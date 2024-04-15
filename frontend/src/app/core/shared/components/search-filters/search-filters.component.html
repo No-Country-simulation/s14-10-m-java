@@ -1,0 +1,34 @@
+<div class="filter-component">
+  <div style="text-align: center">
+    <button (click)="toggleOptionsVisibility()" class="toggle-button">
+      <h3
+        class="filter-title"
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 20px;
+          line-height: 30px;
+          color: #063463;
+        "
+      >
+        {{ title }}
+      </h3>
+    </button>
+  </div>
+  <div class="filter-options ml-2 mt-2" *ngIf="showOptions">
+    <div class="mb-1" *ngFor="let option of options">
+      <label
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 300;
+          font-size: 16px;
+          line-height: 24px;
+          color: #063463;
+        "
+      >
+        <input type="radio" name="{{ title }}" (change)="applyFilterOption(option)" />
+        {{ option }}
+      </label>
+    </div>
+  </div>
+</div>
