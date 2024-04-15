@@ -8,10 +8,11 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Properties;
-
 @Configuration
+@EnableScheduling
 //@PropertySource("classpath:application.properties")
 public class EmailConfig {
 
