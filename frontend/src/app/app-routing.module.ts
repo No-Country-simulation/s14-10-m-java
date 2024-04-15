@@ -13,6 +13,11 @@ const routes: Routes = [
       import('./modules/home/home.module').then((m) => m.HomeModule),
   },
   {
+    path: 'search-doctor',
+    loadChildren: () =>
+      import('./modules/home/home.module').then((m) => m.HomeModule),
+  },
+  {
     path: 'page-under-construction',
     loadChildren: () =>
       import('./modules/not-found/not-found.module').then(
