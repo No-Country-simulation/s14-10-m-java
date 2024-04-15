@@ -18,4 +18,5 @@ public interface DoctorService {
     List<ResponseDoctor> readAllDoctorBySpecialty(String specialty);
     Page<ResponseDoctor> readAllDoctorsByAvailability(String availability, Pageable paging);
     List<ResponseDoctor> readAllDoctorsBySamePostalCode(Integer postalCode);
+    Page<ResponseDoctor> readAllDoctorsBySurname(Boolean asc, Pageable paging);
 }

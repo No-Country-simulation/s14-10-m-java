@@ -9,6 +9,7 @@ import com.s1410.calme.Domain.Mapper.DoctorMapper;
 import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import com.s1410.calme.Domain.Services.DoctorService;
 import com.s1410.calme.Domain.Utils.Specialty;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,6 +38,9 @@ public class DoctorServiceImpl implements DoctorService {
     public ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor) {
 
     if (requestCreateDoctor == null){throw new EntityNotFoundException();}
+
+        var doctorAlreadyExists = doctorRepository.findByEmail(requestCreateDoctor.email());
+        if(doctorAlreadyExists.isPresent()){ throw new EntityExistsException("Email already in use"); }
 
     Doctor doctor = doctorMapper.requestCreateToDoctor(requestCreateDoctor);
         doctor.setPassword(passwordEncoder.encode(requestCreateDoctor.password()));
@@ -151,4 +155,16 @@ public class DoctorServiceImpl implements DoctorService {
                 .stream()
                 .map(doctorMapper::doctorToResponse).collect(Collectors.toList());
     }
+
+    @Override
+    public Page<ResponseDoctor> readAllDoctorsBySurname(Boolean asc, Pageable paging) {
+        if (asc) {
+            return doctorRepository.findBySurnameAsc(paging)
+                    .map(doctorMapper::doctorToResponse);
+        } else {
+            return doctorRepository.findBySurnameDesc(paging)
+                    .map(doctorMapper::doctorToResponse);
+        }
+    }
+
 }

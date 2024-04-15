@@ -14,6 +14,7 @@ public class Doctor extends User{
 
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
+    @Column(unique = true)
     private String email;
     private String password;
     private Boolean morning;
