@@ -19,5 +19,7 @@ public record RequestCreateAssisted(
         @NotNull(message = "dateOfBirth cannot be null")
         LocalDate dateOfBirth,
         Long AssistantID,
+
+        /* CAMBIAR ESTO a RelationType */
         String relationTypeWithAssistant
 ){}
