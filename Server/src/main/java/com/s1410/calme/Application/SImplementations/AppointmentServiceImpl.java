@@ -51,6 +51,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     public ResponseEntity<ResponseAppointment> createAppointment(RequestCreateAppointment requestCreateAppointment) {
         Long doctorId = requestCreateAppointment.doctorId();
         LocalDateTime date = requestCreateAppointment.date();
+
+        if (date.isBefore(LocalDateTime.now())){
+            throw new AppointmentAvailabilityException("Appointment Date cannot be in the past");
+        }
+
         Long assistentId = 0L;
         Long assistedId = 0L;
 
@@ -73,9 +78,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         //TODO: cambiar la respuesta de 404 a badrequest
         //Comprobar si el doctor esta ocupado ese dia
         if(isDoctorBusyAssistent(doctorId, assistentId, date)){
-            throw new EntityNotFoundException("The doctor has an appointment already with you on this day");
+            throw new AppointmentAvailabilityException("The doctor has an appointment already with assistent " + assistentId + " on this day");
         } else if (isDoctorBusyAssisted(doctorId, assistedId, date)) {
-            throw new EntityNotFoundException("The doctor has an appointment already with you on this day");
+            throw new AppointmentAvailabilityException("The doctor has an appointment already with assistent " + assistedId + " on this day");
         }
 
         //Corrobora primero cuál de los dos es el que va y sólo da error si no está ninguno.
