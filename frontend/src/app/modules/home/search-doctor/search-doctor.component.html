@@ -1,0 +1,55 @@
+<div
+  style="
+    height: 149px;
+    background-color: #75a5ff;
+    border-radius: 0px 0px 24px 24px;
+    background-image: radial-gradient(
+      circle at 10% 40%,
+      #ffffff83 05%,
+      #93b9ff15 22%
+    );
+  "
+>
+  <shared-navbar></shared-navbar>
+</div>
+<div
+  class="justify-center flex"
+  style="
+    background-image: radial-gradient(
+      circle at 10% -200%,
+      #ffdeb766 15%,
+      #ffffff15 22%
+    );
+  "
+>
+  <app-search-bar class="mt-20"></app-search-bar>
+</div>
+
+<div class="search mt-20 mr-4">
+  <div>
+    <app-search-filters
+      [title]="'Especialidad'"
+      [options]="['ODONTOLOGÍA',
+      'TRAUMATOLOGÍA',
+      'NEUROLOGÍA',
+      'CARDIOLOGÍA',
+      'NEUMOLOGÍA',
+      'PEDIATRÍA',
+      'GERIATRÍA',
+      'DERMATOLOGÍA',
+      'HEMATOLOGÍA']"
+      (applyFilter)="applySpecialtyFilter($event)"
+    ></app-search-filters>
+    <app-search-filters
+      [title]="'Disponibilidad'"
+      [options]="['Mañana', 'Tarde', 'Noche']"
+    ></app-search-filters>
+  </div>
+  <div class="doctors">
+    <app-doctor-search-card [selectedFilter]="selectedFilter"></app-doctor-search-card>
+  </div>
+</div>
+
+<div class="bg-calme-light-blue h-[8.25rem] rounded-t-3xl footer mt-4">
+  <shared-footer></shared-footer>
+</div>

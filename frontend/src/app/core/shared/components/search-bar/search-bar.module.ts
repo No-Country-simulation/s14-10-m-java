@@ -13,8 +13,7 @@ import { SharedModule } from "../../shared.module";
         SearchBarComponent
     ],
     imports: [
-        CommonModule,
-        SharedModule
+        CommonModule
     ]
 })
 export class SearchBarModule { }
