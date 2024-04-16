@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 
 import { emailValidator } from 'src/app/core/utils/validator';
 import { LoginService } from 'src/app/modules/auth/services/login.service';
+import { TokenService } from 'src/app/core/shared/services/token.service';
+import { NotifyService } from '../../services/notify.service';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +19,9 @@ export class LoginComponent {
 
   constructor(
     private readonly loginService: LoginService,
+    private tokenService: TokenService,
+
+    private NotifySvc: NotifyService,
     private readonly fb: FormBuilder,
     private readonly router: Router
   ) {
@@ -33,9 +38,11 @@ export class LoginComponent {
   }
 
   login() {
+    this.loginService.login(this.loginForm.value).subscribe();
+
     if (this.loginForm.invalid) {
+      this.NotifySvc.showError('Error en la aplicacion');
       return this.loginForm.markAllAsTouched();
     }
-    this.loginService.login(this.loginForm.value).subscribe();
   }
 }
