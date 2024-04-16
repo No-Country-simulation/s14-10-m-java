@@ -20,7 +20,6 @@ export class LoginComponent {
   constructor(
     private readonly loginService: LoginService,
     private tokenService: TokenService,
-
     private NotifySvc: NotifyService,
     private readonly fb: FormBuilder,
     private readonly router: Router
@@ -44,5 +43,9 @@ export class LoginComponent {
       this.NotifySvc.showError('Error en la aplicacion');
       return this.loginForm.markAllAsTouched();
     }
+  }
+  token() {
+    console.log(this.token);
+    return this.tokenService.getToken();
   }
 }
