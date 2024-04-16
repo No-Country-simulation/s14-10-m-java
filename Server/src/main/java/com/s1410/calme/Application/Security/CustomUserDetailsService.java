@@ -19,19 +19,27 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final DoctorRepository doctorRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email)
-            throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        /* si es assistent */
         var found = assistentRepository.findByEmail(email);
         if (found.isPresent()) {
-            var user = User.builder().username(email)
-                    .password(found.get().getPassword()).build();
+            var user = User.builder()
+                    .username(email)
+                    .roles(found.get().getAuthorities().toString())
+                    .password(found.get().getPassword())
+                    .build();
             return user;
         }
 
+        /* si es doctor */
         var found2 = doctorRepository.findByEmail(email);
         if (found2.isPresent()) {
-            var user = User.builder().username(email)
-                    .password(found2.get().getPassword()).build();
+            var user = User.builder()
+                    .username(email)
+                    .password(found2.get().getPassword())
+                    .roles(found2.get().getAuthorities().toString())
+                    .build();
             return user;
         }
 
