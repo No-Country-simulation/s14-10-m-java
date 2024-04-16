@@ -11,7 +11,7 @@ const routes: Routes = [
     children: [
       { path: '', component: PrincipalComponent },
       { path: 'search-doctor', component: SearchDoctorComponent},
-      { path: 'appointment-confirmation', component: AppointmentConfirmationComponent, canActivate: [AuthGuard]},
+      { path: 'appointment-confirmation', component: AppointmentConfirmationComponent},
 
     ],
     

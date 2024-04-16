@@ -45,7 +45,7 @@
           color: #000000;
         "
       >
-        Has seleccionado un turno con el Dr. Macetas.<br />
+        Has seleccionado un turno con el Dr. {{doctorData.firstName}} {{doctorData.secondName}} {{doctorData.lastName}}<br />
         Lee con atención la siguiente información y completa <br />los campos
         requeridos para confirmar tu turno:
       </p>
@@ -140,6 +140,7 @@
       <select
         *ngIf="!isForSelf"
         class="mt-2"
+        [ngModel]="assistedList" (ngModelChange)="seleccionarTitular($event)"
         style="
           font-family: 'Poppins', sans-serif;
           font-weight: 400;
@@ -150,10 +151,10 @@
           border-radius: 8px;
           border: 1px solid #dde1eb;
         "
-  (change)="seleccionarTitular($event)"
   >
         <option value="">Selecciona una persona</option>
         <!-- Aquí debes iterar sobre tu lista de personas y mostrarlas como opciones -->
+        <option *ngFor="let assisted of assistedList" [value]="assisted.id">{{assisted.name}}</option>
         <option value="new">Agregar nueva persona</option>
       </select>
 
@@ -209,7 +210,7 @@
     </div>
     <div class="spacer"></div> 
     <div>
-      <app-appointment></app-appointment>
+      <app-appointment [doctorData]="doctorData"></app-appointment>
     </div>
   </div>
 </div>
