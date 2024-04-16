@@ -1,0 +1,191 @@
+<section class="min-h-screen bg_blue_shadow">
+  <shared-navbar [showOptions]="false"></shared-navbar>
+  <section class="content_register flex items-center justify-center flex-col">
+    <section class="neumorphic flex justify-center items-center gap-5 p-8">
+      <section class="flex flex-col gap-3">
+        <article class="flex flex-col gap-3">
+          <h1 class="text-white text-4xl">Registrarme como profesional</h1>
+          <div class="flex">
+            <div
+              class="flex items-center justify-center text-white p-2 cursor-pointer bg-transparent shadow-4xl"
+              (click)="goToStep(1)"
+            >
+              Datos personales
+            </div>
+            <div
+              class="flex items-center justify-center text-white p-2 cursor-pointer bg-transparent shadow-4xl"
+              (click)="goToStep(2)"
+            >
+              Datos profesionales
+            </div>
+          </div>
+
+          <div *ngIf="currentStep === 1" class="flex flex-col gap-3">
+            <!-- Paso 1 -->
+            <div class="flex flex-col gap-2 neumorphic p-5">
+              <div class="flex flex-col gap-1">
+                <label for="firstName">Primer nombre:</label>
+                <input
+                  type="text"
+                  id="firstName"
+                  [(ngModel)]="formDataStep1.firstName"
+                  class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <label for="secondName">Segundo nombre:</label>
+                <input
+                  type="text"
+                  id="secondName"
+                  [(ngModel)]="formDataStep1.secondName"
+                  class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <label for="lastName">Apellidos:</label>
+                <input
+                  type="text"
+                  id="lastName"
+                  [(ngModel)]="formDataStep1.lastName"
+                  class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <label for="DNI">DNI:</label>
+                <input
+                  type="text"
+                  id="DNI"
+                  [(ngModel)]="formDataStep1.DNI"
+                  class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+              </div>
+
+              <div class="flex flex-col gap-3">
+                <label for="dateOfBirth">Fecha de nacimiento:</label>
+                <input
+                  type="date"
+                  id="dateOfBirth"
+                  [(ngModel)]="formDataStep1.dateOfBirth"
+                  class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+              </div>
+            </div>
+            <div class="flex justify-center items-center">
+              <button
+                (click)="goToStep(2)"
+                class="w-[220px] h-10 border border-gray-300 rounded-lg bg-[#FFCD93]"
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
+          <div *ngIf="currentStep === 2" class="flex flex-col gap-3">
+            <!-- Paso 2 -->
+            <div class="neumorphic p-5 flex flex-col gap-3">
+              <div class="flex flex-col gap-2">
+                <label for="email">Email:</label>
+                <input
+                  type="email"
+                  id="email"
+                  [(ngModel)]="formDataStep2.email"
+                  class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="password">Contraseña:</label>
+                <input
+                  type="password"
+                  id="password"
+                  [(ngModel)]="formDataStep2.password"
+                  class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="specialty">Especialidad:</label>
+                <select
+                  id="specialty"
+                  [(ngModel)]="formDataStep2.specialty"
+                  class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                >
+                  <option value="" disabled>Seleccione especialidad</option>
+                  <option value="CARDIOLOGY">Cardiologia</option>
+                  <option value="NEUROLOGY">Neurologia</option>
+                  <option value="DERMATOLOGY">Dermatologia</option>
+                  <!-- Agrega más opciones según tus necesidades -->
+                </select>
+              </div>
+
+              <div class="flex flex-col gap-2">
+                <label for="phoneNumber">Celular:</label>
+                <input
+                  type="text"
+                  id="phoneNumber"
+                  [(ngModel)]="formDataStep2.phoneNumber"
+                  class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                  required
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="postalCode">Postal Code:</label>
+                <input
+                  type="text"
+                  id="postalCode"
+                  [(ngModel)]="formDataStep2.postalCode"
+                  class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                  required
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <h1>Disponibilidad</h1>
+                <div class="flex justify-between items-center">
+                  <label for="morning">Mañana:</label>
+                  <input
+                    type="checkbox"
+                    id="morning"
+                    [(ngModel)]="formDataStep2.morning"
+                  />
+                </div>
+
+                <div class="flex justify-between items-center">
+                  <label for="afternoon">Tarde:</label>
+                  <input
+                    type="checkbox"
+                    id="afternoon"
+                    [(ngModel)]="formDataStep2.afternoon"
+                  />
+                </div>
+
+                <div class="flex justify-between items-center">
+                  <label for="night">Noche:</label>
+                  <input
+                    type="checkbox"
+                    id="night"
+                    [(ngModel)]="formDataStep2.night"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-center items-center">
+              <button
+                (click)="submitForm()"
+                class="w-[220px] h-10 border border-gray-300 rounded-full bg-[#FFCD93]"
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        </article>
+      </section>
+      <img
+        src="../../../../../assets/image-png/equipo-profesionales-salud.png"
+        alt="logo-team-pro"
+        class="hidden lg:block h-64"
+      />
+    </section>
+  </section>
+</section>
+
+<router-outlet></router-outlet>

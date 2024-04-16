@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,11 +9,24 @@ import { Router } from '@angular/router';
 export class NavbarComponent {
   router = inject(Router);
 
+  @Input()
+  activeBlue: boolean = false;
+
+  @Input()
+  showOptions: boolean = true;
+
   onLogin() {
     this.router.navigateByUrl('/auth/login');
   }
 
   onRegister() {
     this.router.navigateByUrl('/auth/register');
+  }
+
+  public get showLogo(): string {
+    if (this.activeBlue) {
+      return `./assets/icons-svg/blue-logo.svg`;
+    }
+    return `./assets/icons-svg/logo.svg`;
   }
 }

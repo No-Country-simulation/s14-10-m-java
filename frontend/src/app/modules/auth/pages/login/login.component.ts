@@ -5,11 +5,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { emailValidator } from 'src/app/core/utils/validator';
-import Swal from 'sweetalert2';
-import { LoginService } from 'src/app/services/login.service';
-import { NotifyService } from 'src/app/services/notify.service';
-import { ToastrService, ToastrModule } from 'ngx-toastr';
+
+import { LoginService } from 'src/app/modules/auth/services/login.service';
+import { NotifyService } from 'src/app/modules/auth/services/notify.service';
+import { ToastrService } from 'ngx-toastr';
 import { Login } from '../../../../core/models/login.model';
+import { passwordValidator } from '../../../../core/utils/validator';
 
 @Component({
   selector: 'app-login',
@@ -42,137 +43,42 @@ export class LoginComponent {
   }
 
   Login() {
-    /* this.http.post(`https://s14-10-m-java-production.up.railway.app/login`, {
-   email:'prueba11@gmail.com',password:'123456789'
-    }).subscribe(
-      res => console.log('res', res),
-      (error) => {
-        const token = JSON.stringify(error.error.text);
-        this.tokenService.saveToken(token);
-        this.toastr.success("Inicio de sesion exitoso")
+    this.loginService.isLoggedIn$.subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        this.notifySvc.showSuccess('Datos enviados correctamente');
+        this.loginForm.reset(this.loginForm);
+        this.router.navigate(['/home']);
       }
- ) */
-    /* this.loginService.login(this.loginForm.value).subscribe(
-      (resp) => {
-        console.log(resp);
-      },
-      (err) => {
-        const loginToken = err.error.error.message;
+    });
 
-        localStorage.setItem('token', JSON.stringify(loginToken));
-
-        console.log(loginToken);
-
-
-        this.loginService.login(this.loginForm.value).subscribe({
-          next: () => {
-            Swal.fire({
-              title: '¡Ingreso exitoso!',
-              text: `¡Hola, bienvenido a esta iniciativa ambiental!`,
-              icon: 'success',
-            }).then(() => {
-              this.loginForm.reset();
-              this.router.navigate(['/home']);
-            });
-          },
-          error: (error) => {
-            Swal.fire({
-              title: 'Ha ocurrido un error...',
-              text: error.error,
-              icon: 'error',
-            });
-          },
-        });
-      }
-    ); */
-  }
-
-  /* if (this.loginForm.value && this.loginService) {
-      this.notifySvc.showError('datos no coninciden');
-      return;
-    } else if (this.loginForm.value === this.loginService) {
-      this.notifySvc.showSuccess('Datos enviados correctamente');
-      return;
-    } */
-
-  /* if (this.loginForm.valid) {
-      this.notifySvc.showSuccess('Datos enviados correctamente');
+    if (this.loginService.login(this.loginForm.value).subscribe()) {
+      this.notifySvc.showError('Verifica los datos');
+    } else if (this.loginForm.invalid) {
+      this.notifySvc.showError('ERROR EN EL FORMULARIO');
     }
-    if (this.loginForm.invalid) {
-      this.notifySvc.showError('datos no coninciden');
-    } */
 
-  /* if (
-      this.loginService.Login(this.loginForm.value).subscribe({
-        next: () => {
-          this.notifySvc.showSuccess('Datos enviados correctamente');
-          console.log(this.loginForm.value);
-        },
-      })
-    ) */
-  //temporalmente para q el formulario fue tocado
-  /* if (this.loginForm.invalid) {
-      return this.loginForm.markAllAsTouched();
-    } */
-  /* this.loginService.Login(this.loginForm.value).subscribe((res: any) => {
-      this.loginService.id = res.id;
-      this.loginService.token = res.token;
-      localStorage.setItem('id', res.id);
-      localStorage.setItem('token', res.token);
-    }); */
+    this.loginService.login(this.loginForm.value).subscribe(
+      () => {
+        this.notifySvc.showSuccess('Datos enviados correctamente');
+        this.loginForm.reset();
+        this.router.navigate(['/home']);
+      },
+      (error) => {
+        const appToken = JSON.stringify(error.error.text);
+        let token = appToken;
+        token = token.replace(/^"(.*)"$/, '$1');
+        localStorage.setItem('token', token);
+        console.log(token);
+      },
 
-  /* if (this.loginForm.value) {
-      this.notifySvc.showError('Faltan campos por diligenciar');
-    } */
-  /* this.loginService.Login(this.loginForm.value).subscribe({
-      next: () => {
-        this.notifySvc.showSuccess('Datos enviados correctamente')
-           .then(() => {
-            this.loginForm.reset();
-            this.router.navigate(['/home']);
-        })
+      () => {
+        // Este bloque se ejecuta cuando la operación completa,
+        // independientemente de si hay un error o no.
+        this.notifySvc.showSuccess('Datos enviados correctamente');
+        console.log('Formulario enviado:', this.loginForm.value);
       }
-    }) */
-  /* this.loginService.Login(this.loginForm.value).subscribe({
-        next: (response: any) => {
-          // Assuming response type is unknown
-          this.notifySvc.showSuccess('Datos enviados correctamente');
-
-          // Handle successful login response (replace with your logic)
-          console.log('Login correcto:', response); // Example logging
-
-          this.loginForm.reset();
-          this.router.navigate(['/home']);
-        },
-        error: (error: any) => {
-          // Handle login errors
-          console.error('Login error:', error);
-          this.notifySvc.showError('Error al iniciar sesión'); // Example error notification
-        },
-      });
+    );
   }
- */
-  //this.notifySvc.showSuccess('formulario enviado correctamente');
-
-  /* this.loginService.Login(this.loginForm.value).subscribe({
-          next: () => {
-              this.showPassword
-              title: '¡Ingreso exitoso!',
-              text: `¡Hola, bienvenido a esta iniciativa ambiental!`,
-              icon: 'success',
-            }).then(() => {
-              this.loginForm.reset();
-              this.router.navigate(['/home']);
-            });
-          },
-          error: (error) => {
-            Swal.fire({
-              title: 'Ha ocurrido un error...',
-              text: error.error,
-              icon: 'error',
-            });
-          },
-        }); */
 
   handleShowPassword(): void {
     this.showPassword = !this.showPassword;
