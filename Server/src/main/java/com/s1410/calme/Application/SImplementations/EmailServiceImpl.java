@@ -62,49 +62,65 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    //@Scheduled(fixedRate = 5000)
-  //  @Scheduled(cron = "0 0 0 * * *"))
-    public void sendAppointmentEmail() {
+    @Scheduled(cron = "0 0 0 * * *")
+    public void sendScheduledAppointments() {
 
+        getAppointmentsToSendReminders().forEach(appointment -> {
 
-       LocalDate today = LocalDate.now();
+            sendAppointmentEmail(appointment.getAssistent().getEmail(), appointment.getDate());
 
-       LocalDateTime startDataTime =  today.plusDays(2).atStartOfDay();
-       LocalDateTime endDataTime = today.plusDays(3).atStartOfDay();
-    //   System.out.println("La fecha Actual es: " + startDataTime + " " + endDataTime);
-       List<Appointment> appointmentList = appointmentRepository.findAll();
+            System.out.println("Se envio mail de cita pendiente al usuario " + appointment.getAssistent().getEmail());
+        });
+        System.out.println("Se enviaron todo los mail de citas pendiantes programadas en 2 dias ");
 
-     List<Appointment> newAppointmentList = appointmentList.stream().filter(appointment -> {
-
-        return appointment.getDate().isAfter(startDataTime) && appointment.getDate().isBefore(endDataTime);
-       //  return true;
-          }).toList();
-
-     newAppointmentList.forEach(appointment -> System.out.println( appointment.
-             getDate( ) + "  " + appointment.getAssistent().getEmail()));
-
- //      try {
- //          MimeMessage message = javaMailSender.createMimeMessage();
- //          MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-
- //          helper.setTo(email);
- //          helper.setSubject("Resgistrado con Exito!");
-
- //          Context context = new Context();
- //          // Agregar variables de contexto para la plantilla Thymeleaf
- //          context.setVariable("message", "Agendaste una cita para " + date);
- //          // Agregar más variables según sea necesario
-
- //          // Procesar la plantilla Thymeleaf
- //          String htmlBody = templateEngine.process("email", context);
-
- //          // Establecer el cuerpo del mensaje como HTML
- //          helper.setText(htmlBody, true);
-
- //          javaMailSender.send(message);
-
- //      } catch (Exception e) {
- //          throw new RuntimeException(" Error " + " al enviar el correo : " + e.getMessage(), e);
- //      }
     }
+
+
+    @Override
+    public void sendAppointmentEmail(String email, LocalDateTime date) {
+        try {
+
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(email);
+            helper.setSubject("Resgistrado con Exito!");
+
+            Context context = new Context();
+            // Agregar variables de contexto para la plantilla Thymeleaf
+            context.setVariable("message", "Agendaste una cita para " + date);
+            // Agregar más variables según sea necesario
+
+            // Procesar la plantilla Thymeleaf
+            String htmlBody = templateEngine.process("email", context);
+
+            // Establecer el cuerpo del mensaje como HTML
+            helper.setText(htmlBody, true);
+
+            javaMailSender.send(message);
+
+        } catch (Exception e) {
+            throw new RuntimeException(" Error " + " al enviar el correo : " + e.getMessage(), e);
+        }
+    }
+
+    public List<Appointment> getAppointmentsToSendReminders() {
+
+        LocalDate today = LocalDate.now();
+
+        LocalDateTime startDataTime = today.plusDays(2).atStartOfDay();
+        LocalDateTime endDataTime = today.plusDays(3).atStartOfDay();
+
+        List<Appointment> appointmentList = appointmentRepository.findAll();
+
+        List<Appointment> newAppointmentList = appointmentList.stream().filter(appointment -> {
+
+            return appointment.getDate().isAfter(startDataTime) && appointment.getDate().isBefore(endDataTime);
+
+        }).toList();
+
+        return newAppointmentList;
+    }
+
 }
