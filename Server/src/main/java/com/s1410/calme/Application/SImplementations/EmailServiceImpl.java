@@ -62,7 +62,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    @Scheduled(fixedRate = 5000)
+    //@Scheduled(fixedRate = 5000)
   //  @Scheduled(cron = "0 0 0 * * *"))
     public void sendAppointmentEmail() {
 

@@ -4,7 +4,8 @@ import jakarta.persistence.EnumType;
 
 public record ResponseLogin(
         String jwt,
-        String role
+        String role,
+        Long id
 
 ) {
 }
