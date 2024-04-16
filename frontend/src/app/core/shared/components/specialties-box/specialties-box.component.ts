@@ -9,7 +9,6 @@ import { Specialty } from '../slider/interface/specialty.interface';
   styleUrls: ['./specialties-box.component.scss']
 })
 export class SpecialtiesBoxComponent implements OnInit {
-  especialidades: string[] = ['Especialidad 1', 'Especialidad 2', 'Especialidad 3'];
   doctors: Doctor[] = [];
   filteredDoctors: Doctor[] = [];
 
