@@ -27,7 +27,7 @@
             <div *ngIf="currentStep === 1" class="flex flex-col gap-3">
               <!-- Paso 1 -->
               <div class="flex flex-col gap-2 neumorphic p-5">
-                <div class="flex gap-3 flex-wrap">
+                <div class="flex gap-3">
                   <div class="flex flex-col gap-1 w-full">
                     <label for="firstName">First Name:</label>
                     <input
@@ -75,7 +75,7 @@
                   </div>
                 </div>
 
-                <div class="flex gap-3 flex-wrap">
+                <div class="flex gap-3">
                   <div class="flex flex-col gap-1 w-full">
                     <label for="lastName">Last Name:</label>
                     <input
@@ -125,7 +125,7 @@
                     type="date"
                     id="dateOfBirth"
                     formControlName="dateOfBirth"
-                    class="w-full max-w-[415px] h-10 border px-2 border-gray-300 rounded-lg"
+                    class="w-full h-10 border px-2 border-gray-300 rounded-lg"
                   />
                   <div
                     *ngIf="
@@ -147,7 +147,7 @@
                     type="text"
                     id="address"
                     formControlName="address"
-                    class="w-full max-w-[415px] h-10 border px-2 border-gray-300 rounded-lg"
+                    class="w-full h-10 border px-2 border-gray-300 rounded-lg"
                   />
                   <div
                     *ngIf="
@@ -175,7 +175,7 @@
             <div *ngIf="currentStep === 2" class="flex flex-col gap-3">
               <!-- Paso 2 -->
               <div class="neumorphic p-5 flex flex-col gap-3">
-                <div class="flex gap-3 w-full flex-wrap">
+                <div class="flex gap-3 w-full">
                   <div class="flex flex-col gap-2 w-3/6">
                     <label for="email">Email:</label>
                     <input
@@ -226,18 +226,95 @@
                     </div>
                   </div>
                 </div>
+
+                <!--  -->
+                <div class="flex gap-3 w-full">
+                  <div class="flex flex-col gap-2 w-3/6">
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input
+                      type="text"
+                      id="phoneNumber"
+                      formControlName="phoneNumber"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep2.controls.phoneNumber.invalid &&
+                        formDataStep2.controls.phoneNumber.touched
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          formDataStep2.controls.phoneNumber.errors?.required
+                        "
+                        >Phone Number is required.</span
+                      >
+                      <span
+                        *ngIf="
+                          formDataStep2.controls.phoneNumber.errors?.pattern
+                        "
+                        >Invalid phone number format.</span
+                      >
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-2 w-3/6">
+                    <label for="postalCode">Postal Code:</label>
+                    <input
+                      type="text"
+                      id="postalCode"
+                      formControlName="postalCode"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep2.controls.postalCode.invalid &&
+                        formDataStep2.controls.postalCode.touched
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          formDataStep2.controls.postalCode.errors?.required
+                        "
+                        >Postal Code is required.</span
+                      >
+                      <span
+                        *ngIf="
+                          formDataStep2.controls.postalCode.errors?.pattern
+                        "
+                        >Invalid postal code format.</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!--  -->
                 <div class="flex flex-col gap-2">
                   <label for="specialty">Specialty:</label>
                   <select
                     id="specialty"
                     formControlName="specialty"
-                    class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                    class="w-full h-10 border px-2 border-gray-300 rounded-lg"
                   >
                     <option value="" disabled selected>Select specialty</option>
                     <option value="CARDIOLOGY">Cardiology</option>
+                    <option value="DERMATOLOGY">Dermatology</option>
+                    <option value="ENDOCRINOLOGY">Endocrinology</option>
+                    <option value="GASTROENTEROLOGY">Gastroenterology</option>
+                    <option value="GERIATRICS">Geriatrics</option>
+                    <option value="GYNECOLOGY">Gynecology</option>
+                    <option value="HEMATOLOGY">Hematology</option>
+                    <option value="INTERNAL_MEDICINE">Internal Medicine</option>
+                    <option value="NEPHROLOGY">Nephrology</option>
                     <option value="NEUROLOGY">Neurology</option>
+                    <option value="OPHTHALMOLOGY">Ophthalmology</option>
+                    <option value="ONCOLOGY">Oncology</option>
                     <option value="ORTHOPEDICS">Orthopedics</option>
-                    <!-- Agrega más opciones según tus necesidades -->
+                    <option value="OTOLARYNGOLOGY">Otolaryngology</option>
+                    <option value="PEDIATRICS">Pediatrics</option>
+                    <option value="PSYCHIATRY">Psychiatry</option>
+                    <option value="RADIOLOGY">Radiology</option>
+                    <option value="RHEUMATOLOGY">Rheumatology</option>
+                    <option value="TRAUMATOLOGY">Traumatology</option>
+                    <option value="UROLOGY">Urology</option>
                   </select>
                   <div
                     *ngIf="
@@ -248,57 +325,6 @@
                     <span
                       *ngIf="formDataStep2.controls.specialty.errors?.required"
                       >Specialty is required.</span
-                    >
-                  </div>
-                </div>
-
-                <div class="flex flex-col gap-2">
-                  <label for="phoneNumber">Phone Number:</label>
-                  <input
-                    type="text"
-                    id="phoneNumber"
-                    formControlName="phoneNumber"
-                    class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-                  />
-                  <div
-                    *ngIf="
-                      formDataStep2.controls.phoneNumber.invalid &&
-                      formDataStep2.controls.phoneNumber.touched
-                    "
-                  >
-                    <span
-                      *ngIf="
-                        formDataStep2.controls.phoneNumber.errors?.required
-                      "
-                      >Phone Number is required.</span
-                    >
-                    <span
-                      *ngIf="formDataStep2.controls.phoneNumber.errors?.pattern"
-                      >Invalid phone number format.</span
-                    >
-                  </div>
-                </div>
-                <div class="flex flex-col gap-2">
-                  <label for="postalCode">Postal Code:</label>
-                  <input
-                    type="text"
-                    id="postalCode"
-                    formControlName="postalCode"
-                    class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-                  />
-                  <div
-                    *ngIf="
-                      formDataStep2.controls.postalCode.invalid &&
-                      formDataStep2.controls.postalCode.touched
-                    "
-                  >
-                    <span
-                      *ngIf="formDataStep2.controls.postalCode.errors?.required"
-                      >Postal Code is required.</span
-                    >
-                    <span
-                      *ngIf="formDataStep2.controls.postalCode.errors?.pattern"
-                      >Invalid postal code format.</span
                     >
                   </div>
                 </div>
@@ -332,29 +358,37 @@
                 </div>
                 <div class="flex flex-col gap-2">
                   <h1>Disponibilidad</h1>
-                  <div class="flex justify-between items-center">
-                    <label for="morning">Mañana:</label>
-                    <input
-                      type="checkbox"
-                      id="morning"
-                      formControlName="morning"
-                    />
-                  </div>
+                  <div class="flex justify-between">
+                    <div class="flex justify-center items-center">
+                      <label for="morning">Mañana:</label>
+                      <input
+                        type="checkbox"
+                        id="morning"
+                        formControlName="morning"
+                        class="form-checkbox-rounded-full h-5 w-5 text-primary focus:ring-primary-dark"
+                      />
+                    </div>
 
-                  <div class="flex justify-between items-center">
-                    <label for="afternoon">Tarde:</label>
-                    <input
-                      type="checkbox"
-                      id="afternoon"
-                      formControlName="afternoon"
-                    />
-                  </div>
+                    <div class="flex justify-between items-center">
+                      <label for="afternoon">Tarde:</label>
+                      <input
+                        type="checkbox"
+                        id="afternoon"
+                        formControlName="afternoon"
+                      />
+                    </div>
 
-                  <div class="flex justify-between items-center">
-                    <label for="night">Noche:</label>
-                    <input type="checkbox" id="night" formControlName="night" />
+                    <div class="flex justify-between items-center">
+                      <label for="night">Noche:</label>
+                      <input
+                        type="checkbox"
+                        id="night"
+                        formControlName="night"
+                      />
+                    </div>
                   </div>
                 </div>
+                <!--  -->
               </div>
               <div class="flex justify-center items-center">
                 <button
