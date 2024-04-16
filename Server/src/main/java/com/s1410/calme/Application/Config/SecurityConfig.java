@@ -61,7 +61,8 @@ public class SecurityConfig {
             //Endpoint para eliminar y buscar un doctor por su id
             "/doctor/id/**",
             //Endpoint para buscar un doctor por su codigo postal
-            "/doctor/findByPostalCode"
+            "/doctor/findByPostalCode",
+            "/actuator/**"
     };
 
     private static final String[] DOCTOR_ENDPOINTS = {
