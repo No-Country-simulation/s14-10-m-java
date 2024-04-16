@@ -63,7 +63,7 @@ export class DoctorSearchCardComponent implements OnInit{
     });
   }
 
-  redirectToAppointmentConfirmation() {
-    this.router.navigate(['/appointment-confirmation']);
+  redirectToAppointmentConfirmation(doctor: any) {
+    this.router.navigate(['/appointment-confirmation'],{state: {doctorData: doctor}});
   }
 }

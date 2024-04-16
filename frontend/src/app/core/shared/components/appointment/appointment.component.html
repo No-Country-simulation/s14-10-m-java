@@ -14,7 +14,7 @@
   </h2>
   <div class="flex ml-8">
     <img src="../../../../../assets/icons-svg/dr-turn-icon.svg" />
-    <h3 class="option">Dr.</h3>
+    <h3 class="option">Dr. {{doctorData.firstName}} {{doctorData.secondName}} {{doctorData.lastName}}</h3>
   </div>
 
   <p
@@ -28,7 +28,7 @@
       color: #063463;
     "
   >
-    especialidad
+    {{doctorData.specialty}}
   </p>
   <div class="flex mb-4 ml-8">
     <img src="../../../../../assets/icons-svg/day-turn-icon.svg" />
@@ -40,7 +40,7 @@
   </div>
   <div class="flex mb-10 ml-8">
     <img src="../../../../../assets/icons-svg/location-turn-icon.svg" />
-    <h3 class="option">location.</h3>
+    <h3 class="option">{{doctorData.address}}</h3>
   </div>
   <div
     class="flex"
