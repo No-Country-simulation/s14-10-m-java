@@ -33,7 +33,6 @@ public class AssistentController {
                     this.assistentService.createAssistent(createAssistent));
     }
 
-
     @GetMapping("/id/{id}")
     public ResponseEntity<ResponseAssistent> findAssistent(@PathVariable Long id){
         return ResponseEntity.ok(assistentService.readAssistent(id));
