@@ -27,99 +27,105 @@
             <div *ngIf="currentStep === 1" class="flex flex-col gap-3">
               <!-- Paso 1 -->
               <div class="flex flex-col gap-2 neumorphic p-5">
-                <div class="flex flex-col gap-1">
-                  <label for="firstName">First Name:</label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    formControlName="firstName"
-                    class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-                  />
-                  <div
-                    *ngIf="
-                      formDataStep1.controls.firstName.invalid &&
-                      formDataStep1.controls.firstName.touched
-                    "
-                  >
-                    <span
-                      *ngIf="formDataStep1.controls.firstName.errors?.required"
-                      >First Name is required.</span
+                <div class="flex gap-3 flex-wrap">
+                  <div class="flex flex-col gap-1 w-full">
+                    <label for="firstName">First Name:</label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      formControlName="firstName"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep1.controls.firstName.invalid &&
+                        formDataStep1.controls.firstName.touched
+                      "
                     >
+                      <span
+                        *ngIf="
+                          formDataStep1.controls.firstName.errors?.required
+                        "
+                        >First Name is required.</span
+                      >
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col gap-1 w-full">
+                    <label for="secondName">Second Name:</label>
+                    <input
+                      type="text"
+                      id="secondName"
+                      formControlName="secondName"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep1.controls.secondName.invalid &&
+                        formDataStep1.controls.secondName.touched
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          formDataStep1.controls.secondName.errors?.required
+                        "
+                        >Second Name is required.</span
+                      >
+                    </div>
                   </div>
                 </div>
 
-                <div class="flex flex-col gap-1">
-                  <label for="secondName">Second Name:</label>
-                  <input
-                    type="text"
-                    id="secondName"
-                    formControlName="secondName"
-                    class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-                  />
-                  <div
-                    *ngIf="
-                      formDataStep1.controls.secondName.invalid &&
-                      formDataStep1.controls.secondName.touched
-                    "
-                  >
-                    <span
-                      *ngIf="formDataStep1.controls.secondName.errors?.required"
-                      >Second Name is required.</span
+                <div class="flex gap-3 flex-wrap">
+                  <div class="flex flex-col gap-1 w-full">
+                    <label for="lastName">Last Name:</label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      formControlName="lastName"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep1.controls.lastName.invalid &&
+                        formDataStep1.controls.lastName.touched
+                      "
                     >
+                      <span
+                        *ngIf="formDataStep1.controls.lastName.errors?.required"
+                        >Last Name is required.</span
+                      >
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-1 w-full">
+                    <label for="DNI">DNI:</label>
+                    <input
+                      type="text"
+                      id="DNI"
+                      formControlName="DNI"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep1.controls.DNI.invalid &&
+                        formDataStep1.controls.DNI.touched
+                      "
+                    >
+                      <span *ngIf="formDataStep1.controls.DNI.errors?.required"
+                        >DNI is required.</span
+                      >
+                      <span *ngIf="formDataStep1.controls.DNI.errors?.pattern"
+                        >DNI must have 7 digits.</span
+                      >
+                    </div>
                   </div>
                 </div>
-
                 <div class="flex flex-col gap-1">
-                  <label for="lastName">Last Name:</label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    formControlName="lastName"
-                    class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-                  />
-                  <div
-                    *ngIf="
-                      formDataStep1.controls.lastName.invalid &&
-                      formDataStep1.controls.lastName.touched
-                    "
-                  >
-                    <span
-                      *ngIf="formDataStep1.controls.lastName.errors?.required"
-                      >Last Name is required.</span
-                    >
-                  </div>
-                </div>
-
-                <div class="flex flex-col gap-1">
-                  <label for="DNI">DNI:</label>
-                  <input
-                    type="text"
-                    id="DNI"
-                    formControlName="DNI"
-                    class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-                  />
-                  <div
-                    *ngIf="
-                      formDataStep1.controls.DNI.invalid &&
-                      formDataStep1.controls.DNI.touched
-                    "
-                  >
-                    <span *ngIf="formDataStep1.controls.DNI.errors?.required"
-                      >DNI is required.</span
-                    >
-                    <span *ngIf="formDataStep1.controls.DNI.errors?.pattern"
-                      >DNI must have 7 digits.</span
-                    >
-                  </div>
-                </div>
-
-                <div class="flex flex-col gap-3">
                   <label for="dateOfBirth">Date of Birth:</label>
                   <input
                     type="date"
                     id="dateOfBirth"
                     formControlName="dateOfBirth"
-                    class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                    class="w-full max-w-[415px] h-10 border px-2 border-gray-300 rounded-lg"
                   />
                   <div
                     *ngIf="
@@ -134,25 +140,25 @@
                       >Date of Birth is required.</span
                     >
                   </div>
-                  <div class="flex flex-col gap-3">
-                    <label for="address">Address:</label>
-                    <input
-                      type="text"
-                      id="address"
-                      formControlName="address"
-                      class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-                    />
-                    <div
-                      *ngIf="
-                        formDataStep1.controls.address.invalid &&
-                        formDataStep1.controls.address.touched
-                      "
+                </div>
+                <div class="flex flex-col gap-1">
+                  <label for="address">Address:</label>
+                  <input
+                    type="text"
+                    id="address"
+                    formControlName="address"
+                    class="w-full max-w-[415px] h-10 border px-2 border-gray-300 rounded-lg"
+                  />
+                  <div
+                    *ngIf="
+                      formDataStep1.controls.address.invalid &&
+                      formDataStep1.controls.address.touched
+                    "
+                  >
+                    <span
+                      *ngIf="formDataStep1.controls.address.errors?.required"
+                      >Address is required.</span
                     >
-                      <span
-                        *ngIf="formDataStep1.controls.address.errors?.required"
-                        >Address is required.</span
-                      >
-                    </div>
                   </div>
                 </div>
               </div>
@@ -169,50 +175,55 @@
             <div *ngIf="currentStep === 2" class="flex flex-col gap-3">
               <!-- Paso 2 -->
               <div class="neumorphic p-5 flex flex-col gap-3">
-                <div class="flex flex-col gap-2">
-                  <label for="email">Email:</label>
-                  <input
-                    type="email"
-                    id="email"
-                    formControlName="email"
-                    class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-                  />
-                  <div
-                    *ngIf="
-                      formDataStep2.controls.email.invalid &&
-                      formDataStep2.controls.email.touched
-                    "
-                  >
-                    <span *ngIf="formDataStep2.controls.email.errors?.required"
-                      >Email is required.</span
+                <div class="flex gap-3 w-full flex-wrap">
+                  <div class="flex flex-col gap-2 w-3/6">
+                    <label for="email">Email:</label>
+                    <input
+                      type="email"
+                      id="email"
+                      formControlName="email"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep2.controls.email.invalid &&
+                        formDataStep2.controls.email.touched
+                      "
                     >
-                    <span *ngIf="formDataStep2.controls.email.errors?.email"
-                      >Invalid email format.</span
-                    >
+                      <span
+                        *ngIf="formDataStep2.controls.email.errors?.required"
+                        >Email is required.</span
+                      >
+                      <span *ngIf="formDataStep2.controls.email.errors?.email"
+                        >Invalid email format.</span
+                      >
+                    </div>
                   </div>
-                </div>
-                <div class="flex flex-col gap-2">
-                  <label for="password">Password:</label>
-                  <input
-                    type="password"
-                    id="password"
-                    formControlName="password"
-                    class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-                  />
-                  <div
-                    *ngIf="
-                      formDataStep2.controls.password.invalid &&
-                      formDataStep2.controls.password.touched
-                    "
-                  >
-                    <span
-                      *ngIf="formDataStep2.controls.password.errors?.required"
-                      >Password is required.</span
+                  <div class="flex flex-col gap-2 w-3/6">
+                    <label for="password">Password:</label>
+                    <input
+                      type="password"
+                      id="password"
+                      formControlName="password"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep2.controls.password.invalid &&
+                        formDataStep2.controls.password.touched
+                      "
                     >
-                    <span
-                      *ngIf="formDataStep2.controls.password.errors?.minlength"
-                      >Password must be at least 6 characters long.</span
-                    >
+                      <span
+                        *ngIf="formDataStep2.controls.password.errors?.required"
+                        >Password is required.</span
+                      >
+                      <span
+                        *ngIf="
+                          formDataStep2.controls.password.errors?.minlength
+                        "
+                        >Password must be at least 6 characters long.</span
+                      >
+                    </div>
                   </div>
                 </div>
                 <div class="flex flex-col gap-2">

@@ -18,6 +18,11 @@ const routes: Routes = [
       import('./modules/home/home.module').then((m) => m.HomeModule),
   },
   {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./modules/dash-doctor/dash-doctor.module').then((m) => m.DashDoctorModule),
+  },
+  {
     path: 'page-under-construction',
     loadChildren: () =>
       import('./modules/not-found/not-found.module').then(
@@ -31,4 +36,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
