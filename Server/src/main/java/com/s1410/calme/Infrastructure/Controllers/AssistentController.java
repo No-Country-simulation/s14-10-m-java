@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +49,7 @@ public class AssistentController {
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('ROLE_ASSISTENT')")
     public ResponseEntity<ResponseAssistent> updateAssistent(
             @RequestBody @Valid @NotNull RequestEditAssistent editAssistent,
             BindingResult bindingResult,

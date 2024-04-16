@@ -3,6 +3,7 @@ import com.s1410.calme.Application.Filters.JwtAuthenticationFilter;
 import com.s1410.calme.Application.Security.CustomUserDetailsService;
 import com.s1410.calme.Domain.Repositories.AssistentRepository;
 import com.s1410.calme.Domain.Repositories.DoctorRepository;
+import com.s1410.calme.Domain.Utils.RolesEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,6 +32,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
 @EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authProvider;
@@ -65,26 +68,44 @@ public class SecurityConfig {
     };
 
     private static final String[] DOCTOR_ENDPOINTS = {
-            "/doctor/update",
-            "/whatsapp/reminder"
+            "/doctor/update", //todo. ver tema delete doctor desde el controller para que no sea público.
+            "/whatsapp/reminder",
+            "/appointment/all",
+            "/appointment/id",
+            "/appointment/betweenDates",
+            "/appointment/doctor/**",
+            "/appointment/date/**"
     };
 
     private static final String[] ASSISTENT_ENDPOINTS = {
             "/doctor/findByAvailability/**",
             "/doctor/findByPostalCode",
-            "doctor/findBySurname/**",
-            "assistent/id/**",
-            "assistent/update",
-
+            "/doctor/findBySurname/**",
+            "/assistent/id/**", //toconsider. ver si este endpoint es accesible al dr para ver el paciente.
+            "/assistent/update",
+            "/assisted/register",
+            "/assisted/id/**", //toconsider. ver si este endpoint es accesible al dr para ver el paciente.
+            "/assisted/all/**",
+            "/assisted/update",
+            "/assisted/updateRelation",
+            "/assisted/deleteRelation/**/**",
+            "/appoinment/",
+            "/appointment/all",
+            "/appointment/betweenDates",
+            "/appointment/assistent/**",
+            "/appointment/assisted/**",
+            "/appointment/date/**",
     };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable).cors((cors) -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(request -> //comentar desde aqui para quitar el jwt
+                .authorizeHttpRequests(request ->
                         request.requestMatchers(FREE_ENDPOINTS).permitAll()
-                                .anyRequest().authenticated() //Hasta aqui!!
+                                //.requestMatchers(DOCTOR_ENDPOINTS).hasRole("DOCTOR")
+                                //.requestMatchers(ASSISTENT_ENDPOINTS).hasRole("ASSISTENT")
+                                .anyRequest().authenticated()
                 )
                 //authRequest.anyRequest().permitAll()) /*Este se descomenta para probar sin JWT*/
                 .sessionManagement(sessionManager ->

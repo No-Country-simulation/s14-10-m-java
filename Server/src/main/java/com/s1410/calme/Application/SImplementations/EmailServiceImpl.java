@@ -11,8 +11,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
+//import org.thymeleaf.TemplateEngine;
+//import org.thymeleaf.context.Context;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+public class EmailServiceImpl{/*
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;
@@ -106,5 +107,5 @@ public class EmailServiceImpl implements EmailService {
  //      } catch (Exception e) {
  //          throw new RuntimeException(" Error " + " al enviar el correo : " + e.getMessage(), e);
  //      }
-    }
+    }*/
 }

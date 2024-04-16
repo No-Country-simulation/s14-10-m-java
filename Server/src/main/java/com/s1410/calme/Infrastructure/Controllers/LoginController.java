@@ -1,5 +1,5 @@
 package com.s1410.calme.Infrastructure.Controllers;
-import com.s1410.calme.Application.SImplementations.AuthenticationService;
+import com.s1410.calme.Application.SImplementations.AuthenticationServiceImpl;
 import com.s1410.calme.Domain.Dtos.request.RequestLogin;
 import com.s1410.calme.Domain.Dtos.response.ResponseLogin;
 import com.s1410.calme.Infrastructure.Exceptions.BindingResultException;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SecurityRequirement(name = "Bearer Authentication")
 public class LoginController {
 
-    private final AuthenticationService authenticationService;
+    private final AuthenticationServiceImpl authenticationServiceImpl;
 
     @PostMapping
     public ResponseEntity<ResponseLogin> login(
@@ -31,6 +31,6 @@ public class LoginController {
             throw new BindingResultException(bindingResult);
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                this.authenticationService.login(requestLogin));
+                this.authenticationServiceImpl.login(requestLogin));
     }
 }
