@@ -13,11 +13,11 @@ export class SearchFiltersComponent {
   @Output() applyFilter: EventEmitter<string> = new EventEmitter<string>();
 
   valueMapping: { [key: string]: string } = {
-    'ODONTOLOGÍA': 'ODONTOLOGY',
+    'PSIQUIATRÍA': 'PSYCHIATRY',
     'TRAUMATOLOGÍA': 'TRAUMATOLOGY',
     'NEUROLOGÍA': 'NEUROLOGY',
     'CARDIOLOGÍA': 'CARDIOLOGY',
-    'NEUMOLOGÍA': 'PNEUMOLOGY',
+    'RADIOLOGÍA': 'RADIOLOGY',
     'PEDIATRÍA': 'PEDIATRICS',
     'GERIATRÍA': 'GERIATRICS',
     'DERMATOLOGÍA': 'DERMATOLOGY',
