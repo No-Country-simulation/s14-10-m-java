@@ -1,26 +1,27 @@
+<div style="height: 900px;
+background-image: radial-gradient(
+      circle at 8% -8%,
+      #FFDEB766 15%,
+      #ffffff  22%
+    )">
+
 <div
   style="
     height: 149px;
     background-color: #75a5ff;
     border-radius: 0px 0px 24px 24px;
     background-image: radial-gradient(
-      circle at 10% 40%,
-      #ffffff83 05%,
-      #93b9ff15 22%
-    );
+      circle at 12% -10%,
+      #FFDEB766 4%,
+      #ffffff15 24%
+    )
+    ;
   "
 >
   <shared-navbar></shared-navbar>
 </div>
 <div
   class="justify-center flex"
-  style="
-    background-image: radial-gradient(
-      circle at 10% -200%,
-      #ffdeb766 15%,
-      #ffffff15 22%
-    );
-  "
 >
   <app-search-bar class="mt-20"></app-search-bar>
 </div>
@@ -29,11 +30,11 @@
   <div>
     <app-search-filters
       [title]="'Especialidad'"
-      [options]="['ODONTOLOGÍA',
+      [options]="['PSIQUIATRÍA',
       'TRAUMATOLOGÍA',
       'NEUROLOGÍA',
       'CARDIOLOGÍA',
-      'NEUMOLOGÍA',
+      'RADIOLOGÍA',
       'PEDIATRÍA',
       'GERIATRÍA',
       'DERMATOLOGÍA',
@@ -43,13 +44,15 @@
     <app-search-filters
       [title]="'Disponibilidad'"
       [options]="['Mañana', 'Tarde', 'Noche']"
+      (applyFilter)="applyAvailabilityFilter($event)"
     ></app-search-filters>
   </div>
   <div class="doctors">
-    <app-doctor-search-card [selectedFilter]="selectedFilter"></app-doctor-search-card>
+    <app-doctor-search-card [selectedSpecialtyFilter]="selectedSpecialtyFilter" [selectedAvailabilityFilter]="selectedAvailabilityFilter"></app-doctor-search-card>
   </div>
 </div>
 
 <div class="bg-calme-light-blue h-[8.25rem] rounded-t-3xl footer mt-4">
   <shared-footer></shared-footer>
+</div>
 </div>
