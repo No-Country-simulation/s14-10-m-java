@@ -9,6 +9,7 @@ import com.s1410.calme.Domain.Mapper.DoctorMapper;
 import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import com.s1410.calme.Domain.Services.DoctorService;
 import com.s1410.calme.Domain.Utils.Specialty;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +38,9 @@ public class DoctorServiceImpl implements DoctorService {
     public ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor) {
 
     if (requestCreateDoctor == null){throw new EntityNotFoundException();}
+
+        var doctorAlreadyExists = doctorRepository.findByEmail(requestCreateDoctor.email());
+        if(doctorAlreadyExists.isPresent()){ throw new EntityExistsException("Email already in use"); }
 
     Doctor doctor = doctorMapper.requestCreateToDoctor(requestCreateDoctor);
         doctor.setPassword(passwordEncoder.encode(requestCreateDoctor.password()));
@@ -118,8 +124,10 @@ public class DoctorServiceImpl implements DoctorService {
         return doctor.getActive();
     }
     @Override
-    public Page<ResponseDoctor> readAllDoctorBySpecialty (String specialty,Pageable paging){
-        return doctorRepository.findBySpecialty(Specialty.valueOf(specialty),paging).map(doctorMapper::doctorToResponse);
+    public List<ResponseDoctor> readAllDoctorBySpecialty (String specialty){
+        return doctorRepository.findBySpecialty(Specialty.valueOf(specialty))
+                .stream()
+                .map(doctorMapper::doctorToResponse).collect(Collectors.toList());
     }
 
     @Override
@@ -142,7 +150,21 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public Page<ResponseDoctor> readAllDoctorsBySamePostalCode (int postalCode, Pageable pageable){
-        return doctorRepository.readAllDoctorsBySamePostalCode(postalCode, pageable).map(doctorMapper::doctorToResponse);
+    public List<ResponseDoctor> readAllDoctorsBySamePostalCode (Integer postalCode){
+        return doctorRepository.readAllDoctorsBySamePostalCode(postalCode)
+                .stream()
+                .map(doctorMapper::doctorToResponse).collect(Collectors.toList());
     }
+
+    @Override
+    public Page<ResponseDoctor> readAllDoctorsBySurname(Boolean asc, Pageable paging) {
+        if (asc) {
+            return doctorRepository.findBySurnameAsc(paging)
+                    .map(doctorMapper::doctorToResponse);
+        } else {
+            return doctorRepository.findBySurnameDesc(paging)
+                    .map(doctorMapper::doctorToResponse);
+        }
+    }
+
 }

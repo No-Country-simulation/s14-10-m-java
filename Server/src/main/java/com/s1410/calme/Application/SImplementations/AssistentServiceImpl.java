@@ -16,6 +16,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -124,15 +125,25 @@ public class AssistentServiceImpl implements AssistentService {
 
     @Transactional
     @Override
-    public Boolean toogleDeleteAssistent(Long id, String tokenUser) {
-            String email = jwtService.getUsernameFromToken(tokenUser.substring(7));
+    public Boolean toogleDeleteAssistent(Long id,String tokenUser) {
+        String email = jwtService.getUsernameFromToken(tokenUser.substring(7));
 
-            Assistent assistent = this.assistentRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException(id.toString()));
+        Assistent assistent = this.assistentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id.toString()));
 
-            if (!email.equals(assistent.getEmail())) { throw new IllegalArgumentException(
-                    "Logged user cannot edit this user!"); }
-
+        if (!email.equals(assistent.getEmail())) {
+            throw new IllegalArgumentException(
+                    "Logged user cannot delete this user!");
+        }
+        /*
+         * Verify that there are no dependents before executing logical deletion.
+         * */
+        List<RelationAA> relationsAA = assistent.getRelationsAA();
+        relationsAA.forEach(relationAA -> {
+            if (relationAA.getActive()) throw new IllegalArgumentException(
+                    "Before you can delete this user , first you need clean your relations. Check relation with id :"
+                            + relationAA.getId());
+        });
         assistent.setActive(!assistent.getActive());
         assistentRepository.save(assistent);
         return assistent.getActive();

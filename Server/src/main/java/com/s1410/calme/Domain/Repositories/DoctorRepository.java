@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     @Query("SELECT d FROM Doctor d WHERE d.active = true AND d.specialty = :specialty")
-    Page<Doctor> findBySpecialty(@Param("specialty") Specialty specialty,Pageable paging);
+    List<Doctor> findBySpecialty(@Param("specialty") Specialty specialty);
 
     @Query("SELECT d FROM Doctor d WHERE d.active = true AND d.morning = true")
     Page<Doctor> findByMorningAvailabilityAndEnabled(Pageable paging);
@@ -28,6 +28,12 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     Page<Doctor> findAllByActive(Boolean active, Pageable paging);
 
     @Query("SELECT d FROM Doctor d WHERE d.active = true AND d.postalCode = :postalCode")
-    Page<Doctor> readAllDoctorsBySamePostalCode(@Param("postalCode") int postalCode, Pageable pageable);
+    List<Doctor> readAllDoctorsBySamePostalCode(@Param("postalCode") Integer postalCode);
+
+    @Query("SELECT d FROM Doctor d WHERE d.active = true ORDER BY d.lastName ASC")
+    Page<Doctor> findBySurnameAsc(Pageable paging);
+
+    @Query("SELECT d FROM Doctor d WHERE d.active = true ORDER BY d.lastName DESC")
+    Page<Doctor> findBySurnameDesc(Pageable paging);
 
 }

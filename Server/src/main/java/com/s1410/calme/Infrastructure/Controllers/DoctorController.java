@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/doctor")
 @RestController
@@ -61,14 +62,23 @@ public class DoctorController {
     }
 
     @GetMapping("/findByPostalCode")
-    public ResponseEntity<Page<ResponseDoctor>> readAllDoctorsBySamePostalCode(@RequestParam int postalCode, Pageable pageable) {
-        return ResponseEntity.ok(doctorService.readAllDoctorsBySamePostalCode(postalCode, pageable));
+    public ResponseEntity<List<ResponseDoctor>> readAllDoctorsBySamePostalCode(@RequestParam Integer postalCode) {
+        List<ResponseDoctor> doctors = doctorService.readAllDoctorsBySamePostalCode(postalCode);
+        return ResponseEntity.ok(doctors);
     }
 
-    @GetMapping("/findBySpeciality")
-    public ResponseEntity<Page<ResponseDoctor>> readAllDoctorBySpecialty(@RequestParam String specialty, Pageable pageable) {
-        return ResponseEntity.ok(doctorService.readAllDoctorBySpecialty(specialty, pageable));
+    @GetMapping("/findBySpecialty")
+    public ResponseEntity<List<ResponseDoctor>> readAllDoctorBySpecialty(@RequestParam String specialty) {
+        List<ResponseDoctor> doctors = doctorService.readAllDoctorBySpecialty(specialty);
+        return ResponseEntity.ok(doctors);
     }
+
+    @GetMapping("/findBySurname/{asc}")
+    public ResponseEntity<Page<ResponseDoctor>> readAllDoctorBySurname(
+            @PathVariable Boolean asc, Pageable pageable) {
+        return ResponseEntity.ok(doctorService.readAllDoctorsBySurname(asc, pageable));
+    }
+
 
     @PutMapping("/update")
     public ResponseEntity<ResponseDoctor> updateDoctor(

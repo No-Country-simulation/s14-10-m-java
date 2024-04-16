@@ -1,4 +1,5 @@
 package com.s1410.calme.Domain.Dtos.request;
+import com.s1410.calme.Domain.Utils.RolesEnum;
 import com.s1410.calme.Domain.Utils.Specialty;
 import jakarta.validation.constraints.*;
 
@@ -30,8 +31,9 @@ public record RequestCreateDoctor(
         Boolean morning,
         Boolean afternoon,
         Boolean night,
-        int postalCode
-
+        Integer postalCode,
+        Long licenseNumber,
+        String address
 
 ) {
 }

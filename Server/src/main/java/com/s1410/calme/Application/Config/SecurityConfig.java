@@ -55,9 +55,30 @@ public class SecurityConfig {
             "/assistent/register",
             "/doctor/register",
             //Endpoint para obtener lista de doctores y mostrar en front
-            "/doctor/all/{active}"
+            "/doctor/all/{active}",
+            //Endpoint para obtener un doctor por su especialidad
+            "/doctor/findBySpecialty",
+            //Endpoint para eliminar y buscar un doctor por su id
+            "/doctor/id/**",
+            //Endpoint para buscar un doctor por su codigo postal
+            "/doctor/findByPostalCode",
+            "/actuator/**"
+    };
+
+    private static final String[] DOCTOR_ENDPOINTS = {
+            "/doctor/update",
+            "/whatsapp/reminder"
+    };
+
+    private static final String[] ASSISTENT_ENDPOINTS = {
+            "/doctor/findByAvailability/**",
+            "/doctor/findByPostalCode",
+            "doctor/findBySurname/**",
+            "assistent/id/**",
+            "assistent/update",
 
     };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http

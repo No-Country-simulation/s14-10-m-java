@@ -72,6 +72,7 @@ public class EmailServiceImpl implements EmailService {
             System.out.println("Se envio mail de cita pendiente al usuario " + appointment.getAssistent().getEmail());
         });
         System.out.println("Se enviaron todo los mail de citas pendiantes programadas en 2 dias ");
+
     }
 
 
