@@ -4,7 +4,6 @@ import com.s1410.calme.Domain.Repositories.AssistentRepository;
 import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.orm.hibernate5.SpringSessionContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;

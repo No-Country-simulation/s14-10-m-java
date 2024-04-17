@@ -1,5 +1,6 @@
 package com.s1410.calme.Application.SImplementations;
 import com.s1410.calme.Application.Config.Validations.RoleValidation;
+import com.s1410.calme.Application.Config.Validations.SelfValidation;
 import com.s1410.calme.Application.Security.JwtService;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAssistent;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssistent;
@@ -36,6 +37,7 @@ public class AssistentServiceImpl implements AssistentService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final RoleValidation roleValidation;
+    private final SelfValidation selfValidation;
 
     @Transactional
     @Override
@@ -59,6 +61,7 @@ public class AssistentServiceImpl implements AssistentService {
     public ResponseAssistent readAssistent(Long id) {
         Assistent assistent = assistentRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("id") );
+        selfValidation.checkSelfValidation(id);
         return assistentMapper.assistentToResponse(assistent);
     }
 
@@ -92,15 +95,12 @@ public class AssistentServiceImpl implements AssistentService {
     @Override // Assistent role needed.
     public ResponseAssistent updateAssistent(RequestEditAssistent requestEditAssistent,
                                              String tokenUser) {
-        String email = jwtService.getUsernameFromToken(tokenUser.substring(7));
 
         Assistent assistent = this.assistentRepository.findById(requestEditAssistent.id())
                 .orElseThrow(() -> new EntityNotFoundException(requestEditAssistent.id().toString()));
 
         roleValidation.checkAssistentRole();
-
-        if (!email.equals(assistent.getEmail())) { throw new IllegalArgumentException(
-                "Logged user cannot edit this user!"); }
+        selfValidation.checkSelfValidation(requestEditAssistent.id());
 
         if (assistent.getActive()) {
             if (requestEditAssistent.firstName() != null) {
@@ -130,20 +130,14 @@ public class AssistentServiceImpl implements AssistentService {
     @Transactional
     @Override // Assistent role needed.
     public Boolean toogleDeleteAssistent(Long id,String tokenUser) {
-        String email = jwtService.getUsernameFromToken(tokenUser.substring(7));
-
         roleValidation.checkAssistentRole();
+        selfValidation.checkSelfValidation(id);
 
         Assistent assistent = this.assistentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id.toString()));
 
-        if (!email.equals(assistent.getEmail())) {
-            throw new IllegalArgumentException(
-                    "Logged user cannot delete this user!");
-        }
-        /*
-         * Verify that there are no dependents before executing logical deletion.
-         * */
+        //Verify that there are no dependents before executing logical deletion.
+
         List<RelationAA> relationsAA = assistent.getRelationsAA();
         relationsAA.forEach(relationAA -> {
             if (relationAA.getActive()) throw new IllegalArgumentException(
