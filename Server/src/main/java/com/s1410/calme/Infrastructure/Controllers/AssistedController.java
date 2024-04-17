@@ -12,11 +12,13 @@ import jakarta.persistence.NoResultException;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RequestMapping("/assisted")
 @RestController
@@ -47,8 +49,10 @@ public class AssistedController {
     }
 
     @GetMapping("/all/{assistantID}")
-    public ResponseEntity<List<ResponseAssisted>> findAllAssistedFromAssistant(@PathVariable Long assistantID) {
-        return ResponseEntity.ok(this.assistedService.readAllAssistedFromAssistant(assistantID));
+    public ResponseEntity<Page<ResponseAssisted>> findAllAssistedFromAssistant(
+            @PathVariable Long assistantID,
+            @PageableDefault(page = 0, size = 10) Pageable pageable) {
+        return ResponseEntity.ok(this.assistedService.readAllAssistedFromAssistant(assistantID, pageable));
     }
 
     @PutMapping("/update")
