@@ -140,7 +140,7 @@
       <select
         *ngIf="!isForSelf"
         class="mt-2"
-        [ngModel]="assistedList" (ngModelChange)="seleccionarTitular($event)"
+        [ngModel]="titularSeleccionado" (ngModelChange)="seleccionarTitular($event)"
         style="
           font-family: 'Poppins', sans-serif;
           font-weight: 400;
@@ -154,7 +154,7 @@
   >
         <option value="">Selecciona una persona</option>
         <!-- Aquí debes iterar sobre tu lista de personas y mostrarlas como opciones -->
-        <option *ngFor="let assisted of assistedList" [value]="assisted.id">{{assisted.name}}</option>
+        <option *ngFor="let assisted of assistedList" [value]="assisted.id">{{assisted.firstName}}</option>
         <option value="new">Agregar nueva persona</option>
       </select>
 
