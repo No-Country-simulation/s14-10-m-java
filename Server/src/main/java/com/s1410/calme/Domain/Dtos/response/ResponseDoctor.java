@@ -3,6 +3,7 @@ import com.s1410.calme.Domain.Utils.Specialty;
 
 public record ResponseDoctor(
 
+        Long id,
         String email,
         String firstName,
         String secondName,
