@@ -1,25 +1,27 @@
 .appointment-form{
     margin-left: 13%;
     margin-top: 2%;
+    width: 450px;
+
 }
 
 input[type="radio"] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    width: 22px; /* Ajusta el tamaño del radio */
-    height: 22px; /* Ajusta el tamaño del radio */
-    border: 1px solid #ccc; /* Color del borde */
-    border-radius: 50%; /* Hace que el radio sea circular */
-    outline: none; /* Elimina el contorno */
-    margin-right: 5px; /* Ajusta el margen entre el radio y el texto */
+    width: 22px; 
+    height: 22px; 
+    border: 1px solid #ccc; 
+    border-radius: 50%; 
+    outline: none; 
+    margin-right: 5px; 
   }
 
   /* Cambia el color del radio cuando está seleccionado */
   input[type="radio"]:checked {
-    background-color: #ffffff; /* Color de fondo cuando está seleccionado */
-    border: 5px solid #75A5FF; /* Color del borde */
-    border-color: #75A5FF; /* Color del borde cuando está seleccionado */
+    background-color: #ffffff; 
+    border: 5px solid #75A5FF; 
+    border-color: #75A5FF; 
 
 
   }
@@ -29,5 +31,5 @@ input[type="radio"] {
     margin-right: 10%;
   }
   .spacer {
-    width: 20%; /* Ancho del espacio en blanco */
+    width: 20%; 
   }

@@ -5,10 +5,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 import { RouterModule } from '@angular/router';
+import { AddAssistedFormComponent } from './components/add-assisted-form/add-assisted-form.component';
 
 
 @NgModule({
-  declarations: [ButtonComponent, NavbarComponent, FooterComponent],
+  declarations: [ButtonComponent, NavbarComponent, FooterComponent, AddAssistedFormComponent],
   imports: [CommonModule, RouterModule],
   exports: [ButtonComponent, NavbarComponent, FooterComponent],
 })
