@@ -1,4 +1,5 @@
 package com.s1410.calme.Application.SImplementations;
+import com.s1410.calme.Application.Config.Validations.RoleValidation;
 import com.s1410.calme.Application.Security.JwtService;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAssistent;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssistent;
@@ -34,6 +35,7 @@ public class AssistentServiceImpl implements AssistentService {
     private final RelationAARepository relationAARepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final RoleValidation roleValidation;
 
     @Transactional
     @Override
@@ -86,7 +88,6 @@ public class AssistentServiceImpl implements AssistentService {
         return responseAssistentList;
     }
 
-
     @Transactional
     @Override
     public ResponseAssistent updateAssistent(RequestEditAssistent requestEditAssistent,
@@ -95,6 +96,8 @@ public class AssistentServiceImpl implements AssistentService {
 
         Assistent assistent = this.assistentRepository.findById(requestEditAssistent.id())
                 .orElseThrow(() -> new EntityNotFoundException(requestEditAssistent.id().toString()));
+
+        roleValidation.checkAssistentRole();
 
         if (!email.equals(assistent.getEmail())) { throw new IllegalArgumentException(
                 "Logged user cannot edit this user!"); }

@@ -1,4 +1,5 @@
 package com.s1410.calme.Application.SImplementations;
+import com.s1410.calme.Application.Config.Validations.RoleValidation;
 import com.s1410.calme.Application.Security.JwtService;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateDoctor;
 import com.s1410.calme.Domain.Dtos.request.RequestEditDoctor;
@@ -32,6 +33,7 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final RoleValidation roleValidation;
 
     //Create doctor
     @Transactional
@@ -72,6 +74,8 @@ public class DoctorServiceImpl implements DoctorService {
 
         Doctor doctor = doctorRepository.findById(requestEditDoctor.id()).orElseThrow(()->
                 new EntityNotFoundException(requestEditDoctor.id().toString()));
+
+        roleValidation.checkDoctorRole();
 
         if (!email.equals(doctor.getEmail())) { throw new IllegalArgumentException(
                 "Logged user cannot edit this user!"); }
@@ -118,6 +122,8 @@ public class DoctorServiceImpl implements DoctorService {
 
         Doctor doctor = doctorRepository.findById(id).orElseThrow(
                 ()-> new EntityNotFoundException("Could not find the doctor with id: "+id));
+
+        roleValidation.checkDoctorRole();
 
         if (!email.equals(doctor.getEmail())) { throw new IllegalArgumentException(
                 "Logged user cannot edit this user!"); }
