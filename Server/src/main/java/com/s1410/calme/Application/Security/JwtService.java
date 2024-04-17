@@ -21,7 +21,7 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String SECRET_KEY;
 
-    public String getToken(String email, UserDetails userDetails) {
+    public String getToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         String authorities = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -30,24 +30,12 @@ public class JwtService {
         return Jwts
                 .builder()
                 .setClaims(claims)
-                .setSubject(email)
+                .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+1000*86400))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
-        //return getToken(claims, email);
     }
-
-    /*private String getToken(Map<String, Object> claims, String email) {
-        return Jwts
-                .builder()
-                .setClaims(claims)
-                .setSubject(email)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*86400))
-                .signWith(getKey(), SignatureAlgorithm.HS256)
-                .compact();
-    }*/
 
     private Key getKey() {
         byte[] keyBytes= Decoders.BASE64.decode(SECRET_KEY);

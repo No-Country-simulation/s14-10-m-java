@@ -11,9 +11,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-//import org.thymeleaf.TemplateEngine;
-//import org.thymeleaf.context.Context;
-
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -24,13 +23,10 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class EmailServiceImpl{/*
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;
-
     private final TemplateEngine templateEngine;
-
     private final AppointmentRepository appointmentRepository;
 
     @Transactional
@@ -63,49 +59,64 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    //@Scheduled(fixedRate = 5000)
-  //  @Scheduled(cron = "0 0 0 * * *"))
-    public void sendAppointmentEmail() {
+    @Scheduled(cron = "0 0 0 * * *")
+    public void sendScheduledAppointments() {
+
+        getAppointmentsToSendReminders().forEach(appointment -> {
+
+            sendAppointmentEmail(appointment.getAssistent().getEmail(), appointment.getDate());
+
+            System.out.println("Se envio mail de cita pendiente al usuario " + appointment.getAssistent().getEmail());
+        });
+        System.out.println("Se enviaron todo los mail de citas pendiantes programadas en 2 dias ");
+    }
 
 
-       LocalDate today = LocalDate.now();
+    @Override
+    public void sendAppointmentEmail(String email, LocalDateTime date) {
+        try {
 
-       LocalDateTime startDataTime =  today.plusDays(2).atStartOfDay();
-       LocalDateTime endDataTime = today.plusDays(3).atStartOfDay();
-    //   System.out.println("La fecha Actual es: " + startDataTime + " " + endDataTime);
-       List<Appointment> appointmentList = appointmentRepository.findAll();
 
-     List<Appointment> newAppointmentList = appointmentList.stream().filter(appointment -> {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        return appointment.getDate().isAfter(startDataTime) && appointment.getDate().isBefore(endDataTime);
-       //  return true;
-          }).toList();
+            helper.setTo(email);
+            helper.setSubject("Resgistrado con Exito!");
 
-     newAppointmentList.forEach(appointment -> System.out.println( appointment.
-             getDate( ) + "  " + appointment.getAssistent().getEmail()));
+            Context context = new Context();
+            // Agregar variables de contexto para la plantilla Thymeleaf
+            context.setVariable("message", "Agendaste una cita para " + date);
+            // Agregar más variables según sea necesario
 
- //      try {
- //          MimeMessage message = javaMailSender.createMimeMessage();
- //          MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            // Procesar la plantilla Thymeleaf
+            String htmlBody = templateEngine.process("email", context);
 
- //          helper.setTo(email);
- //          helper.setSubject("Resgistrado con Exito!");
+            // Establecer el cuerpo del mensaje como HTML
+            helper.setText(htmlBody, true);
 
- //          Context context = new Context();
- //          // Agregar variables de contexto para la plantilla Thymeleaf
- //          context.setVariable("message", "Agendaste una cita para " + date);
- //          // Agregar más variables según sea necesario
+            javaMailSender.send(message);
 
- //          // Procesar la plantilla Thymeleaf
- //          String htmlBody = templateEngine.process("email", context);
+        } catch (Exception e) {
+            throw new RuntimeException(" Error " + " al enviar el correo : " + e.getMessage(), e);
+        }
+    }
 
- //          // Establecer el cuerpo del mensaje como HTML
- //          helper.setText(htmlBody, true);
+    public List<Appointment> getAppointmentsToSendReminders() {
 
- //          javaMailSender.send(message);
+        LocalDate today = LocalDate.now();
 
- //      } catch (Exception e) {
- //          throw new RuntimeException(" Error " + " al enviar el correo : " + e.getMessage(), e);
- //      }
-    }*/
+        LocalDateTime startDataTime = today.plusDays(2).atStartOfDay();
+        LocalDateTime endDataTime = today.plusDays(3).atStartOfDay();
+
+        List<Appointment> appointmentList = appointmentRepository.findAll();
+
+        List<Appointment> newAppointmentList = appointmentList.stream().filter(appointment -> {
+
+            return appointment.getDate().isAfter(startDataTime) && appointment.getDate().isBefore(endDataTime);
+
+        }).toList();
+
+        return newAppointmentList;
+    }
+
 }

@@ -45,16 +45,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             if (jwtService.isTokenValid(token, userDetails))
-            { String roles = jwtService.getRoles(token);
-
+            {
+                /*String roles = jwtService.getRoles(token);
                 Collection<SimpleGrantedAuthority> authorities =
                         Arrays.stream(roles.split(","))
-                                .map(SimpleGrantedAuthority::new).toList();
+                                .map(SimpleGrantedAuthority::new).toList();*/
 
                 UsernamePasswordAuthenticationToken authToken=
                         new UsernamePasswordAuthenticationToken(
                         userDetails,
-                        null, authorities);
+                        null, userDetails.getAuthorities());
 
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
@@ -69,10 +69,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private String getTokenFromRequest(HttpServletRequest request) {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if(StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer "))
-        {
-            return authHeader.substring(7);
-        }
+        if(StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7); }
         return null;
     }
 }

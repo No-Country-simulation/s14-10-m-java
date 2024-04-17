@@ -64,7 +64,8 @@ public class SecurityConfig {
             //Endpoint para eliminar y buscar un doctor por su id
             "/doctor/id/**",
             //Endpoint para buscar un doctor por su codigo postal
-            "/doctor/findByPostalCode"
+            "/doctor/findByPostalCode",
+            "/actuator/**"
     };
 
     private static final String[] DOCTOR_ENDPOINTS = {
@@ -107,7 +108,7 @@ public class SecurityConfig {
                                 //.requestMatchers(ASSISTENT_ENDPOINTS).hasRole("ASSISTENT")
                                 .anyRequest().authenticated()
                 )
-                //authRequest.anyRequest().permitAll()) /*Este se descomenta para probar sin JWT*/
+                //authRequest.anyRequest().permitAll())
                 .sessionManagement(sessionManager ->
                         sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)

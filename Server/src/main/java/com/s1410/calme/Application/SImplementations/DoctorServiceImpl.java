@@ -8,6 +8,7 @@ import com.s1410.calme.Domain.Entities.Doctor;
 import com.s1410.calme.Domain.Mapper.DoctorMapper;
 import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import com.s1410.calme.Domain.Services.DoctorService;
+import com.s1410.calme.Domain.Utils.RolesEnum;
 import com.s1410.calme.Domain.Utils.Specialty;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -45,6 +46,7 @@ public class DoctorServiceImpl implements DoctorService {
     Doctor doctor = doctorMapper.requestCreateToDoctor(requestCreateDoctor);
         doctor.setPassword(passwordEncoder.encode(requestCreateDoctor.password()));
     doctor.setActive(true);
+    doctor.setRole(RolesEnum.DOCTOR);
     doctorRepository.save(doctor);
 
         return doctorMapper.doctorToResponse(doctor);

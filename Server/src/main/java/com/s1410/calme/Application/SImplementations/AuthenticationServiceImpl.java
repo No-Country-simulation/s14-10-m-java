@@ -30,7 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if(user.isPresent()) {
             role = user.get().getAuthorities().toString();
             id = user.get().getId();
-            token = jwtService.getToken(user.get().getEmail(), user.get());
+            token = jwtService.getToken(user.get());
         }
 
         if (!user.isPresent()) {
@@ -38,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             if (!user2.isPresent()) { throw new EntityNotFoundException(data.email()); }
             role = user2.get().getAuthorities().toString();
             id = user2.get().getId();
-            token = jwtService.getToken(user2.get().getEmail(), user2.get());
+            token = jwtService.getToken(user2.get());
         }
 
         authenticationManager.authenticate(

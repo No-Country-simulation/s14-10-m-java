@@ -11,6 +11,7 @@ import com.s1410.calme.Domain.Repositories.AssistedRepository;
 import com.s1410.calme.Domain.Repositories.AssistentRepository;
 import com.s1410.calme.Domain.Repositories.RelationAARepository;
 import com.s1410.calme.Domain.Services.AssistentService;
+import com.s1410.calme.Domain.Utils.RolesEnum;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,7 @@ public class AssistentServiceImpl implements AssistentService {
                 .requestCreateToAssistent(requestCreateAssistent);
         assistent.setPassword(passwordEncoder.encode(requestCreateAssistent.password()));
         assistent.setActive(Boolean.TRUE);
+        assistent.setRole(RolesEnum.ASSISTENT);
         var assistentAdded = assistentRepository.save(assistent);
         return  assistentMapper.assistentToResponse(assistentAdded);
     }
