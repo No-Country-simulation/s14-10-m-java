@@ -1,6 +1,7 @@
 package com.s1410.calme.Infrastructure.Controllers;
 import com.s1410.calme.Application.SImplementations.AuthenticationService;
 import com.s1410.calme.Domain.Dtos.request.RequestLogin;
+import com.s1410.calme.Domain.Dtos.response.ResponseLogin;
 import com.s1410.calme.Infrastructure.Exceptions.BindingResultException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -23,7 +24,7 @@ public class LoginController {
     private final AuthenticationService authenticationService;
 
     @PostMapping
-    public ResponseEntity<String> login(
+    public ResponseEntity<ResponseLogin> login(
             @RequestBody @Valid @NotNull RequestLogin requestLogin,
             BindingResult bindingResult){
         if (bindingResult.hasErrors()){

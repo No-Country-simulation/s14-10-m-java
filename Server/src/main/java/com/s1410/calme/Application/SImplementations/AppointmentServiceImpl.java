@@ -15,6 +15,7 @@ import com.s1410.calme.Domain.Repositories.AssistedRepository;
 import com.s1410.calme.Domain.Repositories.AssistentRepository;
 import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import com.s1410.calme.Domain.Services.AppointmentService;
+import com.s1410.calme.Infrastructure.Exceptions.custom.AppointmentAvailabilityException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,13 +45,17 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final Integer DEFAULT_PAGE_SIZE = 10;
 
 
-    //TODO: Hacer el código más lindo si es posible y necesario
     //TODO: Chequear que la fecha del appointment sea mayor a la actual
     //TODO: Chequear que las fechas correspondan con los horarios laborales de los doctores
     @Override
     public ResponseEntity<ResponseAppointment> createAppointment(RequestCreateAppointment requestCreateAppointment) {
         Long doctorId = requestCreateAppointment.doctorId();
         LocalDateTime date = requestCreateAppointment.date();
+
+        if (date.isBefore(LocalDateTime.now())){
+            throw new AppointmentAvailabilityException("Appointment Date cannot be in the past");
+        }
+
         Long assistentId = 0L;
         Long assistedId = 0L;
 
@@ -66,16 +72,17 @@ public class AppointmentServiceImpl implements AppointmentService {
                         () -> new EntityNotFoundException("No Doctor found with id: " + doctorId)
                 );
 
-        checkDoctorAvailability(doctorId, date);
-        checkAssistentAvailability(assistentId, date);
-        checkAssistedAvailability(assistedId, date);
+        checkUsersAvailability(doctor, assistentId, assistedId, date);
+
 
         //TODO: cambiar la respuesta de 404 a badrequest
         //Comprobar si el doctor esta ocupado ese dia
         if(isDoctorBusyAssistent(doctorId, assistentId, date)){
+
             throw new EntityNotFoundException("The doctor has an appointment already with you on this day. dr id :" + requestCreateAppointment.doctorId());
         } else if (isDoctorBusyAssisted(doctorId, assistedId, date)) {
             throw new EntityNotFoundException("The doctor has an appointment already with you on this day. dr id: " + requestCreateAppointment.doctorId());
+
         }
 
         //Corrobora primero cuál de los dos es el que va y sólo da error si no está ninguno.
@@ -233,17 +240,88 @@ public class AppointmentServiceImpl implements AppointmentService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    private void checkDoctorAvailability(Long doctorId, LocalDateTime dateTime){
+    private void checkUsersAvailability(Doctor doctor, Long assistentId, Long assistedId, LocalDateTime dateTime){
 
-        LocalDateTime starDate =  LocalDate.of(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth()).atStartOfDay();
+        LocalDateTime startDate =  LocalDate.of(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth()).atStartOfDay();
         LocalDateTime endDate =  LocalDate.of(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth()).atTime(23,59,59);
 
-        System.out.println("START DATE: " + starDate);
-        System.out.println("END DATE: " + endDate);
+        checkDoctorAvailability(doctor, dateTime, startDate, endDate);
 
-        Pageable pageable = PageRequest.of(0, 15);
+        if(assistentId != null){
+            checkAssistentAvailability(assistentId, dateTime, startDate, endDate);
+        }
 
-        Page<Appointment> pageApp = appointmentRepository.findAppointmentsByDoctorIdAndDateRange(doctorId, starDate, endDate , true, pageable);
+        if(assistedId != null){
+            checkAssistedAvailability(assistedId, dateTime, startDate, endDate);
+        }
+    }
+
+    private void checkDoctorAvailability(Doctor doctor, LocalDateTime dateTime, LocalDateTime startDate, LocalDateTime endDate){
+        Pageable pageable = PageRequest.of(0, 25);
+        Page<Appointment> pageApp = appointmentRepository.findAppointmentsByDoctorIdAndDateRange(doctor.getId(), startDate, endDate , true, pageable);
+
+        List<Appointment> appointments = pageApp.getContent();
+
+        boolean check = checkHourRange(doctor, dateTime);
+
+        //Si no se comprobo que esta dentro de un rango de horario del doctor
+        //Entonces se desecha directamente
+        if (!check){
+            throw new AppointmentAvailabilityException("Doctor does not work in those hours");
+        }
+
+
+        //Comprueba que el turno ocurro 30 minutos después del próximo
+        for (Appointment appointment: appointments){
+            System.out.println(dateTime.until(appointment.getDate(), ChronoUnit.MINUTES));
+            long diff = dateTime.until(appointment.getDate(), ChronoUnit.MINUTES);
+            if (diff < 30 && diff >= 0 ){
+                throw new AppointmentAvailabilityException("The doctor with id: " + doctor.getId() + " is not available at that time");
+            }
+        }
+
+
+    }
+
+    private static boolean checkHourRange(Doctor doctor, LocalDateTime dateTime) {
+        LocalTime appointmentTime = dateTime.toLocalTime();
+
+        LocalTime morningStart = LocalTime.parse("07:59");
+        LocalTime morningEnd = LocalTime.parse("12:00");
+        LocalTime afternoonStart = LocalTime.parse("11:59");
+        LocalTime afternoonEnd = LocalTime.parse("16:00");
+        LocalTime nightStart = LocalTime.parse("15:59");
+        LocalTime nightEnd = LocalTime.parse("20:00");
+
+
+        //Comprueba que el turno este dentro de 1 de los rangos horarios del doctor disponible
+        boolean check = false;
+        if (doctor.getMorning() != null){
+            if (doctor.getMorning() &&
+                    (appointmentTime.isAfter(morningStart) && appointmentTime.isBefore(morningEnd))){
+               check = true;
+            }
+        }
+        if(doctor.getAfternoon() != null) {
+
+            if (doctor.getAfternoon() &&
+                    (appointmentTime.isAfter(afternoonStart) && appointmentTime.isBefore(afternoonEnd))) {
+                check = true;
+            }
+        }
+        if(doctor.getNight() != null) {
+
+            if (doctor.getNight() &&
+                    (appointmentTime.isAfter(nightStart) && appointmentTime.isBefore(nightEnd))) {
+                check = true;
+            }
+        }
+        return check;
+    }
+
+    private void checkAssistentAvailability(Long assistentId, LocalDateTime dateTime, LocalDateTime startDate, LocalDateTime endDate){
+        Pageable pageable = PageRequest.of(0, 25);
+        Page<Appointment> pageApp = appointmentRepository.findAppointmentsByAssistentIdAndDateRange(assistentId, startDate, endDate , true, pageable);
 
         List<Appointment> appointments = pageApp.getContent();
 
@@ -252,11 +330,16 @@ public class AppointmentServiceImpl implements AppointmentService {
             System.out.println(dateTime.until(appointment.getDate(), ChronoUnit.MINUTES));
             long diff = dateTime.until(appointment.getDate(), ChronoUnit.MINUTES);
             if (diff < 30 && diff >= 0 ){
+<<<<<<< HEAD
                 throw new EntityNotFoundException("The doctor already has this time busy : " + appointment.getObservations());
+=======
+                throw new AppointmentAvailabilityException("Assistent with id: " + assistentId + " is not available at that time");
+>>>>>>> develop
             }
         }
     }
 
+<<<<<<< HEAD
     private void checkAssistentAvailability(Long assistentId, LocalDateTime dateTime){
 
         LocalDateTime starDate =  LocalDate.of(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth()).atStartOfDay();
@@ -292,6 +375,11 @@ public class AppointmentServiceImpl implements AppointmentService {
         Pageable pageable = PageRequest.of(0, 15);
 
         Page<Appointment> pageApp = appointmentRepository.findAppointmentsByAssistedIdAndDateRange(assistedId, starDate, endDate, true, pageable);
+=======
+    private void checkAssistedAvailability(Long assistedId, LocalDateTime dateTime, LocalDateTime startDate, LocalDateTime endDate) {
+        Pageable pageable = PageRequest.of(0, 25);
+        Page<Appointment> pageApp = appointmentRepository.findAppointmentsByAssistedIdAndDateRange(assistedId, startDate, endDate, true, pageable);
+>>>>>>> develop
 
         List<Appointment> appointments = pageApp.getContent();
 
@@ -300,7 +388,11 @@ public class AppointmentServiceImpl implements AppointmentService {
             System.out.println(dateTime.until(appointment.getDate(), ChronoUnit.MINUTES));
             long diff = dateTime.until(appointment.getDate(), ChronoUnit.MINUTES);
             if (diff < 30 && diff >= 0) {
+<<<<<<< HEAD
                 throw new EntityNotFoundException("You Have an appointment on this hour  id : "  + appointment.getId());
+=======
+                throw new AppointmentAvailabilityException("Assisted with id: " + assistedId + " is not available at that time");
+>>>>>>> develop
             }
         }
     }

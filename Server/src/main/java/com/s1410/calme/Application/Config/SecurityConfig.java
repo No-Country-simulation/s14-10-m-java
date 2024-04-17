@@ -62,10 +62,25 @@ public class SecurityConfig {
             "/doctor/id/**",
             //Endpoint para buscar un doctor por su codigo postal
             "/doctor/findByPostalCode",
-            /* RESTABLECER JUAN */
-            "/db/**"
+
+            "/actuator/**",
 
     };
+
+    private static final String[] DOCTOR_ENDPOINTS = {
+            "/doctor/update",
+            "/whatsapp/reminder"
+    };
+
+    private static final String[] ASSISTENT_ENDPOINTS = {
+            "/doctor/findByAvailability/**",
+            "/doctor/findByPostalCode",
+            "doctor/findBySurname/**",
+            "assistent/id/**",
+            "assistent/update"
+
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
