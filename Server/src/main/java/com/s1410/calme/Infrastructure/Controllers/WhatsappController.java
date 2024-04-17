@@ -30,4 +30,11 @@ public class WhatsappController {
         return apiWhatsappService.sendMessage();
     }
 
+    @PostMapping("/test")
+    ResponseWhatsapp sendMessageTest(@RequestBody MessageBodyDTO payload) throws JsonProcessingException {
+        System.out.println("entra a la funcion");
+
+        return apiWhatsappService.sendMessageTest(payload);
+    }
+
 }

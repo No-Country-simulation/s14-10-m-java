@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,28 +22,48 @@ import java.util.List;
 public class ApiWhatsappServiceImpl implements ApiWhatsappService {
 
     private final AppointmentRepository appointmentRepository;
-    @Value("${whatsapp.identificador}") String identificador;
-    @Value("${whatsapp.token}") String token;
+    @Value("${whatsapp.identificador}")
+    String identificador;
+    @Value("${whatsapp.token}")
+    String token;
 
     private RestClient clientBuilder() {
         return RestClient.builder()
                 .baseUrl("https://graph.facebook.com/v18.0/" + identificador + "/messages")
-                .defaultHeader("Authorization", "Bearer " + token)
+                .defaultHeader("Authorization","Bearer " + token)
                 .build();
     }
 
-    public Boolean sendMessage()
-            throws JsonProcessingException {
+    @Override
+    public Boolean sendMessage() throws JsonProcessingException {
+        return null;
+    }
+
+    public ResponseWhatsapp sendMessageTest(MessageBodyDTO payload) throws JsonProcessingException {
+        RequestMessage request = new RequestMessage("whatsapp",payload.number(),new RequestMessageText(payload.message()));
+
+        String response = clientBuilder().post()
+                .uri("")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(createMessageTest())
+                .retrieve()
+                .body(String.class);
+
+        ObjectMapper obj = new ObjectMapper();
+        return obj.readValue(response,ResponseWhatsapp.class);
+    }
+
+    public String createMessageTest() {
+
         LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
         int day = tomorrow.getDayOfMonth();
         int month = tomorrow.getMonthValue();
         int year = tomorrow.getYear();
+        List<String> message = new ArrayList<>();
         List<Appointment> appointmentsForTomorrow = appointmentRepository.
-                findAppointmentsByDateByActive(true, day, month, year);
-        String response;
+                findAppointmentsByDateByActive(true,day,month,year);
 
-        RestClient restClient = clientBuilder();
-        for (Appointment appointment : appointmentsForTomorrow){
+        for (Appointment appointment : appointmentsForTomorrow) {
             String firstName = appointment.getAssistent().getFirstName();
             if (firstName == null) {
                 firstName = appointment.getAssisted().getFirstName();
@@ -59,46 +80,17 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
                         .getAssistent().getPhoneNumber();
             }
 
-            String message = "¡Buenos días! Nos comunicamos desde Calme para recordarte que "
+            message.add("¡Buenos días! Nos comunicamos desde Calme para recordarte que "
                     + firstName + " " + lastName + " tiene un turno el día " +
                     tomorrow.getDayOfMonth() + "/" + tomorrow.getMonthValue() +
                     "/" + tomorrow.getYear() + " a las " + appointment.getDate().getHour() + ":" +
                     appointment.getDate().getMinute() + "hs con el/la dr/a " +
                     appointment.getDoctor().getFirstName() + " " +
                     appointment.getDoctor().getLastName() +
-                    ", " + appointment.getDoctor().getSpecialty() + ".";
-
-            RequestMessage request = new RequestMessage
-            ("whatsapp", "543517707973",
-           new RequestMessageText(message));
-
-            response = restClient.post()
-                    .uri("")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(request)
-                    .retrieve()
-                    .body(String.class);
+                    ", " + appointment.getDoctor().getSpecialty() + ".");
         }
 
-        return true;
+        System.out.println("CREATEMESSAGE : " + message);
+        return message.toString();}
     }
-}
 
-/*
-public ResponseWhatsapp sendMessage(MessageBodyDTO payload)
-throws JsonProcessingException {
-        RequestMessage request = new RequestMessage
-                ("whatsapp",payload.number(),
-                        new RequestMessageText(payload.message()));
-
-        String response = restClient.post()
-                .uri("")
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(request)
-                .retrieve()
-                .body(String.class);
-
-        ObjectMapper obj = new ObjectMapper();
-        return obj.readValue(response, ResponseWhatsapp.class);
-    }
-*/

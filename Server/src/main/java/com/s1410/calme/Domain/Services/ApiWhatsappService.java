@@ -7,5 +7,6 @@ import com.s1410.calme.Domain.Dtos.whatsapp.ResponseWhatsapp;
 public interface ApiWhatsappService {
 
     public Boolean sendMessage() throws JsonProcessingException;
+    public ResponseWhatsapp sendMessageTest(MessageBodyDTO payload) throws JsonProcessingException;
 
 }
