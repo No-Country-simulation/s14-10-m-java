@@ -1,5 +1,7 @@
 package com.s1410.calme.Domain.Services;
 
+import org.springframework.http.ResponseEntity;
+
 public interface DataBaseService {
 
     /* INSERT USERS */
@@ -7,6 +9,6 @@ public interface DataBaseService {
     String insertDoctor();
     String insertAssisted();
     String insertAppointment();
-    String insertAll();
+    ResponseEntity<?> insertAll();
 
 }

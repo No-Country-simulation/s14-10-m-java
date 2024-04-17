@@ -8,6 +8,8 @@ import com.s1410.calme.Domain.Entities.Assisted;
 import com.s1410.calme.Domain.Services.*;
 import com.s1410.calme.Domain.Utils.Specialty;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -75,13 +77,14 @@ public class dataBaseServiceImpl implements DataBaseService {
     }
 
     @Override
-    public String insertAll() {
+    public ResponseEntity<?> insertAll() {
+
         insertAssistant();
         insertAssisted();
         insertDoctor();
         insertAppointment();
 
-        return "todo ok";
+        return ResponseEntity.ok("data ok");
     }
 
     /* DATA */
@@ -180,29 +183,6 @@ public class dataBaseServiceImpl implements DataBaseService {
     /* 30 appointments */
     List<RequestCreateAppointment> getInsertAppointment(){
         List<RequestCreateAppointment> appointments = new ArrayList<>();
-/*        appointments.add(new RequestCreateAppointment(1L, 15L, 8L, LocalDateTime.now().minusDays(3), "Consulta de rutina para chequeo médico"));
-        appointments.add(new RequestCreateAppointment(2L, 5L, 17L, LocalDateTime.now().minusDays(5), "Seguimiento de tratamiento para control de la presión arterial"));
-        appointments.add(new RequestCreateAppointment(3L, 14L, 3L, LocalDateTime.now().minusDays(2), "Consulta por dolor abdominal persistente"));
-        appointments.add(new RequestCreateAppointment(2L, 2L, 18L, LocalDateTime.now().minusDays(6), "Vacunación contra la gripe"));
-        appointments.add(new RequestCreateAppointment(5L, 9L, 6L, LocalDateTime.now().minusDays(4), "Examen de sangre para análisis de glucosa"));
-        appointments.add(new RequestCreateAppointment(6L, 11L, 16L, LocalDateTime.now().minusDays(1), "Seguimiento de rehabilitación por lesión en el hombro"));
-        appointments.add(new RequestCreateAppointment(7L, 10L, 12L, LocalDateTime.now().minusDays(3), "Consulta pediátrica para vacunación infantil"));
-        appointments.add(new RequestCreateAppointment(8L, 7L, 19L, LocalDateTime.now().minusDays(5), "Control de presión arterial y ajuste de medicación"));
-        appointments.add(new RequestCreateAppointment(9L, 4L, 13L, LocalDateTime.now().minusDays(2), "Consulta ginecológica de rutina"));
-        appointments.add(new RequestCreateAppointment(10L, 1L, 20L, LocalDateTime.now().minusDays(6), "Consulta odontológica para limpieza y revisión"));
-        appointments.add(new RequestCreateAppointment(11L, 8L, 15L, LocalDateTime.now().minusDays(2), "Consulta de seguimiento para control de la diabetes"));
-        appointments.add(new RequestCreateAppointment(12L, 17L, 5L, LocalDateTime.now().minusDays(4), "Examen de vista y prescripción de lentes"));
-        appointments.add(new RequestCreateAppointment(13L, 3L, 14L, LocalDateTime.now().minusDays(1), "Consulta por síntomas de gripe"));
-        appointments.add(new RequestCreateAppointment(14L, 18L, 2L, LocalDateTime.now().minusDays(3), "Consulta de dermatología para tratamiento de acné"));
-        appointments.add(new RequestCreateAppointment(15L, 6L, 9L, LocalDateTime.now().minusDays(5), "Consulta de psicología para manejo del estrés"));
-        appointments.add(new RequestCreateAppointment(16L, 16L, 11L, LocalDateTime.now().minusDays(2), "Sesión de fisioterapia para recuperación de lesión de rodilla"));
-        appointments.add(new RequestCreateAppointment(17L, 12L, 10L, LocalDateTime.now().minusDays(4), "Control de peso y nutrición"));
-        appointments.add(new RequestCreateAppointment(18L, 19L, 7L, LocalDateTime.now().minusDays(1), "Consulta por síntomas de alergia"));
-        appointments.add(new RequestCreateAppointment(19L, 13L, 4L, LocalDateTime.now().minusDays(3), "Examen ginecológico de rutina"));
-        appointments.add(new RequestCreateAppointment(20L, 20L, 1L, LocalDateTime.now().minusDays(5), "Extracción de muela de juicio"));
-        appointments.add(new RequestCreateAppointment(2L, 1L, 2L, LocalDateTime.now().minusDays(3), "Consulta de seguimiento postoperatorio"));
-        appointments.add(new RequestCreateAppointment(2L, 2L, 3L, LocalDateTime.now().minusDays(4), "Control de glucosa en ayunas"));
-        appointments.add(new RequestCreateAppointment(3L, 3L, 4L, LocalDateTime.now().minusDays(5), "Consulta de cardiología para evaluación de ritmo cardíaco"));*/
 
         appointments.add(new RequestCreateAppointment(1L, 11L, 12L, LocalDateTime.of(2024, 4, 22, 10, 0), "Consulta de gastroenterología para evaluación de problemas digestivos"));
         appointments.add(new RequestCreateAppointment(2L, 12L, 13L, LocalDateTime.of(2024, 4, 21, 11, 30), "Control de presión arterial y seguimiento de dieta baja en sodio"));

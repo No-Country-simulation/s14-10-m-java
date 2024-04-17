@@ -3,6 +3,7 @@ package com.s1410.calme.Infrastructure.Controllers;
 
 import com.s1410.calme.Domain.Services.DataBaseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,13 +29,12 @@ public class DataBaseController {
     }
     @GetMapping("/appointment")
     String insertAppointment(){
-        System.out.println("entro al controlador");
+
         return dataBaseService.insertAppointment();
     }
 
     @GetMapping("/all")
-    String insertAll(){
-        System.out.println("entro al controlador");
+    ResponseEntity<?> insertAll(){
         return dataBaseService.insertAll();
     }
 
