@@ -26,7 +26,7 @@ export class LoginComponent {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, emailValidator]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(7)]],
     });
   }
   get email() {
@@ -37,15 +37,45 @@ export class LoginComponent {
   }
 
   login() {
-    this.loginService.login(this.loginForm.value).subscribe();
-
+    //temporalmente para q el formulario fue tocado
     if (this.loginForm.invalid) {
       this.NotifySvc.showError('Error en la aplicacion');
       return this.loginForm.markAllAsTouched();
     }
-  }
-  token() {
-    console.log(this.token);
-    return this.tokenService.getToken();
+    this.loginService.Login(this.loginForm.value).subscribe(
+      (res: any) => {
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        console.log(error);
+        this.loginService.id = error.error.id;
+        sessionStorage.setItem('id', error.error.id);
+        this.router.navigate(['/']);
+      }
+    );
+
+    /* this.loginService.Login(this.loginForm.value).subscribe({
+          next: () => {
+              this.showPassword
+              title: '¡Ingreso exitoso!',
+              text: `¡Hola, bienvenido a esta iniciativa ambiental!`,
+              icon: 'success',
+            }).then(() => {
+              this.loginForm.reset();
+              this.router.navigate(['/home']);
+            });
+          },
+          error: (error) => {
+            Swal.fire({
+              title: 'Ha ocurrido un error...',
+              text: error.error,
+              icon: 'error',
+            });
+          },
+        }); */
+
+    // handleShowPassword(): void {
+    //   this.showPassword = !this.showPassword;
+    // }
   }
 }
