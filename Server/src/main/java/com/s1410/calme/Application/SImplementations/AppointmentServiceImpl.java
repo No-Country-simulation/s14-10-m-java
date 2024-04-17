@@ -1,5 +1,6 @@
 package com.s1410.calme.Application.SImplementations;
 
+import com.s1410.calme.Application.Config.Validations.RoleValidation;
 import com.s1410.calme.Domain.Dtos.request.RequestAppointmentDate;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAppointment;
 import com.s1410.calme.Domain.Dtos.request.RequestAppointmentBetweenDates;
@@ -41,16 +42,19 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AssistedRepository assistedRepository;
     private final AssistentRepository assistentRepository;
     private final DoctorRepository doctorRepository;
-
+    private final RoleValidation roleValidation;
     private final Integer DEFAULT_PAGE_SIZE = 10;
-
 
     //TODO: Chequear que la fecha del appointment sea mayor a la actual
     //TODO: Chequear que las fechas correspondan con los horarios laborales de los doctores
-    @Override
+
+    @Override //Assistent role needed.
     public ResponseEntity<ResponseAppointment> createAppointment(RequestCreateAppointment requestCreateAppointment) {
         Long doctorId = requestCreateAppointment.doctorId();
         LocalDateTime date = requestCreateAppointment.date();
+        roleValidation.checkAssistentRole();
+
+        roleValidation.checkAssistentRole();
 
         if (date.isBefore(LocalDateTime.now())){
             throw new AppointmentAvailabilityException("Appointment Date cannot be in the past");
@@ -103,9 +107,10 @@ public class AppointmentServiceImpl implements AppointmentService {
         return new ResponseEntity<>(responseAppointment, HttpStatus.OK);
     }
 
-    @Override
+    @Override //
     public ResponseEntity<List<ResponseAppointment>> getAllAppointments(Integer page, Boolean active) {
 
+        roleValidation.checkDoctorRole();
 
         //Default Page Number for wrong inputs
         if (page <= 0) page = 1;
@@ -128,8 +133,10 @@ public class AppointmentServiceImpl implements AppointmentService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Override
+    @Override //Assistent role needed.
     public ResponseEntity<ResponseAppointment> changeAppointmentActiveValue(Long id) {
+        roleValidation.checkAssistentRole();
+
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No Appointment found with id: " + id));
 
@@ -161,7 +168,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 HttpStatus.OK);
     }
 
-    @Override
+    @Override //Should be only for Admin?
     public ResponseEntity<ResponseAppointment> updateAppointmentDate(RequestEditAppointmentDate updatedDate, Long id) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No Appointment found with id: " + id));
@@ -175,8 +182,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Override
+    @Override //Doctor role needed.
     public ResponseEntity<List<ResponseAppointment>> getAppointmentByDoctorID(Long id, Boolean active, Integer page) {
+        roleValidation.checkDoctorRole();
         if (page <= 0) page = 1;
         Pageable pageable = PageRequest.of(page-1, DEFAULT_PAGE_SIZE);
 
@@ -188,8 +196,10 @@ public class AppointmentServiceImpl implements AppointmentService {
                 HttpStatus.OK);
     }
 
-    @Override
+    @Override //Assistent role needed.
     public ResponseEntity<List<ResponseAppointment>> getAppointmentByAssistentID(Long id, Boolean active, Integer page) {
+        roleValidation.checkAssistentRole();
+
         if (page <= 0) page = 1;
         Pageable pageable = PageRequest.of(page-1, DEFAULT_PAGE_SIZE);
 
@@ -200,8 +210,10 @@ public class AppointmentServiceImpl implements AppointmentService {
                     HttpStatus.OK);
         }
 
-    @Override
+    @Override //Assistent role needed.
     public ResponseEntity<List<ResponseAppointment>> getAppointmentByAssistedId(Long id, Boolean active, Integer page) {
+        roleValidation.checkAssistentRole();
+
         if (page <= 0) page = 1;
         Pageable pageable = PageRequest.of(page-1, DEFAULT_PAGE_SIZE);
 
@@ -212,18 +224,17 @@ public class AppointmentServiceImpl implements AppointmentService {
                     HttpStatus.OK);
     }
 
-
     //Metodo para saber si ya el assistent tiene cita con el doctor ese dia
     @Override
     public boolean isDoctorBusyAssistent(Long doctorID, Long assistentId, LocalDateTime date) {
         return appointmentRepository.existsByDoctorAndAssistent(doctorID, assistentId, date);
     }
+
     //Metodo para saber si ya el assisted tiene cita con el doctor ese dia
     @Override
     public boolean isDoctorBusyAssisted(Long doctorId, Long assistedId, LocalDateTime date) {
         return appointmentRepository.existsByDoctorAndAssisted(doctorId, assistedId, date);
     }
-
 
     @Override
     public ResponseEntity<List<ResponseAppointment>> getAppointmentsByDate(

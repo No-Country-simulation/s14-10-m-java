@@ -1,5 +1,6 @@
 package com.s1410.calme.Application.SImplementations;
 
+import com.s1410.calme.Application.Config.Validations.RoleValidation;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAssisted;
 import com.s1410.calme.Domain.Dtos.request.RequestEditAssisted;
 import com.s1410.calme.Domain.Dtos.response.ResponseAssisted;
@@ -30,11 +31,13 @@ public class AssistedServiceImpl implements AssistedService {
     private final AssistedRepository assistedRepository;
     private final AssistentRepository assistentRepository;
     private final RelationAARepository relationAARepository;
+    private final RoleValidation roleValidation;
 
     @Transactional
-    @Override
+    @Override //Assistent role needed.
     public ResponseAssisted createAssisted(RequestCreateAssisted requestCreateAssisted) {
 
+        roleValidation.checkAssistentRole();
         Long assistantId = requestCreateAssisted.AssistantID();
 
         // Search if the assistant user exists in DB to link with assisted, otherwise launch an exception.
@@ -117,8 +120,9 @@ public class AssistedServiceImpl implements AssistedService {
     }
 
     @Transactional
-    @Override
+    @Override //Assistent role needed.
     public ResponseAssisted updateAssisted(RequestEditAssisted requestEditAssisted) {
+        roleValidation.checkAssistentRole();
 
         Assisted assisted = this.assistedRepository.findById(requestEditAssisted.id())
                 .orElseThrow(() -> new EntityNotFoundException(requestEditAssisted.id().toString()));
@@ -138,8 +142,9 @@ public class AssistedServiceImpl implements AssistedService {
     }
 
     @Transactional
-    @Override
+    @Override //Assistent role needed.
     public boolean updateRelationAA(Long assistantId, Long assistedId, RelationType relationType){
+        roleValidation.checkAssistentRole();
         Assisted assisted = this.assistedRepository.findById(assistedId)
                 .orElseThrow(() -> new EntityNotFoundException(assistedId.toString()));
         Assistent assistant = this.assistentRepository.findById(assistantId)
@@ -154,8 +159,9 @@ public class AssistedServiceImpl implements AssistedService {
     }
 
     @Transactional
-    @Override
+    @Override //Assistent role needed.
     public Boolean unlinkAssistedFromAssistant(Long assistantId, Long assistedId) {
+        roleValidation.checkAssistentRole();
 
         // Get relation between Assisted and Assistant.
         RelationAA relation = this.relationAARepository.findByAssistentIdAndAssistedId(assistantId, assistedId)

@@ -68,7 +68,7 @@ public class DoctorServiceImpl implements DoctorService {
                 .map(doctorMapper::doctorToResponse);
     }
 
-    @Override
+    @Override //Doctor role required.
     public ResponseDoctor updateDoctor(RequestEditDoctor requestEditDoctor,String tokenUser) {
         String email = jwtService.getUsernameFromToken(tokenUser.substring(7));
 
@@ -116,7 +116,7 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMapper.doctorToResponse(doctor);
     }
 
-    @Override
+    @Override //Doctor role required.
     public Boolean toogleDeleteDoctor(Long id, String tokenUser) {
         String email = jwtService.getUsernameFromToken(tokenUser.substring(7));
 
@@ -131,6 +131,7 @@ public class DoctorServiceImpl implements DoctorService {
         doctor.setActive(!doctor.getActive());
         return doctor.getActive();
     }
+
     @Override
     public List<ResponseDoctor> readAllDoctorBySpecialty (String specialty){
         return doctorRepository.findBySpecialty(Specialty.valueOf(specialty))

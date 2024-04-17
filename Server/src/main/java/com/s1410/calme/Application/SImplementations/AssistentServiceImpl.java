@@ -66,7 +66,7 @@ public class AssistentServiceImpl implements AssistentService {
     *active checks status of assistent
     *pageable pulls 20 entries by default
     * */
-    @Override
+    @Override // Might have admin role.
     public Page<ResponseAssistent> readAllAsistents(Boolean active,Pageable paging) {
         return assistentRepository.findAllByActive(active,paging)
                 .map(assistentMapper::assistentToResponse);
@@ -89,7 +89,7 @@ public class AssistentServiceImpl implements AssistentService {
     }
 
     @Transactional
-    @Override
+    @Override // Assistent role needed.
     public ResponseAssistent updateAssistent(RequestEditAssistent requestEditAssistent,
                                              String tokenUser) {
         String email = jwtService.getUsernameFromToken(tokenUser.substring(7));
@@ -127,11 +127,12 @@ public class AssistentServiceImpl implements AssistentService {
         return assistentMapper.assistentToResponse(assistent);
     }
 
-
     @Transactional
-    @Override
+    @Override // Assistent role needed.
     public Boolean toogleDeleteAssistent(Long id,String tokenUser) {
         String email = jwtService.getUsernameFromToken(tokenUser.substring(7));
+
+        roleValidation.checkAssistentRole();
 
         Assistent assistent = this.assistentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id.toString()));

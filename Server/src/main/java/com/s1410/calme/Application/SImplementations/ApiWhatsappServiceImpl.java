@@ -2,6 +2,7 @@ package com.s1410.calme.Application.SImplementations;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.s1410.calme.Application.Config.Validations.RoleValidation;
 import com.s1410.calme.Domain.Dtos.whatsapp.*;
 import com.s1410.calme.Domain.Entities.Appointment;
 import com.s1410.calme.Domain.Repositories.AppointmentRepository;
@@ -21,6 +22,8 @@ import java.util.List;
 public class ApiWhatsappServiceImpl implements ApiWhatsappService {
 
     private final AppointmentRepository appointmentRepository;
+    private final RoleValidation roleValidation;
+
     @Value("${whatsapp.identificador}") String identificador;
     @Value("${whatsapp.token}") String token;
 
@@ -31,8 +34,10 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
                 .build();
     }
 
-    public Boolean sendMessage()
-            throws JsonProcessingException {
+    // Doctor role needed.
+    public Boolean sendMessage() throws JsonProcessingException {
+        roleValidation.checkDoctorRole();
+
         LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
         int day = tomorrow.getDayOfMonth();
         int month = tomorrow.getMonthValue();
@@ -83,22 +88,3 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
         return true;
     }
 }
-
-/*
-public ResponseWhatsapp sendMessage(MessageBodyDTO payload)
-throws JsonProcessingException {
-        RequestMessage request = new RequestMessage
-                ("whatsapp",payload.number(),
-                        new RequestMessageText(payload.message()));
-
-        String response = restClient.post()
-                .uri("")
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(request)
-                .retrieve()
-                .body(String.class);
-
-        ObjectMapper obj = new ObjectMapper();
-        return obj.readValue(response, ResponseWhatsapp.class);
-    }
-*/

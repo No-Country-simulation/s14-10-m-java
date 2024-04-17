@@ -72,7 +72,6 @@ public class SecurityConfig {
             "/doctor/update", //todo. ver tema delete doctor desde el controller para que no sea público.
             "/whatsapp/reminder",
             "/appointment/all",
-            "/appointment/id",
             "/appointment/betweenDates",
             "/appointment/doctor/**",
             "/appointment/date/**"
