@@ -27,11 +27,11 @@ export class LoginComponent {
   constructor(
     private readonly loginService: LoginService,
     private readonly fb: FormBuilder,
-    private readonly router: Router,
+    private readonly router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, emailValidator]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(7)]],
     });
   }
   get email() {
@@ -46,17 +46,19 @@ export class LoginComponent {
     if (this.loginForm.invalid) {
       return this.loginForm.markAllAsTouched();
     }
-    this.loginService.Login(this.loginForm.value).subscribe((res: any) => {
-    },
-    (error) => {
-      console.log(error)
-      this.loginService.id = error.error.id;
-      localStorage.setItem('id', error.error.id);
-      this.router.navigate(['/']);
-    }
-    )
+    this.loginService.Login(this.loginForm.value).subscribe(
+      (res: any) => {
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        console.log(error);
+        this.loginService.id = error.error.id;
+        sessionStorage.setItem('id', error.error.id);
+        this.router.navigate(['/']);
+      }
+    );
 
-  /* this.loginService.Login(this.loginForm.value).subscribe({
+    /* this.loginService.Login(this.loginForm.value).subscribe({
           next: () => {
               this.showPassword
               title: '¡Ingreso exitoso!',
