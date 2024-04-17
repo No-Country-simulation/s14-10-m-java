@@ -23,6 +23,11 @@ const routes: Routes = [
       import('./modules/dash-doctor/dash-doctor.module').then((m) => m.DashDoctorModule),
   },
   {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./modules/dash-patient/dash-patient.module').then((m) => m.DashPatientModule),
+  },
+  {
     path: 'page-under-construction',
     loadChildren: () =>
       import('./modules/not-found/not-found.module').then(

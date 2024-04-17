@@ -15,6 +15,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { SharedModule } from './core/shared/shared.module';
 import { TokenResponseInterceptor } from './core/shared/interceptors/token-response.interceptor';
 import { TokenInterceptor } from './core/shared/interceptors/token.interceptor';
+import { DashDoctorModule } from './modules/dash-doctor/dash-doctor.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +30,7 @@ import { TokenInterceptor } from './core/shared/interceptors/token.interceptor';
     AuthModule,
     // HomeModule,
     SharedModule,
+    DashDoctorModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenResponseInterceptor, multi: true },

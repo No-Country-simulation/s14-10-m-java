@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DashDoctorRoutingModule } from './dash-doctor-routing.module';
 import { ProfileComponent } from './profile/profile.component';
+import { SharedModule } from 'src/app/core/shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ProfileComponent } from './profile/profile.component';
   ],
   imports: [
     CommonModule,
-    DashDoctorRoutingModule
+    DashDoctorRoutingModule,
+    SharedModule
   ]
 })
 export class DashDoctorModule { }
