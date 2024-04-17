@@ -73,9 +73,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         //TODO: cambiar la respuesta de 404 a badrequest
         //Comprobar si el doctor esta ocupado ese dia
         if(isDoctorBusyAssistent(doctorId, assistentId, date)){
-            throw new EntityNotFoundException("The doctor has an appointment already with you on this day");
+            throw new EntityNotFoundException("The doctor has an appointment already with you on this day. dr id :" + requestCreateAppointment.doctorId());
         } else if (isDoctorBusyAssisted(doctorId, assistedId, date)) {
-            throw new EntityNotFoundException("The doctor has an appointment already with you on this day");
+            throw new EntityNotFoundException("The doctor has an appointment already with you on this day. dr id: " + requestCreateAppointment.doctorId());
         }
 
         //Corrobora primero cuál de los dos es el que va y sólo da error si no está ninguno.
@@ -252,7 +252,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             System.out.println(dateTime.until(appointment.getDate(), ChronoUnit.MINUTES));
             long diff = dateTime.until(appointment.getDate(), ChronoUnit.MINUTES);
             if (diff < 30 && diff >= 0 ){
-                throw new EntityNotFoundException("The doctor already has this time busy");
+                throw new EntityNotFoundException("The doctor already has this time busy : " + appointment.getObservations());
             }
         }
     }
@@ -276,7 +276,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             System.out.println(dateTime.until(appointment.getDate(), ChronoUnit.MINUTES));
             long diff = dateTime.until(appointment.getDate(), ChronoUnit.MINUTES);
             if (diff < 30 && diff >= 0 ){
-                throw new EntityNotFoundException("You Have an appointment on this hour");
+                throw new EntityNotFoundException("You Have an appointment on this hour id : " + appointment.getId());
             }
         }
     }
@@ -300,7 +300,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             System.out.println(dateTime.until(appointment.getDate(), ChronoUnit.MINUTES));
             long diff = dateTime.until(appointment.getDate(), ChronoUnit.MINUTES);
             if (diff < 30 && diff >= 0) {
-                throw new EntityNotFoundException("You Have an appointment on this hour");
+                throw new EntityNotFoundException("You Have an appointment on this hour  id : "  + appointment.getId());
             }
         }
     }

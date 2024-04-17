@@ -31,4 +31,11 @@ public class DataBaseController {
         System.out.println("entro al controlador");
         return dataBaseService.insertAppointment();
     }
+
+    @GetMapping("/all")
+    String insertAll(){
+        System.out.println("entro al controlador");
+        return dataBaseService.insertAll();
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.s1410.calme.Application.SImplementations;
 
+import com.s1410.calme.Domain.Dtos.request.RequestCreateAppointment;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAssisted;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateAssistent;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateDoctor;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,12 +63,25 @@ public class dataBaseServiceImpl implements DataBaseService {
 
     @Override
     public String insertAppointment() {
-        return null;
+
+        List<RequestCreateAppointment> requestCreateAppointments = getInsertAppointment();
+        System.out.println("entro al service insertAppointment()");
+        requestCreateAppointments.forEach(
+                requestCreateAppointment -> {
+                    appointmentService.createAppointment(requestCreateAppointment);
+                }
+        );
+        return requestCreateAppointments.toString();
     }
 
     @Override
     public String insertAll() {
-        return null;
+        insertAssistant();
+        insertAssisted();
+        insertDoctor();
+        insertAppointment();
+
+        return "todo ok";
     }
 
     /* DATA */
@@ -116,7 +131,6 @@ public class dataBaseServiceImpl implements DataBaseService {
         doctor.add(new RequestCreateDoctor("doctormoreno@gmail.com", "passwordvwx", "Carmen", null, "Moreno", "123456780", Specialty.CARDIOLOGY, LocalDate.of(1981, 12, 25), 1234567801L, false, true, true, 23456, 8765432109L, "Calle Mayor 456"));
         doctor.add(new RequestCreateDoctor("doctorruiz@gmail.com", "passwordyz1", "Javier", null, "Ruiz", "234567891", Specialty.PEDIATRICS, LocalDate.of(1989, 2, 14), 2345678912L, true, false, true, 34567, 7654321098L, "Paseo del Sol 789"));
         doctor.add(new RequestCreateDoctor("doctorperez@gmail.com", "password234", "Paula", null, "Perez", "345678912", Specialty.DERMATOLOGY, LocalDate.of(1984, 3, 5), 3456789123L, false, true, false, 45678, 6543210987L, "Avenida del Bosque 890"));
-        doctor.add(new RequestCreateDoctor("doctorgomezr@gmail.com", "password567", "Daniel", null, "Gomez", "456789123", Specialty.GERIATRICS, LocalDate.of(1976, 4, 18), 4567891234L, true, false, true, 56789, 5432109876L, "Calle del Rio 456"));
         doctor.add(new RequestCreateDoctor("doctorlopezm@gmail.com", "password890", "Maria", null, "Lopez", "567891234", Specialty.HEMATOLOGY, LocalDate.of(1982, 8, 10), 5678912345L, false, true, false, 67890, 4321098765L, "Avenida del Puerto 789"));
         doctor.add(new RequestCreateDoctor("doctortorresj@gmail.com", "passwordabc1", "Julio", null, "Torres", "678912345", Specialty.RADIOLOGY, LocalDate.of(1987, 11, 23), 6789123456L, true, false, true, 78901, 3210987654L, "Callejon de la Luna 123"));
         doctor.add(new RequestCreateDoctor("doctormartine@gmail.com", "passworddef2", "Ana", null, "Martinez", "789123456", Specialty.PSYCHIATRY, LocalDate.of(1978, 6, 15), 7891234567L, false, true, false, 89012, 2109876543L, "Calle del Pinar 456"));
@@ -163,9 +177,75 @@ public class dataBaseServiceImpl implements DataBaseService {
 
         return requestCreateAssisteds;
     }
-    /* 40 appointments */
+    /* 30 appointments */
+    List<RequestCreateAppointment> getInsertAppointment(){
+        List<RequestCreateAppointment> appointments = new ArrayList<>();
+/*        appointments.add(new RequestCreateAppointment(1L, 15L, 8L, LocalDateTime.now().minusDays(3), "Consulta de rutina para chequeo médico"));
+        appointments.add(new RequestCreateAppointment(2L, 5L, 17L, LocalDateTime.now().minusDays(5), "Seguimiento de tratamiento para control de la presión arterial"));
+        appointments.add(new RequestCreateAppointment(3L, 14L, 3L, LocalDateTime.now().minusDays(2), "Consulta por dolor abdominal persistente"));
+        appointments.add(new RequestCreateAppointment(2L, 2L, 18L, LocalDateTime.now().minusDays(6), "Vacunación contra la gripe"));
+        appointments.add(new RequestCreateAppointment(5L, 9L, 6L, LocalDateTime.now().minusDays(4), "Examen de sangre para análisis de glucosa"));
+        appointments.add(new RequestCreateAppointment(6L, 11L, 16L, LocalDateTime.now().minusDays(1), "Seguimiento de rehabilitación por lesión en el hombro"));
+        appointments.add(new RequestCreateAppointment(7L, 10L, 12L, LocalDateTime.now().minusDays(3), "Consulta pediátrica para vacunación infantil"));
+        appointments.add(new RequestCreateAppointment(8L, 7L, 19L, LocalDateTime.now().minusDays(5), "Control de presión arterial y ajuste de medicación"));
+        appointments.add(new RequestCreateAppointment(9L, 4L, 13L, LocalDateTime.now().minusDays(2), "Consulta ginecológica de rutina"));
+        appointments.add(new RequestCreateAppointment(10L, 1L, 20L, LocalDateTime.now().minusDays(6), "Consulta odontológica para limpieza y revisión"));
+        appointments.add(new RequestCreateAppointment(11L, 8L, 15L, LocalDateTime.now().minusDays(2), "Consulta de seguimiento para control de la diabetes"));
+        appointments.add(new RequestCreateAppointment(12L, 17L, 5L, LocalDateTime.now().minusDays(4), "Examen de vista y prescripción de lentes"));
+        appointments.add(new RequestCreateAppointment(13L, 3L, 14L, LocalDateTime.now().minusDays(1), "Consulta por síntomas de gripe"));
+        appointments.add(new RequestCreateAppointment(14L, 18L, 2L, LocalDateTime.now().minusDays(3), "Consulta de dermatología para tratamiento de acné"));
+        appointments.add(new RequestCreateAppointment(15L, 6L, 9L, LocalDateTime.now().minusDays(5), "Consulta de psicología para manejo del estrés"));
+        appointments.add(new RequestCreateAppointment(16L, 16L, 11L, LocalDateTime.now().minusDays(2), "Sesión de fisioterapia para recuperación de lesión de rodilla"));
+        appointments.add(new RequestCreateAppointment(17L, 12L, 10L, LocalDateTime.now().minusDays(4), "Control de peso y nutrición"));
+        appointments.add(new RequestCreateAppointment(18L, 19L, 7L, LocalDateTime.now().minusDays(1), "Consulta por síntomas de alergia"));
+        appointments.add(new RequestCreateAppointment(19L, 13L, 4L, LocalDateTime.now().minusDays(3), "Examen ginecológico de rutina"));
+        appointments.add(new RequestCreateAppointment(20L, 20L, 1L, LocalDateTime.now().minusDays(5), "Extracción de muela de juicio"));
+        appointments.add(new RequestCreateAppointment(2L, 1L, 2L, LocalDateTime.now().minusDays(3), "Consulta de seguimiento postoperatorio"));
+        appointments.add(new RequestCreateAppointment(2L, 2L, 3L, LocalDateTime.now().minusDays(4), "Control de glucosa en ayunas"));
+        appointments.add(new RequestCreateAppointment(3L, 3L, 4L, LocalDateTime.now().minusDays(5), "Consulta de cardiología para evaluación de ritmo cardíaco"));*/
 
-
+        appointments.add(new RequestCreateAppointment(1L, 11L, 12L, LocalDateTime.of(2024, 4, 22, 10, 0), "Consulta de gastroenterología para evaluación de problemas digestivos"));
+        appointments.add(new RequestCreateAppointment(2L, 12L, 13L, LocalDateTime.of(2024, 4, 21, 11, 30), "Control de presión arterial y seguimiento de dieta baja en sodio"));
+        appointments.add(new RequestCreateAppointment(3L, 13L, 14L, LocalDateTime.of(2024, 4, 20, 13, 15), "Sesión de terapia de grupo para manejo de la ansiedad"));
+        appointments.add(new RequestCreateAppointment(4L, 14L, 15L, LocalDateTime.of(2024, 4, 19, 15, 45), "Consulta de psiquiatría para ajuste de medicación"));
+        appointments.add(new RequestCreateAppointment(5L, 15L, 16L, LocalDateTime.of(2024, 4, 18, 8, 30), "Consulta de oftalmología para evaluación de cataratas"));
+        appointments.add(new RequestCreateAppointment(6L, 16L, 17L, LocalDateTime.of(2024, 4, 17, 10, 15), "Consulta de traumatología para tratamiento de lesión de tobillo"));
+        appointments.add(new RequestCreateAppointment(7L, 17L, 18L, LocalDateTime.of(2024, 4, 16, 12, 45), "Consulta de alergología para evaluación de reacciones alérgicas"));
+        appointments.add(new RequestCreateAppointment(8L, 18L, 19L, LocalDateTime.of(2024, 4, 15, 14, 0), "Consulta de neurología para evaluación de migrañas"));
+        appointments.add(new RequestCreateAppointment(9L, 19L, 20L, LocalDateTime.of(2024, 4, 14, 16, 30), "Consulta de neumología para evaluación de síntomas respiratorios"));
+        appointments.add(new RequestCreateAppointment(10L, 20L, 1L, LocalDateTime.of(2024, 4, 13, 9, 45), "Consulta de reumatología para manejo de artritis"));
+        appointments.add(new RequestCreateAppointment(1L, 1L, 2L, LocalDateTime.of(2024, 4, 12, 11, 0), "Consulta de oncología para seguimiento de tratamiento contra el cáncer"));
+        appointments.add(new RequestCreateAppointment(2L, 2L, 3L, LocalDateTime.of(2024, 4, 11, 13, 15), "Consulta de endocrinología para evaluación de tiroides"));
+        appointments.add(new RequestCreateAppointment(3L, 3L, 4L, LocalDateTime.of(2024, 4, 10, 15, 30), "Consulta de geriatría para evaluación de salud en la vejez"));
+        appointments.add(new RequestCreateAppointment(4L, 4L, 5L, LocalDateTime.of(2024, 4, 9, 17, 45), "Consulta de nutrición para planificación de dieta saludable"));
+        appointments.add(new RequestCreateAppointment(5L, 5L, 6L, LocalDateTime.of(2024, 4, 8, 10, 0), "Consulta de cirugía plástica para evaluación de cirugía estética"));
+        appointments.add(new RequestCreateAppointment(6L, 6L, 7L, LocalDateTime.of(2024, 4, 7, 14, 30), "Consulta de medicina deportiva para evaluación de lesión deportiva"));
+        appointments.add(new RequestCreateAppointment(7L, 7L, 8L, LocalDateTime.of(2024, 4, 6, 16, 45), "Consulta de medicina interna para evaluación de síntomas generales"));
+        appointments.add(new RequestCreateAppointment(8L, 8L, 9L, LocalDateTime.of(2024, 4, 5, 8, 0), "Consulta de hematología para evaluación de trastornos de la coagulación"));
+        appointments.add(new RequestCreateAppointment(9L, 9L, 10L, LocalDateTime.of(2024, 4, 4, 10, 15), "Consulta de odontología para tratamiento de caries"));
+        appointments.add(new RequestCreateAppointment(10L, 10L, 1L, LocalDateTime.of(2024, 4, 3, 12, 30), "Consulta de psicoterapia para manejo de trastorno de ansiedad"));
+        appointments.add(new RequestCreateAppointment(10L, 10L, 11L, LocalDateTime.of(2024, 3, 13, 9, 45), "Consulta de reumatología para manejo de artritis"));
+        appointments.add(new RequestCreateAppointment(1L, 1L, 12L, LocalDateTime.of(2024, 2, 12, 11, 0), "Consulta de oncología para seguimiento de tratamiento contra el cáncer"));
+        appointments.add(new RequestCreateAppointment(2L, 2L, 13L, LocalDateTime.of(2024, 3, 11, 13, 15), "Consulta de endocrinología para evaluación de tiroides"));
+        appointments.add(new RequestCreateAppointment(3L, 3L, 14L, LocalDateTime.of(2024, 3, 10, 15, 30), "Consulta de geriatría para evaluación de salud en la vejez"));
+        appointments.add(new RequestCreateAppointment(4L, 4L, 15L, LocalDateTime.of(2024, 2, 9, 17, 45), "Consulta de nutrición para planificación de dieta saludable"));
+        appointments.add(new RequestCreateAppointment(5L, 5L, 16L, LocalDateTime.of(2024, 3, 8, 11, 0), "Consulta de cirugía plástica para evaluación de cirugía estética"));
+        appointments.add(new RequestCreateAppointment(6L, 6L, 17L, LocalDateTime.of(2024, 2, 7, 15, 30), "Consulta de medicina deportiva para evaluación de lesión deportiva"));
+        appointments.add(new RequestCreateAppointment(7L, 7L, 18L, LocalDateTime.of(2024, 3, 6, 18, 45), "Consulta de medicina interna para evaluación de síntomas generales"));
+        appointments.add(new RequestCreateAppointment(7L, 8L, 5L, LocalDateTime.of(2024, 4, 5, 7, 0), "Consulta de hematología para evaluación de trastornos de la coagulación"));
+        appointments.add(new RequestCreateAppointment(9L, 9L, 20L, LocalDateTime.of(2024, 3, 4, 10, 15), "Consulta de odontología para tratamiento de caries"));
+        appointments.add(new RequestCreateAppointment(10L, 10L, 1L, LocalDateTime.of(2024, 2, 3, 12, 30), "Consulta de psicoterapia para manejo de trastorno de ansiedad"));
+        appointments.add(new RequestCreateAppointment(1L, 1L, 2L, LocalDateTime.of(2024, 4, 2, 14, 45), "Consulta de urología para evaluación de problemas de próstata"));
+        appointments.add(new RequestCreateAppointment(2L, 2L, 3L, LocalDateTime.of(2024, 4, 1, 17, 0), "Consulta de dermatología para tratamiento de acné"));
+        appointments.add(new RequestCreateAppointment(3L, 3L, 4L, LocalDateTime.of(2024, 3, 31, 9, 15), "Consulta de otorrinolaringología para tratamiento de sinusitis"));
+        appointments.add(new RequestCreateAppointment(4L, 4L, 5L, LocalDateTime.of(2024, 2, 29, 11, 30), "Consulta de ginecología para examen de rutina"));
+        appointments.add(new RequestCreateAppointment(5L, 5L, 6L, LocalDateTime.of(2024, 3, 29, 13, 45), "Consulta de cardiología para evaluación de ritmo cardíaco"));
+        appointments.add(new RequestCreateAppointment(6L, 6L, 7L, LocalDateTime.of(2024, 2, 28, 16, 0), "Consulta de pediatría para seguimiento de desarrollo infantil"));
+        appointments.add(new RequestCreateAppointment(7L, 7L, 8L, LocalDateTime.of(2024, 1, 27, 8, 15), "Consulta de fisioterapia para rehabilitación de lesión"));
+        appointments.add(new RequestCreateAppointment(8L, 8L, 9L, LocalDateTime.of(2024, 4, 26, 10, 30), "Consulta de nutrición para seguimiento de dieta"));
+        appointments.add(new RequestCreateAppointment(9L, 9L, 10L, LocalDateTime.of(2024, 4, 25, 12, 45), "Consulta de psiquiatría para manejo de trastorno de ansiedad"));
+        return appointments;
+    }
 
 
 

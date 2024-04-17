@@ -40,7 +40,7 @@ public class DoctorServiceImpl implements DoctorService {
     if (requestCreateDoctor == null){throw new EntityNotFoundException();}
 
         var doctorAlreadyExists = doctorRepository.findByEmail(requestCreateDoctor.email());
-        if(doctorAlreadyExists.isPresent()){ throw new EntityExistsException("Email already in use"); }
+        if(doctorAlreadyExists.isPresent()){ throw new EntityExistsException("Email already in use" + requestCreateDoctor.email()); }
 
     Doctor doctor = doctorMapper.requestCreateToDoctor(requestCreateDoctor);
         doctor.setPassword(passwordEncoder.encode(requestCreateDoctor.password()));
