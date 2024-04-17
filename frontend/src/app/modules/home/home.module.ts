@@ -14,9 +14,10 @@ import { SearchFiltersComponent } from 'src/app/core/shared/components/search-fi
 import { AppointmentConfirmationComponent } from './appointment-confirmation/appointment-confirmation.component';
 import { AppointmentComponent } from 'src/app/core/shared/components/appointment/appointment.component';
 import { FormsModule } from '@angular/forms';
+import { DocScheduleComponent } from './doc-schedule/doc-schedule.component';
 
 @NgModule({
-  declarations: [PrincipalComponent, CardComponent, SliderComponent,SpecialtiesBoxComponent, SearchDoctorComponent,DoctorSearchCardComponent,SearchFiltersComponent, AppointmentConfirmationComponent,AppointmentComponent],
+  declarations: [PrincipalComponent, CardComponent, SliderComponent,SpecialtiesBoxComponent, SearchDoctorComponent,DoctorSearchCardComponent,SearchFiltersComponent, AppointmentConfirmationComponent,AppointmentComponent, DocScheduleComponent],
   imports: [CommonModule, HomeRoutingModule, SharedModule, SearchBarModule,FormsModule],
   exports: [CardComponent],
 })
