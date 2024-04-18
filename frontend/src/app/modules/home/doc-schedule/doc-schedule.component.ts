@@ -1,8 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { DocService } from '../../../core/shared/services/doc/doc.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { DocResponse } from 'src/app/core/interfaces/doc.interface';
+
+import { ScheduleComponent } from '@syncfusion/ej2-angular-schedule';
 
 @Component({
   selector: 'app-doc-schedule',
@@ -14,8 +16,18 @@ export class DocScheduleComponent implements OnInit {
 
   docService = inject(DocService);
   activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+
+  @ViewChild('scheduleObj') public scheduleObj?: ScheduleComponent;
+
+  public selectedDate: Date;
+
+  constructor() {
+    this.selectedDate = new Date();
+  }
 
   ngOnInit(): void {
+    sessionStorage.removeItem('fecha');
     this.getDocInfo();
   }
 
@@ -28,5 +40,18 @@ export class DocScheduleComponent implements OnInit {
           console.log(resp);
         },
       });
+  }
+
+  public readonly: boolean = false;
+
+  onDateSelect(eventArgs: any) {
+    this.selectedDate = eventArgs.data.StartTime;
+    console.log('Fecha seleccionada:', this.selectedDate);
+    console.log(this.selectedDate.toISOString());
+    sessionStorage.setItem('fecha', this.selectedDate.toISOString());
+
+    this.router.navigate(['/appointment-confirmation'], {
+      state: { doctorData: this.doctor },
+    });
   }
 }

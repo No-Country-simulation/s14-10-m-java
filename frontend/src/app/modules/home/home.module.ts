@@ -16,9 +16,33 @@ import { AppointmentComponent } from 'src/app/core/shared/components/appointment
 import { FormsModule } from '@angular/forms';
 import { DocScheduleComponent } from './doc-schedule/doc-schedule.component';
 
+import {
+  ScheduleModule,
+  RecurrenceEditorModule,
+} from '@syncfusion/ej2-angular-schedule';
+
 @NgModule({
-  declarations: [PrincipalComponent, CardComponent, SliderComponent,SpecialtiesBoxComponent, SearchDoctorComponent,DoctorSearchCardComponent,SearchFiltersComponent, AppointmentConfirmationComponent,AppointmentComponent, DocScheduleComponent],
-  imports: [CommonModule, HomeRoutingModule, SharedModule, SearchBarModule,FormsModule],
+  declarations: [
+    PrincipalComponent,
+    CardComponent,
+    SliderComponent,
+    SpecialtiesBoxComponent,
+    SearchDoctorComponent,
+    DoctorSearchCardComponent,
+    SearchFiltersComponent,
+    AppointmentConfirmationComponent,
+    AppointmentComponent,
+    DocScheduleComponent,
+  ],
+  imports: [
+    CommonModule,
+    HomeRoutingModule,
+    SharedModule,
+    SearchBarModule,
+    FormsModule,
+    ScheduleModule,
+    RecurrenceEditorModule,
+  ],
   exports: [CardComponent],
 })
 export class HomeModule {}
