@@ -31,7 +31,7 @@ public final class Assistent extends User {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority authority = new SimpleGrantedAuthority(RolesEnum.ASSISTENT.name().toString());
+        GrantedAuthority authority = new SimpleGrantedAuthority(this.role.name());
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(authority);
         return authorities;
