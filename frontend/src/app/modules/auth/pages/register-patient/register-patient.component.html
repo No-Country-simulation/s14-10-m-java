@@ -10,122 +10,129 @@
             (ngSubmit)="submitForm()"
             class="flex flex-col gap-2"
           >
-            <div class="flex flex-col gap-2">
-              <label for="firstName">Primer nombre:</label>
-              <input
-                type="text"
-                id="firstName"
-                formControlName="firstName"
-                class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-              />
-              <div
-                *ngIf="
-                  f.firstName.invalid &&
-                  (f.firstName.dirty || f.firstName.touched)
-                "
-              >
-                <div *ngIf="f.firstName.errors.required">
-                  First Name es requerido
+            <div class="flex gap-3 flex-wrap">
+              <div class="flex flex-col gap-2">
+                <label for="firstName">Primer nombre:</label>
+                <input
+                  type="text"
+                  id="firstName"
+                  formControlName="firstName"
+                  class="w-[200px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+                <div
+                  *ngIf="
+                    f.firstName.invalid &&
+                    (f.firstName.dirty || f.firstName.touched)
+                  "
+                >
+                  <div *ngIf="f.firstName.errors.required">
+                    First Name es requerido
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-2">
+                <label for="secondName">Segundo nombre:</label>
+                <input
+                  type="text"
+                  id="secondName"
+                  formControlName="secondName"
+                  class="w-[200px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+                <div
+                  *ngIf="
+                    f.secondName.invalid &&
+                    (f.secondName.dirty || f.secondName.touched)
+                  "
+                >
+                  <div *ngIf="f.secondName.errors.required">
+                    Second Name es requerido
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="flex flex-col gap-2">
-              <label for="secondName">Segundo nombre:</label>
-              <input
-                type="text"
-                id="secondName"
-                formControlName="secondName"
-                class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-              />
-              <div
-                *ngIf="
-                  f.secondName.invalid &&
-                  (f.secondName.dirty || f.secondName.touched)
-                "
-              >
-                <div *ngIf="f.secondName.errors.required">
-                  Second Name es requerido
+            <div class="flex gap-3 flex-wrap">
+              <div class="flex flex-col gap-2">
+                <label for="lastName">Apellidos:</label>
+                <input
+                  type="text"
+                  id="lastName"
+                  formControlName="lastName"
+                  class="w-[200px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+                <div
+                  *ngIf="
+                    f.lastName.invalid &&
+                    (f.lastName.dirty || f.lastName.touched)
+                  "
+                >
+                  <div *ngIf="f.lastName.errors.required">
+                    Last Name es requerido
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="flex flex-col gap-2">
-              <label for="lastName">Apellidos:</label>
-              <input
-                type="text"
-                id="lastName"
-                formControlName="lastName"
-                class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-              />
-              <div
-                *ngIf="
-                  f.lastName.invalid && (f.lastName.dirty || f.lastName.touched)
-                "
-              >
-                <div *ngIf="f.lastName.errors.required">
-                  Last Name es requerido
+              <div class="flex flex-col gap-2">
+                <label for="DNI">DNI:</label>
+                <input
+                  type="text"
+                  id="DNI"
+                  formControlName="DNI"
+                  class="w-[200px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+                <div *ngIf="f.DNI.invalid && (f.DNI.dirty || f.DNI.touched)">
+                  <div *ngIf="f.DNI.errors.required">DNI es requerido</div>
+                  <div *ngIf="f.DNI.errors.pattern">
+                    DNI debe tener 7 dígitos numéricos
+                  </div>
                 </div>
               </div>
             </div>
-
-            <div class="flex flex-col gap-2">
-              <label for="DNI">DNI:</label>
-              <input
-                type="text"
-                id="DNI"
-                formControlName="DNI"
-                class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-              />
-              <div *ngIf="f.DNI.invalid && (f.DNI.dirty || f.DNI.touched)">
-                <div *ngIf="f.DNI.errors.required">DNI es requerido</div>
-                <div *ngIf="f.DNI.errors.pattern">
-                  DNI debe tener 7 dígitos numéricos
+            <div class="flex gap-3 flex-wrap">
+              <div class="flex flex-col gap-2">
+                <label for="phoneNumber">Numero de Telefono:</label>
+                <input
+                  type="text"
+                  id="phoneNumber"
+                  formControlName="phoneNumber"
+                  class="w-[200px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+                <div
+                  *ngIf="
+                    f.phoneNumber.invalid &&
+                    (f.phoneNumber.dirty || f.phoneNumber.touched)
+                  "
+                >
+                  <div *ngIf="f.phoneNumber.errors.required">
+                    Phone Number es requerido
+                  </div>
+                  <div *ngIf="f.phoneNumber.errors.pattern">
+                    Phone Number debe ser de 7 digitos
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="flex flex-col gap-2">
-              <label for="phoneNumber">Numero de Telefono:</label>
-              <input
-                type="text"
-                id="phoneNumber"
-                formControlName="phoneNumber"
-                class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-              />
-              <div
-                *ngIf="
-                  f.phoneNumber.invalid &&
-                  (f.phoneNumber.dirty || f.phoneNumber.touched)
-                "
-              >
-                <div *ngIf="f.phoneNumber.errors.required">
-                  Phone Number es requerido
-                </div>
-                <div *ngIf="f.phoneNumber.errors.pattern">
-                  Phone Number debe ser de 7 digitos
-                </div>
-              </div>
-            </div>
-            <div class="flex flex-col gap-2">
-              <!-- DateOfBirth -->
-              <label for="dateOfBirth">Dia de nacimiento:</label>
-              <input
-                type="date"
-                id="dateOfBirth"
-                formControlName="dateOfBirth"
-                class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
-              />
-              <div
-                *ngIf="
-                  f.dateOfBirth.invalid &&
-                  (f.dateOfBirth.dirty || f.dateOfBirth.touched)
-                "
-              >
-                <div *ngIf="f.dateOfBirth.errors.required">
-                  Date of Birth es requerido
-                </div>
-                <div *ngIf="f.dateOfBirth.errors.futureDate">
-                  La fecha de nacimiento no puede ser futura
+              <div class="flex flex-col gap-2">
+                <!-- DateOfBirth -->
+                <label for="dateOfBirth">Dia de nacimiento:</label>
+                <input
+                  type="date"
+                  id="dateOfBirth"
+                  formControlName="dateOfBirth"
+                  class="w-[200px] h-10 border px-2 border-gray-300 rounded-lg"
+                />
+                <div
+                  *ngIf="
+                    f.dateOfBirth.invalid &&
+                    (f.dateOfBirth.dirty || f.dateOfBirth.touched)
+                  "
+                >
+                  <div *ngIf="f.dateOfBirth.errors.required">
+                    Date of Birth es requerido
+                  </div>
+                  <div *ngIf="f.dateOfBirth.errors.futureDate">
+                    La fecha de nacimiento no puede ser futura
+                  </div>
                 </div>
               </div>
             </div>
@@ -135,7 +142,7 @@
                 type="email"
                 id="email"
                 formControlName="email"
-                class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                class="w-full h-10 border px-2 border-gray-300 rounded-lg"
               />
               <div
                 *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)"
@@ -153,7 +160,7 @@
                 type="password"
                 id="password"
                 formControlName="password"
-                class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                class="w-full h-10 border px-2 border-gray-300 rounded-lg"
               />
               <div
                 *ngIf="
@@ -187,7 +194,7 @@
                 [ngClass]="{
                   'bg-accent-light text-primary-dark font-poppins text-base font-semibold':
                     !isDisabled,
-                  'bg-[#D7D7D7] text-gray-600 cursor-not-allowed': isDisabled
+                  'bg-[#D7D7D7] text-gray-600 cursor-not-allowed font-bold': isDisabled
                 }"
                 [disabled]="isDisabled"
               >
