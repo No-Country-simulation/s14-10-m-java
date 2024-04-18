@@ -39,13 +39,18 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
         return null;
     }
 
-    public ResponseWhatsapp sendMessageTest(MessageBodyDTO payload) throws JsonProcessingException {
-        RequestMessage request = new RequestMessage("whatsapp",payload.number(),new RequestMessageText(payload.message()));
+    public ResponseWhatsapp sendMessageTest(String message) throws JsonProcessingException {
+
+
+        RequestMessage request = new RequestMessage(
+                "whatsapp","543517707973 ",
+                new RequestMessageText(message.toString()));
+
 
         String response = clientBuilder().post()
                 .uri("")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(createMessageTest())
+                .body(request)
                 .retrieve()
                 .body(String.class);
 
@@ -53,44 +58,52 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
         return obj.readValue(response,ResponseWhatsapp.class);
     }
 
-    public String createMessageTest() {
+    public List<ResponseWhatsapp> createMessageTest() throws JsonProcessingException {
 
-        LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
+        LocalDateTime tomorrow = LocalDateTime.now().plusDays(2);
         int day = tomorrow.getDayOfMonth();
         int month = tomorrow.getMonthValue();
         int year = tomorrow.getYear();
-        List<String> message = new ArrayList<>();
+        List<ResponseWhatsapp> message = new ArrayList<>();
         List<Appointment> appointmentsForTomorrow = appointmentRepository.
                 findAppointmentsByDateByActive(true,day,month,year);
 
         for (Appointment appointment : appointmentsForTomorrow) {
-            String firstName = appointment.getAssistent().getFirstName();
-            if (firstName == null) {
-                firstName = appointment.getAssisted().getFirstName();
-            }
 
-            String lastName = appointment.getAssistent().getLastName();
-            if (lastName == null) {
-                lastName = appointment.getAssisted().getLastName();
-            }
+            String doctorName = appointment.getDoctor().getFirstName();
+            String doctorLastName = appointment.getDoctor().getLastName();
+            String doctorSpecialty = appointment.getDoctor().getSpecialty().toString();
+            int apDay = appointment.getDate().getDayOfMonth();
+            int apMonth = appointment.getDate().getMonthValue();
+            int apYear = appointment.getDate().getYear();
+            int apHour = appointment.getDate().getHour();
+            int apMinutes = appointment.getDate().getMinute();
 
-            Long phone = appointment.getAssistent().getPhoneNumber();
-            if (phone == null) {
+            String firstName;
+            String lastName;
+            Long phone;
+            if (appointment.getAssistent() != null) {
+                firstName = appointment.getAssistent().getFirstName();
+                lastName = appointment.getAssistent().getFirstName();
+                phone = appointment.getAssistent().getPhoneNumber();}
+            else { firstName = appointment.getAssisted().getFirstName();
+                    lastName = appointment.getAssisted().getFirstName();
                 phone = appointment.getAssisted().getRelationsAA().get(0)
-                        .getAssistent().getPhoneNumber();
-            }
+                        .getAssistent().getPhoneNumber(); }
 
-            message.add("¡Buenos días! Nos comunicamos desde Calme para recordarte que "
-                    + firstName + " " + lastName + " tiene un turno el día " +
-                    tomorrow.getDayOfMonth() + "/" + tomorrow.getMonthValue() +
-                    "/" + tomorrow.getYear() + " a las " + appointment.getDate().getHour() + ":" +
-                    appointment.getDate().getMinute() + "hs con el/la dr/a " +
-                    appointment.getDoctor().getFirstName() + " " +
-                    appointment.getDoctor().getLastName() +
-                    ", " + appointment.getDoctor().getSpecialty() + ".");
+            String messagePure =
+                    "¡Buenos días! Nos comunicamos desde Calme para recordarte que " + firstName + " "
+                    + lastName + " tiene un turno el día " + apDay + "/" + apMonth + "/" + apYear +
+                    " a las " + apHour + ":" + apMinutes +  "hs con el/la dr/a " + doctorName + " " +
+                    doctorLastName + ", " + doctorSpecialty + ".";
+
+            ResponseWhatsapp response = sendMessageTest(messagePure);
+            message.add(response);
+
+
         }
 
-        System.out.println("CREATEMESSAGE : " + message);
-        return message.toString();}
+        return message;
     }
+}
 
