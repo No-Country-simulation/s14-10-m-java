@@ -27,14 +27,8 @@
       *ngIf="!isLogged"
       >Inicia Sesión</app-button
     >
-    <app-button
-      color="primary"
-      buttonType="button"
-      (click)="onBooking()"
-      *ngIf="isLogged"
-      >Agendar un turno</app-button
-    >
+    <ng-container *ngIf="isLogged">
+      <app-dialog-menu></app-dialog-menu>
+    </ng-container>
   </div>
 </header>
-
-<!-- <button (click)="onRegister()">Agenda un turno</button> -->
