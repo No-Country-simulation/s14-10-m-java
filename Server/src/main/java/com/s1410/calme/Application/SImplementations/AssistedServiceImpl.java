@@ -117,9 +117,21 @@ public class AssistedServiceImpl implements AssistedService {
                 .orElseThrow(() -> new EntityNotFoundException(requestEditAssisted.id().toString()));
 
        if (assisted.getActive()) {
-            if (requestEditAssisted.DNI() != null) {
-                assisted.setDNI(requestEditAssisted.DNI());
+            if (requestEditAssisted.firstName() != null) {
+                assisted.setFirstName(requestEditAssisted.firstName());
             }
+
+           if (requestEditAssisted.secondName() != null) {
+               assisted.setSecondName(requestEditAssisted.secondName());
+           }
+
+           if (requestEditAssisted.lastName() != null) {
+               assisted.setLastName(requestEditAssisted.lastName());
+           }
+
+           if (requestEditAssisted.DNI() != null) {
+               assisted.setDNI(requestEditAssisted.DNI());
+           }
 
             if (requestEditAssisted.dateOfBirth() != null) {
                 assisted.setDateOfBirth(requestEditAssisted.dateOfBirth());
