@@ -22,195 +22,96 @@
   >
     <shared-navbar class="mt-10"></shared-navbar>
   </div>
-  <div class="flex">
-    <div class="appointment-form">
-      <h3
+  <div class="flex flex-col items-center mt-20">
+    <div class="text-center mt-4">
+      <img
         style="
-          font-family: 'Poppins', sans-serif;
-          font-weight: 700;
-          font-size: 32px;
-          line-height: 48px;
-          color: #ff9d2b;
+          box-shadow: 0px 0px 30px 0 #87b1ff60;
+          border-radius: 50%;
+          height: 88px;
+          margin-left: 40%;
+          margin-bottom: 10%;
+          background-color: #b9cdfb;
         "
-      >
-        Datos de la consulta
-      </h3>
-      <p
-        class="mt-4"
-        style="
-          font-family: 'Poppins', sans-serif;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 24px;
-          color: #000000;
-        "
-      >
-        Has seleccionado un turno con el Dr. {{doctorData.firstName}} {{doctorData.secondName}} {{doctorData.lastName}}<br />
-        Lee con atención la siguiente información y completa <br />los campos
-        requeridos para confirmar tu turno:
-      </p>
-      <div class="flex mt-10">
-        <h3
-          style="
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            font-size: 24px;
-            line-height: 36px;
-            color: #063463;
-          "
-        >
-          Motivo de la consulta
-        </h3>
-        <p
-          class="m-3"
-          style="
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            font-size: 12px;
-            line-height: 18px;
-            color: #5b5b5b;
-          "
-        >
-          (Máximo 160 caracteres)
-        </p>
-      </div>
-      <input
-        class="mt-1"
-        style="
-          font-family: 'Poppins', sans-serif;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 24px;
-          width: 418px;
-          height: 56px;
-          border-radius: 8px;
-          border: 1px solid #dde1eb;
-        "
-        type="text"
-        placeholder="  Ingresa el motivo de tu turno"
-        [(ngModel)]="motivoConsulta"
+        src="../../../../assets/icons-svg/check.svg"
       />
       <h3
-        class="mt-6"
-        style="
-          font-family: 'Poppins', sans-serif;
-          font-weight: 400;
-          font-size: 24px;
-          line-height: 36px;
-          color: #063463;
-        "
-      >
-        ¿Este turno es para vos?
-      </h3>
-      <div class="mt-2 flex">
-        <label class="radio-label" style="margin-right: 10%">
-          <input
-            type="radio"
-            name="opcion"
-            value="opcion1"
-            (change)="toggleForSelf($event)"
-            checked
-          />
-          Si
-        </label>
-        <label class="radio-label">
-          <input
-            type="radio"
-            name="opcion"
-            value="opcion2"
-            (change)="toggleForSelf($event)"
-          />
-          No, es para alguien más
-        </label>
-      </div>
-
-      <h3
-        *ngIf="!isForSelf"
-        class="mt-6"
-        style="
-          font-family: 'Poppins', sans-serif;
-          font-weight: 400;
-          font-size: 24px;
-          line-height: 36px;
-          color: #063463;
-        "
-      >
-        Selecciona quien es el titular del turno
-      </h3>
-      <select
-        *ngIf="!isForSelf"
-        class="mt-2"
-        [ngModel]="titularSeleccionado" (ngModelChange)="seleccionarTitular($event)"
-        style="
-          font-family: 'Poppins', sans-serif;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 24px;
-          width: 418px;
-          height: 56px;
-          border-radius: 8px;
-          border: 1px solid #dde1eb;
-        "
-  >
-        <option value="">Selecciona una persona</option>
-        <!-- Aquí debes iterar sobre tu lista de personas y mostrarlas como opciones -->
-        <option *ngFor="let assisted of assistedList" [value]="assisted.id">{{assisted.firstName}}</option>
-        <option value="new">Agregar nueva persona</option>
-      </select>
-
-      <h3
-        class="mt-6"
-        style="
-          font-family: 'Poppins', sans-serif;
-          font-weight: 400;
-          font-size: 24px;
-          line-height: 36px;
-          color: #063463;
-        "
-      >
-        Ingresa un teléfono de contacto
-      </h3>
-      <input
-        class="mt-2"
-        style="
-          font-family: 'Poppins', sans-serif;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 24px;
-          width: 418px;
-          height: 56px;
-          border-radius: 8px;
-          border: 1px solid #dde1eb;
-        "
-        type="text"
-        placeholder="  Código de área + número de celular sin el 15"
-        [(ngModel)]="telefonoContacto"
-      />
-      <div
-        class="py-2 w-[252px] mt-10 rounded-full flex justify-center"
-        [ngClass]="{
-          'bg-accent-light': isFormComplete(),
-          'bg-gray-300': !isFormComplete()
-        }"
-      >
-        <button buttonType="button" routerLink="" [disabled]="!isFormComplete()">
-          <p
-            style="
+      style="
               font-family: 'Poppins', sans-serif;
-              font-weight: 500;
-              font-size: 22px;
-              line-height: 33px;
-              color: #224c76;
-            "
-          >
-            Confirmar turno
-          </p>
-        </button>
-      </div>
+              font-weight: 400;
+              font-size: 24px;
+              line-height: 36px;
+              color: #000000;
+              margin-bottom: 2%;
+            ">Has reservado un turno con el Dr. para</h3>
+      <h2
+      style="
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 48px;
+      color: #6A9EFF;
+      margin-bottom: 5%;
+    ">dia y mes - hs</h2>
+      <p
+      style="
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #000000;
+      margin-bottom: 10%;
+    ">
+        En unos minutos recibirás la confirmación en tu casilla de mails o a tu
+        celular. <br />
+        Si no recibes la confirmación, ponte en contacto con nuestro equipo de
+        soporte.
+      </p>
     </div>
-    <div class="spacer"></div> 
-    <div>
-      <app-appointment [doctorData]="doctorData"></app-appointment>
+    <div
+          class="py-2 w-[270px] mt-10 mb-6 rounded-full bg-accent-light flex justify-center"
+        >
+    <button
+    style="
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 33px;
+      color: #224C76;
+    ">Volver a Mis Turnos</button>
     </div>
+  </div>
+  <div>
+    <h3 class="mb-4"
+    style="
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 36px;
+      color: #FF9D2B;
+      margin-left: 10%;
+    ">Importante:</h3>
+    <p class="mb-10"
+    style="
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 30px;
+      color: #000000;
+      margin-left: 10%;
+    ">
+      Si deseas cancelar puedes hacerlo desde “Mis turnos” hasta 24 hs antes de
+      tu consulta<br />
+      Si deseas reprogramar tu turno comunicate al siguiente número:
+    </p>
+    <h2
+    style="
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 36px;
+      color: #063463;
+      text-align: center;
+    ">0800-0000-0000</h2>
   </div>
 </div>

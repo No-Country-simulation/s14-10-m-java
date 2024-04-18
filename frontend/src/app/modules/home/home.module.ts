@@ -11,12 +11,13 @@ import { SpecialtiesBoxComponent } from 'src/app/core/shared/components/specialt
 import { SearchDoctorComponent } from './search-doctor/search-doctor.component';
 import { DoctorSearchCardComponent } from 'src/app/core/shared/components/doctor-search-card/doctor-search-card.component';
 import { SearchFiltersComponent } from 'src/app/core/shared/components/search-filters/search-filters.component';
-import { AppointmentConfirmationComponent } from './appointment-confirmation/appointment-confirmation.component';
+import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
 import { AppointmentComponent } from 'src/app/core/shared/components/appointment/appointment.component';
 import { FormsModule } from '@angular/forms';
+import { AppointmentConfirmationComponent } from './appointment-confirmation/appointment-confirmation.component';
 
 @NgModule({
-  declarations: [PrincipalComponent, CardComponent, SliderComponent,SpecialtiesBoxComponent, SearchDoctorComponent,DoctorSearchCardComponent,SearchFiltersComponent, AppointmentConfirmationComponent,AppointmentComponent],
+  declarations: [PrincipalComponent, CardComponent, SliderComponent,SpecialtiesBoxComponent, SearchDoctorComponent,DoctorSearchCardComponent,SearchFiltersComponent, AppointmentFormComponent,AppointmentComponent, AppointmentConfirmationComponent],
   imports: [CommonModule, HomeRoutingModule, SharedModule, SearchBarModule,FormsModule],
   exports: [CardComponent],
 })
