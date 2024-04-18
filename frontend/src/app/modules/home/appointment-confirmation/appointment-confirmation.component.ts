@@ -14,9 +14,11 @@ export class AppointmentConfirmationComponent implements OnInit {
   titularSeleccionado: string = '';
   doctorData: any;
   assistedList: any;
+  userId = 9;
 
   constructor(private route: ActivatedRoute,private assistentService :AssistentService) { }
 
+  
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
     if(window.history.state.doctorData){
@@ -31,7 +33,7 @@ export class AppointmentConfirmationComponent implements OnInit {
       error => {
         console.error('Error al obtener las personas del usuario:', error);
       }
-    );    
+    );   
   }
 
   toggleForSelf(event: Event) {
@@ -49,12 +51,10 @@ export class AppointmentConfirmationComponent implements OnInit {
       // Puedes usar bibliotecas de modales como NgbModal o MatDialog para mostrar el modal
     }
   }
-  seleccionarTitular(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    if (target && target.value) {
-      this.titularSeleccionado = target.value;
-    }
+  seleccionarTitular(value: string) {
+    this.titularSeleccionado = value;
   }
+  
   isFormComplete(): boolean {
     if (!this.isForSelf) {
       // Si el turno es para alguien más, debes verificar si se ha seleccionado un titular del turno.
