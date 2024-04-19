@@ -14,7 +14,7 @@ export class AppointmentFormComponent implements OnInit {
   titularSeleccionado: string = '';
   doctorData: any;
   assistedList: any;
-  turnDate?: Date | null;
+  turnDate?: string | null;
 
   constructor(private route: ActivatedRoute,private assistentService :AssistentService, private router: Router) { }
 
@@ -36,7 +36,19 @@ export class AppointmentFormComponent implements OnInit {
     );   
     const fechaAlmacenada = sessionStorage.getItem('fecha');
     if (fechaAlmacenada) {
-      this.turnDate = new Date(fechaAlmacenada);
+      // Creamos un objeto Date con la fecha almacenada
+      const dateObj = new Date(fechaAlmacenada);
+      
+      // Obtenemos los componentes de la fecha
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      const hours = String(dateObj.getHours()).padStart(2, '0');
+      const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+      const seconds = String(dateObj.getSeconds()).padStart(2, '0');
+      
+      // Creamos la cadena de texto en el formato deseado
+      this.turnDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
     }
     console.log(this.turnDate);
   }
