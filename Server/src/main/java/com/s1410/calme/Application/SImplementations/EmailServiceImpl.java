@@ -3,6 +3,7 @@ package com.s1410.calme.Application.SImplementations;
 import com.s1410.calme.Domain.Entities.Appointment;
 import com.s1410.calme.Domain.Repositories.AppointmentRepository;
 import com.s1410.calme.Domain.Services.EmailService;
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -122,5 +123,26 @@ public class EmailServiceImpl implements EmailService {
 
         return newAppointmentList;
     }
+
+
+
+    public void confirmationEmail(String email) throws MessagingException {
+        //build confirmation path {validationLink} and {userName}
+        //setear true la confirmacion del email.
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        helper.setTo(email);
+        helper.setSubject("CALME : Valida tu usuario.");
+
+        correoRequest.setTemplateEmail("confirmationEmail.html");
+        correoRequest.setDestinatario("juan.ortega.it@gmail.com");
+        correoRequest.setAsunto("The last step , confirm your email");
+        correoRequest.getDataBinding().put("validationLink", "validationLinkExample");
+        correoRequest.getDataBinding().put("userName" , "userNameExample");
+        sendEmail(correoRequest);
+
+    }
+
 
 }
