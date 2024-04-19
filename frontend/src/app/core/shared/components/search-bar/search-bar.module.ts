@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from './search-bar.component';
-
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,7 +12,8 @@ import { SearchBarComponent } from './search-bar.component';
         SearchBarComponent
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        FormsModule
     ]
 })
 export class SearchBarModule { }
