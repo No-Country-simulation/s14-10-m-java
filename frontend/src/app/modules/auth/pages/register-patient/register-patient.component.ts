@@ -33,16 +33,23 @@ export class RegisterPatientComponent {
   ) {
     this.formData = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       firstName: ['', Validators.required],
       secondName: ['', Validators.required],
       lastName: ['', Validators.required],
-      DNI: ['', [Validators.required, Validators.pattern(/^[0-9]{7}$/)]],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{7}$/)]],
+      DNI: ['', [
+        Validators.required,
+        Validators.pattern(/^\d+$/),
+        Validators.maxLength(9),
+        Validators.minLength(7)
+      ]],
+      phoneNumber: ['', [
+        Validators.required,
+        Validators.pattern(/^\d+$/)
+      ]],
       dateOfBirth: ['', [Validators.required, this.dateOfBirthValidator]],
       aceptoTerminos: [false, Validators.requiredTrue]
     });
-    // Escucha los cambios en el formulario para habilitar/deshabilitar el botón
     this.formData.valueChanges.subscribe(() => {
       this.isDisabled = !this.formData.valid;
     });
