@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment';
 import { Login } from '../../../core/models/login.model';
 import { Router } from '@angular/router';
 import { TokenService } from 'src/app/core/shared/services/token.service';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -41,6 +40,7 @@ export class LoginService {
     this.isLoggedIn.next(false);
     this.tokenService.clearToken();
     this.router.navigate(['/auth/login']);
+    //console.log(this.Login);
   }
 
   updateVariables() {

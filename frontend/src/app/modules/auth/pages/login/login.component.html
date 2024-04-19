@@ -1,10 +1,8 @@
-<section
-  class="min-h-screen bg-gradient-to-br from-blue-400 via-blue-200 to-blue-10"
->
+<section class="min-h-screen fondo-bg">
   <shared-navbar [showOptions]="false"></shared-navbar>
   <div class="flex flex-col px-40 py-5">
     <div
-      class="flex w-full items-center justify-center lg:justify-between border border-x-stone-300 bg-gradient-to-br from-gray-10 to-gray-50"
+      class="flex w-full items-center justify-center lg:justify-between border border-x-stone-300 bg-gradient-to-br from-gray-10 to-gray-50 -14"
     >
       <!-- Right column container with form -->
       <div
@@ -88,13 +86,14 @@
               </a>
             </p>
           </div>
-          <button
-            type="submit"
-
-            class="w-56 bg-stone-300 hover:bg-yellow-400 text-blue-800 font-bold py-2 rounded-full mb-6"
-          >
-            INGRESAR
-          </button>
+          <div class="flex justify-center">
+            <button
+              type="submit"
+              class="w-56 bg-stone-300 hover:bg-yellow-400 text-blue-800 font-bold py-2 rounded-full mb-6"
+            >
+              INGRESAR
+            </button>
+          </div>
           <!-- Remember me checkbox -->
           <div class="mb-9 pt-6 items-justify-between">
             <div class="mb-[0.125rem] block max-h-[1.5rem]">

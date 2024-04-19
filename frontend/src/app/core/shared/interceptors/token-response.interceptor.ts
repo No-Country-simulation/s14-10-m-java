@@ -5,7 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor,
   HttpResponse,
-  HttpErrorResponse
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
@@ -14,13 +14,16 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class TokenResponseInterceptor implements HttpInterceptor {
-
   constructor(
     private toastr: ToastrService,
     private tokenService: TokenService,
-    private router: Router) {}
+    private router: Router
+  ) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse && request.url.includes('/login')) {
@@ -28,7 +31,10 @@ export class TokenResponseInterceptor implements HttpInterceptor {
         }
       }),
       catchError((error: any) => {
-        if (error instanceof HttpErrorResponse && request.url.includes('/login')) {
+        if (
+          error instanceof HttpErrorResponse &&
+          request.url.includes('/login')
+        ) {
           this.handleLoginErrorResponse(error);
           return new Observable<HttpEvent<any>>();
         }
@@ -41,11 +47,11 @@ export class TokenResponseInterceptor implements HttpInterceptor {
     const token = JSON.stringify(event.body.jwt);
     this.tokenService.saveToken(token);
     this.toastr.success('¡Inicio de sesión exitoso!');
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
   }
 
   private handleLoginErrorResponse(error: HttpErrorResponse): void {
     this.toastr.error('¡Fallo inicio de sesión!');
-    this.router.navigate(['/auth/login'])
+    this.router.navigate(['/auth/login']);
   }
 }

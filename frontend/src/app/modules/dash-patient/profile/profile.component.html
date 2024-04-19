@@ -1,1 +1,371 @@
-<p>profile works!</p>
+<div
+  style="
+    height: 900px;
+    background-image: radial-gradient(
+      circle at 8% -8%,
+      #ffffff 22% #ffffff 22%
+    );
+  "
+>
+  <div
+    style="
+      background-color: #75a5ff;
+      background-image: radial-gradient(
+        circle at 15% -10%,
+        sc #ffffff 22%,
+        #ffffff15 24%
+      );
+    "
+    class="rounded-b-3xl"
+  >
+    <shared-navbar></shared-navbar>
+  </div>
+  <div
+    class="container mx-auto flex justify-between items-between h-screen w-full py-16"
+  >
+    <div class="w-full bg-white p-8 flex">
+      <!-- Columna de la foto -->
+      <div class="w-3/7 flex flex-col items-center px-24">
+        <img
+          src="../../../../assets/img/Frame 66.png"
+          alt="Foto de perfil"
+          class="w-64 h-48 rounded-full mb-4"
+        />
+        <a href="#" class="text-xl font-bold text-blue-800">Editar perfil</a>
+      </div>
+      <!-- Columna de la información -->
+      <div class="w-9/12 px-8">
+        <h2 class="font-bold text-blue-800 text-4xl mt-10 mb-12">
+          Nombre Apellido
+        </h2>
+        <div class="grid grid-cols-2 gap-x-8">
+          <div>
+            <ul class="w-2/5">
+              <li class="mb-4 flex items-center font-bold text-blue-900">
+                <span class="font-bold mr-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-7 h-7"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"
+                    />
+                  </svg>
+                </span>
+                <div class="w-2/5 font-semibold text-xl PB-3">+123456789</div>
+              </li>
+              <li class="mb-4 flex items-center font-bold text-blue-900">
+                <span class="font-semibold mr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-7 h-7"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+                    />
+                  </svg>
+                </span>
+                <div class="w-2/5 font-semibold text-xl">
+                  usuario@correo.com
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="grid gap-x-8">
+              <ul class="w-2/5">
+                <li class="mb-4 flex items-center font-bold text-blue-900">
+                  <span class="font-semibold mr-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-7 h-7"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                      />
+                    </svg>
+                  </span>
+                  <div class="w-full font-semibold text-xl">Direccion</div>
+                </li>
+                <li class="mb-4 flex items-center font-bold text-blue-900">
+                  <span class="font-semibold mr-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-7 h-7"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"
+                      />
+                    </svg>
+                  </span>
+                  <div class="w-2/5 font-semibold text-xl">DNI:123456789</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 pt-36">
+          <!-- Columna 1 -->
+          <div>
+            <h2 class="text-3xl font-bold text-yellow-500">Mis turnos</h2>
+          </div>
+          <!-- Columna 2 -->
+          <div class="flex justify-end items-end px-16">
+            <a
+              href="#"
+              class="inline-block bg-transparent hover:bg-yellow-500 text-blue-900 font-bold py-2 px-8 rounded-xl border border-blue-500"
+            >
+              Editar turno
+            </a>
+          </div>
+        </div>
+        <!--<div>
+          <hr
+            class="absolute left-64 w-6/12 h-0.5 mr-96 border-t border-blue-800 pt-6"
+          />
+        </div>-->
+        <div
+          class="grid grid-cols-2 gap-4 gap-x-6 bg-gray-50 rounded-lg rounded-p4 border-blue-900 shadow-black-900 mt-5"
+        >
+          <div
+            class="w-full font-bold text-3xl text-blue-950 pt-14 rounded p-4"
+          >
+            <p>Dr. Macetas</p>
+            <ul class="font-extralight pt-6">
+              <li>Cardiólogo</li>
+            </ul>
+            <ul class="font-extralight pt-6">
+              <li>Av. Principal 234-Piso 1, CABA</li>
+            </ul>
+          </div>
+          <!-- Segunda columna -->
+          <div
+            class="w-full font-semibold text-2xl text-blue-900 pt-14 rounded p-4"
+          >
+            <p>Jue, 11 de abril 2024 - 12 hs</p>
+            <ul class="pt-6">
+              <li class="text-transparent">espacio</li>
+            </ul>
+            <ul class="pt-6 pr-4">
+              <li>
+                <a
+                  href="#"
+                  class="inline-block hover:to-blue-100 text-red-600 font-bold py-2 px-8 rounded-lg text-center"
+                  >Cancelar turno</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-2 gap-4 gap-x-6 bg-gray-50 rounded-lg rounded-p4 border-blue-900 shadow-black-900 mt-5"
+        >
+          <div
+            class="w-full font-bold text-3xl text-blue-950 pt-14 rounded p-4"
+          >
+            <p>Dr. Macetas</p>
+            <ul class="font-extralight pt-6">
+              <li>Cardiólogo</li>
+            </ul>
+            <ul class="font-extralight pt-6">
+              <li>Av. Principal 234-Piso 1, CABA</li>
+            </ul>
+          </div>
+          <!-- Segunda columna -->
+          <div
+            class="w-full font-semibold text-2xl text-blue-900 pt-14 rounded p-4"
+          >
+            <p>Jue, 11 de abril 2024 - 12 hs</p>
+            <ul class="pt-6">
+              <li class="text-transparent">espacio</li>
+            </ul>
+            <ul class="pt-6 pr-4">
+              <li>
+                <a
+                  href="#"
+                  class="inline-block hover:to-blue-100 text-red-600 font-bold py-2 px-8 rounded-lg text-center"
+                  >Cancelar turno</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 pt-24">
+          <!-- Columna 1 -->
+          <div>
+            <h2 class="text-3xl font-bold text-yellow-500">Asistidos</h2>
+          </div>
+
+          <!-- Columna 2 -->
+          <div class="wpx-10 text-end">
+            <a
+              href="#"
+              class="inline-block bg-transparent hover:bg-yellow-500 text-blue-900 font-bold py-2 px-8 rounded-xl border border-blue-500"
+            >
+              Añadir nuevo
+            </a>
+
+            <!---<hr
+                class="absolute left-64 w-6/12 ml-64 pb-48 border-t border-blue-800"
+              />-->
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4 pt-5">
+          <div class="col-cols-3 flex justify-center items-center w-2/6 pt-14">
+            <img
+              src="../../../../assets/img/Ellipse 50.png"
+              alt="Foto de paciente"
+              class="w-32 h-32 justify-center items-center rounded-full mb-4 ml-32"
+            />
+          </div>
+          <!-- Segunda columna -->
+          <div class="w-4/7 pt-14">
+            <h2 class="font-extrabold text-blue-900 mb-4">Nombre apellido</h2>
+            <ul class="font-light">
+              <li class="mb-2 text-2xl text-blue-700">
+                Relacion de parentesco
+              </li>
+              <li class="mb-2 text-2xl">
+                <a
+                  href="#"
+                  class="block text-start text-blue-900 font-bold py-2 rounded"
+                >
+                  Ocultar
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6 inline-block mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 10l7-7m0 0l7 7m-7-7v18"
+                    /></svg
+                ></a>
+              </li>
+            </ul>
+          </div>
+          <div class="w-px-10 pt-14">
+            <a
+              href="#"
+              class="block text-blue-600 font-extralight text-2xl text-end py-2 px-4"
+              >Editar</a
+            >
+          </div>
+          <div class="col-start-2 col-span-3">
+            <div
+              class="grid grid-cols-2 gap-4 gap-x-6 bg-gray-50 rounded-lg rounded-p4 border-blue-900 shadow-black-900 mt-5"
+            >
+              <div
+                class="w-full font-bold text-3xl text-blue-950 pt-14 rounded p-4"
+              >
+                <p>Dra. Farias</p>
+                <ul class="font-extralight pt-6">
+                  <li>Dermatologa</li>
+                </ul>
+                <ul class="font-extralight pt-6">
+                  <li>Centro Medico Los Pinos Av. Cordoba 678</li>
+                </ul>
+              </div>
+              <!-- Segunda columna -->
+              <div
+                class="w-full font-semibold text-2xl text-blue-900 pt-14 rounded p-4"
+              >
+                <p class="text-end">10:30 hs</p>
+                <ul class="pt-6">
+                  <li class="text-end">Mar, 1 de abril 2024</li>
+                </ul>
+                <ul class="pt-6 pr-4">
+                  <li class="text-end">
+                    <a
+                      href="#"
+                      class="inline-flex hover:to-red-900 text-red-600 font-medium pt-8 text-end"
+                      >Cancelar turno</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4 pt-5">
+          <div class="col-cols-3 flex justify-center items-center w-2/6 pt-14">
+            <img
+              src="../../../../assets/img/Ellipse 51.png"
+              alt="Foto de paciente"
+              class="w-32 h-32 justify-center items-center rounded-full mb-4 ml-32"
+            />
+          </div>
+          <!-- Segunda columna -->
+          <div class="w-4/7 pt-14">
+            <h2 class="font-extrabold text-blue-900 mb-4">Nombre apellido</h2>
+            <ul class="font-light">
+              <li class="mb-2 text-2xl text-blue-700">
+                Relacion de parentesco
+              </li>
+              <li class="mb-2 text-2xl">
+                <a
+                  href="#"
+                  class="block text-start text-blue-900 font-bold py-2 rounded"
+                >
+                  Ocultar
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6 inline-block mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 10l7-7m0 0l7 7m-7-7v18"
+                    /></svg
+                ></a>
+              </li>
+            </ul>
+          </div>
+          <div class="w-px-10 pt-14">
+            <a
+              href="#"
+              class="block text-blue-600 font-extralight text-2xl text-end py-2 px-4"
+              >Editar</a
+            >
+          </div>
+        </div>
+        <shared-footer></shared-footer>
+      </div>
+    </div>
+  </div>
+</div>
