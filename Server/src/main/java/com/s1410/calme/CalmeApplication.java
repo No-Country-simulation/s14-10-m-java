@@ -25,6 +25,8 @@ public class CalmeApplication {
 	@Autowired
 	ApiWhatsappServiceImpl apiWhatsappServiceImpl;
 
+
+	@PostConstruct
 	List<ResponseWhatsapp> senMessage() throws JsonProcessingException {
 		return apiWhatsappServiceImpl.createMessageTest();
 	}

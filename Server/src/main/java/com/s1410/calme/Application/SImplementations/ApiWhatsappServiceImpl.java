@@ -44,7 +44,7 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
 
         RequestMessage request = new RequestMessage(
                 "whatsapp","543517707973 ",
-                new RequestMessageText(message.toString()));
+                new RequestMessageText(message));
 
 
         String response = clientBuilder().post()
@@ -60,7 +60,7 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
 
     public List<ResponseWhatsapp> createMessageTest() throws JsonProcessingException {
 
-        LocalDateTime tomorrow = LocalDateTime.now().plusDays(2);
+        LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
         int day = tomorrow.getDayOfMonth();
         int month = tomorrow.getMonthValue();
         int year = tomorrow.getYear();
@@ -99,8 +99,6 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
 
             ResponseWhatsapp response = sendMessageTest(messagePure);
             message.add(response);
-
-
         }
 
         return message;
