@@ -5,7 +5,7 @@ import { AssistentService } from 'src/app/core/shared/services/assistent.service
 @Component({
   selector: 'app-appointment-confirmation',
   templateUrl: './appointment-confirmation.component.html',
-  styleUrls: ['./appointment-confirmation.component.scss']
+  styleUrls: ['./appointment-confirmation.component.scss'],
 })
 export class AppointmentConfirmationComponent implements OnInit {
   isForSelf: boolean = true;
@@ -16,24 +16,27 @@ export class AppointmentConfirmationComponent implements OnInit {
   assistedList: any;
   userId = 9;
 
-  constructor(private route: ActivatedRoute,private assistentService :AssistentService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private assistentService: AssistentService
+  ) {}
 
-  
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-    if(window.history.state.doctorData){
-      this.doctorData = window.history.state.doctorData;
-    }
-    }
-    );
+    console.log(this.doctorData);
+
+    this.route.paramMap.subscribe((params) => {
+      if (window.history.state.doctorData) {
+        this.doctorData = window.history.state.doctorData;
+      }
+    });
     this.assistentService.getAssistedList().subscribe(
       (data: any[]) => {
         this.assistedList = data;
       },
-      error => {
+      (error) => {
         console.error('Error al obtener las personas del usuario:', error);
       }
-    );   
+    );
   }
 
   toggleForSelf(event: Event) {
@@ -44,7 +47,7 @@ export class AppointmentConfirmationComponent implements OnInit {
       this.isForSelf = false;
     }
   }
-  
+
   onSelect(values: string) {
     if (values === 'new') {
       // Lógica para abrir el modal con el nuevo formulario
@@ -54,15 +57,20 @@ export class AppointmentConfirmationComponent implements OnInit {
   seleccionarTitular(value: string) {
     this.titularSeleccionado = value;
   }
-  
+
   isFormComplete(): boolean {
     if (!this.isForSelf) {
       // Si el turno es para alguien más, debes verificar si se ha seleccionado un titular del turno.
-      return this.titularSeleccionado.trim() !== '' && this.motivoConsulta.trim() !== '' && this.telefonoContacto.trim() !== '';
-      
-    }else{
-    // Verifica si el motivo de la consulta y el teléfono de contacto están completos
-    return this.motivoConsulta.trim() !== '' && this.telefonoContacto.trim() !== '';
+      return (
+        this.titularSeleccionado.trim() !== '' &&
+        this.motivoConsulta.trim() !== '' &&
+        this.telefonoContacto.trim() !== ''
+      );
+    } else {
+      // Verifica si el motivo de la consulta y el teléfono de contacto están completos
+      return (
+        this.motivoConsulta.trim() !== '' && this.telefonoContacto.trim() !== ''
+      );
     }
   }
 }

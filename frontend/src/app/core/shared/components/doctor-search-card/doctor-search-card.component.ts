@@ -6,19 +6,16 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-doctor-search-card',
   templateUrl: './doctor-search-card.component.html',
-  styleUrls: ['./doctor-search-card.component.scss']
+  styleUrls: ['./doctor-search-card.component.scss'],
 })
-export class DoctorSearchCardComponent implements OnInit{
+export class DoctorSearchCardComponent implements OnInit {
   @Input() selectedSpecialtyFilter: string = '';
   @Input() selectedAvailabilityFilter: string = '';
 
   doctors: Doctor[] = [];
   speciality: string = '';
 
-  constructor(
-    private doctorService: DoctorService,
-    private router: Router
-  ){}
+  constructor(private doctorService: DoctorService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadDoctors();
@@ -29,7 +26,10 @@ export class DoctorSearchCardComponent implements OnInit{
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if ('selectedSpecialtyFilter' in changes || 'selectedAvailabilityFilter' in changes) {
+    if (
+      'selectedSpecialtyFilter' in changes ||
+      'selectedAvailabilityFilter' in changes
+    ) {
       this.applyFilter();
     }
   }
@@ -38,9 +38,12 @@ export class DoctorSearchCardComponent implements OnInit{
     if (this.selectedSpecialtyFilter || this.selectedAvailabilityFilter) {
       this.doctorService.getDoctors().subscribe((doctors) => {
         // Aplicamos ambos filtros si están seleccionados
-        this.doctors = doctors.filter(doctor =>
-          (!this.selectedSpecialtyFilter || doctor.specialty === this.selectedSpecialtyFilter) &&
-          (!this.selectedAvailabilityFilter || this.checkAvailability(doctor, this.selectedAvailabilityFilter))
+        this.doctors = doctors.filter(
+          (doctor) =>
+            (!this.selectedSpecialtyFilter ||
+              doctor.specialty === this.selectedSpecialtyFilter) &&
+            (!this.selectedAvailabilityFilter ||
+              this.checkAvailability(doctor, this.selectedAvailabilityFilter))
         );
       });
     } else {
@@ -68,6 +71,12 @@ export class DoctorSearchCardComponent implements OnInit{
   }
 
   redirectToAppointmentConfirmation(doctor: any) {
-    this.router.navigate(['/appointment-confirmation'],{state: {doctorData: doctor}});
+    console.log(doctor);
+
+    this.router.navigate([`scheduler/${doctor.id}`]);
+
+    // this.router.navigate(['/appointment-confirmation'], {
+    //   state: { doctorData: doctor },
+    // });
   }
 }
