@@ -46,11 +46,8 @@ export class DocScheduleComponent implements OnInit {
 
   onDateSelect(eventArgs: any) {
     this.selectedDate = eventArgs.data.StartTime;
-    console.log('Fecha seleccionada:', this.selectedDate);
-    console.log('Fecha Str seleccionada:', this.selectedDate.toJSON());
-    console.log('Fecha Dt seleccionada:', new Date(this.selectedDate.toJSON()));
 
-    sessionStorage.setItem('fecha', this.selectedDate.toJSON());
+    sessionStorage.setItem('fecha', this.selectedDate.toString());
 
     this.router.navigate(['/appointment-form'], {
       state: { doctorData: this.doctor },
