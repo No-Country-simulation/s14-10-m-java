@@ -10,9 +10,10 @@ import { Router } from '@angular/router';
 })
 export class DoctorSearchCardComponent implements OnInit{
   @Input() selectedSpecialtyFilter: string = '';
-  @Input() selectedAvailabilityFilter: string = ''; 
+  @Input() selectedAvailabilityFilter: string = '';
 
   doctors: Doctor[] = [];
+  speciality: string = '';
 
   constructor(
     private doctorService: DoctorService,
@@ -21,9 +22,12 @@ export class DoctorSearchCardComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadDoctors();
-    
+    this.doctorService.specialityParamSubject.subscribe(speciality => {
+      this.speciality = speciality;
+      console.log('speciality observable desde doctor-search', this.speciality);
+    })
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     if ('selectedSpecialtyFilter' in changes || 'selectedAvailabilityFilter' in changes) {
       this.applyFilter();
@@ -34,8 +38,8 @@ export class DoctorSearchCardComponent implements OnInit{
     if (this.selectedSpecialtyFilter || this.selectedAvailabilityFilter) {
       this.doctorService.getDoctors().subscribe((doctors) => {
         // Aplicamos ambos filtros si están seleccionados
-        this.doctors = doctors.filter(doctor => 
-          (!this.selectedSpecialtyFilter || doctor.specialty === this.selectedSpecialtyFilter) && 
+        this.doctors = doctors.filter(doctor =>
+          (!this.selectedSpecialtyFilter || doctor.specialty === this.selectedSpecialtyFilter) &&
           (!this.selectedAvailabilityFilter || this.checkAvailability(doctor, this.selectedAvailabilityFilter))
         );
       });
