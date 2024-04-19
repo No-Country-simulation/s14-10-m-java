@@ -36,6 +36,7 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
                 .defaultHeader("Authorization","Bearer " + token)
                 .build();
     }
+
     public List<ResponseWhatsapp> sendAllReminders() throws JsonProcessingException {
 
         LocalDateTime dayAfterTomorrow = LocalDateTime.now().plusDays(8);
@@ -52,12 +53,12 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
         }
         return clientResponses;
     }
-    public ResponseWhatsapp sendMessageToApi(List<String> message) throws JsonProcessingException {
 
-        String phone = message.get(1);
+    public ResponseWhatsapp sendMessageToApi(String message) throws JsonProcessingException {
+
         RequestMessage request = new RequestMessage(
                 "whatsapp", "543513849396",
-                new RequestMessageText(message.get(0)));
+                new RequestMessageText(message));
 
         String response = clientBuilder().post()
                 .uri("")
@@ -69,7 +70,8 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
         ObjectMapper obj = new ObjectMapper();
         return obj.readValue(response,ResponseWhatsapp.class);
     }
-    List<String> setMessage(Appointment appointment){
+
+    public String setMessage(Appointment appointment){
 
         String firstName;
         String lastName;
@@ -94,24 +96,19 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
         int apHour = appointment.getDate().getHour();
         int apMinutes = appointment.getDate().getMinute();
 
-        String reminderMesagge =
+        String reminderMessage =
                 "¡Buenos días! Nos comunicamos desde Calme para recordarte que " + firstName + " "
                 + lastName + " tiene un turno el día " + apDay + "/" + apMonth + "/" + apYear +
                 " a las " + apHour + ":" + apMinutes +  "hs con el/la dr/a " + doctorName + " " +
                 doctorLastName + ", " + doctorSpecialty + ".";
 
-        String plainPhone = phone.toString();
-        List<String> messageAndPhone = new ArrayList<>();
-        messageAndPhone.add(reminderMesagge);
-        messageAndPhone.add(plainPhone);
-
-        return messageAndPhone;
+        return reminderMessage;
     }
 
-   @PostConstruct
+   /*@PostConstruct
     void sendMessageToApi() throws JsonProcessingException {
         sendAllReminders();
-    }
+    }*/
 
 
 }
