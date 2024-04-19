@@ -37,6 +37,7 @@ export class LoginService {
     );
   }
   logout() {
+    this.isLoggedIn.next(false);
     this.tokenService.clearToken();
     this.router.navigate(['/auth/login']);
     //console.log(this.Login);
