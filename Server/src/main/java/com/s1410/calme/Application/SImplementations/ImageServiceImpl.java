@@ -1,6 +1,7 @@
 package com.s1410.calme.Application.SImplementations;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import com.s1410.calme.Domain.Services.ImageService;
 import jakarta.annotation.Resource;
@@ -28,7 +29,10 @@ public class ImageServiceImpl implements ImageService {
                     "unique_filename", false,
                     "overwrite", true,
                     "public_id", name,
-                    "folder", "profileImages"
+                    "folder", "profileImages",
+                    "resource_type", "image",
+                    "transformation", new Transformation<>()
+                            .width(250).height(250).crop("fill").gravity("auto")
             );
 
             //Upload image to Cloudinary
