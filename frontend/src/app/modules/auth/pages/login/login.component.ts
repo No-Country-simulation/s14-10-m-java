@@ -47,8 +47,10 @@ export class LoginComponent {
         this.router.navigate(['/']);
       },
       (error) => {
-        console.log(error);
+        console.log(error.jwt);
         this.loginService.id = error.error.id;
+        this.loginService.token = error.error.token;
+        localStorage.getItem(error.token);
         sessionStorage.setItem('id', error.error.id);
         this.router.navigate(['/']);
       }
