@@ -10,7 +10,6 @@
 >
   <div
     style="
-      height: 120px;
       background-color: #75a5ff;
       border-radius: 0px 0px 24px 24px;
       background-image: radial-gradient(
@@ -45,7 +44,9 @@
           color: #000000;
         "
       >
-        Has seleccionado un turno con el Dr. {{doctorData.firstName}} {{doctorData.secondName}} {{doctorData.lastName}} {{doctorData.id}}<br />
+        Has seleccionado un turno con el Dr. {{ doctorData.firstName }}
+        {{ doctorData.secondName }} {{ doctorData.lastName }} {{ doctorData.id
+        }}<br />
         Lee con atención la siguiente información y completa <br />los campos
         requeridos para confirmar tu turno:
       </p>
@@ -140,7 +141,8 @@
       <select
         *ngIf="!isForSelf"
         class="mt-2"
-        [ngModel]="titularSeleccionado" (ngModelChange)="seleccionarTitular($event)"
+        [ngModel]="titularSeleccionado"
+        (ngModelChange)="seleccionarTitular($event)"
         style="
           font-family: 'Poppins', sans-serif;
           font-weight: 400;
@@ -151,10 +153,12 @@
           border-radius: 8px;
           border: 1px solid #dde1eb;
         "
-  >
+      >
         <option value="">Selecciona una persona</option>
         <!-- Aquí debes iterar sobre tu lista de personas y mostrarlas como opciones -->
-        <option *ngFor="let assisted of assistedList" [value]="assisted.id">{{assisted.firstName}}</option>
+        <option *ngFor="let assisted of assistedList" [value]="assisted.id">
+          {{ assisted.firstName }}
+        </option>
         <option value="new">Agregar nueva persona</option>
       </select>
 
@@ -208,7 +212,7 @@
         </button>
       </div>
     </div>
-    <div class="spacer"></div> 
+    <div class="spacer"></div>
     <div>
       <app-appointment [doctorData]="doctorData"></app-appointment>
     </div>
