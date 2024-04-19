@@ -11,11 +11,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +38,7 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
     }
     public List<ResponseWhatsapp> sendAllReminders() throws JsonProcessingException {
 
-        LocalDateTime dayAfterTomorrow = LocalDateTime.now().plusDays(1);
+        LocalDateTime dayAfterTomorrow = LocalDateTime.now().plusDays(8);
         List<Appointment> appointmentsForTomorrow = appointmentRepository.
                 findAppointmentsByDateByActive(true,
                         dayAfterTomorrow.getDayOfMonth(),
@@ -44,17 +47,17 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
         List<ResponseWhatsapp> clientResponses = new ArrayList<>();
 
         for (Appointment appointment : appointmentsForTomorrow) {
-
             ResponseWhatsapp response = sendMessageToApi(setMessage(appointment));
             clientResponses.add(response);
         }
         return clientResponses;
     }
-    public ResponseWhatsapp sendMessageToApi(String message) throws JsonProcessingException {
+    public ResponseWhatsapp sendMessageToApi(List<String> message) throws JsonProcessingException {
 
+        String phone = message.get(1);
         RequestMessage request = new RequestMessage(
-                "whatsapp","543513849396",
-                new RequestMessageText(message));
+                "whatsapp", "543513849396",
+                new RequestMessageText(message.get(0)));
 
         String response = clientBuilder().post()
                 .uri("")
@@ -66,17 +69,20 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
         ObjectMapper obj = new ObjectMapper();
         return obj.readValue(response,ResponseWhatsapp.class);
     }
-    String setMessage(Appointment appointment){
+    List<String> setMessage(Appointment appointment){
 
         String firstName;
         String lastName;
+        Long phone;
         if (appointment.getAssistent() != null) {
             firstName = appointment.getAssistent().getFirstName();
             lastName = appointment.getAssistent().getLastName();
+            phone = appointment.getAssistent().getPhoneNumber();
         }
         else {
             firstName = appointment.getAssisted().getFirstName();
             lastName = appointment.getAssisted().getLastName();
+            phone = appointment.getAssisted().getRelationsAA().get(0).getAssistent().getPhoneNumber();
         }
 
         String doctorName = appointment.getDoctor().getFirstName();
@@ -94,14 +100,18 @@ public class ApiWhatsappServiceImpl implements ApiWhatsappService {
                 " a las " + apHour + ":" + apMinutes +  "hs con el/la dr/a " + doctorName + " " +
                 doctorLastName + ", " + doctorSpecialty + ".";
 
-        return reminderMesagge;
+        String plainPhone = phone.toString();
+        List<String> messageAndPhone = new ArrayList<>();
+        messageAndPhone.add(reminderMesagge);
+        messageAndPhone.add(plainPhone);
+
+        return messageAndPhone;
     }
 
-    /*
    @PostConstruct
     void sendMessageToApi() throws JsonProcessingException {
         sendAllReminders();
-    }*/
+    }
 
 
 }
