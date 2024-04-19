@@ -14,6 +14,7 @@ export class AppointmentFormComponent implements OnInit {
   titularSeleccionado: string = '';
   doctorData: any;
   assistedList: any;
+  turnDate?: Date | null;
 
   constructor(private route: ActivatedRoute,private assistentService :AssistentService, private router: Router) { }
 
@@ -33,6 +34,11 @@ export class AppointmentFormComponent implements OnInit {
         console.error('Error al obtener las personas del usuario:', error);
       }
     );   
+    const fechaAlmacenada = sessionStorage.getItem('fecha');
+    if (fechaAlmacenada) {
+      this.turnDate = new Date(fechaAlmacenada);
+    }
+    console.log(this.turnDate);
   }
 
   toggleForSelf(event: Event) {
@@ -56,33 +62,34 @@ export class AppointmentFormComponent implements OnInit {
   }
   confirmFormData(){
 
-    const currentDate = new Date();
-
-  const threeDaysLater = new Date(currentDate);
-  threeDaysLater.setDate(currentDate.getDate() + 4);
-  threeDaysLater.setHours(5);
-
     let motivoTelefono = `Motivo de la consulta: ${this.motivoConsulta}\nTeléfono: ${this.telefonoContacto}`;
     let formData;
   if(this.isForSelf){
   formData = {
     doctorId: this.doctorData.id,
     assistentId: sessionStorage.getItem('id'),
-    date: threeDaysLater,
+    date: this.turnDate,
     observations: motivoTelefono
     }
   }else{
     formData = {
       doctorId: this.doctorData.id,
       assistedId: this.titularSeleccionado,
-      date: threeDaysLater,
+      date: this.turnDate,
       observations: motivoTelefono
       }
   }
-this.assistentService.confirmAppointment(formData);
-
-this.router.navigate(['/appointment-confirmation']);
-
+  this.assistentService.confirmAppointment(formData).subscribe(
+    () => {
+      // Si la confirmación fue exitosa, navega a la página de confirmación
+      this.router.navigate(['/appointment-confirmation'], { queryParams: { doctorData: JSON.stringify(this.doctorData) } });
+    },
+    error => {
+      console.error('Error al confirmar el turno:', error);
+      // Si la confirmación no fue exitosa, puedes mostrar un mensaje de error o
+      // tomar otras acciones según tus necesidades, pero no navegas a la página de confirmación
+    }
+  );
 
   }
   isFormComplete(): boolean {
@@ -95,4 +102,6 @@ this.router.navigate(['/appointment-confirmation']);
     return this.motivoConsulta.trim() !== '' && this.telefonoContacto.trim() !== '';
     }
   }
+
+  
 }

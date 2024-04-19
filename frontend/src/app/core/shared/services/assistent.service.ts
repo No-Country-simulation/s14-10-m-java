@@ -24,7 +24,7 @@ export class AssistentService {
     return this.http.get<any[]>(`https://s14-10-m-java-production.up.railway.app/assisted/all/${userId}`, { headers });
   }
 
-  confirmAppointment(formData: any){
+  confirmAppointment(formData: any): Observable<any>{
     const jwt = sessionStorage.getItem('token');
       if (!jwt) {
          throw new Error('JWT no encontrado en sessionStorage');
@@ -33,14 +33,7 @@ export class AssistentService {
       const headers = new HttpHeaders({
        'Authorization': `Bearer ${jwt}`
       });
-    this.http.post('https://s14-10-m-java-production.up.railway.app/appointment/', formData , {headers})
-    .subscribe(
-      (response) => {
-        console.log('Turno confirmado exitosamente', response);
-      },
-      (error) => {
-        console.error('Error al confirmar el turno', error);
-      }
-    );
+    return this.http.post('https://s14-10-m-java-production.up.railway.app/appointment/', formData , {headers})
+    
   }
 }

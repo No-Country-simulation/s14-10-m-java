@@ -16,6 +16,15 @@ import { SharedModule } from './core/shared/shared.module';
 import { TokenResponseInterceptor } from './core/shared/interceptors/token-response.interceptor';
 import { TokenInterceptor } from './core/shared/interceptors/token.interceptor';
 import { DashDoctorModule } from './modules/dash-doctor/dash-doctor.module';
+import {
+  ScheduleModule,
+  RecurrenceEditorModule,
+  DayService,
+  WeekService,
+  WorkWeekService,
+  MonthService,
+  MonthAgendaService,
+} from '@syncfusion/ej2-angular-schedule';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,11 +39,22 @@ import { DashDoctorModule } from './modules/dash-doctor/dash-doctor.module';
     AuthModule,
     // HomeModule,
     SharedModule,
-    DashDoctorModule
+    DashDoctorModule,
+    ScheduleModule,
+    RecurrenceEditorModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: TokenResponseInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenResponseInterceptor,
+      multi: true,
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    DayService,
+    WeekService,
+    WorkWeekService,
+    MonthService,
+    MonthAgendaService,
   ],
   bootstrap: [AppComponent],
 })
