@@ -13,11 +13,16 @@ export class DoctorSearchCardComponent implements OnInit {
   @Input() selectedAvailabilityFilter: string = '';
 
   doctors: Doctor[] = [];
+  speciality: string = '';
 
   constructor(private doctorService: DoctorService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadDoctors();
+    this.doctorService.specialityParamSubject.subscribe(speciality => {
+      this.speciality = speciality;
+      console.log('speciality observable desde doctor-search', this.speciality);
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {

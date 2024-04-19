@@ -1,10 +1,12 @@
 <div class="search-bar h-[51px] flex gap-4">
   <input
+    [(ngModel)]="term" (keyup.enter)="performSearch()"
     type="text"
     placeholder="Buscar especialidad"
     class="font-poppins font-normal text-[16px] leading-24 pl-6 h-[50px] bg-transparent focus:outline-none placeholder:text-[#C5C5C5] border-[2px] rounded-[10px] bg-white w-[532px]"
   />
-  <button (click)="redirectToAppointmentConfirmation()"
+  <button
+    (click)="performSearch()"
     class="font-poppins bg-accent-light w-[190px] h-[48px] flex items-center justify-center rounded-[30px] cursor-pointer text-primary-dark"
   >
     <span class="text-[22px] leading-33 font-normal pr-8">Buscar</span>
@@ -14,5 +16,4 @@
       alt=""
     />
   </button>
-  <!-- <app-button color="primary"  endIcon="icon-search" buttonType="button">Buscar</app-button> -->
 </div>
