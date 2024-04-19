@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public interface ImageService {
 
-     String uploadImageCloudinary(MultipartFile image);
+     String uploadProfileImageCloudinary(MultipartFile image, String name);
 
 }
 
