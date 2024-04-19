@@ -35,7 +35,6 @@ public class AssistentServiceImpl implements AssistentService {
     private final AssistedRepository assistedRepository;
     private final RelationAARepository relationAARepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
     private final RoleValidation roleValidation;
     private final SelfValidation selfValidation;
 
@@ -61,14 +60,10 @@ public class AssistentServiceImpl implements AssistentService {
     public ResponseAssistent readAssistent(Long id) {
         Assistent assistent = assistentRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("id") );
-        selfValidation.checkSelfValidation(id);
+        selfValidation.checkSelfValidation(id); //Take off this validation if admin role is added.
         return assistentMapper.assistentToResponse(assistent);
     }
 
-    /*
-    *active checks status of assistent
-    *pageable pulls 20 entries by default
-    * */
     @Override // Might have admin role.
     public Page<ResponseAssistent> readAllAsistents(Boolean active,Pageable paging) {
         return assistentRepository.findAllByActive(active,paging)
@@ -96,11 +91,11 @@ public class AssistentServiceImpl implements AssistentService {
     public ResponseAssistent updateAssistent(RequestEditAssistent requestEditAssistent,
                                              String tokenUser) {
 
-        Assistent assistent = this.assistentRepository.findById(requestEditAssistent.id())
-                .orElseThrow(() -> new EntityNotFoundException(requestEditAssistent.id().toString()));
-
         roleValidation.checkAssistentRole();
         selfValidation.checkSelfValidation(requestEditAssistent.id());
+
+        Assistent assistent = this.assistentRepository.findById(requestEditAssistent.id())
+                .orElseThrow(() -> new EntityNotFoundException(requestEditAssistent.id().toString()));
 
         if (assistent.getActive()) {
             if (requestEditAssistent.firstName() != null) {
@@ -141,7 +136,7 @@ public class AssistentServiceImpl implements AssistentService {
         List<RelationAA> relationsAA = assistent.getRelationsAA();
         relationsAA.forEach(relationAA -> {
             if (relationAA.getActive()) throw new IllegalArgumentException(
-                    "Before you can delete this user , first you need clean your relations. Check relation with id :"
+                    "Before you can delete this user, first you need clean your relations. Check relation with id :"
                             + relationAA.getId());
         });
         assistent.setActive(!assistent.getActive());

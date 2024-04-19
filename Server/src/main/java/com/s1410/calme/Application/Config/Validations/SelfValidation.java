@@ -18,10 +18,11 @@ public class SelfValidation {
         var possibleAssistent = assistentRepository.findById(id);
         var possibleDoctor = doctorRepository.findById(id);
 
-        if (!userLogged.equals(possibleAssistent.get().getEmail()) && possibleDoctor.isEmpty()) {
-            throw new IllegalArgumentException("Logged user cannot edit this user!"); }
-        if (!userLogged.equals(possibleDoctor.get().getEmail())) {
+
+        if (possibleAssistent.isEmpty() || !userLogged.equals(possibleAssistent.get().getEmail())) {
+             if (possibleDoctor.isEmpty() || !userLogged.equals(possibleDoctor.get().getEmail())) {
             throw new IllegalArgumentException("Logged user cannot edit this user!");
+        }
         } return true;
     }
 
