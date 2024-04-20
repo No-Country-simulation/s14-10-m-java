@@ -7,11 +7,13 @@ import com.s1410.calme.Domain.Dtos.request.RequestCreateDoctor;
 import com.s1410.calme.Domain.Entities.Assisted;
 import com.s1410.calme.Domain.Services.*;
 import com.s1410.calme.Domain.Utils.Specialty;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -191,6 +193,10 @@ public class dataBaseServiceImpl implements DataBaseService {
         int Hour = FutureDate.getHour();
         int Minute = FutureDate.getMinute();
 
+        if (FutureDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+            FutureDate = FutureDate.plusDays(1);
+        }
+
         List<RequestCreateAppointment> appointments = new ArrayList<>();
 
         appointments.add(new RequestCreateAppointment(1L, null, 1L, LocalDateTime.of(Year, Month, demoDay, 10, 0), "Consulta de gastroenterología para evaluación de problemas digestivos"));
@@ -236,6 +242,12 @@ public class dataBaseServiceImpl implements DataBaseService {
         return appointments;
     }
 
+
+    /*
+    @PostConstruct
+    void levantar(){
+        insertAll();
+    }*/
 
 
 }
