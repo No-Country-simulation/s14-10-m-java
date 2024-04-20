@@ -1,9 +1,213 @@
-<main>
-  <div class="bg-calme-light-blue h-[8.25rem] rounded-b-3xl">
-    <shared-navbar></shared-navbar>
-  </div>
+<div class="bg-calme-light-blue h-[8.25rem] rounded-b-3xl">
+  <shared-navbar></shared-navbar>
+</div>
 
-  <!-- <div class="bg-calme-light-blue h-[8.25rem] rounded-t-3xl">
-    <shared-footer></shared-footer>
-  </div> -->
+<!-- doctor.component.html -->
+
+<main
+  class="w-11/12 max-w-[1000px] m-auto mt-14 min-h-[70vh] font-poppins"
+  *ngIf="doctor$ | async as doctor"
+>
+  <section class="flex gap-28">
+    <div class="flex justify-start flex-col items-center gap-4">
+      <img
+        src="../../../../assets/image-png/photo-profile.png"
+        class="w-[10rem] h-[10rem] rounded-full mx-auto"
+        alt="perfil"
+      />
+      <button class="underline" (click)="openPopup()">Editar Perfil</button>
+
+      <!-- Form -->
+      <div *ngIf="isPopupVisible" class="overlay">
+        <app-popup (closePopup)="closePopup()">
+          <h1 class="mb-4">Editar Perfil</h1>
+          <form action="" class="grid grid-cols-2 gap-4">
+            <div class="col-span-1">
+              <label for="firstName">First Name:</label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+
+                disabled
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+              />
+              <label for="secondName">Second Name:</label>
+              <input
+                type="text"
+                id="secondName"
+                name="secondName"
+
+                disabled
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+              />
+              <label for="lastName">Last Name:</label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+
+                disabled
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+              />
+              <label for="DNI">DNI:</label>
+              <input
+                type="text"
+                id="DNI"
+                name="DNI"
+
+                disabled
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+              />
+            </div>
+            <div class="col-span-1">
+              <label for="dateOfBirth">Date of Birth:</label>
+              <input
+                type="date"
+                id="dateOfBirth"
+                name="dateOfBirth"
+                disabled
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+              />
+              <label for="specialty">Specialty:</label>
+              <input
+                type="text"
+                id="specialty"
+                name="specialty"
+
+                disabled
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+              />
+              <label for="phoneNumber">Phone Number:</label>
+              <input
+                type="text"
+                id="phoneNumber"
+                name="phoneNumber"
+
+                disabled
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+              />
+              <!-- Checkbox group for availability -->
+              <div class="flex space-x-4">
+                <label class="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    name="morning"
+                    class="form-checkbox rounded text-primary focus:ring-primary-dark"
+                  />
+                  <span>Morning</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    name="afternoon"
+                    class="form-checkbox rounded text-primary focus:ring-primary-dark"
+                  />
+                  <span>Afternoon</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    name="night"
+                    class="form-checkbox rounded text-primary focus:ring-primary-dark"
+                  />
+                  <span>Night</span>
+                </label>
+              </div>
+              <label for="postalCode">Postal Code:</label>
+              <input
+                type="text"
+                id="postalCode"
+                name="postalCode"
+
+                disabled
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+              />
+              <label for="licenseNumber">License Number:</label>
+              <input
+                type="text"
+                id="licenseNumber"
+                name="licenseNumber"
+
+                disabled
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+              />
+              <label for="address">Address:</label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+
+                disabled
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+              />
+            </div>
+            <button type="submit" class="bg-yellow-400  px-4 py-2 rounded-xl">Submit</button>
+
+          </form>
+        </app-popup>
+      </div>
+
+      <!--  -->
+    </div>
+    <div class="flex flex-col gap-14">
+      <div class="flex flex-col gap-3">
+        <h1 class="text-[#065DB4] font-bold text-4xl">
+          Dr. {{ doctor.firstName }} {{ doctor.lastName }}
+        </h1>
+        <h2 class="lowercase text-[#FF9D2B] text-xl">
+          Medico {{ doctor.specialty }}
+        </h2>
+        <div class="grid grid-cols-2 gap-5 mt-6">
+          <div class="flex flex-col gap-3">
+            <p class="flex gap-2 items-center text-[#063463]">
+              <span class="icon icon-phone"></span>{{ doctor.phoneNumber }}
+            </p>
+            <p class="flex gap-2 items-center text-[#063463]">
+              <span class="icon icon-email"></span>{{ doctor.email }}
+            </p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <p class="flex gap-2 items-center text-[#063463]">
+              <span class="icon icon-address"></span>{{ doctor.address }}
+            </p>
+            <p class="flex gap-2 items-center text-[#063463]">
+              <span class="icon icon-license"></span>N° Matrícula
+              {{ doctor.licenseNumber }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h1 class="text-[#FF9D2B] mb-6 font-bold text-2xl">Agenda</h1>
+        <div class="border border-blue-400 w-full mb-4"></div>
+
+        <div class="flex flex-col gap-2">
+          <p class="my-3">
+            Aquí puedes consultar tus turnos agendados para el día:
+          </p>
+          <!-- <select
+            class="w-5/6 border h-10 border-[#DDE1EB] rounded-md px-5"
+          ></select> -->
+          <select
+            class="w-5/6 border h-10 border-[#DDE1EB] rounded-md"
+            (ngModelChange)="selectDay($event)"
+          >
+            <option value="" disabled selected></option>
+            <option *ngFor="let day of upcomingDays" [value]="day">
+              {{ day }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
+
+<ng-template #loading>
+  <p>Loading doctor details...</p>
+</ng-template>
+
+<div class="bg-calme-light-blue h-[8.25rem] rounded-t-3xl">
+  <shared-footer></shared-footer>
+</div>
