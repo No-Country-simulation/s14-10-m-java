@@ -6,92 +6,61 @@ import com.s1410.calme.Domain.Dtos.whatsapp.*;
 import com.s1410.calme.Domain.Entities.Appointment;
 import com.s1410.calme.Domain.Repositories.AppointmentRepository;
 import com.s1410.calme.Domain.Services.ApiWhatsappService;
-import com.s1410.calme.Domain.Services.AppointmentService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class ApiWhatsappServiceImpl implements ApiWhatsappService {
 
     private final AppointmentRepository appointmentRepository;
-    @Value("${whatsapp.identificador}") String identificador;
-    @Value("${whatsapp.token}") String token;
+    @Value("${whatsapp.identificador}")
+    String identificador;
+    @Value("${whatsapp.token}")
+    String token;
 
     private RestClient clientBuilder() {
         return RestClient.builder()
                 .baseUrl("https://graph.facebook.com/v18.0/" + identificador + "/messages")
-                .defaultHeader("Authorization", "Bearer " + token)
+                .defaultHeader("Authorization","Bearer " + token)
                 .build();
     }
 
-    public Boolean sendMessage()
-            throws JsonProcessingException {
-        LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
-        int day = tomorrow.getDayOfMonth();
-        int month = tomorrow.getMonthValue();
-        int year = tomorrow.getYear();
+    public List<ResponseWhatsapp> sendAllReminders() throws JsonProcessingException {
+
+        LocalDateTime dayAfterTomorrow = LocalDateTime.now().plusDays(8);
         List<Appointment> appointmentsForTomorrow = appointmentRepository.
-                findAppointmentsByDateByActive(true, day, month, year);
-        String response;
+                findAppointmentsByDateByActive(true,
+                        dayAfterTomorrow.getDayOfMonth(),
+                        dayAfterTomorrow.getMonthValue(),
+                        dayAfterTomorrow.getYear());
+        List<ResponseWhatsapp> clientResponses = new ArrayList<>();
 
-        RestClient restClient = clientBuilder();
-        for (Appointment appointment : appointmentsForTomorrow){
-            String firstName = appointment.getAssistent().getFirstName();
-            if (firstName == null) {
-                firstName = appointment.getAssisted().getFirstName();
-            }
-
-            String lastName = appointment.getAssistent().getLastName();
-            if (lastName == null) {
-                lastName = appointment.getAssisted().getLastName();
-            }
-
-            Long phone = appointment.getAssistent().getPhoneNumber();
-            if (phone == null) {
-                phone = appointment.getAssisted().getRelationsAA().get(0)
-                        .getAssistent().getPhoneNumber();
-            }
-
-            String message = "¡Buenos días! Nos comunicamos desde Calme para recordarte que "
-                    + firstName + " " + lastName + " tiene un turno el día " +
-                    tomorrow.getDayOfMonth() + "/" + tomorrow.getMonthValue() +
-                    "/" + tomorrow.getYear() + " a las " + appointment.getDate().getHour() + ":" +
-                    appointment.getDate().getMinute() + "hs con el/la dr/a " +
-                    appointment.getDoctor().getFirstName() + " " +
-                    appointment.getDoctor().getLastName() +
-                    ", " + appointment.getDoctor().getSpecialty() + ".";
-
-            RequestMessage request = new RequestMessage
-            ("whatsapp", "543517707973",
-           new RequestMessageText(message));
-
-            response = restClient.post()
-                    .uri("")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(request)
-                    .retrieve()
-                    .body(String.class);
+        for (Appointment appointment : appointmentsForTomorrow) {
+            ResponseWhatsapp response = sendMessageToApi(setMessage(appointment));
+            clientResponses.add(response);
         }
-
-        return true;
+        return clientResponses;
     }
-}
 
-/*
-public ResponseWhatsapp sendMessage(MessageBodyDTO payload)
-throws JsonProcessingException {
-        RequestMessage request = new RequestMessage
-                ("whatsapp",payload.number(),
-                        new RequestMessageText(payload.message()));
+    public ResponseWhatsapp sendMessageToApi(String message) throws JsonProcessingException {
 
-        String response = restClient.post()
+        RequestMessage request = new RequestMessage(
+                "whatsapp", "543513849396",
+                new RequestMessageText(message));
+
+        String response = clientBuilder().post()
                 .uri("")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(request)
@@ -99,6 +68,48 @@ throws JsonProcessingException {
                 .body(String.class);
 
         ObjectMapper obj = new ObjectMapper();
-        return obj.readValue(response, ResponseWhatsapp.class);
+        return obj.readValue(response,ResponseWhatsapp.class);
     }
-*/
+
+    public String setMessage(Appointment appointment){
+
+        String firstName;
+        String lastName;
+        Long phone;
+        if (appointment.getAssistent() != null) {
+            firstName = appointment.getAssistent().getFirstName();
+            lastName = appointment.getAssistent().getLastName();
+            phone = appointment.getAssistent().getPhoneNumber();
+        }
+        else {
+            firstName = appointment.getAssisted().getFirstName();
+            lastName = appointment.getAssisted().getLastName();
+            phone = appointment.getAssisted().getRelationsAA().get(0).getAssistent().getPhoneNumber();
+        }
+
+        String doctorName = appointment.getDoctor().getFirstName();
+        String doctorLastName = appointment.getDoctor().getLastName();
+        String doctorSpecialty = appointment.getDoctor().getSpecialty().toString();
+        int apDay = appointment.getDate().getDayOfMonth();
+        int apMonth = appointment.getDate().getMonthValue();
+        int apYear = appointment.getDate().getYear();
+        int apHour = appointment.getDate().getHour();
+        int apMinutes = appointment.getDate().getMinute();
+
+        String reminderMessage =
+                "¡Buenos días! Nos comunicamos desde Calme para recordarte que " + firstName + " "
+                + lastName + " tiene un turno el día " + apDay + "/" + apMonth + "/" + apYear +
+                " a las " + apHour + ":" + apMinutes +  "hs con el/la dr/a " + doctorName + " " +
+                doctorLastName + ", " + doctorSpecialty + ".";
+
+        return reminderMessage;
+    }
+
+   /*@PostConstruct
+    void sendMessageToApi() throws JsonProcessingException {
+        sendAllReminders();
+    }*/
+
+
+}
+

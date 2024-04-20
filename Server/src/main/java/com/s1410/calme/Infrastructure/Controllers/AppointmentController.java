@@ -52,8 +52,8 @@ public class AppointmentController {
     }
 
     @GetMapping("/doctor/{id}")
-    public  ResponseEntity<List<ResponseAppointment>> getDoctorAppointments(@RequestParam Integer page, @RequestParam Boolean active, @PathVariable Long id){
-        return appointmentService.getAppointmentByDoctorID(id, active, page);
+    public  ResponseEntity<List<ResponseAppointment>> getDoctorAppointments(@RequestParam Boolean active, @PathVariable Long id){
+        return appointmentService.getAppointmentByDoctorID(id, active);
     }
 
     @GetMapping("/assistent/{id}")
