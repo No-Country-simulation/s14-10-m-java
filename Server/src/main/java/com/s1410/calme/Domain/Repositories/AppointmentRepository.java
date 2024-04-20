@@ -54,7 +54,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
     );
 
     @Query("SELECT a FROM Appointment a WHERE a.doctor.id = :doctorId AND a.active = :active")
-    Page<Appointment> findAppointmentByDoctorId(Long doctorId, Boolean active, Pageable pageable);
+    List<Appointment> findAppointmentByDoctorId(Long doctorId, Boolean active);
 
     @Query("SELECT a FROM Appointment a WHERE a.assistent.id = :assistantId AND a.active = :active")
     Page<Appointment> findAppointmentByAssistantById(Long assistantId, Boolean active, Pageable pageable);

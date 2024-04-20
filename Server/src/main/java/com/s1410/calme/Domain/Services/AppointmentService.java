@@ -25,7 +25,7 @@ public interface AppointmentService {
 
     ResponseEntity<ResponseAppointment> updateAppointmentDate(RequestEditAppointmentDate updatedDate, Long id);
 
-    ResponseEntity<List<ResponseAppointment>> getAppointmentByDoctorID(Long id, Boolean active, Integer page);
+    ResponseEntity<List<ResponseAppointment>> getAppointmentByDoctorID(Long id, Boolean active);
 
     ResponseEntity<List<ResponseAppointment>> getAppointmentByAssistentID(Long id, Boolean active, Integer page);
 
