@@ -187,15 +187,14 @@ public class AppointmentServiceImpl implements AppointmentService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+  
     @Override //Doctor role needed.
-    public ResponseEntity<List<ResponseAppointment>> getAppointmentByDoctorID(Long id, Boolean active, Integer page) {
+    public ResponseEntity<List<ResponseAppointment>> getAppointmentByDoctorID(Long id, Boolean active) {
+
         roleValidation.checkDoctorRole();
-        if (page <= 0) page = 1;
-        Pageable pageable = PageRequest.of(page-1, DEFAULT_PAGE_SIZE);
+        List<Appointment> appointmentList = appointmentRepository.findAppointmentByDoctorId(id, active);
 
-        Page<Appointment> pageAppointment = appointmentRepository.findAppointmentByDoctorId(id, active, pageable);
-
-        return new ResponseEntity<>(pageAppointment.getContent()
+        return new ResponseEntity<>(appointmentList
                 .stream().map(appointmentMapper::appointmentToResponse).
                 collect(Collectors.toList()),
                 HttpStatus.OK);
