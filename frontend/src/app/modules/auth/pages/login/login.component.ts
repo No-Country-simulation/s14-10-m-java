@@ -33,6 +33,7 @@ export class LoginComponent {
   }
 
   login() {
+    //temporalmente para q el formulario fue tocado
     if (this.loginForm.invalid) {
       return this.loginForm.markAllAsTouched();
     }
