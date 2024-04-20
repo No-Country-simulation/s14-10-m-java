@@ -19,7 +19,6 @@ public class EmailController {
     @GetMapping("/emailValidation/{token}/{email}")
     /*/emailValidation/token=askjdajs/email=lalala@gmail.com*/
     String EmailValidation(@PathVariable("token") String token, @PathVariable("email") String email) throws Exception {
-        System.out.println("LLEGO EL EMAIL");
         emailService.validateToken(token, email);
         return "Gracias por validarte";
     }
