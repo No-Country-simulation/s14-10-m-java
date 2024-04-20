@@ -32,7 +32,11 @@ public class dataBaseServiceImpl implements DataBaseService {
         System.out.println("entro al service insertAssistant()");
         requestAssistents.forEach(
                 requestCreateAssistent -> {
-                    assistentService.createAssistent(requestCreateAssistent);
+                    try {
+                        assistentService.createAssistent(requestCreateAssistent);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     System.out.println(requestCreateAssistent.firstName());
                 });
         return requestAssistents.toString();

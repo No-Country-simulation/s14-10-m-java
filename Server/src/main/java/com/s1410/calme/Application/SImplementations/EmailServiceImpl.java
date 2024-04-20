@@ -1,10 +1,14 @@
 package com.s1410.calme.Application.SImplementations;
 
 import com.s1410.calme.Domain.Entities.Appointment;
+import com.s1410.calme.Domain.Entities.Assistent;
 import com.s1410.calme.Domain.Repositories.AppointmentRepository;
+import com.s1410.calme.Domain.Repositories.AssistentRepository;
 import com.s1410.calme.Domain.Services.EmailService;
+import jakarta.annotation.PostConstruct;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -20,23 +24,23 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
 @Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
-
     private final JavaMailSender javaMailSender;
-
     private final TemplateEngine templateEngine;
-
     private final AppointmentRepository appointmentRepository;
+    private final AssistentRepository assistentRepository;
+
+    String token = buildEndpoint();
 
     @Transactional
     @Override
     public void sendUserRegistrationMail(String email) {
-
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -61,7 +65,6 @@ public class EmailServiceImpl implements EmailService {
             throw new RuntimeException(" Error " + " al enviar el correo : " + e.getMessage(), e);
         }
     }
-
     @Override
     @Scheduled(cron = "0 0 0 * * *")
     public void sendScheduledAppointments() {
@@ -75,13 +78,9 @@ public class EmailServiceImpl implements EmailService {
         System.out.println("Se enviaron todo los mail de citas pendiantes programadas en 2 dias ");
 
     }
-
-
     @Override
     public void sendAppointmentEmail(String email, LocalDateTime date) {
         try {
-
-
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
@@ -105,7 +104,6 @@ public class EmailServiceImpl implements EmailService {
             throw new RuntimeException(" Error " + " al enviar el correo : " + e.getMessage(), e);
         }
     }
-
     public List<Appointment> getAppointmentsToSendReminders() {
 
         LocalDate today = LocalDate.now();
@@ -125,23 +123,58 @@ public class EmailServiceImpl implements EmailService {
     }
 
 
+    /*
+    * 1. se registra exitosamente.
+    * 2. generar token dentro de confirmationEmail() y se manda el mail.
+    * 3. el usuario ve el email y toca el boton con un url personalizado.
+    * 4. llega a nuestro controlador con el token por parametro.
+    * 5. compara el token con el token del servidor.
+    * */
 
-    public void confirmationEmail(String email) throws MessagingException {
-        //build confirmation path {validationLink} and {userName}
-        //setear true la confirmacion del email.
-
+    public void emailConfirmation(String email, String userName) throws Exception {
+        try {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
         helper.setTo(email);
         helper.setSubject("CALME : Valida tu usuario.");
 
-        correoRequest.setTemplateEmail("confirmationEmail.html");
-        correoRequest.setDestinatario("juan.ortega.it@gmail.com");
-        correoRequest.setAsunto("The last step , confirm your email");
-        correoRequest.getDataBinding().put("validationLink", "validationLinkExample");
-        correoRequest.getDataBinding().put("userName" , "userNameExample");
-        sendEmail(correoRequest);
+        Context context = new Context();
+        context.setVariable("nombreUsuario",userName);
+        context.setVariable("validationLink", token);
+        String htmlBody = templateEngine.process("emailValidation", context);
 
+        helper.setText(htmlBody, true);
+        javaMailSender.send(message);
+        }catch (Exception e) {
+            throw new Exception("Error en la validación del correo electrónico: " + e.getMessage());
+        }
+    }
+
+
+    @Transactional
+    public void validateToken(String tokenController, String email){
+        if(tokenController == token){
+            //Esta función está llamada así para evitar referencia cíclica con assistentService.
+            Assistent assistent = this.assistentRepository.findByEmail(email)
+                    .orElseThrow(() -> new EntityNotFoundException(email));
+            assistent.setValidUser(true);
+            assistentRepository.save(assistent);
+            //It doubles when you try validate doctor.
+            System.out.println("usuario validado");
+        }else {System.out.println("usuario invalido");
+        throw new RuntimeException("Usuario no validado!");}
+    }
+
+    String buildEndpoint(){
+        String urlPersonalizado = "http://localhost:8080/email/emailValidation/supertoken/email=juan.ortega.it@gmail.com";
+        return urlPersonalizado;
+    }
+
+
+    @PostConstruct
+    void senMessage() throws Exception {
+        emailConfirmation("juan.ortega.it@gmail.com","Juan Ortega");
+        emailConfirmation("guillermodivan@hotmail.com","Guillermo Divan");
     }
 
 
