@@ -71,9 +71,9 @@ public class EmailServiceImpl implements EmailService {
 
             sendAppointmentEmail(appointment.getAssistent().getEmail(), appointment.getDate());
 
-            System.out.println("Se envio mail de cita pendiente al usuario " + appointment.getAssistent().getEmail());
+            
         });
-        System.out.println("Se enviaron todo los mail de citas pendiantes programadas en 2 dias ");
+        
 
     }
     @Override
@@ -157,12 +157,12 @@ public class EmailServiceImpl implements EmailService {
             if(assistentValidating.isPresent()) {
                 assistentValidating.get().setValidUser(true);
                 assistentRepository.save(assistentValidating.get());
-                System.out.println("ES ASISTENTE");
+                
             } else { Doctor doctorValidating = doctorRepository.findByEmail(email)
                     .orElseThrow(() -> new EntityNotFoundException(email));
                     doctorValidating.setValidUser(true);
                     doctorRepository.save(doctorValidating);
-                System.out.println("ES DOCTOR");
+                
                 }
         }else { throw new RuntimeException("Usuario no validado!");}
     }
