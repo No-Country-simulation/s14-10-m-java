@@ -1,0 +1,24 @@
+.icon-email {
+  background-image: url('../../../../assets/icons-svg/ph_email.svg');
+}
+
+.icon-address {
+  background-image: url('../../../../assets/icons-svg/ph_house.svg');
+}
+
+.icon-phone {
+  background-image: url('../../../../assets/icons-svg/ph_phone.svg');
+}
+
+.icon-license {
+  background-image: url('../../../../assets/icons-svg/ph_identity.svg');
+}
+
+.icon {
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 24px; /* Tamaño deseado para los iconos */
+  height: 24px; /* Tamaño deseado para los iconos */
+  display: inline-block;
+  vertical-align: middle;
+}
