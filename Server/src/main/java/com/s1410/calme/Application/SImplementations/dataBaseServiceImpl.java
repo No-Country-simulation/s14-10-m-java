@@ -186,8 +186,8 @@ public class dataBaseServiceImpl implements DataBaseService {
         int Year = FutureDate.getYear();
         int Month = FutureDate.getMonthValue();
         int Day = FutureDate.getDayOfMonth();
-        int Day2 = FutureDate.plusDays(4).getDayOfMonth();
-        int demoDay = FutureDate.plusDays(5).getDayOfMonth();
+        int Day2 = FutureDate.plusDays(1).getDayOfMonth();
+        int demoDay = FutureDate.plusDays(2).getDayOfMonth();
         int Hour = FutureDate.getHour();
         int Minute = FutureDate.getMinute();
 
