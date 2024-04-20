@@ -16,12 +16,11 @@ import com.s1410.calme.Domain.Utils.RelationType;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -94,7 +93,7 @@ public class AssistedServiceImpl implements AssistedService {
     }
 
     @Override
-    public List<ResponseAssisted> readAllAssistedFromAssistant(Long assistantId) {
+    public Page<ResponseAssisted> readAllAssistedFromAssistant(Long assistantId, Pageable pageable) {
 
         // Get assistant from db.
         Assistent assistant = this.assistentRepository.findById(assistantId)
@@ -103,20 +102,14 @@ public class AssistedServiceImpl implements AssistedService {
         // Validate if the assistant is active.
         if (!assistant.getActive()) throw new IllegalArgumentException("Assistant with ID " + assistantId + " is inactive.");
 
-        //Set assisted list for response.
-        List<ResponseAssisted> responseAssistedList = new ArrayList<>();
-
+        //Set assisted page for response.
         /*Se espera una lista de respuesta de assisted. Se mapea a través del mapstruct
         entre ambas listas buscando en el repo de relaciónAA todas las relaciones del assistant
         y luego... stream() permite transformar la lista, map() funciona como el for, y collect()
         lo hace lista. */
-        responseAssistedList = assistedMapper
-                .assistedListToResponseList(this.relationAARepository
-                        .findAllByAssistentId(assistantId)
-                        .stream().map(RelationAA::getAssisted).collect(Collectors.toList()));
-
-        return responseAssistedList;
-
+        return this.relationAARepository
+                .findByAssistentId(assistantId, pageable)
+                .map(assistedMapper::assistedToResponse);
     }
 
     @Transactional
@@ -128,9 +121,21 @@ public class AssistedServiceImpl implements AssistedService {
                 .orElseThrow(() -> new EntityNotFoundException(requestEditAssisted.id().toString()));
 
        if (assisted.getActive()) {
-            if (requestEditAssisted.DNI() != null) {
-                assisted.setDNI(requestEditAssisted.DNI());
+            if (requestEditAssisted.firstName() != null) {
+                assisted.setFirstName(requestEditAssisted.firstName());
             }
+
+           if (requestEditAssisted.secondName() != null) {
+               assisted.setSecondName(requestEditAssisted.secondName());
+           }
+
+           if (requestEditAssisted.lastName() != null) {
+               assisted.setLastName(requestEditAssisted.lastName());
+           }
+
+           if (requestEditAssisted.DNI() != null) {
+               assisted.setDNI(requestEditAssisted.DNI());
+           }
 
             if (requestEditAssisted.dateOfBirth() != null) {
                 assisted.setDateOfBirth(requestEditAssisted.dateOfBirth());

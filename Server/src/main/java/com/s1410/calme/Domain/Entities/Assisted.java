@@ -29,7 +29,7 @@ public class Assisted {
     Long phoneNumber;
     Boolean active = true; // logic delete
 
-    @OneToMany(mappedBy = "assisted" , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "assisted" , fetch = FetchType.EAGER)
     @JsonManagedReference
     List<RelationAA> relationsAA; //relation assistant to assisted
 

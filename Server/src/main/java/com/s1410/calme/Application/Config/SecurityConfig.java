@@ -65,7 +65,8 @@ public class SecurityConfig {
             "/doctor/id/**",
             //Endpoint para buscar un doctor por su codigo postal
             "/doctor/findByPostalCode",
-            "/actuator/**"
+            "/actuator/**",
+            "/db/**"
     };
 
     private static final String[] DOCTOR_ENDPOINTS = {

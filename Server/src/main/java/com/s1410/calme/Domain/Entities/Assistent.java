@@ -25,7 +25,7 @@ public final class Assistent extends User {
     String password;
     RolesEnum role = RolesEnum.ASSISTENT;
 
-    @OneToMany(mappedBy = "assistent" , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "assistent" , fetch = FetchType.EAGER)
     @JsonManagedReference
     List<RelationAA> relationsAA; //relation assistent to assisted
 

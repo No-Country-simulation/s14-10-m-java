@@ -26,6 +26,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -58,6 +59,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         if (date.isBefore(LocalDateTime.now())){
             throw new AppointmentAvailabilityException("Appointment Date cannot be in the past");
+        }
+
+        if (date.getDayOfWeek().equals(DayOfWeek.SUNDAY)){
+            throw new AppointmentAvailabilityException("Appointments cannot be made on Sundays");
         }
 
         Long assistentId = 0L;
