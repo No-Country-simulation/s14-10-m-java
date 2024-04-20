@@ -11,6 +11,7 @@ public record ResponseDoctor(
         String DNI,
         Specialty specialty,
         Long phoneNumber,
+        LocalDate dateOfBirth,
         Boolean morning,
         Boolean afternoon,
         Boolean night,
