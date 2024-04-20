@@ -8,6 +8,7 @@ import com.s1410.calme.Domain.Entities.Doctor;
 import com.s1410.calme.Domain.Mapper.DoctorMapper;
 import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import com.s1410.calme.Domain.Services.DoctorService;
+import com.s1410.calme.Domain.Services.EmailService;
 import com.s1410.calme.Domain.Utils.Specialty;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,11 +32,12 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final EmailService emailService;
 
     //Create doctor
     @Transactional
     @Override
-    public ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor) {
+    public ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor) throws Exception {
 
     if (requestCreateDoctor == null){throw new EntityNotFoundException();}
 
@@ -45,9 +47,10 @@ public class DoctorServiceImpl implements DoctorService {
     Doctor doctor = doctorMapper.requestCreateToDoctor(requestCreateDoctor);
         doctor.setPassword(passwordEncoder.encode(requestCreateDoctor.password()));
     doctor.setActive(true);
-    doctorRepository.save(doctor);
+    var doctorAdded = doctorRepository.save(doctor);
 
-        return doctorMapper.doctorToResponse(doctor);
+        emailService.emailConfirmation(doctorAdded.getEmail(), doctorAdded.getFirstName());
+        return doctorMapper.doctorToResponse(doctorAdded);
     }
 
     @Override

@@ -43,12 +43,16 @@ public class dataBaseServiceImpl implements DataBaseService {
     }
 
     @Override
-    public String insertDoctor() {
+    public String insertDoctor() throws Exception {
         List<RequestCreateDoctor> requestCreateDoctors = getInsertDoctors();
         System.out.println("entro al service insertDoctor()");
         requestCreateDoctors.forEach(
                 requestCreateDoctor -> {
-                    doctorService.createDoctor(requestCreateDoctor);
+                    try {
+                        doctorService.createDoctor(requestCreateDoctor);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     System.out.println(requestCreateDoctor.firstName());
                 }
         );
@@ -81,7 +85,7 @@ public class dataBaseServiceImpl implements DataBaseService {
     }
 
     @Override
-    public ResponseEntity<?> insertAll() {
+    public ResponseEntity<?> insertAll() throws Exception {
 
         insertAssistant();
         insertAssisted();

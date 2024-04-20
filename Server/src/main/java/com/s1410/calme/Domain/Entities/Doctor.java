@@ -30,6 +30,7 @@ public class Doctor extends User {
     private Long licenseNumber;
     private String address;
     private RolesEnum role = RolesEnum.DOCTOR;
+    private Boolean validUser = false;
 
 
     @Override

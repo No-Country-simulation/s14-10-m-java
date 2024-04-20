@@ -2,18 +2,18 @@ package com.s1410.calme.Application.SImplementations;
 
 import com.s1410.calme.Domain.Entities.Appointment;
 import com.s1410.calme.Domain.Entities.Assistent;
+import com.s1410.calme.Domain.Entities.Doctor;
 import com.s1410.calme.Domain.Repositories.AppointmentRepository;
 import com.s1410.calme.Domain.Repositories.AssistentRepository;
+import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import com.s1410.calme.Domain.Services.EmailService;
 import jakarta.annotation.PostConstruct;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
@@ -21,10 +21,7 @@ import org.thymeleaf.context.Context;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -35,8 +32,9 @@ public class EmailServiceImpl implements EmailService {
     private final TemplateEngine templateEngine;
     private final AppointmentRepository appointmentRepository;
     private final AssistentRepository assistentRepository;
+    private final DoctorRepository doctorRepository;
 
-    String token = buildEndpoint();
+    String token = token();
 
     @Transactional
     @Override
@@ -140,7 +138,7 @@ public class EmailServiceImpl implements EmailService {
 
         Context context = new Context();
         context.setVariable("nombreUsuario",userName);
-        context.setVariable("validationLink", token);
+        context.setVariable("validationLink", buildEndpoint());
         String htmlBody = templateEngine.process("emailValidation", context);
 
         helper.setText(htmlBody, true);
@@ -153,28 +151,36 @@ public class EmailServiceImpl implements EmailService {
 
     @Transactional
     public void validateToken(String tokenController, String email){
-        if(tokenController == token){
+        if(tokenController.equals(token)){
             //Esta función está llamada así para evitar referencia cíclica con assistentService.
-            Assistent assistent = this.assistentRepository.findByEmail(email)
+            Optional<Assistent> assistentValidating = assistentRepository.findByEmail(email);
+            if(assistentValidating.isPresent()) {
+                assistentValidating.get().setValidUser(true);
+                assistentRepository.save(assistentValidating.get());
+                System.out.println("ES ASISTENTE");
+            } else { Doctor doctorValidating = doctorRepository.findByEmail(email)
                     .orElseThrow(() -> new EntityNotFoundException(email));
-            assistent.setValidUser(true);
-            assistentRepository.save(assistent);
-            //It doubles when you try validate doctor.
-            System.out.println("usuario validado");
-        }else {System.out.println("usuario invalido");
-        throw new RuntimeException("Usuario no validado!");}
+                    doctorValidating.setValidUser(true);
+                    doctorRepository.save(doctorValidating);
+                System.out.println("ES DOCTOR");
+                }
+        }else { throw new RuntimeException("Usuario no validado!");}
     }
 
     String buildEndpoint(){
-        String urlPersonalizado = "http://localhost:8080/email/emailValidation/supertoken/email=juan.ortega.it@gmail.com";
+        String urlPersonalizado = "http://localhost:8080/email/emailValidation/" + token + "/juan.ortega.it@gmail.com";
         return urlPersonalizado;
+    }
+    String token(){
+        String token = UUID.randomUUID().toString();
+        return token;
     }
 
 
     @PostConstruct
     void senMessage() throws Exception {
         emailConfirmation("juan.ortega.it@gmail.com","Juan Ortega");
-        emailConfirmation("guillermodivan@hotmail.com","Guillermo Divan");
+       // emailConfirmation("guillermodivan@hotmail.com","Guillermo Divan");
     }
 
 
