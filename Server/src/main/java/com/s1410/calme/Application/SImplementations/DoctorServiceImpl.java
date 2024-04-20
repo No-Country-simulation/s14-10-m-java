@@ -106,8 +106,8 @@ public class DoctorServiceImpl implements DoctorService {
                 doctor.setNight(requestEditDoctor.night());
             }
         }
-
-        return doctorMapper.doctorToResponse(doctor);
+         var doctorAdded = doctorRepository.save(doctor);
+        return doctorMapper.doctorToResponse(doctorAdded);
     }
 
     @Override
