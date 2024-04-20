@@ -237,7 +237,10 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-4 pt-5">
+        <div
+          *ngFor="let asistido of listaAsistidos"
+          class="grid grid-cols-3 gap-4 pt-5"
+        >
           <div class="col-cols-3 flex justify-center items-center w-2/6 pt-14">
             <img
               src="../../../../assets/img/Ellipse 50.png"
@@ -247,7 +250,9 @@
           </div>
           <!-- Segunda columna -->
           <div class="w-4/7 pt-14">
-            <h2 class="font-extrabold text-blue-900 mb-4">Nombre apellido</h2>
+            <h2 class="font-extrabold text-blue-900 mb-4">
+              {{ asistido.first }}
+            </h2>
             <ul class="font-light">
               <li class="mb-2 text-2xl text-blue-700">
                 Relacion de parentesco
@@ -318,52 +323,7 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-4 pt-5">
-          <div class="col-cols-3 flex justify-center items-center w-2/6 pt-14">
-            <img
-              src="../../../../assets/img/Ellipse 51.png"
-              alt="Foto de paciente"
-              class="w-32 h-32 justify-center items-center rounded-full mb-4 ml-32"
-            />
-          </div>
-          <!-- Segunda columna -->
-          <div class="w-4/7 pt-14">
-            <h2 class="font-extrabold text-blue-900 mb-4">Nombre apellido</h2>
-            <ul class="font-light">
-              <li class="mb-2 text-2xl text-blue-700">
-                Relacion de parentesco
-              </li>
-              <li class="mb-2 text-2xl">
-                <a
-                  href="#"
-                  class="block text-start text-blue-900 font-bold py-2 rounded"
-                >
-                  Ocultar
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-6 h-6 inline-block mr-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 10l7-7m0 0l7 7m-7-7v18"
-                    /></svg
-                ></a>
-              </li>
-            </ul>
-          </div>
-          <div class="w-px-10 pt-14">
-            <a
-              href="#"
-              class="block text-blue-600 font-extralight text-2xl text-end py-2 px-4"
-              >Editar</a
-            >
-          </div>
-        </div>
+
         <shared-footer></shared-footer>
       </div>
     </div>
