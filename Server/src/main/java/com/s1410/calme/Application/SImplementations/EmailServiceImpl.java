@@ -177,11 +177,10 @@ public class EmailServiceImpl implements EmailService {
     }
 
 
-    @PostConstruct
+/*    @PostConstruct
     void senMessage() throws Exception {
         emailConfirmation("juan.ortega.it@gmail.com","Juan Ortega");
-       // emailConfirmation("guillermodivan@hotmail.com","Guillermo Divan");
-    }
+    }*/
 
 
 }
