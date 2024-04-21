@@ -49,7 +49,7 @@ public class EmailServiceImpl implements EmailService {
 
 
             // Procesar la plantilla Thymeleaf
-            String htmlBody = templateEngine.process("email", context);
+            String htmlBody = templateEngine.process("templateWelcomeRegister", context);
 
             // Establecer el cuerpo del mensaje como HTML
             helper.setText(htmlBody, true);
@@ -93,7 +93,7 @@ public class EmailServiceImpl implements EmailService {
             // Agregar más variables según sea necesario
 
             // Procesar la plantilla Thymeleaf
-            String htmlBody = templateEngine.process("email", context);
+            String htmlBody = templateEngine.process("templateScheduledAppointment", context);
 
             // Establecer el cuerpo del mensaje como HTML
             helper.setText(htmlBody, true);
@@ -104,7 +104,33 @@ public class EmailServiceImpl implements EmailService {
             throw new RuntimeException(" Error " + " al enviar el correo : " + e.getMessage(), e);
         }
     }
+    @Override
+    public void sendPasswordRecoveryMail(String email) {
 
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(email);
+            helper.setSubject("Recuperacion de contrasena");
+
+            Context context = new Context();
+            // Agregar variables de contexto para la plantilla Thymeleaf
+            // context.setVariable("message", "CLICK aqui para recuperar contresena " + " \"http://localhost:8080/verify-password?token=\"" + email);
+            context.setVariable("messageRecovery", "CLICK aquí para recuperar contraseña: <a href=\"http://localhost:8080/login/set-password?email=" + email + "\">Recuperar contraseña</a>");
+
+            // Procesar la plantilla Thymeleaf
+            String htmlBody = templateEngine.process("templateForgetPassword", context);
+
+            // Establecer el cuerpo del mensaje como HTML
+            helper.setText(htmlBody, true);
+
+            javaMailSender.send(message);
+
+        } catch (Exception e) {
+            throw new RuntimeException(" Error " + " al enviar el correo de recuperacion, reenvie el correo : " + e.getMessage(), e);
+        }
+    }
     public List<Appointment> getAppointmentsToSendReminders() {
 
         LocalDate today = LocalDate.now();
