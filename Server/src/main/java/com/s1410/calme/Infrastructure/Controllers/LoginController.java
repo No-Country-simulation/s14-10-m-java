@@ -1,7 +1,7 @@
 package com.s1410.calme.Infrastructure.Controllers;
-import com.s1410.calme.Application.SImplementations.AuthenticationService;
 import com.s1410.calme.Domain.Dtos.request.RequestLogin;
 import com.s1410.calme.Domain.Dtos.response.ResponseLogin;
+import com.s1410.calme.Domain.Services.AuthenticationService;
 import com.s1410.calme.Infrastructure.Exceptions.BindingResultException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -31,7 +31,6 @@ public class LoginController {
                 this.authenticationService.login(requestLogin));
     }
 
-
     @PutMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestParam String email) {
         String result = authenticationService.forgotPassword(email);
@@ -40,7 +39,10 @@ public class LoginController {
 
     @PutMapping("/set-password")
     public ResponseEntity<String> setPassword(@RequestParam String email, @RequestParam String newPassword) {
+
         String result = authenticationService.setPassword(email, newPassword);
+
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

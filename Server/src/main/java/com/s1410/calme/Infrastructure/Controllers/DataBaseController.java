@@ -18,9 +18,8 @@ public class DataBaseController {
     String insertAssistant(){
         return dataBaseService.insertAssistant();
     }
-
     @GetMapping("/doctor")
-    String insertDoctor(){
+    String insertDoctor() throws Exception {
         return dataBaseService.insertDoctor();
     }
     @GetMapping("/assisted")
@@ -34,7 +33,7 @@ public class DataBaseController {
     }
 
     @GetMapping("/all")
-    ResponseEntity<?> insertAll(){
+    ResponseEntity<?> insertAll() throws Exception {
         return dataBaseService.insertAll();
     }
 

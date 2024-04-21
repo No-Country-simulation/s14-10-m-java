@@ -33,10 +33,10 @@ public class AppointmentController {
         return appointmentService.getAppointmentById(id);
     }
 
-    @PutMapping("/{id}")
+    /*@PutMapping("/{id}")
     public ResponseEntity<ResponseAppointment> changeAppointmentActiveValue(@PathVariable Long id){
         return appointmentService.changeAppointmentActiveValue(id);
-    }
+    }*/
 
     @GetMapping("/betweenDates")
     public ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(@RequestBody RequestAppointmentBetweenDates dates,
@@ -45,15 +45,15 @@ public class AppointmentController {
         return appointmentService.getAppointmentsBetweenDates(dates, page, active);
     }
 
-    @PutMapping("/{id}/date")
+    /*@PutMapping("/{id}/date")
     public ResponseEntity<ResponseAppointment> updateAppointmentDate(@RequestBody RequestEditAppointmentDate updatedDate,
                                                                      @PathVariable Long id){
         return appointmentService.updateAppointmentDate(updatedDate, id);
-    }
+    }*/
 
     @GetMapping("/doctor/{id}")
-    public  ResponseEntity<List<ResponseAppointment>> getDoctorAppointments(@RequestParam Integer page, @RequestParam Boolean active, @PathVariable Long id){
-        return appointmentService.getAppointmentByDoctorID(id, active, page);
+    public  ResponseEntity<List<ResponseAppointment>> getDoctorAppointments(@RequestParam Boolean active, @PathVariable Long id){
+        return appointmentService.getAppointmentByDoctorID(id, active);
     }
 
     @GetMapping("/assistent/{id}")

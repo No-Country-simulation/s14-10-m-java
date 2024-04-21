@@ -24,14 +24,15 @@ public final class Assistent extends User {
     String email;
     String password;
     RolesEnum role = RolesEnum.ASSISTENT;
+    Boolean validUser = false;
 
-    @OneToMany(mappedBy = "assistent" , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "assistent" , fetch = FetchType.EAGER)
     @JsonManagedReference
     List<RelationAA> relationsAA; //relation assistent to assisted
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority authority = new SimpleGrantedAuthority(RolesEnum.ASSISTENT.name());
+        GrantedAuthority authority = new SimpleGrantedAuthority(this.role.name());
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(authority);
         return authorities;
@@ -39,26 +40,26 @@ public final class Assistent extends User {
 
     @Override
     public String getUsername() {
-        return null;
+        return getEmail();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

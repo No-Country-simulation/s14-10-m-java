@@ -30,7 +30,7 @@ public class Assisted {
     Boolean active = true; // logic delete
     String imageUrl = "https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg";
 
-    @OneToMany(mappedBy = "assisted" , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "assisted" , fetch = FetchType.EAGER)
     @JsonManagedReference
     List<RelationAA> relationsAA; //relation assistant to assisted
 

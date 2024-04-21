@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -86,6 +88,18 @@ public class ApplicationExceptionHandler {
     };
 
 
+    @ExceptionHandler(value = HttpClientErrorException.class)
+    public ResponseEntity<Object> handleHttpClientErrorExceptions(HttpClientErrorException exception) {
+        HttpStatus unauthorized = HttpStatus.UNAUTHORIZED;
+
+        ApiException apiException = new ApiException(
+                exception.getMessage(),
+                unauthorized,
+                ZonedDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires"))
+        );
+
+        return new ResponseEntity<>(apiException, unauthorized);
+    };
     //Maneja cualquier otra excepción que no haya sido considerada en los casos anteriores
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> handleAllOtherExceptions(Exception exception) {
