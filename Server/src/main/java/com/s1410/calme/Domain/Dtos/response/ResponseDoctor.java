@@ -1,6 +1,8 @@
 package com.s1410.calme.Domain.Dtos.response;
 import com.s1410.calme.Domain.Utils.Specialty;
 
+import java.time.LocalDate;
+
 public record ResponseDoctor(
 
         Long id,
