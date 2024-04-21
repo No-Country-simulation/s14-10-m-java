@@ -16,6 +16,7 @@ public record ResponseAssistent(
         Long phoneNumber,
         LocalDate dateOfBirth,
         List<RelationAA> relationsAA,
+        String imageUrl,
         Boolean valid
 ) {
 }

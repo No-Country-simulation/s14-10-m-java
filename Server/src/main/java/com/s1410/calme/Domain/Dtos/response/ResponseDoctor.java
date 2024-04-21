@@ -20,6 +20,7 @@ public record ResponseDoctor(
         Integer postalCode,
         Long licenseNumber,
         String address,
+        String imageUrl,
         Boolean validUser
 ) {
 }
