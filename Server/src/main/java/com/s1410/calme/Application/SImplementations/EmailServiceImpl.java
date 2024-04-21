@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -27,9 +26,7 @@ import java.util.stream.Collectors;
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;
-
     private final TemplateEngine templateEngine;
-
     private final AppointmentRepository appointmentRepository;
 
     @Transactional
@@ -72,7 +69,6 @@ public class EmailServiceImpl implements EmailService {
             System.out.println("Se envio mail de cita pendiente al usuario " + appointment.getAssistent().getEmail());
         });
         System.out.println("Se enviaron todo los mail de citas pendiantes programadas en 2 dias ");
-
     }
 
 
