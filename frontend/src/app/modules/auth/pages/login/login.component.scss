@@ -1,15 +1,14 @@
 section {
-    background-image: url("../../../../../assets/image-png/bg_blue.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  background-image: url("../../../../../assets/image-png/bg_blue.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 input {
-    border-radius: 5px 5px 5px 5px;
-    color: black;
+  border-radius: 5px 5px 5px 5px;
+  color: black;
 }
-
 
 /* Define the base font family for all headings, paragraphs, and links */
 
@@ -18,45 +17,25 @@ p,
 input,
 h2,
 a {
-    font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
-
 
 /* Add the italic style specifically for h1 elements with the .poppins-medium-italic class */
 
 h1.poppins-medium-italic {
-    font-style: italic;
+  font-style: italic;
 }
 
 img {
-    height: 480px;
-    width: 480px;
+  height: 480px;
+  width: 480px;
 }
 
 button {
-    flex-direction: center;
-    align-items: center;
+  flex-direction: center;
+  align-items: center;
 }
 
 span {
-    color: red;
-}
-
-.contenedor {
-    position: relative;
-    /* Permite posicionar elementos dentro */
-}
-
-.logo {
-    position: absolute;
-    /* Posiciona el logo de forma absoluta */
-    top: 0;
-    /* Posiciona el borde superior del logo en el borde superior del div */
-    right: 0;
-    /* Posiciona el borde izquierdo del logo en el borde izquierdo del div */
-    width: 100px;
-    /* Ajusta el ancho del logo */
-    height: 100px;
-    /* Ajusta la altura del logo */
-    background-image: url("./../../../../../assets/image-png/CALME.png");
+  color: red;
 }

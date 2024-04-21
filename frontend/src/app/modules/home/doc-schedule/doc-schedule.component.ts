@@ -4,7 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { DocResponse } from 'src/app/core/interfaces/doc.interface';
 
-import { ScheduleComponent } from '@syncfusion/ej2-angular-schedule';
+import {
+  EventSettingsModel,
+  ScheduleComponent,
+  View,
+} from '@syncfusion/ej2-angular-schedule';
 
 @Component({
   selector: 'app-doc-schedule',
@@ -12,15 +16,31 @@ import { ScheduleComponent } from '@syncfusion/ej2-angular-schedule';
   styleUrls: ['./doc-schedule.component.scss'],
 })
 export class DocScheduleComponent implements OnInit {
-  doctor?: DocResponse;
-
   docService = inject(DocService);
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
 
+  public doctor?: DocResponse;
+
   @ViewChild('scheduleObj') public scheduleObj?: ScheduleComponent;
 
   public selectedDate: Date;
+
+  public currView: View = 'WorkWeek';
+
+  public eventSettings: EventSettingsModel = {
+    dataSource: [
+      {
+        Id: 20,
+        Subject: 'Booking',
+        StartTime: new Date(),
+        EndTime: new Date(),
+        CategoryColor: '#ea7a57',
+        IsBlock: true,
+        IsAllDay: true,
+      },
+    ],
+  };
 
   constructor() {
     this.selectedDate = new Date();
