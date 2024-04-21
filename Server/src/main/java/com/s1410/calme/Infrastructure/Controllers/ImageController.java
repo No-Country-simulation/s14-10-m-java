@@ -15,6 +15,25 @@ public class ImageController {
 
     public final ImageService imageService;
 
+    //Endpoint to update a user's profile image.
+    //Send requestPath image as form-data (Postman) or FormData (Js/Ts)
+
+    @PutMapping("/update/doctor/{doctorId}")
+    public ResponseEntity<String> updateDoctorProfileImage(
+            @PathVariable Long doctorId,
+            @RequestPart("image") @NonNull MultipartFile image
+    ) {
+        return ResponseEntity.ok(this.imageService.saveDoctorProfilePicture(image, doctorId));
+    }
+
+    @PutMapping("/update/assistant/{assistantId}")
+    public ResponseEntity<String> updateAssistantProfileImage(
+            @PathVariable Long assistantId,
+            @RequestPart("image") @NonNull MultipartFile image
+    ) {
+        return ResponseEntity.ok(this.imageService.saveAssistantProfilePicture(image, assistantId));
+    }
+
     @PutMapping("/update/assisted/{assistedId}")
     public ResponseEntity<String> updateAssistedProfileImage(
             @PathVariable Long assistedId,

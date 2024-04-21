@@ -16,7 +16,8 @@ public record ResponseDoctor(
         Boolean night,
         Integer postalCode,
         Long licenseNumber,
-        String address
+        String address,
+        String imageUrl
 ) {
 }
 

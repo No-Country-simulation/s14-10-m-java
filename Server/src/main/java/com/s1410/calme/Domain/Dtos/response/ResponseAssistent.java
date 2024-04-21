@@ -15,6 +15,7 @@ public record ResponseAssistent(
         String DNI,
         Long phoneNumber,
         LocalDate dateOfBirth,
-        List<RelationAA> relationsAA
+        List<RelationAA> relationsAA,
+        String imageUrl
 ) {
 }
