@@ -64,7 +64,6 @@ public class DoctorServiceImpl implements DoctorService {
     public ResponseDoctor readDoctor(Long id) {
         Doctor doctor = doctorRepository.findById(id).orElseThrow( ()->
                 new EntityNotFoundException("The doctor with id: "+ id+" was not found"));
-        selfValidation.checkSelfValidation(id);
         return doctorMapper.doctorToResponse(doctor);
     }
 
