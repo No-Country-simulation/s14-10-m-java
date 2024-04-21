@@ -9,5 +9,6 @@ public interface EmailService {
      void sendUserRegistrationMail(String email) ;
      void sendScheduledAppointments();
      void sendAppointmentEmail (String email, LocalDateTime date);
+     void sendPasswordRecoveryMail(String email);
 }
 
