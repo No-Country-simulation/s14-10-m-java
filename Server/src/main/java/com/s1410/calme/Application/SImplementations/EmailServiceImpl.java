@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -73,8 +72,6 @@ public class EmailServiceImpl implements EmailService {
 
             
         });
-        
-
     }
     @Override
     public void sendAppointmentEmail(String email, LocalDateTime date) {

@@ -18,7 +18,6 @@ public class DataBaseController {
     String insertAssistant(){
         return dataBaseService.insertAssistant();
     }
-
     @GetMapping("/doctor")
     String insertDoctor() throws Exception {
         return dataBaseService.insertDoctor();

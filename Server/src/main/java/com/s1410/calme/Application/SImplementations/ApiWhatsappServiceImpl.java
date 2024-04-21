@@ -2,6 +2,7 @@ package com.s1410.calme.Application.SImplementations;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.s1410.calme.Application.Config.Validations.RoleValidation;
 import com.s1410.calme.Domain.Dtos.whatsapp.*;
 import com.s1410.calme.Domain.Entities.Appointment;
 import com.s1410.calme.Domain.Repositories.AppointmentRepository;
@@ -25,10 +26,10 @@ import java.util.Map;
 public class ApiWhatsappServiceImpl implements ApiWhatsappService {
 
     private final AppointmentRepository appointmentRepository;
-    @Value("${whatsapp.identificador}")
-    String identificador;
-    @Value("${whatsapp.token}")
-    String token;
+    private final RoleValidation roleValidation;
+
+    @Value("${whatsapp.identificador}") String identificador;
+    @Value("${whatsapp.token}") String token;
 
     private RestClient clientBuilder() {
         return RestClient.builder()
