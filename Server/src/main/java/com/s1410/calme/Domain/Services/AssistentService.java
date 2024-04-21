@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AssistentService {
 
-    ResponseAssistent createAssistent(RequestCreateAssistent requestCreateAssistent);
+    ResponseAssistent createAssistent(RequestCreateAssistent requestCreateAssistent) throws Exception;
     ResponseAssistent readAssistent(Long id);
     Page<ResponseAssistent> readAllAsistents(Boolean active, Pageable paging);
     List<ResponseAssistent> readAllAssistentFromAssisted(Long assistedId);

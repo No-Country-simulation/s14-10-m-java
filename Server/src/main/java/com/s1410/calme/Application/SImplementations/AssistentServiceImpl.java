@@ -13,13 +13,13 @@ import com.s1410.calme.Domain.Repositories.AssistedRepository;
 import com.s1410.calme.Domain.Repositories.AssistentRepository;
 import com.s1410.calme.Domain.Repositories.RelationAARepository;
 import com.s1410.calme.Domain.Services.AssistentService;
+import com.s1410.calme.Domain.Services.EmailService;
 import com.s1410.calme.Domain.Utils.RolesEnum;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,13 +35,15 @@ public class AssistentServiceImpl implements AssistentService {
     private final AssistedRepository assistedRepository;
     private final RelationAARepository relationAARepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final EmailService emailService;
     private final RoleValidation roleValidation;
     private final SelfValidation selfValidation;
 
     @Transactional
     @Override
     public ResponseAssistent createAssistent(
-            RequestCreateAssistent requestCreateAssistent) {
+            RequestCreateAssistent requestCreateAssistent) throws Exception {
         if(requestCreateAssistent == null){ throw new EntityNotFoundException(); }
 
         var assistentAlreadyExists = assistentRepository.findByEmail(requestCreateAssistent.email());
@@ -51,8 +53,12 @@ public class AssistentServiceImpl implements AssistentService {
                 .requestCreateToAssistent(requestCreateAssistent);
         assistent.setPassword(passwordEncoder.encode(requestCreateAssistent.password()));
         assistent.setActive(Boolean.TRUE);
+        assistent.setValidUser(Boolean.FALSE);
         assistent.setRole(RolesEnum.ASSISTENT);
+
         var assistentAdded = assistentRepository.save(assistent);
+
+        emailService.emailConfirmation(assistentAdded.getEmail(), assistentAdded.getFirstName());
         return  assistentMapper.assistentToResponse(assistentAdded);
     }
 
@@ -143,4 +149,5 @@ public class AssistentServiceImpl implements AssistentService {
         assistentRepository.save(assistent);
         return assistent.getActive();
     }
+
 }

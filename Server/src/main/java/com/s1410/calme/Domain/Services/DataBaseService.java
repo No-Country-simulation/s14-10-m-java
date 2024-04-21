@@ -6,9 +6,9 @@ public interface DataBaseService {
 
     /* INSERT USERS */
     String insertAssistant();
-    String insertDoctor();
+    String insertDoctor() throws Exception;
     String insertAssisted();
     String insertAppointment();
-    ResponseEntity<?> insertAll();
+    ResponseEntity<?> insertAll() throws Exception;
 
 }

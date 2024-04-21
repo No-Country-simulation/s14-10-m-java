@@ -24,6 +24,7 @@ public final class Assistent extends User {
     String email;
     String password;
     RolesEnum role = RolesEnum.ASSISTENT;
+    Boolean validUser = false;
 
     @OneToMany(mappedBy = "assistent" , fetch = FetchType.EAGER)
     @JsonManagedReference

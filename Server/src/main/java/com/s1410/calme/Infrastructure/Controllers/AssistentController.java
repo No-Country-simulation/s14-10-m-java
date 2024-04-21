@@ -26,7 +26,8 @@ public class AssistentController {
 
     @PostMapping("/register")
     public ResponseEntity<ResponseAssistent> registerAssistent(
-            @RequestBody @Valid @NotNull RequestCreateAssistent createAssistent, BindingResult bindingResult){
+            @RequestBody @Valid @NotNull RequestCreateAssistent createAssistent, BindingResult bindingResult)
+            throws Exception{
         if (bindingResult.hasErrors()){
             throw new BindingResultException(bindingResult);
         }

@@ -10,6 +10,7 @@ import com.s1410.calme.Domain.Entities.Doctor;
 import com.s1410.calme.Domain.Mapper.DoctorMapper;
 import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import com.s1410.calme.Domain.Services.DoctorService;
+import com.s1410.calme.Domain.Services.EmailService;
 import com.s1410.calme.Domain.Utils.RolesEnum;
 import com.s1410.calme.Domain.Utils.Specialty;
 import jakarta.persistence.EntityExistsException;
@@ -34,13 +35,14 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final EmailService emailService;
     private final RoleValidation roleValidation;
     private final SelfValidation selfValidation;
 
     //Create doctor
     @Transactional
     @Override
-    public ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor) {
+    public ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor) throws Exception {
 
     if (requestCreateDoctor == null){throw new EntityNotFoundException();}
 
@@ -50,10 +52,12 @@ public class DoctorServiceImpl implements DoctorService {
     Doctor doctor = doctorMapper.requestCreateToDoctor(requestCreateDoctor);
         doctor.setPassword(passwordEncoder.encode(requestCreateDoctor.password()));
     doctor.setActive(true);
+    var doctorAdded = doctorRepository.save(doctor);
     doctor.setRole(RolesEnum.DOCTOR);
     doctorRepository.save(doctor);
 
-        return doctorMapper.doctorToResponse(doctor);
+        emailService.emailConfirmation(doctorAdded.getEmail(), doctorAdded.getFirstName());
+        return doctorMapper.doctorToResponse(doctorAdded);
     }
 
     @Override

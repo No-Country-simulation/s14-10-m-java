@@ -31,23 +31,31 @@ public class dataBaseServiceImpl implements DataBaseService {
     @Override
     public String insertAssistant() {
         List<RequestCreateAssistent> requestAssistents = getInsertAssistents();
-        System.out.println("entro al service insertAssistant()");
+        
         requestAssistents.forEach(
                 requestCreateAssistent -> {
-                    assistentService.createAssistent(requestCreateAssistent);
-                    System.out.println(requestCreateAssistent.firstName());
+                    try {
+                        assistentService.createAssistent(requestCreateAssistent);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    
                 });
         return requestAssistents.toString();
     }
 
     @Override
-    public String insertDoctor() {
+    public String insertDoctor() throws Exception {
         List<RequestCreateDoctor> requestCreateDoctors = getInsertDoctors();
-        System.out.println("entro al service insertDoctor()");
+        
         requestCreateDoctors.forEach(
                 requestCreateDoctor -> {
-                    doctorService.createDoctor(requestCreateDoctor);
-                    System.out.println(requestCreateDoctor.firstName());
+                    try {
+                        doctorService.createDoctor(requestCreateDoctor);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    
                 }
         );
         return requestCreateDoctors.toString();
@@ -55,11 +63,11 @@ public class dataBaseServiceImpl implements DataBaseService {
     @Override
     public String insertAssisted() {
         List<RequestCreateAssisted> requestCreateAssisteds = getInsertAssisted();
-        System.out.println("entro al service insertAssisted()");
+        
         requestCreateAssisteds.forEach(
                 requestCreateAssisted -> {
                     assistedService.createAssisted(requestCreateAssisted);
-                    System.out.println(requestCreateAssisted.firstName());
+                    
                 }
         );
         return requestCreateAssisteds.toString();
@@ -69,7 +77,7 @@ public class dataBaseServiceImpl implements DataBaseService {
     public String insertAppointment() {
 
         List<RequestCreateAppointment> requestCreateAppointments = getInsertAppointment();
-        System.out.println("entro al service insertAppointment()");
+        
         requestCreateAppointments.forEach(
                 requestCreateAppointment -> {
                     appointmentService.createAppointment(requestCreateAppointment);
@@ -79,7 +87,7 @@ public class dataBaseServiceImpl implements DataBaseService {
     }
 
     @Override
-    public ResponseEntity<?> insertAll() {
+    public ResponseEntity<?> insertAll() throws Exception {
 
         insertAssistant();
         insertAssisted();
