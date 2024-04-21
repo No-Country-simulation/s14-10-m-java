@@ -1,19 +1,20 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceGetDoctorService {
-  http = inject(HttpClient);
 
   private readonly getDoctorUrl: string = `${environment.apiUrl}/doctor/id`;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getDoctorById(id: number): Observable<any> {
-    return this.http.get(`${this.getDoctorUrl}/${id}`);
+    const token = sessionStorage.getItem('token');
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.getDoctorUrl}/${id}`, { headers });
   }
 }

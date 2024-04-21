@@ -4,6 +4,7 @@ import { ServiceGetDoctorService } from '../service/service-get-doctor.service'
 import { ServiceAppointmentDoctorService } from "../service/service-appointment-doctor.service";
 import { ServicePutDoctorService } from "../service/service-put-doctor.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -36,22 +37,7 @@ export class ProfileComponent implements OnInit {
 
 
   updateForm: FormGroup | any = new FormGroup({});;
-  // updateForm:any = {
-  //   id: 0,
-  //   firstName: '',
-  //   secondName: '',
-  //   lastName: '',
-  //   DNI: '',
-  //   dateOfBirth: '',
-  //   specialty: '',
-  //   phoneNumber: 0,
-  //   morning: true,
-  //   afternoon: true,
-  //   night: true,
-  //   postalCode: 0,
-  //   licenseNumber: 0,
-  //   address: ''
-  // };
+
 
   doctorData: any;
 
@@ -61,7 +47,8 @@ export class ProfileComponent implements OnInit {
     private doctorService: ServiceGetDoctorService,
     private appointmentService: ServiceAppointmentDoctorService,
     private formBuilder: FormBuilder,
-    private doctorPutService: ServicePutDoctorService
+    private doctorPutService: ServicePutDoctorService,
+    private toastr: ToastrService
   ) {
 
     const today = new Date();
@@ -74,48 +61,8 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const userDataString = sessionStorage.getItem('id');
-    if (userDataString) {
-      this.doctorId = Number(userDataString);
-      this.doctor$ = this.doctorService.getDoctorById(this.doctorId);
-
-      // Suscribirse a la observable para obtener los datos del doctor
-      this.doctor$.subscribe({
-        next: (data) => {
-          console.log('Datos del doctor:', data);
-          this.doctorData = data; // Asigna los datos del doctor directamente a la variable doctorData
-
-          // Inicializa el formulario con los datos del doctor
-          this.updateForm = this.formBuilder.group({
-            id: [this.doctorData.id || 0],
-            firstName: [this.doctorData.firstName || '', Validators.required],
-            secondName: [this.doctorData.secondName || ''],
-            lastName: [this.doctorData.lastName || '', Validators.required],
-            DNI: [this.doctorData.DNI || '', [
-              Validators.required,
-              Validators.pattern(/^\d{7,9}$/)
-            ]],
-            dateOfBirth: [this.doctorData.dateOfBirth || '', Validators.required],
-            specialty: [this.doctorData.specialty || '', Validators.required],
-            phoneNumber: [this.doctorData.phoneNumber || 0, Validators.required],
-            morning: [this.doctorData.morning || false],
-            afternoon: [this.doctorData.afternoon || false],
-            night: [this.doctorData.night || false],
-            postalCode: [this.doctorData.postalCode || 0, Validators.required],
-            licenseNumber: [this.doctorData.licenseNumber || 0, Validators.required],
-            address: [this.doctorData.address || '', Validators.required]
-          });
-          console.log(this.doctorData.dateOfBirth)
-        },
-        error: (error) => {
-          console.error('Error al obtener los datos del doctor:', error);
-        }
-      });
-    } else {
-      console.error('No se encontró el ID del doctor en sessionStorage.');
-    }
-
-
+    // Get doctor Data!
+    this.getDoctorData();
     // DATA APPOINTMENT
     this.appointmentService.getDoctorAppointmentId(this.id, this.active).subscribe(
       (response: any) => {
@@ -162,22 +109,47 @@ export class ProfileComponent implements OnInit {
     this.isPopupVisible = false;
   }
 
-  // Submit
-  get formControls() {
-    return this.updateForm.controls;
-  }
 
 
   // Función para obtener los datos del doctor
   getDoctorData(): void {
-    this.doctor$.subscribe({
-      next: (data) => {
-        this.doctorData = data;
-      },
-      error: (error) => {
-        console.error('Error al obtener los datos del doctor:', error);
-      }
-    });
+    const userDataString = sessionStorage.getItem('id');
+    if (userDataString) {
+      this.doctorId = Number(userDataString);
+      this.doctor$ = this.doctorService.getDoctorById(this.doctorId);
+
+      this.doctor$.subscribe({
+        next: (data) => {
+          console.log('Datos del doctor:', data);
+          this.doctorData = data;
+
+          this.updateForm = this.formBuilder.group({
+            id: [this.doctorData.id || 0],
+            firstName: [this.doctorData.firstName || '', Validators.required],
+            secondName: [this.doctorData.secondName || ''],
+            lastName: [this.doctorData.lastName || '', Validators.required],
+            DNI: [this.doctorData.DNI || '', [
+              Validators.required,
+              Validators.pattern(/^\d{7,9}$/)
+            ]],
+            dateOfBirth: [this.doctorData.dateOfBirth || '', Validators.required],
+            specialty: [this.doctorData.specialty || '', Validators.required],
+            phoneNumber: [this.doctorData.phoneNumber || 0, Validators.required],
+            morning: [this.doctorData.morning || false],
+            afternoon: [this.doctorData.afternoon || false],
+            night: [this.doctorData.night || false],
+            postalCode: [this.doctorData.postalCode || 0, Validators.required],
+            licenseNumber: [this.doctorData.licenseNumber || 0, Validators.required],
+            address: [this.doctorData.address || '', Validators.required]
+          });
+        },
+        error: (error) => {
+          console.error('Error al obtener los datos del doctor:', error);
+        }
+      });
+    } else {
+      console.error('No se encontró el ID del doctor en sessionStorage.');
+    }
   }
 
   onSubmit() {
@@ -186,10 +158,10 @@ export class ProfileComponent implements OnInit {
       this.doctorPutService.putDoctor(doctorData).subscribe(
         (response) => {
           console.log('Doctor updated successfully:', response);
-          // Puedes agregar lógica adicional aquí después de la actualización exitosa
           this.closePopup();
-          // Llama a la función para obtener los datos del doctor actualizados
-          this.getDoctorData();
+          this.toastr.success('Doctor Actualizado correctamente!', 'Exito!'
+          );
+          this.getDoctorData()
         },
         (error) => {
           console.error('Error updating doctor:', error);
