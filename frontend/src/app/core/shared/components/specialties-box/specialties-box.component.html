@@ -6,8 +6,8 @@
       <div class="specialties-list flex-grow-1 grid-list"> <!-- Cambiamos la clase a grid-list -->
           <ul>
               <li *ngFor="let doctor of filteredDoctors" class="mb-1 text-h" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 20px; line-height: 47px; color: #063463;">
-                  {{ doctor.specialty}}
-              </li>
+                <a [routerLink]="['/scheduler/',doctor.id]">Dr. {{ doctor.firstName}} {{doctor.secondName}} {{doctor.lastName}}</a>
+            </li>
           </ul>
       </div>
   </div>

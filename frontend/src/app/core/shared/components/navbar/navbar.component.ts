@@ -59,12 +59,35 @@ export class NavbarComponent implements OnInit {
     return `./assets/icons-svg/logo.svg`;
   }
 
+  // private changeNavItems() {
+  //   if (this.isLogged) {
+  //     this.navItems = [
+  //       { name: 'Especialidades', ruta: 'no-definida' },
+  //       { name: 'Mis turnos', ruta: 'no-definida' },
+  //     ];
+  //   }
+  // }
   private changeNavItems() {
-    if (this.isLogged) {
-      this.navItems = [
-        { name: 'Especialidades', ruta: 'no-definida' },
-        { name: 'Mis turnos', ruta: 'no-definida' },
-      ];
+    const userType = sessionStorage.getItem('role');
+
+    if (this.isLogged && userType) {
+      if (userType === '[DOCTOR]') {
+        this.navItems = [
+          { name: 'Especialidades', ruta: '/dashboard/profile-doctor' },
+          { name: 'Mis turnos', ruta: '/dashboard/profile-doctor' },
+        ];
+      } else if (userType === '[ASSISTENT]') {
+        this.navItems = [
+          { name: 'Especialidades', ruta: '/dashboard/profile-patient' },
+          { name: 'Mis turnos', ruta: '/dashboard/profile-patient' },
+        ];
+      } else {
+        this.navItems = [
+          { name: 'Especialidades', ruta: 'no-definida' },
+          { name: 'Mis turnos', ruta: 'no-definida' },
+        ];
+      }
     }
   }
+
 }

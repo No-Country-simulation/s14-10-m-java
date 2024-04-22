@@ -11,15 +11,18 @@ import { SpecialtiesBoxComponent } from 'src/app/core/shared/components/specialt
 import { SearchDoctorComponent } from './search-doctor/search-doctor.component';
 import { DoctorSearchCardComponent } from 'src/app/core/shared/components/doctor-search-card/doctor-search-card.component';
 import { SearchFiltersComponent } from 'src/app/core/shared/components/search-filters/search-filters.component';
-import { AppointmentConfirmationComponent } from './appointment-confirmation/appointment-confirmation.component';
+import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
 import { AppointmentComponent } from 'src/app/core/shared/components/appointment/appointment.component';
 import { FormsModule } from '@angular/forms';
+
 import { DocScheduleComponent } from './doc-schedule/doc-schedule.component';
 
 import {
   ScheduleModule,
   RecurrenceEditorModule,
 } from '@syncfusion/ej2-angular-schedule';
+import { AppointmentConfirmationComponent } from './appointment-confirmation/appointment-confirmation.component';
+import { AddAssistedFormComponent } from 'src/app/core/shared/components/add-assisted-form/add-assisted-form.component';
 
 @NgModule({
   declarations: [
@@ -30,9 +33,11 @@ import {
     SearchDoctorComponent,
     DoctorSearchCardComponent,
     SearchFiltersComponent,
+    AppointmentFormComponent,
     AppointmentConfirmationComponent,
     AppointmentComponent,
     DocScheduleComponent,
+    AddAssistedFormComponent
   ],
   imports: [
     CommonModule,

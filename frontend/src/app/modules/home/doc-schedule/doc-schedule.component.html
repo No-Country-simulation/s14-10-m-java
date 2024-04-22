@@ -91,9 +91,13 @@
         width="100%"
         height="550px"
         #scheduleObj
+        [currentView]="currView"
+        [eventSettings]="eventSettings"
         (select)="onDateSelect($event)"
-        [readonly]="readonly"
       >
+        <e-views>
+          <e-view option="WorkWeek" startHour="09:30" endHour="18:00"></e-view>
+        </e-views>
       </ejs-schedule>
     </div>
   </div>
