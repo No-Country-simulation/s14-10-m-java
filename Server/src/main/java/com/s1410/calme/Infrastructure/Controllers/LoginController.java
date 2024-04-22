@@ -26,7 +26,7 @@ public class LoginController {
 
     private final AuthenticationService authenticationService;
 
-    
+
     @Operation(summary = "Login user", description = "Logs in an user.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully logged in"),
@@ -86,7 +86,7 @@ public class LoginController {
     }
 
 
-    @Operation(summary = "Change user password", description = "Changes an user password after they accepted the 'forgot-password' email-")
+    @Operation(summary = "Change user password", description = "Changes an user password after they accepted the 'forgot-password' email")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully changed password"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error changing password", content = {
