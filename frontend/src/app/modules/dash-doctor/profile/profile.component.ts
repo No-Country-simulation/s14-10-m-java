@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
   // Params in the appointment
   // page: number = 1;
   active: boolean = true;
-  id: number = 30
+  id: number | any = sessionStorage.getItem('id');
 
   availableAppointmentDates: string[] = [];
 
