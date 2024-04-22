@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DoctorService } from '../specialties-box/doctors.service';
+import { Doctor } from '../specialties-box/doctor.interface';
+import { Observable, map, of } from 'rxjs';
 
 @Component({
   selector: 'app-search-bar',
@@ -10,65 +12,22 @@ import { DoctorService } from '../specialties-box/doctors.service';
 export class SearchBarComponent {
 
   term: string = '';
+  postalCode$: Observable<Doctor[]> | null | undefined;
+  speciality$: Observable<Doctor[]> | null | undefined;
+  surname$: Observable<Doctor[]> | null | undefined;
 
-  constructor(private doctorService: DoctorService, private router: Router) { }
+  constructor( private doctorService: DoctorService, private router: Router ) {}
 
-  result: string[] = [];
+  searchByTerm(): void {
+    if (this.term.trim()) {
 
-  specialities: string[] = [
-    "CARDIOLOGY",
-    "DERMATOLOGY",
-    "ENDOCRINOLOGY",
-    "GASTROENTEROLOGY",
-    "GERIATRICS",
-    "GYNECOLOGY",
-    "HEMATOLOGY",
-    "INTERNAL_MEDICINE",
-    "NEPHROLOGY",
-    "NEUROLOGY",
-    "OPHTHALMOLOGY",
-    "ONCOLOGY",
-    "ORTHOPEDICS",
-    "OTOLARYNGOLOGY",
-    "PEDIATRICS",
-    "PSYCHIATRY",
-    "RADIOLOGY",
-    "RHEUMATOLOGY",
-    "TRAUMATOLOGY",
-    "UROLOGY"
-  ];
+        this.postalCode$ = this.doctorService.getDoctorsByPostalCode(this.term);
 
+        this.speciality$ = this.doctorService.getDoctorsBySpecialty(this.term);
 
-  ngOnInit() {
-    console.log(this.specialities)
-
-    this.doctorService.specialityParamSubject.subscribe(speciality => console.log('speciality observable', speciality))
-  }
-
-  performSearch(): void {
-    this.result = this.searchBySpeciality(this.term);
-    console.log('resultados',this.result);
-    this.sendSpeciality(this.result[0])
-  }
-
-  searchBySpeciality(query: string): string[] {
-    const searchTerm = query.toUpperCase();
-    return this.specialities.filter(speciality =>
-      speciality.toUpperCase().includes(searchTerm)
-    );
-  }
-
-  sendSpeciality(speciality: string){
-    let specialityParam = '';
-    this.specialities.map(item => {
-      if(item === speciality){
-        specialityParam = speciality;
-        console.log('specialityParam', specialityParam)
-        this.doctorService.specialityParamSubject.next(specialityParam)
-        this.router.navigate(['/search-doctor'])
+        this.surname$ = this.doctorService.getDoctorsBySurname(this.term);
       }
-    })
-  }
 
-
+      this.router.navigate(['/search-doctor'])
+    }
 }
