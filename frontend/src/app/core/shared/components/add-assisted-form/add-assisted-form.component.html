@@ -1,1 +1,197 @@
-<p>add-assisted-form works!</p>
+<!-- popup.component.html -->
+<div class="popup">
+    <div class="popup-content">
+      <h1>Agregando Asistido</h1>
+      <!-- Tu formulario aquí -->
+      <form>
+        <div class="flex mt-10">
+          <h3
+          
+            style="
+              font-family: 'Poppins', sans-serif;
+              font-weight: 400;
+              font-size: 24px;
+              line-height: 36px;
+              color: #063463;
+            "
+          >
+            Numero de DNI
+          </h3>
+        </div>
+        <input
+        [(ngModel)]="NumDNI"
+          class="mt-1"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            width: 418px;
+            height: 56px;
+            border-radius: 8px;
+            border: 1px solid #dde1eb;
+          "
+          type="text"
+          placeholder="  dni"
+        />
+        <div class="flex">
+          <h3
+            style="
+              font-family: 'Poppins', sans-serif;
+              font-weight: 400;
+              font-size: 24px;
+              line-height: 36px;
+              color: #063463;
+            "
+          >
+            Nombre
+          </h3>
+        </div>
+        <input
+        [(ngModel)]="FirsName"
+          class="mt-1"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            width: 418px;
+            height: 56px;
+            border-radius: 8px;
+            border: 1px solid #dde1eb;
+          "
+          type="text"
+          placeholder="  nombre"
+        />
+        <div class="flex">
+          <h3
+            style="
+              font-family: 'Poppins', sans-serif;
+              font-weight: 400;
+              font-size: 24px;
+              line-height: 36px;
+              color: #063463;
+            "
+          >
+            Segundo nombre
+          </h3>
+        </div>
+        <input
+        [(ngModel)]="SecondName"
+          class="mt-1"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            width: 418px;
+            height: 56px;
+            border-radius: 8px;
+            border: 1px solid #dde1eb;
+          "
+          type="text"
+          placeholder="  segundo nombre"
+        />
+        <div class="flex">
+          <h3
+            style="
+              font-family: 'Poppins', sans-serif;
+              font-weight: 400;
+              font-size: 24px;
+              line-height: 36px;
+              color: #063463;
+            "
+          >
+            Apellido
+          </h3>
+        </div>
+        <input
+        [(ngModel)]="LastName"
+          class="mt-1"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            width: 418px;
+            height: 56px;
+            border-radius: 8px;
+            border: 1px solid #dde1eb;
+          "
+          type="text"
+          placeholder="  apellido"
+        />
+        <div class="flex">
+          <h3
+            style="
+              font-family: 'Poppins', sans-serif;
+              font-weight: 400;
+              font-size: 24px;
+              line-height: 36px;
+              color: #063463;
+            "
+          >
+            Fecha de nacimiento
+          </h3>
+        </div>
+        <input
+        [(ngModel)]="DateOfBirth"
+          class="mt-1"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            width: 418px;
+            height: 56px;
+            border-radius: 8px;
+            border: 1px solid #dde1eb;
+          "
+          type="text"
+          placeholder="  fecha de nacimiento"
+        />
+          <div class="flex">
+            <h3
+              style="
+                font-family: 'Poppins', sans-serif;
+                font-weight: 400;
+                font-size: 24px;
+                line-height: 36px;
+                color: #063463;
+              "
+            >
+              Que relacion tiene con el asistido?
+            </h3>
+          </div>
+          <select
+        class=""
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          width: 418px;
+          height: 56px;
+          border-radius: 8px;
+          border: 1px solid #dde1eb;
+        "
+      >
+        <option value="NUCLEAR_FAMILY">Nucleo familiar</option>
+        <option value="EXTENDED_FAMILY">Familiar lejano</option>
+        <option value="PROFESSIONAL">Persona a cuidado profecional</option>
+      </select>
+      </form>
+      <div class="flex  justify-center mt-4">
+        <div>
+        <button class="button" (click)="confirmFormData()" [disabled]="!isFormComplete()">Agregar asistido</button>
+      </div>
+      <div style="margin-right: 30%;">
+        
+      </div>
+      <div>
+      <button class="button" (click)="closePopup()">Cerrar</button>
+    </div>
+    </div>
+    </div>
+  </div>
+  

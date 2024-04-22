@@ -7,12 +7,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { DialogMenuModule } from './components/dialog-menu/dialog-menu.module';
 
-import { AddAssistedFormComponent } from './components/add-assisted-form/add-assisted-form.component';
 import { PopupComponent } from './components/popup/popup.component';
 
 
 @NgModule({
-  declarations: [ButtonComponent, NavbarComponent, FooterComponent, AddAssistedFormComponent, PopupComponent],
+  declarations: [ButtonComponent, NavbarComponent, FooterComponent, PopupComponent],
+
   imports: [CommonModule, RouterModule, DialogMenuModule],
   exports: [ButtonComponent, NavbarComponent, FooterComponent, PopupComponent],
 })
