@@ -26,7 +26,8 @@ const routes: Routes = [
         component: AppointmentConfirmationComponent,
         canActivate: [AuthGuard],
       },
-      { path: 'scheduler/:id', component: DocScheduleComponent },
+      { path: 'scheduler/:id', component: DocScheduleComponent,
+      canActivate: [AuthGuard], },
     ],
   },
 ];

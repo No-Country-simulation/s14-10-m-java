@@ -10,24 +10,15 @@ export class ProfileComponent implements OnInit {
   
   turns: boolean = false;
   assisteds: boolean = false;
-  data: any[] = [];
+  data: any;
 
   constructor(private assistentService: AssistentService){}
 
   ngOnInit(): void {
-    this.getAssistedList();
-  }
-
-  getAssistedList() {
-    this.assistentService.getAssistentAppointments().subscribe(
-      (data) => {
-        this.data = data;
-      },
-      (error: any) => {
-        console.error('Error al obtener la lista de asistidos:', error);
-      }
+    this.assistentService.getAssistant().subscribe(data=>
+      this.data = data
     );
-    console.log(this.data ," turnos ")
+    console.log(this.data);
   }
 
   turnsDropdown() {

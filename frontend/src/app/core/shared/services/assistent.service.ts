@@ -20,6 +20,16 @@ export class AssistentService {
     });
     return this.http.get<any>(`${this.baseUrl}/assisted/all/${userId}?page=0&size=3&sort=asc`, { headers: headers });
   }
+  getAssistant(): Observable<any> {
+    const jwt = sessionStorage.getItem('token');
+    const userId = sessionStorage.getItem('id');
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${jwt}`
+    });
+    return this.http.get<any>(`${this.baseUrl}/assistent/id/${userId}`, { headers: headers });
+  
+  }
 
   getAssistentAppointments(): Observable<any> {
     const jwt = sessionStorage.getItem('token');

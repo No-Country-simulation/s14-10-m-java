@@ -36,7 +36,8 @@
     <div class="ml-10">
       <div>
         <h2 class="flex flex-col font-bold text-blue-800 text-4xl mt-10 mb-12">
-          Nombre Apellido
+          {{data.firstName}} {{data.secondName}} {{data.lastName}}
+
         </h2>
       </div>
       <div class="grid grid-cols-2 gap-x-40">
@@ -78,7 +79,7 @@
                   />
                 </svg>
               </span>
-              <div class="w-2/5 font-semibold text-xl">usuario@correo.com</div>
+              <div class="w-2/5 font-semibold text-xl">{{data.email}}</div>
             </li>
           </ul>
         </div>
@@ -102,7 +103,7 @@
                   />
                 </svg>
               </span>
-              <div class="w-full font-semibold text-xl">Direccion</div>
+              <div class="w-full font-semibold text-xl">{{data.phoneNumber}}</div>
             </li>
             <li class="mb-4 flex items-center font-bold text-blue-900">
               <span class="font-semibold mr-2">
@@ -121,7 +122,7 @@
                   />
                 </svg>
               </span>
-              <div class="w-2/5 font-semibold text-xl">DNI:123456789</div>
+              <div class="w-2/5 font-semibold text-xl">{{data.DNI}}</div>
             </li>
           </ul>
         </div>
