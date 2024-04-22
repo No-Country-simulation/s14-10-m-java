@@ -159,7 +159,7 @@
         <option *ngFor="let assisted of assistedList" [value]="assisted.id">
           {{ assisted.firstName }}
         </option>
-        <option value="new">Agregar nueva persona</option>
+        <option value="new">Agregar nuevo asistido</option>
       </select>
 
       <h3
@@ -217,4 +217,7 @@
       <app-appointment [doctorData]="doctorData"></app-appointment>
     </div>
   </div>
+  <app-add-assisted-form *ngIf="showPopup"></app-add-assisted-form>
+  
+
 </div>

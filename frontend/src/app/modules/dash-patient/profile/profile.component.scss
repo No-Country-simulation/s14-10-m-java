@@ -1,17 +1,31 @@
-span {
-    color: rgba(11, 11, 109, 0.815)
+.añadir{
+    border: 3px solid #065DB4;
+    border-radius: 30px;
+    width: 164px;
+    height: 40px;
+    font-family: 'Poppins', sans-serif;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 24px;
+          color: #063463;
 }
 
-h2 {
-    font-family: "Poppins", sans-serif;
-    font-size: 28px;
-}
+.desplegable{
+    font-family: 'Poppins', sans-serif;
+          font-weight: 700;
+          font-size: 32px;
+          line-height: 48px;
+          color: #FF9D2B;
 
-h2,
-ul,
-li,
-p,
-span,
-a {
-    font-family: "Poppins", sans-serif;
 }
+.main-content {
+    min-height: calc(100vh - 8.25rem); /* Resta el alto del footer al 100% del alto de la ventana */
+    padding-bottom: 8.25rem; /* Asegura que haya suficiente espacio para el footer */
+  }
+  
+  .footer-wrapper {
+    position: fixed; /* Fija la posición del footer */
+    bottom: 0; /* Lo coloca al final de la ventana */
+    width: 100%; /* Ocupa todo el ancho de la ventana */
+  }
+  
