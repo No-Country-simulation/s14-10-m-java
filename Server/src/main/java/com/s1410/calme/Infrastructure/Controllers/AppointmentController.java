@@ -33,10 +33,10 @@ public class AppointmentController {
         return appointmentService.getAppointmentById(id);
     }
 
-    /*@PutMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ResponseAppointment> changeAppointmentActiveValue(@PathVariable Long id){
         return appointmentService.changeAppointmentActiveValue(id);
-    }*/
+    }
 
     @GetMapping("/betweenDates")
     public ResponseEntity<List<ResponseAppointment>> getAppointmentsBetweenDates(@RequestBody RequestAppointmentBetweenDates dates,
