@@ -15,6 +15,7 @@ export class AppointmentFormComponent implements OnInit {
   doctorData: any;
   assistedList: any;
   turnDate?: string | null;
+  showPopup: boolean = false; // Variable para controlar la visibilidad del popup
 
   constructor(private route: ActivatedRoute,private assistentService :AssistentService, private router: Router) { }
 
@@ -27,8 +28,8 @@ export class AppointmentFormComponent implements OnInit {
     }
     );
     this.assistentService.getAssistedList().subscribe(
-      (data: any[]) => {
-        this.assistedList = data;
+      (data: any) => {
+        this.assistedList = data.content;
       },
       error => {
         console.error('Error al obtener las personas del usuario:', error);
@@ -50,7 +51,8 @@ export class AppointmentFormComponent implements OnInit {
       // Creamos la cadena de texto en el formato deseado
       this.turnDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
     }
-    console.log(this.turnDate);
+
+    console.log(this.assistedList);
   }
 
   toggleForSelf(event: Event) {
@@ -62,15 +64,13 @@ export class AppointmentFormComponent implements OnInit {
     }
   }
   
-  onSelect(values: string) {
-    if (values === 'new') {
-      // Lógica para abrir el modal con el nuevo formulario
-      // Puedes usar bibliotecas de modales como NgbModal o MatDialog para mostrar el modal
-    }
-  }
+  
+
   seleccionarTitular(value: string) {
     this.titularSeleccionado = value;
-    console.log(this.titularSeleccionado);
+    if (value === 'new') {
+      this.showPopup = true; // Mostrar el popup cuando se selecciona "Agregar nuevo asistido"
+    }
   }
   confirmFormData(){
 

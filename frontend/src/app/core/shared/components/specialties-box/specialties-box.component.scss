@@ -14,6 +14,6 @@
 }
 .grid-list ul {
   display: grid; /* Utilizamos grid para la disposición de la lista */
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Definimos la cantidad de columnas y su tamaño */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Definimos la cantidad de columnas y su tamaño */
   grid-gap: 10px; /* Espacio entre elementos */
 }

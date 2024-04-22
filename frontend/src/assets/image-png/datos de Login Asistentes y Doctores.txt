@@ -1,0 +1,206 @@
+asistentes :
+
+[
+    {
+        "email": "juanortegaj22@gmail.com",
+        "password": "password1"
+    },
+    {
+        "email": "marialopezr@gmail.com",
+        "password": "password2"
+    },
+    {
+        "email": "pedrogarciaa@gmail.com",
+        "password": "password3"
+    },
+    {
+        "email": "luciamartinb@gmail.com",
+        "password": "password4"
+    },
+    {
+        "email": "carlosperezc@gmail.com",
+        "password": "password5"
+    },
+    {
+        "email": "sofiagonzalezd@gmail.com",
+        "password": "password6"
+    },
+    {
+        "email": "andreafernandeze@gmail.com",
+        "password": "password7"
+    },
+    {
+        "email": "davidrodriguezf@gmail.com",
+        "password": "password8"
+    },
+    {
+        "email": "mariagomezh@gmail.com",
+        "password": "password9"
+    },
+    {
+        "email": "luisroblese@gmail.com",
+        "password": "password10"
+    },
+    {
+        "email": "carmencastillof@gmail.com",
+        "password": "password11"
+    },
+    {
+        "email": "javierhernandezg@gmail.com",
+        "password": "password12"
+    },
+    {
+        "email": "paulagonzalezh@gmail.com",
+        "password": "password13"
+    },
+    {
+        "email": "danielramosj@gmail.com",
+        "password": "password14"
+    },
+    {
+        "email": "mariasanchezk@gmail.com",
+        "password": "password15"
+    },
+    {
+        "email": "julioalonsoi@gmail.com",
+        "password": "password16"
+    },
+    {
+        "email": "anagarridoj@gmail.com",
+        "password": "password17"
+    },
+    {
+        "email": "albertolunak@gmail.com",
+        "password": "password18"
+    },
+    {
+        "email": "susanaquirozl@gmail.com",
+        "password": "password19"
+    },
+    {
+        "email": "jorgesantiagom@gmail.com",
+        "password": "password20"
+    }
+]
+
+
+doctores :
+
+[
+    {
+        "email": "doctorjimenez@gmail.com",
+        "password": "password123"
+    },
+    {
+        "email": "doctorlopez@gmail.com",
+        "password": "password456"
+    },
+    {
+        "email": "doctorgonzalez@gmail.com",
+        "password": "password789"
+    },
+    {
+        "email": "doctormartin@gmail.com",
+        "password": "passwordabc"
+    },
+    {
+        "email": "doctorgomez@gmail.com",
+        "password": "passworddef"
+    },
+    {
+        "email": "doctorhernandez@gmail.com",
+        "password": "passwordghi"
+    },
+    {
+        "email": "doctorfernandez@gmail.com",
+        "password": "passwordjkl"
+    },
+    {
+        "email": "doctortorres@gmail.com",
+        "password": "passwordmno"
+    },
+    {
+        "email": "doctorrodriguez@gmail.com",
+        "password": "passwordpqr"
+    },
+    {
+        "email": "doctorgarcia@gmail.com",
+        "password": "passwordstu"
+    },
+    {
+        "email": "doctormoreno@gmail.com",
+        "password": "passwordvwx"
+    },
+    {
+        "email": "doctorruiz@gmail.com",
+        "password": "passwordyz1"
+    },
+    {
+        "email": "doctorperez@gmail.com",
+        "password": "password234"
+    },
+    {
+        "email": "doctorlopezm@gmail.com",
+        "password": "password890"
+    },
+    {
+        "email": "doctortorresj@gmail.com",
+        "password": "passwordabc1"
+    },
+    {
+        "email": "doctormartine@gmail.com",
+        "password": "passworddef2"
+    },
+    {
+        "email": "doctorgonzalezo@gmail.com",
+        "password": "passwordghi3"
+    },
+    {
+        "email": "doctormoralese@gmail.com",
+        "password": "passwordjkl4"
+    },
+    {
+        "email": "doctorperezm@gmail.com",
+        "password": "password123"
+    },
+    {
+        "email": "doctorrodriguezs@gmail.com",
+        "password": "password456"
+    },
+    {
+        "email": "doctorgomezg@gmail.com",
+        "password": "password789"
+    },
+    {
+        "email": "doctormartinezm@gmail.com",
+        "password": "passwordabc"
+    },
+    {
+        "email": "doctorgarciah@gmail.com",
+        "password": "passworddef"
+    },
+    {
+        "email": "doctorlopeza@gmail.com",
+        "password": "passwordghi"
+    },
+    {
+        "email": "doctortorresr@gmail.com",
+        "password": "passwordjkl"
+    },
+    {
+        "email": "doctorgomezb@gmail.com",
+        "password": "passwordmno"
+    },
+    {
+        "email": "doctormartinezc@gmail.com",
+        "password": "passwordpqr"
+    },
+    {
+        "email": "doctorgomezr@gmail.com",
+        "password": "passwordstu"
+    },
+    {
+        "email": "doctormorenor@gmail.com",
+        "password": "passwordvwx"
+    }
+]

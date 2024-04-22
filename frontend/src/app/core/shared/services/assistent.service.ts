@@ -7,21 +7,48 @@ import { Observable } from 'rxjs';
 })
 export class AssistentService {
 
+  private baseUrl = 'https://s14-10-m-java-production.up.railway.app';
+
   constructor(private http: HttpClient) { }
 
-  getAssistedList(): Observable<any[]> {
+  getAssistedList(): Observable<any> {
     const jwt = sessionStorage.getItem('token');
     const userId = sessionStorage.getItem('id');
-
-    if (!jwt) {
-      throw new Error('JWT no encontrado en sessionStorage');
-    }
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${jwt}`
     });
+    return this.http.get<any>(`${this.baseUrl}/assisted/all/${userId}?page=0&size=3&sort=asc`, { headers: headers });
+  }
 
-    return this.http.get<any[]>(`https://s14-10-m-java-production.up.railway.app/assisted/all/${userId}`, { headers });
+  getAssistentAppointments(): Observable<any> {
+    const jwt = sessionStorage.getItem('token');
+    const userId = sessionStorage.getItem('id');
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${jwt}`
+    });
+    return this.http.get<any>(`${this.baseUrl}/appointment/assistent/${userId}?page=0&active=true`, { headers: headers });
+  }
+  getAssistedAppointments(asistedId: any): Observable<any> {
+    const jwt = sessionStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${jwt}`
+    });
+    return this.http.get<any>(`${this.baseUrl}/appointment/assisted/${asistedId}?page=0&active=true`, { headers: headers });
+  }
+
+  addAssisted(formData: any): Observable<any>{
+    const jwt = sessionStorage.getItem('token');
+    if (!jwt) {
+       throw new Error('JWT no encontrado en sessionStorage');
+    }
+
+    const headers = new HttpHeaders({
+     'Authorization': `Bearer ${jwt}`
+    });
+    return this.http.post(`${this.baseUrl}/assisted/register`, formData , {headers})
   }
 
   confirmAppointment(formData: any): Observable<any>{
@@ -33,7 +60,21 @@ export class AssistentService {
       const headers = new HttpHeaders({
        'Authorization': `Bearer ${jwt}`
       });
-    return this.http.post('https://s14-10-m-java-production.up.railway.app/appointment/', formData , {headers})
+    return this.http.post(`${this.baseUrl}/appointment/`, formData , {headers})
     
   }
+
+  deleteAppointment(appointmentId: any) {
+    const jwt = sessionStorage.getItem('token');
+    if (!jwt) {
+       throw new Error('JWT no encontrado en sessionStorage');
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${jwt}`
+    });
+
+    return this.http.put(`${this.baseUrl}/appointment/${appointmentId}`, {}, { headers });
+  }
+
 }
