@@ -10,7 +10,7 @@ public interface AssistedService {
 
     ResponseAssisted createAssisted(RequestCreateAssisted requestCreateAssisted);
     ResponseAssisted readAssisted(Long id);
-    Page<ResponseAssisted> readAllAssistedFromAssistant(Long assistantId, Pageable pageable);
+    Page<ResponseAssisted> readAllAssistedFromAssistant(Long assistantId, Pageable pageable, Boolean actives);
     ResponseAssisted updateAssisted(RequestEditAssisted requestEditAssisted);
     boolean updateRelationAA(Long assistantId, Long assistedId, RelationType relationType);
     Boolean unlinkAssistedFromAssistant(Long assistantId, Long assistedId );

@@ -120,8 +120,9 @@ public class AssistedController {
     @GetMapping("/all/{assistantID}")
     public ResponseEntity<Page<ResponseAssisted>> findAllAssistedFromAssistant(
             @PathVariable Long assistantID,
-            @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        return ResponseEntity.ok(this.assistedService.readAllAssistedFromAssistant(assistantID, pageable));
+            @PageableDefault(page = 0, size = Integer.MAX_VALUE) Pageable pageable,
+            @RequestParam(required = false, defaultValue = "true") Boolean actives) {
+        return ResponseEntity.ok(this.assistedService.readAllAssistedFromAssistant(assistantID, pageable, actives));
     }
 
     @Operation(summary = "Update assisted", description = "Updates the data from an assisted. Assisted is passed by its Id.")
