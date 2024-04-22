@@ -1,8 +1,8 @@
 package com.s1410.calme.Infrastructure.Controllers;
-import com.s1410.calme.Application.SImplementations.AuthenticationService;
 import com.s1410.calme.Domain.Dtos.request.RequestLogin;
 import com.s1410.calme.Domain.Dtos.response.ResponseLogin;
 import com.s1410.calme.Infrastructure.Exceptions.ApiException;
+import com.s1410.calme.Domain.Services.AuthenticationService;
 import com.s1410.calme.Infrastructure.Exceptions.BindingResultException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -59,6 +59,7 @@ public class LoginController {
     }
 
 
+
     @Operation(summary = "Recover user password", description = "Sends email for user to recovers their password.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully sent email"),
@@ -100,7 +101,10 @@ public class LoginController {
     })
     @PutMapping("/set-password")
     public ResponseEntity<String> setPassword(@RequestParam String email, @RequestParam String newPassword) {
+
         String result = authenticationService.setPassword(email, newPassword);
+
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

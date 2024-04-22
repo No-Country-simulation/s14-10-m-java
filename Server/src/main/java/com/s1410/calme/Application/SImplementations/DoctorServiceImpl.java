@@ -1,4 +1,6 @@
 package com.s1410.calme.Application.SImplementations;
+import com.s1410.calme.Application.Config.Validations.RoleValidation;
+import com.s1410.calme.Application.Config.Validations.SelfValidation;
 import com.s1410.calme.Application.Security.JwtService;
 import com.s1410.calme.Domain.Dtos.request.RequestCreateDoctor;
 import com.s1410.calme.Domain.Dtos.request.RequestEditDoctor;
@@ -8,6 +10,8 @@ import com.s1410.calme.Domain.Entities.Doctor;
 import com.s1410.calme.Domain.Mapper.DoctorMapper;
 import com.s1410.calme.Domain.Repositories.DoctorRepository;
 import com.s1410.calme.Domain.Services.DoctorService;
+import com.s1410.calme.Domain.Services.EmailService;
+import com.s1410.calme.Domain.Utils.RolesEnum;
 import com.s1410.calme.Domain.Utils.Specialty;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,11 +35,14 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final EmailService emailService;
+    private final RoleValidation roleValidation;
+    private final SelfValidation selfValidation;
 
     //Create doctor
     @Transactional
     @Override
-    public ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor) {
+    public ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor) throws Exception {
 
     if (requestCreateDoctor == null){throw new EntityNotFoundException();}
 
@@ -45,14 +52,16 @@ public class DoctorServiceImpl implements DoctorService {
     Doctor doctor = doctorMapper.requestCreateToDoctor(requestCreateDoctor);
         doctor.setPassword(passwordEncoder.encode(requestCreateDoctor.password()));
     doctor.setActive(true);
+    var doctorAdded = doctorRepository.save(doctor);
+    doctor.setRole(RolesEnum.DOCTOR);
     doctorRepository.save(doctor);
 
-        return doctorMapper.doctorToResponse(doctor);
+        emailService.emailConfirmation(doctorAdded.getEmail(), doctorAdded.getFirstName());
+        return doctorMapper.doctorToResponse(doctorAdded);
     }
 
     @Override
     public ResponseDoctor readDoctor(Long id) {
-
         Doctor doctor = doctorRepository.findById(id).orElseThrow( ()->
                 new EntityNotFoundException("The doctor with id: "+ id+" was not found"));
         return doctorMapper.doctorToResponse(doctor);
@@ -64,15 +73,13 @@ public class DoctorServiceImpl implements DoctorService {
                 .map(doctorMapper::doctorToResponse);
     }
 
-    @Override
+    @Override //Doctor role required.
     public ResponseDoctor updateDoctor(RequestEditDoctor requestEditDoctor,String tokenUser) {
-        String email = jwtService.getUsernameFromToken(tokenUser.substring(7));
-
         Doctor doctor = doctorRepository.findById(requestEditDoctor.id()).orElseThrow(()->
                 new EntityNotFoundException(requestEditDoctor.id().toString()));
 
-        if (!email.equals(doctor.getEmail())) { throw new IllegalArgumentException(
-                "Logged user cannot edit this user!"); }
+        roleValidation.checkDoctorRole();
+        selfValidation.checkSelfValidation(requestEditDoctor.id());
 
         if (doctor.getActive()){
             if (requestEditDoctor.firstName() != null) {
@@ -106,23 +113,22 @@ public class DoctorServiceImpl implements DoctorService {
                 doctor.setNight(requestEditDoctor.night());
             }
         }
-
-        return doctorMapper.doctorToResponse(doctor);
+         var doctorAdded = doctorRepository.save(doctor);
+        return doctorMapper.doctorToResponse(doctorAdded);
     }
 
-    @Override
+    @Override //Doctor role required.
     public Boolean toogleDeleteDoctor(Long id, String tokenUser) {
-        String email = jwtService.getUsernameFromToken(tokenUser.substring(7));
-
         Doctor doctor = doctorRepository.findById(id).orElseThrow(
                 ()-> new EntityNotFoundException("Could not find the doctor with id: "+id));
 
-        if (!email.equals(doctor.getEmail())) { throw new IllegalArgumentException(
-                "Logged user cannot edit this user!"); }
+        roleValidation.checkDoctorRole();
+        selfValidation.checkSelfValidation(id);
 
         doctor.setActive(!doctor.getActive());
         return doctor.getActive();
     }
+
     @Override
     public List<ResponseDoctor> readAllDoctorBySpecialty (String specialty){
         return doctorRepository.findBySpecialty(Specialty.valueOf(specialty))

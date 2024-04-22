@@ -58,7 +58,7 @@ public class DoctorController {
     })
     @PostMapping("/register")
     public ResponseEntity<ResponseDoctor> registerDoctor(@RequestBody @Valid @NotNull RequestCreateDoctor requestCreateDoctor,
-                                                         BindingResult bindingResult) {
+                                                         BindingResult bindingResult) throws Exception {
         try {
             if (bindingResult.hasErrors()){
                 throw new BindingResultException(bindingResult);

@@ -1,6 +1,5 @@
 package com.s1410.calme.Infrastructure.Controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.s1410.calme.Domain.Dtos.whatsapp.MessageBodyDTO;
 import com.s1410.calme.Domain.Dtos.whatsapp.ResponseWhatsapp;
 import com.s1410.calme.Domain.Services.ApiWhatsappService;
 import com.s1410.calme.Domain.Services.AssistentService;
@@ -13,9 +12,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/whatsapp")
@@ -44,7 +44,12 @@ public class WhatsappController {
             )
     })
     @PostMapping("/reminder")
-    boolean sendMessage() throws JsonProcessingException {
-        return apiWhatsappService.sendMessage();
+    List<ResponseWhatsapp> sendMessage() throws JsonProcessingException {
+        return apiWhatsappService.sendAllReminders();
     }
+
+
+
+
+
 }

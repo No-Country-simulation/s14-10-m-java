@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface DoctorService {
 
-    ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor);
+    ResponseDoctor createDoctor(RequestCreateDoctor requestCreateDoctor) throws Exception;
     ResponseDoctor readDoctor(Long id);
     Page<ResponseDoctor> readAllDoctors(boolean active, Pageable paging);
     ResponseDoctor updateDoctor(RequestEditDoctor requestEditDoctor, String tokenUser);
