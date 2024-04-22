@@ -7,7 +7,7 @@ public interface EmailService {
      void sendScheduledAppointments();
      void sendAppointmentEmail (String email, LocalDateTime date);
      void emailConfirmation(String email, String userName) throws Exception;
-     void validateToken(String tokenController, String email);
+     String validateToken(String tokenController, String email);
      void sendPasswordRecoveryMail(String email);
 }
 

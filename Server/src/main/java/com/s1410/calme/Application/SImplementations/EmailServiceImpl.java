@@ -10,7 +10,11 @@ import com.s1410.calme.Domain.Services.EmailService;
 import jakarta.annotation.PostConstruct;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -26,7 +32,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class EmailServiceImpl implements EmailService {
+public class EmailServiceImpl extends HttpServlet implements EmailService  {
     private final JavaMailSender javaMailSender;
     private final TemplateEngine templateEngine;
     private final AppointmentRepository appointmentRepository;
@@ -34,6 +40,11 @@ public class EmailServiceImpl implements EmailService {
     private final DoctorRepository doctorRepository;
 
     String token = token();
+
+    @Value("${server.root}")
+    private String serverRoot;
+
+    private String rootPath;
 
     @Transactional
     @Override
@@ -160,7 +171,7 @@ public class EmailServiceImpl implements EmailService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
         helper.setTo(email);
-        helper.setSubject("CALME : Valida tu usuario.");
+        helper.setSubject("CALME : Confirma tu correo.");
 
         Context context = new Context();
         context.setVariable("nombreUsuario",userName);
@@ -176,25 +187,26 @@ public class EmailServiceImpl implements EmailService {
 
 
     @Transactional
-    public void validateToken(String tokenController, String email){
+    public String validateToken(String tokenController, String email){
         if(tokenController.equals(token)){
             //Esta función está llamada así para evitar referencia cíclica con assistentService.
             Optional<Assistent> assistentValidating = assistentRepository.findByEmail(email);
             if(assistentValidating.isPresent()) {
                 assistentValidating.get().setValidUser(true);
                 assistentRepository.save(assistentValidating.get());
+                return  assistentValidating.get().getFirstName() + " Confirmacion de identidad exitosa. ";
                 
             } else { Doctor doctorValidating = doctorRepository.findByEmail(email)
                     .orElseThrow(() -> new EntityNotFoundException(email));
                     doctorValidating.setValidUser(true);
                     doctorRepository.save(doctorValidating);
-                
+                return doctorValidating.getFirstName() + " Doctor , su confirmacion de identidad ha sido exitosa. ";
                 }
         }else { throw new RuntimeException("Usuario no validado!");}
     }
 
     String buildEndpoint(){
-        String urlPersonalizado = "http://localhost:8080/email/emailValidation/" + token + "/juan.ortega.it@gmail.com";
+        String urlPersonalizado= serverRoot + "/email/emailValidation/" + token + "/juan.ortega.it@gmail.com";
         return urlPersonalizado;
     }
     String token(){
@@ -207,6 +219,5 @@ public class EmailServiceImpl implements EmailService {
     void senMessage() throws Exception {
         emailConfirmation("juan.ortega.it@gmail.com","Juan Ortega");
     }*/
-
 
 }
