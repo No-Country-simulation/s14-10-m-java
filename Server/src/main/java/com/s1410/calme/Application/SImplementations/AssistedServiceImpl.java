@@ -141,6 +141,15 @@ public class AssistedServiceImpl implements AssistedService {
            }
 
            if (requestEditAssisted.DNI() != null) {
+
+               //Verify that there is no other assisted with the same DNI.
+               if
+               (this.assistedRepository.findByDNI(requestEditAssisted.DNI()).isPresent()
+                       &&
+                       !Objects.equals(assisted.getDNI(), requestEditAssisted.DNI())
+               )
+                   throw new EntityExistsException("There is already an assisted with the DNI " + requestEditAssisted.DNI());
+
                assisted.setDNI(requestEditAssisted.DNI());
            }
 
