@@ -2,7 +2,7 @@
   <input
     [(ngModel)]="term" (keyup.enter)="searchByTerm()"
     type="text"
-    placeholder="Buscar especialidad"
+    placeholder="Buscar por apellido, especialidad o código postal"
     class="font-poppins font-normal text-[16px] leading-24 pl-6 h-[50px] bg-transparent focus:outline-none placeholder:text-[#C5C5C5] border-[2px] rounded-[10px] bg-white w-[532px]"
   />
   <button
@@ -17,33 +17,3 @@
     />
   </button>
 </div>
-
-<!-- <ng-container *ngIf="postalCode$ | async as postalCode">
-  <ng-container *ngFor="let doctor of postalCode">
-    <div class="flex flex-col">
-      <span>Nombre: {{ doctor.firstName }}</span>
-      <span>Apellildo: {{ doctor.lastName }}</span>
-      <span class="text-green-500">Filtro por código postal: {{ doctor.postalCode }}</span>
-    </div>
-  </ng-container>
-</ng-container>
-
-<ng-container *ngIf="surname$ | async as surname">
-  <ng-container *ngFor="let doctor of surname">
-    <div class="flex flex-col">
-      <span>Nombre: {{ doctor.firstName }}</span>
-      <span>Apellildo: {{ doctor.lastName }}</span>
-      <span class="text-green-500">Filtro por lastName: {{ doctor.lastName }}</span>
-    </div>
-  </ng-container>
-</ng-container>
-
-<ng-container *ngIf="speciality$ | async as speciality">
-  <ng-container *ngFor="let doctor of speciality">
-    <div class="flex flex-col">
-      <span>Nombre: {{ doctor.firstName }}</span>
-      <span>Apellildo: {{ doctor.lastName }}</span>
-      <span class="text-green-500">Filtro por especialidad: {{ doctor.specialty }}</span>
-    </div>
-  </ng-container>
-</ng-container> -->

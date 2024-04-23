@@ -2,7 +2,7 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Doctor } from '../specialties-box/doctor.interface';
 import { DoctorService } from '../specialties-box/doctors.service';
 import { Router } from '@angular/router';
-import { Observable, combineLatest, map } from 'rxjs';
+import { Observable, Subscription, combineLatest, map } from 'rxjs';
 
 @Component({
   selector: 'app-doctor-search-card',
@@ -10,6 +10,9 @@ import { Observable, combineLatest, map } from 'rxjs';
   styleUrls: ['./doctor-search-card.component.scss'],
 })
 export class DoctorSearchCardComponent implements OnInit {
+
+  doctorServiceSubscription1: Subscription = new Subscription();
+  doctorServiceSubscription2: Subscription = new Subscription();
 
   postalCodeDoctors$: Observable<Doctor[]> | null = null;
   specialtyDoctors$: Observable<Doctor[]> | null = null;
@@ -54,7 +57,7 @@ export class DoctorSearchCardComponent implements OnInit {
 
   applyFilter() {
     if (this.selectedSpecialtyFilter || this.selectedAvailabilityFilter) {
-      this.doctorService.getDoctors().subscribe((doctors) => {
+      this.doctorServiceSubscription1 = this.doctorService.getDoctors().subscribe((doctors) => {
         // Aplicamos ambos filtros si están seleccionados
         this.doctors = doctors.filter(
           (doctor) =>
@@ -83,7 +86,7 @@ export class DoctorSearchCardComponent implements OnInit {
   }
 
   loadDoctors() {
-    this.doctorService.getDoctors().subscribe((doctors) => {
+    this.doctorServiceSubscription2 = this.doctorService.getDoctors().subscribe((doctors) => {
       this.doctors = doctors;
     });
   }
@@ -96,5 +99,10 @@ export class DoctorSearchCardComponent implements OnInit {
     // this.router.navigate(['/appointment-confirmation'], {
     //   state: { doctorData: doctor },
     // });
+  }
+
+  ngOnDestroy() {
+    this.doctorServiceSubscription1?.unsubscribe();
+    this.doctorServiceSubscription2?.unsubscribe();
   }
 }
