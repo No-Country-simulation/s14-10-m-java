@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 
 <head>
@@ -72,6 +72,7 @@
         .social-icons a:hover {
             background-color: #1a4d7d;
         }
+
     </style>
 </head>
 <body>
@@ -80,10 +81,21 @@
         <h1 class="title">Recordatorio de Citas CALME</h1>
     </div>
     <div class="content">
-        <img src="https://via.placeholder.com/200" alt="Turno Icon" class="turno-icon">
-        <p class="body">Estimado/a <span th:text="${message}"></span>,</p>
-        <p class="body">Le recordamos que tiene una cita programada en nuestro hospital el [Fecha de la Cita] a las [Hora de la Cita]. Por favor, asegúrese de llegar a tiempo y traer consigo cualquier documento o información relevante.</p>
-        <p class="body">Le informamos que actualmente no es posible cancelar o reprogramar las citas a través de nuestra aplicación. Si necesita realizar cambios en su cita, por favor póngase en contacto con nosotros lo antes posible para que podamos asistirle adecuadamente.</p>
+        <p class="body">Estimado/a <span th:text="${nameUser}"></span>,</p>
+        <p class="body"> Le recordamos que tiene una cita programada con el Dr.
+            <span th:text="${appointmentDoctor}"></span></p>
+            <p class="body">
+            Fecha de la cita:
+            <span th:text="${appointmentDate}"></span>
+            <br /> Hora:
+            <span th:text="${appointmentTime}"></span>hs.
+            <br />
+            Dirección consultorio:
+            <span th:text="${appointmentAddress}"></span></p>
+            <p class="body">Por favor, asegúrese de llegar a tiempo y traer consigo cualquier documento o información relevante.</p>
+        <p class="body">Le informamos que actualmente no es posible cancelar o reprogramar las citas a través de nuestra
+            aplicación. Si necesita realizar cambios en su cita, por favor póngase en contacto con nosotros lo antes
+            posible para que podamos asistirle adecuadamente.</p>
         <p class="body">¡Esperamos verlo/a pronto!</p>
         <div class="social-icons">
             <a href="#" title="Facebook">F</a>
