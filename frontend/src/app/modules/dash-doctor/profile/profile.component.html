@@ -10,11 +10,16 @@
 >
   <section class="flex gap-28">
     <div class="flex justify-start flex-col items-center gap-4">
-      <img
-        src="../../../../assets/image-png/photo-profile.png"
+      <ng-container *ngIf="!doctor.imageUrl">
+        <img
+        src="../../../../assets/image-png/user.png"
         class="w-[10rem] h-[10rem] rounded-full mx-auto"
         alt="perfil"
       />
+      </ng-container>
+      <ng-container *ngIf="doctor.imageUrl">
+        <img [src]="doctor.imageUrl" alt="Foto de perfil" class="w-[10rem] h-[10rem] rounded-full mx-auto">
+      </ng-container>
       <button class="underline" (click)="openPopup()">Editar Perfil</button>
 
       <!-- Form -->

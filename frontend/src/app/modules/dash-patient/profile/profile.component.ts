@@ -20,7 +20,6 @@ export class ProfileComponent implements OnInit {
     this.assistentService.getAssistant().subscribe(data=>
       this.data = data
     );
-    //console.log(this.data);
   }
 
   turnsDropdown() {

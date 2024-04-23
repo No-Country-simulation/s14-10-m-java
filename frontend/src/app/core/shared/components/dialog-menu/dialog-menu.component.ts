@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { DialogMenuService } from '../../services/dialog-menu.service';
 import { LoginService } from 'src/app/modules/auth/services/login.service';
-import { AssistentService } from '../../services/assistent.service';
+
+import { Subscription } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { checkToken } from '../../interceptors/token.interceptor';
 
 @Component({
   selector: 'app-dialog-menu',
@@ -11,24 +14,37 @@ import { AssistentService } from '../../services/assistent.service';
 })
 export class DialogMenuComponent {
 
+  private apiUrl = 'https://s14-10-m-java-production.up.railway.app';
+  doctorSubscription: Subscription = new Subscription();
+  assistentSubscription: Subscription = new Subscription();
+
   isOpen: boolean = false;
   isLogged: boolean = false;
-  data: any;
-
+  doctor: any;
+  assistent: any;
+  roled: any;
   @Output() closeModal = new EventEmitter<void>();
 
-
-  roled = sessionStorage.getItem('role');
 
   constructor(
     private dialogMenuService: DialogMenuService,
     private loginService: LoginService,
-    private assistentService: AssistentService ){}
+    private http: HttpClient ){}
 
   ngOnInit(): void {
-    this.assistentService.getAssistant().subscribe(data =>
-      this.data = data
-    );
+    this.roled = sessionStorage.getItem('role');
+    const id = sessionStorage.getItem('id');
+
+    if(this.roled === '[DOCTOR]'){
+      this.doctorSubscription = this.http.get(`${this.apiUrl}/doctor/id/${id}`, { context: checkToken() }).subscribe(doctor => {
+        this.doctor = doctor;
+      });
+    }
+    if(this.roled === '[ASSISTENT]'){
+      this.assistentSubscription = this.http.get(`${this.apiUrl}/assistent/id/${id}`, { context: checkToken() }).subscribe(assistent => {
+        this.assistent = assistent;
+      });
+    }
   }
 
   onCloseModal() {
@@ -42,6 +58,11 @@ export class DialogMenuComponent {
   logout() {
     this.close();
     this.loginService.logout();
+  }
+
+  ngOnDestroy() {
+    this.doctorSubscription?.unsubscribe();
+    this.assistentSubscription?.unsubscribe();
   }
 
 }
