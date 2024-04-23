@@ -79,23 +79,26 @@ public class EmailServiceImpl extends HttpServlet implements EmailService  {
 
         getAppointmentsToSendReminders().forEach(appointment -> {
 
-            sendAppointmentEmail(appointment.getAssistent().getEmail(), appointment.getDate());
-
+            sendAppointmentEmail(appointment);
             
         });
     }
     @Override
-    public void sendAppointmentEmail(String email, LocalDateTime date) {
+    public void sendAppointmentEmail(Appointment appointment) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-            helper.setTo(email);
-            helper.setSubject("Resgistrado con Exito!");
+            helper.setTo(appointment.getAssistent().getEmail());
+            helper.setSubject("Recordatorio de cita medica - Calme");
 
             Context context = new Context();
             // Agregar variables de contexto para la plantilla Thymeleaf
-            context.setVariable("message", "Agendaste una cita para " + date);
+            context.setVariable("nameUser", appointment.getAssistent().getFirstName() + " " + appointment.getAssistent().getLastName());
+            context.setVariable("appointmentDate", appointment.getDate().toLocalDate());
+            context.setVariable("appointmentTime", appointment.getDate().toLocalTime());
+            context.setVariable("appointmentDoctor", appointment.getDoctor().getFirstName() + " " + appointment.getDoctor().getLastName());
+            context.setVariable("appointmentAddress", appointment.getDoctor().getAddress());
             // Agregar más variables según sea necesario
 
             // Procesar la plantilla Thymeleaf
