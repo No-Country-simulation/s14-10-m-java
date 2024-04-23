@@ -22,7 +22,6 @@ import {
   RecurrenceEditorModule,
 } from '@syncfusion/ej2-angular-schedule';
 import { AppointmentConfirmationComponent } from './appointment-confirmation/appointment-confirmation.component';
-import { AddAssistedFormComponent } from 'src/app/core/shared/components/add-assisted-form/add-assisted-form.component';
 
 @NgModule({
   declarations: [
@@ -36,8 +35,7 @@ import { AddAssistedFormComponent } from 'src/app/core/shared/components/add-ass
     AppointmentFormComponent,
     AppointmentConfirmationComponent,
     AppointmentComponent,
-    DocScheduleComponent,
-    AddAssistedFormComponent
+    DocScheduleComponent
   ],
   imports: [
     CommonModule,

@@ -13,7 +13,7 @@ import { SharedModule } from 'src/app/core/shared/shared.module';
   declarations: [
     ProfileComponent,
     AssistedCardComponent,
-    AppointmentCardComponent
+    AppointmentCardComponent,
   ],
   imports: [
     CommonModule,

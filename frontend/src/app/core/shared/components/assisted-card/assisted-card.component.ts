@@ -12,6 +12,7 @@ export class AssistedCardComponent implements OnInit {
   dropdownStates: boolean[] = []; // Array para mantener el estado de despliegue de cada asistido
   assistedAppointments: any [] = [];
   assistedAppointmentsMap: { [assistedId: string]: any[] } = {};
+  editAssisted: boolean = false;
 
   constructor(private assistedService: AssistentService) {
    }
@@ -57,5 +58,20 @@ export class AssistedCardComponent implements OnInit {
         console.error('Error al cancelar el turno:', error);
       }
     );
+  }
+
+  deleteAssisted(assistedId: any){
+    this.assistedService.deleteAssisted(assistedId).subscribe(
+      (response) => {
+        console.log('Se a desvinculado el asistido', response);
+        window.location.reload();      },
+      (error) => {
+        console.error('Error al desvincular el asistido:', error);
+      }
+    );
+    
+  }
+  toggleEditAssisted() {
+    this.editAssisted = !this.editAssisted; 
   }
 }

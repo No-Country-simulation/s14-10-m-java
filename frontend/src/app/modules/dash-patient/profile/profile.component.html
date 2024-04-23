@@ -39,7 +39,7 @@
           class="w-214 h-214 rounded-full mb-4"
         />
       </ng-container>
-      <a href="#" class="text-xl font-bold text-blue-800 mt-4">Editar perfil</a>
+      <a href="#" class="text-xl font-bold text-blue-800 mt-4" (click)="toggleEditPerfil()">Editar perfil</a>
     </div>
     <div class="ml-10">
       <div>
@@ -68,7 +68,7 @@
                   />
                 </svg>
               </span>
-              <div class="w-2/5 font-semibold text-xl PB-3">+123456789</div>
+              <div class="w-2/5 font-semibold text-xl PB-3">+{{data.phoneNumber}}</div>
             </li>
             <li class="mb-4 flex items-center font-bold text-blue-900">
               <span class="font-semibold mr-2">
@@ -153,7 +153,7 @@
 <div style="width: 882px; margin-left: 33%">
   <div class="flex justify-between">
     <button class="desplegable" (click)="assistedsDropdown()">Asistidos</button>
-    <button class="añadir">Añadir nuevo</button>
+    <button class="añadir" (click)="togglePopup()">Añadir nuevo</button>
   </div>
   <div *ngIf="assisteds">
     <app-assisted-card></app-assisted-card>
@@ -163,3 +163,5 @@
 <div class="bg-calme-light-blue h-[8.25rem] rounded-t-3xl">
   <shared-footer></shared-footer>
 </div>
+<app-add-assisted-form (close)="this.showPopup=false" *ngIf="showPopup"></app-add-assisted-form>
+<app-edit-assistant-form (close)="this.editPerfil=false" *ngIf="editPerfil"></app-edit-assistant-form>

@@ -50,8 +50,9 @@
           </button>
         </div>
       </div>
-      <div class="ml-auto d-flex align-items-center">
-        <button class="edit btn btn-primary">Editar</button>
+      <div class="flex flex-col ml-auto d-flex align-items-center">
+        <button class="edit btn btn-primary" style="margin-left: 70%;" (click)="toggleEditAssisted()">Editar</button>
+        <button class="delete" style="margin-top: 22%;" (click)="deleteAssisted(assisted.id)"> Desvincular de mi cuenta</button>
       </div>
     </div>
     <div *ngIf="dropdownStates[i]">
@@ -160,6 +161,7 @@
       <button class="añadir" [routerLink]="['/search-doctor']">Añadir nuevo</button>
 
     </div>
+    <app-edit-assisted-form (close)="this.editAssisted=false" *ngIf="editAssisted" [assistedId]="assisted.id"></app-edit-assisted-form>
   </div>
 </div>
 

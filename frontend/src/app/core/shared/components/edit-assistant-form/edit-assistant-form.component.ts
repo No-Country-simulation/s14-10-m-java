@@ -2,12 +2,11 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { AssistentService } from '../../services/assistent.service';
 
 @Component({
-  selector: 'app-add-assisted-form',
-  templateUrl: './add-assisted-form.component.html',
-  styleUrls: ['./add-assisted-form.component.scss']
+  selector: 'app-edit-assistant-form',
+  templateUrl: './edit-assistant-form.component.html',
+  styleUrls: ['./edit-assistant-form.component.scss']
 })
-export class AddAssistedFormComponent {
-  
+export class EditAssistantFormComponent {
   @Output() 
   close = new EventEmitter();
   
@@ -17,8 +16,7 @@ export class AddAssistedFormComponent {
   SecondName: string | undefined;
   LastName: string | undefined;
   DateOfBirth: string | undefined;
-  AssistantID: string | null | undefined;
-  RelationTypeWithAssistant: string | undefined;
+  PhoneNumber: number | null | undefined;
 
 constructor(private assistentService: AssistentService){}
 
@@ -31,16 +29,17 @@ constructor(private assistentService: AssistentService){}
     if (this.isFormComplete()) {
     let formData = {
   
-      DNI: this.NumDNI,
+      id: sessionStorage.getItem('id'),
     firstName: this.FirsName,
     secondName: this.SecondName,
     lastName: this.LastName,
+    DNI: this.NumDNI,
+    phoneNumber: this.PhoneNumber,
     dateOfBirth: this.DateOfBirth,
-    AssistantID: sessionStorage.getItem('id'),
-    relationTypeWithAssistant: this.RelationTypeWithAssistant,
     }
   
-    this.assistentService.addAssisted(formData).subscribe(response => {
+    console.log(formData);
+    this.assistentService.editAssistant(formData).subscribe(response => {
       // Manejar la respuesta del servidor aquí
       console.log('Respuesta del servidor:', response);
       window.location.reload(); 
@@ -48,8 +47,7 @@ constructor(private assistentService: AssistentService){}
     error => {
       // Manejar errores aquí
       console.error('Error al hacer la solicitud:', error);
-    }
-    )
+    })
     }else{
       // Si el formulario no está completo, añadir la clase 'incomplete' al botón
       const addButton = document.querySelector('.button');
@@ -64,15 +62,14 @@ isFormComplete(): boolean {
     this.SecondName !== undefined &&
     this.LastName !== undefined &&
     this.DateOfBirth !== undefined &&
-    this.RelationTypeWithAssistant !== undefined &&
+    this.PhoneNumber !== undefined &&
     this.NumDNI.toString().trim() !== '' &&
     this.FirsName.trim() !== '' &&
     this.SecondName.trim() !== '' &&
     this.LastName.trim() !== '' &&
     this.DateOfBirth.trim() !== '' &&
-    this.RelationTypeWithAssistant.trim() !== ''
+    this.PhoneNumber !== null
   );
 }
   
-
 }

@@ -107,11 +107,10 @@ export class AppointmentFormComponent implements OnInit {
   isFormComplete(): boolean {
     if (!this.isForSelf) {
       // Si el turno es para alguien más, debes verificar si se ha seleccionado un titular del turno.
-      return this.titularSeleccionado.trim() !== '' && this.motivoConsulta.trim() !== '' && this.telefonoContacto.trim() !== '';
-      
-    }else{
-    // Verifica si el motivo de la consulta y el teléfono de contacto están completos
-    return this.motivoConsulta.trim() !== '' && this.telefonoContacto.trim() !== '';
+      return this.titularSeleccionado.trim() !== '' && this.motivoConsulta.trim() !== '' && this.telefonoContacto.trim() !== '';  
+    } else {
+      // Si el turno es para uno mismo, solo verifica si el motivo de la consulta y el teléfono de contacto están completos.
+      return this.motivoConsulta.trim() !== '' && this.telefonoContacto.trim() !== '';
     }
   }
 

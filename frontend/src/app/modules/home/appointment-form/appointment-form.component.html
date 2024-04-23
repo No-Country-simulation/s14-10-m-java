@@ -217,7 +217,7 @@
       <app-appointment [doctorData]="doctorData"></app-appointment>
     </div>
   </div>
-  <app-add-assisted-form *ngIf="showPopup"></app-add-assisted-form>
+  <app-add-assisted-form (close)="this.showPopup=false" *ngIf="showPopup"></app-add-assisted-form>
   
 
 </div>

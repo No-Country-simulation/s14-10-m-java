@@ -1,24 +1,21 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AssistentService } from '../../services/assistent.service';
 
 @Component({
-  selector: 'app-add-assisted-form',
-  templateUrl: './add-assisted-form.component.html',
-  styleUrls: ['./add-assisted-form.component.scss']
+  selector: 'app-edit-assisted-form',
+  templateUrl: './edit-assisted-form.component.html',
+  styleUrls: ['./edit-assisted-form.component.scss']
 })
-export class AddAssistedFormComponent {
-  
+export class EditAssistedFormComponent {
   @Output() 
   close = new EventEmitter();
-  
+  @Input() assistedId: string | undefined;
 
   NumDNI: number | undefined;
   FirsName: string | undefined;
   SecondName: string | undefined;
   LastName: string | undefined;
   DateOfBirth: string | undefined;
-  AssistantID: string | null | undefined;
-  RelationTypeWithAssistant: string | undefined;
 
 constructor(private assistentService: AssistentService){}
 
@@ -30,17 +27,17 @@ constructor(private assistentService: AssistentService){}
   confirmFormData(){
     if (this.isFormComplete()) {
     let formData = {
-  
+      
+      id: this.assistedId,
       DNI: this.NumDNI,
     firstName: this.FirsName,
     secondName: this.SecondName,
     lastName: this.LastName,
     dateOfBirth: this.DateOfBirth,
-    AssistantID: sessionStorage.getItem('id'),
-    relationTypeWithAssistant: this.RelationTypeWithAssistant,
     }
+    console.log(formData);
   
-    this.assistentService.addAssisted(formData).subscribe(response => {
+    this.assistentService.editAssisted(formData).subscribe(response => {
       // Manejar la respuesta del servidor aquí
       console.log('Respuesta del servidor:', response);
       window.location.reload(); 
@@ -64,15 +61,12 @@ isFormComplete(): boolean {
     this.SecondName !== undefined &&
     this.LastName !== undefined &&
     this.DateOfBirth !== undefined &&
-    this.RelationTypeWithAssistant !== undefined &&
     this.NumDNI.toString().trim() !== '' &&
     this.FirsName.trim() !== '' &&
     this.SecondName.trim() !== '' &&
     this.LastName.trim() !== '' &&
-    this.DateOfBirth.trim() !== '' &&
-    this.RelationTypeWithAssistant.trim() !== ''
+    this.DateOfBirth.trim() !== ''
   );
 }
   
-
 }
