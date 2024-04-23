@@ -2,6 +2,7 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Doctor } from '../specialties-box/doctor.interface';
 import { DoctorService } from '../specialties-box/doctors.service';
 import { Router } from '@angular/router';
+import { Observable, combineLatest, map } from 'rxjs';
 
 @Component({
   selector: 'app-doctor-search-card',
@@ -9,6 +10,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./doctor-search-card.component.scss'],
 })
 export class DoctorSearchCardComponent implements OnInit {
+
+  postalCodeDoctors$: Observable<Doctor[]> | null = null;
+  specialtyDoctors$: Observable<Doctor[]> | null = null;
+  surnameDoctors$: Observable<Doctor[]> | null = null;
+
+  combinedDoctors$: Observable<Doctor[]> | null = null;
+
   @Input() selectedSpecialtyFilter: string = '';
   @Input() selectedAvailabilityFilter: string = '';
 
@@ -19,10 +27,20 @@ export class DoctorSearchCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDoctors();
-    this.doctorService.specialityParamSubject.subscribe(speciality => {
-      this.speciality = speciality;
-      console.log('speciality observable desde doctor-search', this.speciality);
-    })
+    this.postalCodeDoctors$ = this.doctorService.getPostalCodeDoctors$();
+    this.specialtyDoctors$ = this.doctorService.getSpecialtyDoctors$();
+    this.surnameDoctors$ = this.doctorService.getSurnameDoctors$();
+
+
+    this.combinedDoctors$ = combineLatest([
+      this.doctorService.getPostalCodeDoctors$(),
+      this.doctorService.getSpecialtyDoctors$(),
+      this.doctorService.getSurnameDoctors$()
+    ]).pipe(
+      map(([postalCodeDoctors, specialtyDoctors, surnameDoctors]) => {
+        return [...postalCodeDoctors, ...specialtyDoctors, ...surnameDoctors];
+      })
+    )
   }
 
   ngOnChanges(changes: SimpleChanges): void {
