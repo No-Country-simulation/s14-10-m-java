@@ -13,6 +13,8 @@ export class AssistedCardComponent implements OnInit {
   assistedAppointments: any [] = [];
   assistedAppointmentsMap: { [assistedId: string]: any[] } = {};
   editAssisted: boolean = false;
+  showCancelPopup: boolean = false;
+  showCancelTurnPopup: boolean = false;
 
   constructor(private assistedService: AssistentService) {
    }
@@ -73,5 +75,39 @@ export class AssistedCardComponent implements OnInit {
   }
   toggleEditAssisted() {
     this.editAssisted = !this.editAssisted; 
+  }
+  toggleCancelPopup() {
+    this.showCancelPopup = !this.showCancelPopup;
+  }
+
+  toggleCancelTurnPopup() {
+    this.showCancelTurnPopup = !this.showCancelTurnPopup;
+  }
+
+  obtenerDia(appointmentDate: string): string | null {
+    if (appointmentDate) {
+      const turnDate = new Date(appointmentDate);
+      return turnDate.toLocaleDateString('es-ES', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    } else {
+      return null;
+    }
+  }
+  
+  obtenerHora(appointmentDate: string): string | null {
+    if (appointmentDate) {
+      const turnDate = new Date(appointmentDate);
+      const hora = turnDate.getHours();
+      const minutos = turnDate.getMinutes();
+      const horaFormateada = hora < 10 ? `0${hora}` : `${hora}`;
+      const minutosFormateados = minutos < 10 ? `0${minutos}` : `${minutos}`;
+      return `${horaFormateada}:${minutosFormateados}`;
+    } else {
+      return null;
+    }
   }
 }

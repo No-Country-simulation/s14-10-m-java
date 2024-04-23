@@ -10,6 +10,7 @@ export class AppointmentCardComponent implements OnInit {
 
   constructor(private assistentService: AssistentService){}
   assistentAppointments: any [] = [];
+  showCancelPopup: boolean = false;
 
   ngOnInit(): void {
     this.getAssistentList();
@@ -38,4 +39,35 @@ export class AppointmentCardComponent implements OnInit {
       }
     );
   }
+
+  openCancelPopup() {
+    this.showCancelPopup = !this.showCancelPopup;
+  }
+  obtenerDia(appointmentDate: string): string | null {
+    if (appointmentDate) {
+      const turnDate = new Date(appointmentDate);
+      return turnDate.toLocaleDateString('es-ES', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    } else {
+      return null;
+    }
+  }
+  
+  obtenerHora(appointmentDate: string): string | null {
+    if (appointmentDate) {
+      const turnDate = new Date(appointmentDate);
+      const hora = turnDate.getHours();
+      const minutos = turnDate.getMinutes();
+      const horaFormateada = hora < 10 ? `0${hora}` : `${hora}`;
+      const minutosFormateados = minutos < 10 ? `0${minutos}` : `${minutos}`;
+      return `${horaFormateada}:${minutosFormateados}`;
+    } else {
+      return null;
+    }
+  }
+
 }

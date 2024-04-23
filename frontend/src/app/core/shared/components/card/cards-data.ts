@@ -21,7 +21,7 @@ export const cardList: Card[] = [
     {
         id: 4,
         image: "check.svg",
-        title: "Califica al profesional",
-        description:"Luego de tu cita recibirás un cuestionario de evaluación de la atención recibida.",
+        title: "Cancela tu Turno",
+        description:"Podés cancelar tu turnos con 24hs. de antelación.",
     }
 ]
