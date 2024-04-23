@@ -6,7 +6,8 @@
 >
   <div class="m-10 flex" style="display: flex; justify-content: space-between">
     <div class="image ml-4">
-      <img
+      <ng-container *ngIf="!doctor.imageUrl">
+        <img
         style="
           height: 117px;
           border-radius: 50%;
@@ -14,6 +15,17 @@
         "
         src="../../../assets/image-png/user.png"
       />
+      </ng-container>
+      <ng-container *ngIf="doctor.imageUrl">
+        <img
+        style="
+          height: 117px;
+          border-radius: 50%;
+          box-shadow: -10px 10px 20px #6a9effcc;
+        "
+        [src]="doctor.imageUrl"
+      />
+      </ng-container>
     </div>
     <div>
       <div
@@ -83,7 +95,8 @@
   >
     <div class="m-10 flex" style="display: flex; justify-content: space-between">
       <div class="image ml-4">
-        <img
+        <ng-container *ngIf="!doctor.imageUrl">
+          <img
           style="
             height: 117px;
             border-radius: 50%;
@@ -91,6 +104,17 @@
           "
           src="../../../assets/image-png/user.png"
         />
+        </ng-container>
+        <ng-container *ngIf="doctor.imageUrl">
+          <img
+          style="
+            height: 117px;
+            border-radius: 50%;
+            box-shadow: -10px 10px 20px #6a9effcc;
+          "
+          [src]="doctor.imageUrl"
+        />
+        </ng-container>
       </div>
       <div>
         <div

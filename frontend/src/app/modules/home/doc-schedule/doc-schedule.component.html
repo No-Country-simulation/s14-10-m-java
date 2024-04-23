@@ -46,7 +46,8 @@
       </h3>
       <div class="flex mt-4">
         <div class="shrink-0 h-auto w-[8.125rem] flex items-center">
-          <img
+          <ng-container *ngIf="!doctor?.imageUrl">
+            <img
             style="
               height: 117px;
               border-radius: 50%;
@@ -55,6 +56,18 @@
             src="./assets/image-png/user.png"
             alt="doc-img"
           />
+          </ng-container>
+          <ng-container *ngIf="doctor?.imageUrl">
+            <img
+            style="
+              height: 117px;
+              border-radius: 50%;
+              box-shadow: -10px 10px 20px #6a9effcc;
+            "
+            [src]="doctor?.imageUrl"
+            alt="doc-img"
+          />
+          </ng-container>
         </div>
         <div class="flex-1 h-auto flex items-center">
           <div class="text-calme-dark-blue mx-5 w-full">

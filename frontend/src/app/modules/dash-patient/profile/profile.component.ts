@@ -7,7 +7,7 @@ import { AssistentService } from 'src/app/core/shared/services/assistent.service
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  
+
   turns: boolean = false;
   assisteds: boolean = false;
   data: any;
@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
     this.assistentService.getAssistant().subscribe(data=>
       this.data = data
     );
-    console.log(this.data);
+    //console.log(this.data);
   }
 
   turnsDropdown() {
@@ -27,5 +27,5 @@ export class ProfileComponent implements OnInit {
   assistedsDropdown() {
     this.assisteds = !this.assisteds;
   }
-  
+
 }

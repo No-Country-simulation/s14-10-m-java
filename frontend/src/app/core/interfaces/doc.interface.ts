@@ -13,4 +13,5 @@ export interface DocResponse {
   postalCode: number;
   licenseNumber: number;
   address: string;
+  imageUrl: string;
 }

@@ -1,6 +1,6 @@
 
 <div class="main-content">
-  <div 
+  <div
   style="
     background-image: radial-gradient(
       circle at 8% -20%,
@@ -26,11 +26,19 @@
   <!-- Columna de la información -->
   <div class="w-9/12 flex px-8 justify-center mb-4 mt-10">
     <div class="w-3/7 flex flex-col items-center px-24 mt-10">
-      <img
-        src="../../../../assets/img/Frame 66.png"
-        alt="Foto de perfil"
-        class="w-214 h-214 rounded-full mb-4"
-      />
+      <ng-container *ngIf="!data.imageUrl">
+        <img
+          src="../../../../assets/image-png/user.png"
+          alt="Foto de perfil"
+          class="w-214 h-214 rounded-full mb-4"
+        />
+      </ng-container>
+      <ng-container *ngIf="data.imageUrl">
+        <img
+          [src]="data.imageUrl" alt="Foto de perfil"
+          class="w-214 h-214 rounded-full mb-4"
+        />
+      </ng-container>
       <a href="#" class="text-xl font-bold text-blue-800 mt-4">Editar perfil</a>
     </div>
     <div class="ml-10">

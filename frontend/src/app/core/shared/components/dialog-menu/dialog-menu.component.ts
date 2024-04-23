@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { DialogMenuService } from '../../services/dialog-menu.service';
 import { LoginService } from 'src/app/modules/auth/services/login.service';
+import { AssistentService } from '../../services/assistent.service';
 
 @Component({
   selector: 'app-dialog-menu',
@@ -12,12 +13,20 @@ export class DialogMenuComponent {
 
   isOpen: boolean = false;
   isLogged: boolean = false;
+  data: any;
 
   @Output() closeModal = new EventEmitter<void>();
 
   constructor(
     private dialogMenuService: DialogMenuService,
-    private loginService: LoginService ){}
+    private loginService: LoginService,
+    private assistentService: AssistentService ){}
+
+  ngOnInit(): void {
+    this.assistentService.getAssistant().subscribe(data =>
+      this.data = data
+    );
+  }
 
   onCloseModal() {
     this.closeModal.emit();

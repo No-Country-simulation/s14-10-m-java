@@ -25,7 +25,7 @@ export class DoctorService {
   getDoctors(): Observable<Doctor[]> {
     return this.http.get<{ content: Doctor[] }>(this.apiUrl, { context: checkToken() })
       .pipe(
-        map(response => response.content)
+        map(response => response.content.reverse())
       );
   }
 

@@ -13,4 +13,6 @@ export interface Doctor {
     postalCode: number;
     licenseNumber: string;
     address: string;
+    imageUrl?: string,
+    validUser: boolean
 }
