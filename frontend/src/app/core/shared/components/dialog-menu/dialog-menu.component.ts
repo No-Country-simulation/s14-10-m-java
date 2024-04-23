@@ -17,6 +17,9 @@ export class DialogMenuComponent {
 
   @Output() closeModal = new EventEmitter<void>();
 
+
+  roled = sessionStorage.getItem('role');
+
   constructor(
     private dialogMenuService: DialogMenuService,
     private loginService: LoginService,

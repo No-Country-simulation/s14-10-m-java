@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit {
   togglePopup() {
     this.showPopup = !this.showPopup;
   }
+
   toggleEditPerfil() {
     this.editPerfil = !this.editPerfil;
   }
