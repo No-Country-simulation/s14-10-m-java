@@ -31,7 +31,8 @@ export class AppointmentCardComponent implements OnInit {
     this.assistentService.deleteAppointment(appointmentId).subscribe(
       (response) => {
         console.log('Turno cancelado exitosamente', response);
-        window.location.reload();      },
+        window.location.reload();
+            },
       (error) => {
         console.error('Error al cancelar el turno:', error);
       }

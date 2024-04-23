@@ -11,6 +11,8 @@ export class ProfileComponent implements OnInit {
   turns: boolean = false;
   assisteds: boolean = false;
   data: any;
+  showPopup: boolean = false; 
+  editPerfil: boolean = false;
 
   constructor(private assistentService: AssistentService){}
 
@@ -27,5 +29,10 @@ export class ProfileComponent implements OnInit {
   assistedsDropdown() {
     this.assisteds = !this.assisteds;
   }
-  
+  togglePopup() {
+    this.showPopup = !this.showPopup; 
+  }
+  toggleEditPerfil() {
+    this.editPerfil = !this.editPerfil; 
+  }
 }

@@ -7,10 +7,10 @@
       font-size: 40px;
       line-height: 60px;
       color: #065DB4;
-    ">Agregando Asistido</h1>
+    ">Editar Perfil</h1>
       <!-- Tu formulario aquí -->
       <form>
-        <div class="flex mt-10">
+        <div class="flex mt-4">
           <h3
           
             style="
@@ -171,11 +171,11 @@
                 color: #063463;
               "
             >
-              Que relacion tiene con el asistido?
+              Numero de Telefono
             </h3>
           </div>
-          <select [(ngModel)]="RelationTypeWithAssistant" 
-          name="relationTypeWithAssistant"
+          <input [(ngModel)]="PhoneNumber" 
+          name="phoneNumber"
         class=""
         style="
           font-family: 'Poppins', sans-serif;
@@ -187,15 +187,13 @@
           border-radius: 8px;
           border: 1px solid #dde1eb;
         "
+          type="text"
+          placeholder="  Numero de Telefono"
       >
-        <option value="NUCLEAR_FAMILY">Nucleo familiar</option>
-        <option value="EXTENDED_FAMILY">Familiar lejano</option>
-        <option value="PROFESSIONAL">Persona a cuidado profecional</option>
-      </select>
       </form>
       <div class="flex  justify-center mt-4">
         <div>
-        <button class="button" (click)="confirmFormData(); closePopup()" [disabled]="!isFormComplete()">Agregar asistido</button>
+        <button class="button" (click)="confirmFormData(); closePopup()" [disabled]="!isFormComplete()">Editar Perfil</button>
       </div>
       <div style="margin-right: 30%;">
         
