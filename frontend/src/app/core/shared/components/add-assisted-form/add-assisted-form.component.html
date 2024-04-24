@@ -12,7 +12,7 @@
       <form>
         <div class="flex mt-10">
           <h3
-          
+
             style="
               font-family: 'Poppins', sans-serif;
               font-weight: 400;
@@ -174,7 +174,7 @@
               Que relacion tiene con el asistido?
             </h3>
           </div>
-          <select [(ngModel)]="RelationTypeWithAssistant" 
+          <select [(ngModel)]="RelationTypeWithAssistant"
           name="relationTypeWithAssistant"
         class=""
         style="
@@ -190,7 +190,7 @@
       >
         <option value="NUCLEAR_FAMILY">Nucleo familiar</option>
         <option value="EXTENDED_FAMILY">Familiar lejano</option>
-        <option value="PROFESSIONAL">Persona a cuidado profecional</option>
+        <option value="PROFESSIONAL">Persona a cuidado profesional</option>
       </select>
       </form>
       <div class="flex  justify-center mt-4">
@@ -198,7 +198,7 @@
         <button class="button" (click)="confirmFormData(); closePopup()" [disabled]="!isFormComplete()">Agregar asistido</button>
       </div>
       <div style="margin-right: 30%;">
-        
+
       </div>
       <div>
       <button class="button" (click)="closePopup()">Cerrar</button>
@@ -206,4 +206,3 @@
     </div>
     </div>
   </div>
-  
