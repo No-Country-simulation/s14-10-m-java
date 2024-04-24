@@ -52,7 +52,7 @@
       </div>
       <div class="flex flex-col ml-auto d-flex align-items-center">
         <button class="edit btn btn-primary" style="margin-left: 70%;" (click)="toggleEditAssisted()">Editar</button>
-        <button class="delete" style="margin-top: 22%;" (click)="deleteAssisted(assisted.id)"> Desvincular de mi cuenta</button>
+        <button class="delete" style="margin-top: 22%;" (click)="toggleCancelPopup()"> Desvincular de mi cuenta</button>
       </div>
     </div>
     <div *ngIf="dropdownStates[i]">
@@ -123,7 +123,7 @@
                 >
                   {{ appointment.date }}
                 </li>
-                <button (click)="deleteAssistedAppointment(appointment.id)"
+                <button (click)="toggleCancelTurnPopup()"
                   style="
                     margin-left: 55%;
                     margin-top: 17%;
@@ -140,6 +140,101 @@
               </ul>
             </div>
           </div>
+
+
+          <div *ngIf="showCancelTurnPopup" class="alert-container">
+            <div class="alert">
+              <div>
+                <h3
+                  style="
+                    margin-top: 8%;
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 400;
+                    font-size: 24px;
+                    line-height: 36px;
+                    color: #065db4;
+                  "
+                >
+                  ¿Está seguro/a de que quiere cancelar el turno<br />
+                  asignado para el día
+                  <span style="font-weight: bold"
+              >{{ obtenerDia(appointment.date) }}, a las
+              {{ obtenerHora(appointment.date) }}Hs.?</span
+                  >
+                </h3>
+              </div>
+              <div>
+                <p
+                  style="
+                    margin-top: 2%;
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 300;
+                    font-size: 16px;
+                    line-height: 24px;
+                    color: #065db4;
+                  "
+                >
+                  Recuerde que los turnos sólo pueden ser cancelados 24 horas antes.
+                </p>
+              </div>
+              <div>
+                <button
+                (click)="deleteAssistedAppointment(appointment.id)"
+                  style="
+                    margin-top: 30%;
+                    width: 252px;
+                    height: 48px;
+                    background-color: #f81313;
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 500;
+                    font-size: 22px;
+                    line-height: 33px;
+                    color: #ffffff;
+                    border-radius: 30px;
+                  "
+                >
+                  Cancelar turno
+                </button>
+              </div>
+              <div>
+                <button
+                  (click)="toggleCancelTurnPopup()"
+                  style="
+                    margin-top: 8%;
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 300;
+                    font-size: 16px;
+                    line-height: 24px;
+                    color: #063463;
+                    text-decoration: underline;
+                  "
+                >
+                  Quiero mantener mi turno
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
       </div>
     </div>
@@ -162,21 +257,73 @@
 
     </div>
     <app-edit-assisted-form (close)="this.editAssisted=false" *ngIf="editAssisted" [assistedId]="assisted.id"></app-edit-assisted-form>
+    <div *ngIf="assistedList.length === 0">
+      <p
+        style="
+          margin-top: 6%;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 36px;
+          color: #000000;
+        "
+      >
+        ¿Necesitas sacar un turno médico para alguien más?<br />
+        Podes agregar familiares a tu perfil y así gestionar sus consultas.
+      </p>
+    </div>
+    <div *ngIf="showCancelPopup" class="alert-container">
+      <div class="alert" >
+        <div>
+          <h3 style="
+          margin-top: 8%;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 36px;
+          color: #065DB4;
+        ">¿Está seguro/a de que quiere cancelar la relacion con este asistido:<br><span style="font-weight: bold;">{{ assisted.firstName }} {{ assisted.secondName }}
+              {{ assisted.lastName }}</span>?</h3>
+        </div>
+        <div>
+          <p style="
+          margin-top: 2%;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 300;
+          font-size: 16px;
+          line-height: 24px;
+          color: #065DB4;
+        ">Recuerde que al desvincular un asistido ya no se lo verá en su lista de asistidos. </p>
+        </div>
+        <div>
+      <button (click)="deleteAssisted(assisted.id)" style="
+      margin-top: 30%;
+      width: 252px;
+      height: 48px;
+      background-color: #f81313;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 33px;
+      color: #FFFFFF;
+      border-radius: 30px;
+      ">
+        Desvincular Asistido
+      </button>
+      </div>
+      <div>
+        <button (click)="toggleCancelPopup()" style="
+        margin-top: 8%;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 24px;
+        color: #063463;
+        text-decoration: underline;
+        ">Quiero mantener este asistido</button>
+      </div>
+      </div>
+      </div>
   </div>
 </div>
 
-<div *ngIf="assistedList.length === 0">
-  <p
-    style="
-      margin-top: 6%;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 400;
-      font-size: 24px;
-      line-height: 36px;
-      color: #000000;
-    "
-  >
-    ¿Necesitas sacar un turno médico para alguien más?<br />
-    Podes agregar familiares a tu perfil y así gestionar sus consultas.
-  </p>
-</div>

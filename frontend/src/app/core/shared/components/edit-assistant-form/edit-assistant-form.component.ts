@@ -18,7 +18,7 @@ export class EditAssistantFormComponent {
   DateOfBirth: string | undefined;
   PhoneNumber: number | null | undefined;
 
-constructor(private assistentService: AssistentService){}
+  constructor(private assistentService: AssistentService){}
 
   closePopup() {
     this.close.emit();
@@ -55,8 +55,9 @@ constructor(private assistentService: AssistentService){}
     }
   }
 
-isFormComplete(): boolean {
-  return (
+  isFormComplete(): boolean {
+  // Verifica que todos los campos requeridos no estén indefinidos y que no estén vacíos
+  const requiredFieldsComplete =
     this.NumDNI !== undefined &&
     this.FirsName !== undefined &&
     this.SecondName !== undefined &&
@@ -67,9 +68,28 @@ isFormComplete(): boolean {
     this.FirsName.trim() !== '' &&
     this.SecondName.trim() !== '' &&
     this.LastName.trim() !== '' &&
-    this.DateOfBirth.trim() !== '' &&
-    this.PhoneNumber !== null
-  );
+    this.DateOfBirth.trim() !== '';
+
+  // Verifica que NumDNI tenga 8 o 9 dígitos
+  const validNumDNI = this.NumDNI !== undefined && (this.NumDNI.toString().length === 8 || this.NumDNI.toString().length === 9);
+
+  // Verifica que DateOfBirth tenga el formato correcto (xxxx-xx-xx)
+  const validDateOfBirth = this.DateOfBirth !== undefined && /^\d{4}-\d{2}-\d{2}$/.test(this.DateOfBirth);
+
+  // Verifica que PhoneNumber no sea nulo y tenga entre 8 y 9 dígitos
+  const validPhoneNumber =
+    this.PhoneNumber !== undefined &&
+    this.PhoneNumber !== null &&// Asegurarse de que PhoneNumber sea un número antes de convertirlo a cadena
+    this.PhoneNumber.toString().length >= 8 &&
+    this.PhoneNumber.toString().length <= 9;
+
+  // Retorna verdadero si todos los campos requeridos están completos y si NumDNI tiene 8 o 9 dígitos,
+  // DateOfBirth tiene el formato correcto y PhoneNumber tiene entre 8 y 9 dígitos
+  return requiredFieldsComplete && validNumDNI && validDateOfBirth && validPhoneNumber;
 }
+
   
+isDateOfBirthValid(): boolean {
+  return this.DateOfBirth !== undefined && /^\d{4}-\d{2}-\d{2}$/.test(this.DateOfBirth);
+}
 }

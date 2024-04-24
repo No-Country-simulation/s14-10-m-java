@@ -60,23 +60,100 @@
           >
             {{ appointment.date }}
           </li>
-          <button (click)="deleteAssistentAppointment(appointment.id)"
-                  style="
-                    margin-left: 55%;
-                    margin-top: 17%;
-                    font-family: 'Poppins', sans-serif;
-                    font-weight: 500;
-                    font-size: 24px;
-                    line-height: 36px;
-                    color: #f81313;
-                    text-decoration: underline;
-                  "
-                >
-                  Cancelar turno
-              </button>
+          <button
+            (click)="openCancelPopup()"
+            style="
+              margin-left: 55%;
+              margin-top: 17%;
+              font-family: 'Poppins', sans-serif;
+              font-weight: 500;
+              font-size: 24px;
+              line-height: 36px;
+              color: #f81313;
+              text-decoration: underline;
+            "
+          >
+            Cancelar turno
+          </button>
         </ul>
       </div>
     </div>
+    <div *ngIf="showCancelPopup" class="alert-container">
+      <div class="alert">
+        <div>
+          <h3
+            style="
+              margin-top: 8%;
+              font-family: 'Poppins', sans-serif;
+              font-weight: 400;
+              font-size: 24px;
+              line-height: 36px;
+              color: #065db4;
+            "
+          >
+            ¿Está seguro/a de que quiere cancelar el turno<br />
+            asignado para el día
+            <span style="font-weight: bold"
+              >{{ obtenerDia(appointment.date) }}, a las
+              {{ obtenerHora(appointment.date) }}Hs.?</span
+            >
+          </h3>
+        </div>
+        <div>
+          <p
+            style="
+              margin-top: 2%;
+              font-family: 'Poppins', sans-serif;
+              font-weight: 300;
+              font-size: 16px;
+              line-height: 24px;
+              color: #065db4;
+            "
+          >
+            Recuerde que los turnos sólo pueden ser cancelados 24 horas antes.
+          </p>
+        </div>
+        <div>
+          <button
+            (click)="deleteAssistentAppointment(appointment.id)"
+            style="
+              margin-top: 30%;
+              width: 252px;
+              height: 48px;
+              background-color: #f81313;
+              font-family: 'Poppins', sans-serif;
+              font-weight: 500;
+              font-size: 22px;
+              line-height: 33px;
+              color: #ffffff;
+              border-radius: 30px;
+            "
+          >
+            Cancelar turno
+          </button>
+        </div>
+        <div>
+          <button
+            (click)="openCancelPopup()"
+            style="
+              margin-top: 8%;
+              font-family: 'Poppins', sans-serif;
+              font-weight: 300;
+              font-size: 16px;
+              line-height: 24px;
+              color: #063463;
+              text-decoration: underline;
+            "
+          >
+            Quiero mantener mi turno
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
+    
   </div>
 </div>
 

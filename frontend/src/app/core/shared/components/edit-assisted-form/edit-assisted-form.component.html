@@ -41,6 +41,7 @@
           type="text"
           placeholder="  dni"
         />
+        <div *ngIf="NumDNI !== undefined && (NumDNI.toString().length < 8 || NumDNI.toString().length > 9)" style="color: red;">El número de DNI debe tener entre 8 y 9 dígitos.</div>
         <div class="flex">
           <h3
             style="
@@ -161,6 +162,7 @@
           type="text"
           placeholder="  fecha de nacimiento"
         />
+        <div *ngIf="!isDateOfBirthValid()" style="color: red;">El formato de fecha de nacimiento debe ser yyyy-mm-dd.</div>
       </form>
       <div class="flex  justify-center mt-4">
         <div>
