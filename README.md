@@ -2,10 +2,13 @@
 [![Logo](./frontend/src/assets/icons-svg/calme-logo-azul.png)](https://s14-10-m-java.web.app)
 <br>
 
-Calme es un calendario médico webapp, desarrollado para ofrecer una solución adaptada a las personas mayores que requieren solicitar turnos médicos con la ayuda de un asistente que gestiona sus turnos, para que las personas mayores no tengan que preocuparse por recordar contraseñas.
+Calme es un calendario médico webapp, desarrollado para ofrecer una solución adaptada a las personas mayores que requieren solicitar turnos médicos 
+con la ayuda de un asistente que gestiona sus turnos, para que las personas mayores no tengan que preocuparse por recordar contraseñas.
 <br><br>
 
-[![App Screenshot](./frontend/src/assets/img/screenshot-demo.png)](https://s14-10-m-java.web.app)
+[![App Screenshot](./frontend/src/assets/img/readme-home.png)](https://s14-10-m-java.web.app)
+
+[![App Screenshot](./frontend/src/assets/img/readme-perfil.png)](https://s14-10-m-java.web.app)
 
 <br><br>
 
