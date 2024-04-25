@@ -9,14 +9,14 @@
       "
     ></div>
     <div class="assisted-item flex">
-      <ng-container *ngIf="!assisted.image">
+      <ng-container *ngIf="!assisted.imageUrl">
         <img
         style="height: 128px; width: 128px"
         src="../../../../../assets/image-png/user.png"
         alt="Imagen de Asistido"
       />
     </ng-container>
-      <ng-container *ngIf="assisted.image">
+      <ng-container *ngIf="assisted.imageUrl">
         <img
         style="height: 128px; width: 128px"
         [src]="assisted.imageUrl"
