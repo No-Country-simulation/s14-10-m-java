@@ -106,14 +106,15 @@ public class AssistedServiceImpl implements AssistedService {
         if (!assistant.getActive()) throw new IllegalArgumentException("Assistant with ID " + assistantId + " is inactive.");
 
         // Get all the assisted from an assistant
-        Page<Assisted> allAssistedPage = this.relationAARepository.findByAssistentId(assistantId, pageable);
+        Page<RelationAA> allAssistedPage = this.relationAARepository.findByAssistentId(assistantId, pageable);
 
         // Filter assisted by active (by default) or inactive (parameter condition)
         List<ResponseAssisted> filteredAssisteds = allAssistedPage
                 .getContent()
                 .stream()
-                .filter(assisted -> actives == assisted.getActive())
-                .map(assistedMapper::assistedToResponse).toList();
+                .filter(relationAA -> relationAA.getActive() == actives)
+                .map(relation -> assistedMapper.assistedToResponse(relation.getAssisted()))
+                .toList();
 
         // Return a Page of assisted with the filter applied
         return new PageImpl<>(filteredAssisteds, pageable, allAssistedPage.getTotalElements());

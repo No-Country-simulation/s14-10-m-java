@@ -1,6 +1,5 @@
 package com.s1410.calme.Domain.Repositories;
 
-import com.s1410.calme.Domain.Entities.Assisted;
 import com.s1410.calme.Domain.Entities.RelationAA;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +15,8 @@ import java.util.Optional;
 public interface RelationAARepository extends JpaRepository<RelationAA, Long> {
     boolean existsByAssistedId(Long assistedId);
     boolean existsByAssistentIdAndAssistedId(Long assistentId, Long assistedId);
-    @Query("SELECT ra.assisted FROM RelationAA ra WHERE ra.assistent.id = :assistentId")
-    Page<Assisted> findByAssistentId(@Param("assistentId") Long assistentId, Pageable pageable);
+    @Query("SELECT ra FROM RelationAA ra WHERE ra.assistent.id = :assistentId")
+    Page<RelationAA> findByAssistentId(@Param("assistentId") Long assistentId, Pageable pageable);
     List<RelationAA> findAllByAssistedId(Long assistedId);
     Optional<RelationAA> findByAssistentIdAndAssistedId(Long assistentId, Long assistedId);
 
