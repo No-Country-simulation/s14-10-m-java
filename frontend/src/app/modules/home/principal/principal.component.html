@@ -1,0 +1,174 @@
+<div
+  class="home-principal"
+  style="
+    height: 880px;
+    background-image: radial-gradient(
+      ellipse farthest-corner at 20% 0%,
+      #ffffff83 10%,
+      #93b9ff15 22%
+    );
+  "
+>
+  <div>
+    <shared-navbar></shared-navbar>
+  </div>
+
+  <div class="container-fluid w-11/12 max-w-[1300px] m-auto home-secondary">
+    <div class="flex justify-between mt-20">
+      <div class="flex flex-col space-y-12 mt-20">
+        <h1
+          style="
+            font-family: 'Dela Gothic One', sans-serif;
+            font-weight: 400;
+            font-size: 46px;
+            line-height: 66.61px;
+            color: #ffffff;
+          "
+        >
+          Busca tu médico
+        </h1>
+        <h5
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 36px;
+            color: #ffffff;
+          "
+        >
+          Encontrá al especialista que necesitás en nuestra amplia red de
+          profesionales y agendá tu cita sin esperas en pocos pasos
+        </h5>
+        <app-search-bar></app-search-bar>
+      </div>
+      <img
+        src="../../../../assets/image-png/home1.png"
+        alt="Descripción de la imagen"
+      />
+    </div>
+  </div>
+</div>
+
+<div class="w-11/12 max-w-[1300px] m-auto">
+  <div class="container-fluid">
+    <div class="p-7 text-center">
+      <h1
+        class="text-2xl font-bold"
+        style="
+          font-family: 'Dela Gothic One', sans-serif;
+          font-weight: 400;
+          font-size: 46px;
+          line-height: 66.61px;
+          color: #ff9d2b;
+          text-align: center;
+        "
+      >
+        ¿Cómo podemos ayudarte?
+      </h1>
+
+      <p
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 300;
+          font-size: 18px;
+          line-height: 27px;
+          text-align: center;
+          max-width: 60%;
+          margin: 0 auto;
+          color: #063463;
+        "
+      >
+        Estamos aquí para brindarte la mejor atención médica.<br />
+        Nuestro equipo está listo para apoyarte en todo lo que necesites, juntos
+        podemos encontrar la solución a tus necesidades médicas.<br />
+        Estamos comprometidos en ofrecerte la mejor atención médica
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <app-card></app-card>
+  </div>
+
+  <div class="container-fluid">
+    <div class="p-7 text-center">
+      <h1
+        style="
+          font-family: 'Dela Gothic One', sans-serif;
+          font-weight: 400;
+          font-size: 40px;
+          line-height: 57.92px;
+          color: #75a5ff;
+          text-align: start;
+        "
+      >
+        Nuestras especialidades:
+      </h1>
+    </div>
+  </div>
+  <div>
+    <app-slider
+      (selectedSpecialty)="specialtiesBox.filterDoctorsBySpecialty($event)"
+    ></app-slider>
+  </div>
+
+  <div>
+    <app-specialties-box #specialtiesBox></app-specialties-box>
+  </div>
+
+  <div class="mt-20 mb-20">
+    <div class="mt-20 flex" style="width: 100; color: #75a5ff">
+      <!-- Ajusta el ancho del contenedor según tus necesidades -->
+      <div class="mt-20">
+        <h3
+          class="text-h mb-8"
+          style="
+            font-family: 'Dela Gothic One', sans-serif;
+            font-weight: 400;
+            font-size: 32px;
+            line-height: 46.34px;
+            color: #75a5ff;
+          "
+        >
+          ¿Eres profesional de la salud?
+        </h3>
+        <p
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 36px;
+            color: #063463;
+          "
+        >
+          Únete a nosotros como profesional de la salud y forma parte de la
+          mejor atención y cuidado a nuestros pacientes. ¡Juntos, podemos lograr
+          grandes cosas!
+        </p>
+        <div
+          class="py-2 w-[270px] mt-10 rounded-full bg-accent-light text-primary-dark font-poppins text-base font-semibold flex justify-center items-center"
+        >
+          <button buttonType="button" routerLink="/auth/login">
+            <p
+              style="
+                font-family: 'Poppins', sans-serif;
+                font-weight: 300;
+                font-size: 20px;
+                line-height: 30px;
+                color: #063463;
+              "
+            >
+              Trabaja con nosotros
+            </p>
+          </button>
+        </div>
+      </div>
+      <img
+        class="right"
+        src="../../../../assets/image-png/home2.png"
+        alt="Descripción de la imagen"
+      />
+    </div>
+  </div>
+</div>
+<shared-footer></shared-footer>

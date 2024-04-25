@@ -1,0 +1,407 @@
+<div class="bg-calme-light-blue h-[8.25rem] rounded-b-3xl">
+  <shared-navbar></shared-navbar>
+</div>
+
+<!-- start doctor component -->
+
+<main
+  class="w-11/12 max-w-[1000px] m-auto mt-14 min-h-[70vh] font-poppins"
+  *ngIf="doctor$ | async as doctor"
+>
+  <section class="flex gap-28">
+    <div class="flex justify-start flex-col items-center gap-4">
+      <ng-container *ngIf="!doctor.imageUrl">
+        <img
+        src="../../../../assets/image-png/user.png"
+        class="w-[10rem] h-[10rem] rounded-full mx-auto"
+        alt="perfil"
+      />
+      </ng-container>
+      <ng-container *ngIf="doctor.imageUrl">
+        <img [src]="doctor.imageUrl" alt="Foto de perfil" class="w-[10rem] h-[10rem] rounded-full mx-auto">
+      </ng-container>
+      <button class="underline" (click)="openPopup()">Editar Perfil</button>
+
+      <!-- Form -->
+      <div *ngIf="isPopupVisible" class="overlay">
+        <app-popup (closePopup)="closePopup()">
+          <h1 class="mb-4">Editar Perfil</h1>
+          <form
+            [formGroup]="updateForm"
+            (ngSubmit)="onSubmit()"
+            class="grid grid-cols-2 gap-4"
+          >
+            <div class="col-span-1">
+              <label for="firstName">First Name:</label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                formControlName="firstName"
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+                required
+              />
+              <!-- Agregar mensaje de error para el campo firstName -->
+              <div
+                *ngIf="
+                  updateForm.get('firstName').invalid &&
+                  (updateForm.get('firstName').dirty ||
+                    updateForm.get('firstName').touched)
+                "
+              >
+                <div *ngIf="updateForm.get('firstName').errors.required">
+                  First Name is required.
+                </div>
+              </div>
+
+              <label for="secondName">Second Name:</label>
+              <input
+                type="text"
+                id="secondName"
+                name="secondName"
+                formControlName="secondName"
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+              />
+              <!-- No se agregan validaciones para secondName -->
+
+              <label for="lastName">Last Name:</label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                formControlName="lastName"
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+                required
+              />
+              <!-- Agregar mensaje de error para el campo lastName -->
+              <div
+                *ngIf="
+                  updateForm.get('lastName').invalid &&
+                  (updateForm.get('lastName').dirty ||
+                    updateForm.get('lastName').touched)
+                "
+              >
+                <div *ngIf="updateForm.get('lastName').errors.required">
+                  Last Name is required.
+                </div>
+              </div>
+
+              <label for="DNI">DNI:</label>
+              <input
+                type="text"
+                id="DNI"
+                name="DNI"
+                formControlName="DNI"
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+                required
+                pattern="^\d{7,9}$"
+              />
+              <!-- Agregar mensaje de error para el campo DNI -->
+              <div
+                *ngIf="
+                  updateForm.get('DNI').invalid &&
+                  (updateForm.get('DNI').dirty || updateForm.get('DNI').touched)
+                "
+              >
+                <div *ngIf="updateForm.get('DNI').errors.required">
+                  DNI is required.
+                </div>
+                <div *ngIf="updateForm.get('DNI').errors.pattern">
+                  DNI must have 7 to 9 digits.
+                </div>
+              </div>
+
+              <label for="postalCode">Postal Code:</label>
+              <input
+                type="text"
+                id="postalCode"
+                name="postalCode"
+                formControlName="postalCode"
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+                required
+              />
+              <!-- Agregar mensaje de error para el campo postalCode -->
+              <div
+                *ngIf="
+                  updateForm.get('postalCode').invalid &&
+                  (updateForm.get('postalCode').dirty ||
+                    updateForm.get('postalCode').touched)
+                "
+              >
+                <div *ngIf="updateForm.get('postalCode').errors.required">
+                  Postal Code is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-span-1">
+              <label for="dateOfBirth">Date of Birth:</label>
+              <input
+                type="date"
+                id="dateOfBirth"
+                name="dateOfBirth"
+                formControlName="dateOfBirth"
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+                required
+              />
+              <!-- Agregar mensaje de error para el campo dateOfBirth -->
+              <div
+                *ngIf="
+                  updateForm.get('dateOfBirth').invalid &&
+                  (updateForm.get('dateOfBirth').dirty ||
+                    updateForm.get('dateOfBirth').touched)
+                "
+              >
+                <div *ngIf="updateForm.get('dateOfBirth').errors.required">
+                  Date of Birth is required.
+                </div>
+              </div>
+
+              <label for="specialty">Especialidad:</label>
+              <!-- <input
+                type="text"
+                id="specialty"
+                name="specialty"
+                formControlName="specialty"
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+                required
+              /> -->
+              <select
+                id="specialty"
+                formControlName="specialty"
+                class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+              >
+                <option value="" disabled selected></option>
+                <option value="CARDIOLOGY">Cardiología</option>
+                <option value="DERMATOLOGY">Dermatología</option>
+                <option value="ENDOCRINOLOGY">Endocrinología</option>
+                <option value="GASTROENTEROLOGY">Gastroenterología</option>
+                <option value="GERIATRICS">Geriatría</option>
+                <option value="GYNECOLOGY">Ginecología</option>
+                <option value="HEMATOLOGY">Hematología</option>
+                <option value="INTERNAL_MEDICINE">Medicina Interna</option>
+                <option value="NEPHROLOGY">Nefrología</option>
+                <option value="NEUROLOGY">Neurología</option>
+                <option value="OPHTHALMOLOGY">Oftalmología</option>
+                <option value="ONCOLOGY">Oncología</option>
+                <option value="ORTHOPEDICS">Ortopedia</option>
+                <option value="OTOLARYNGOLOGY">Otorrinolaringología</option>
+                <option value="PEDIATRICS">Pediatría</option>
+                <option value="PSYCHIATRY">Psiquiatría</option>
+                <option value="RADIOLOGY">Radiología</option>
+                <option value="RHEUMATOLOGY">Reumatología</option>
+                <option value="TRAUMATOLOGY">Traumatología</option>
+                <option value="UROLOGY">Urología</option>
+              </select>
+              <!-- Agregar mensaje de error para el campo specialty -->
+              <div
+                *ngIf="
+                  updateForm.get('specialty').invalid &&
+                  (updateForm.get('specialty').dirty ||
+                    updateForm.get('specialty').touched)
+                "
+              >
+                <div *ngIf="updateForm.get('specialty').errors.required">
+                  Specialty is required.
+                </div>
+              </div>
+
+              <label for="phoneNumber">Phone Number:</label>
+              <input
+                type="text"
+                id="phoneNumber"
+                name="phoneNumber"
+                formControlName="phoneNumber"
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+                required
+              />
+              <!-- Agregar mensaje de error para el campo phoneNumber -->
+              <div
+                *ngIf="
+                  updateForm.get('phoneNumber').invalid &&
+                  (updateForm.get('phoneNumber').dirty ||
+                    updateForm.get('phoneNumber').touched)
+                "
+              >
+                <div *ngIf="updateForm.get('phoneNumber').errors.required">
+                  Phone Number is required.
+                </div>
+              </div>
+
+              <!-- Checkbox group for availability -->
+
+              <label for="licenseNumber">License Number:</label>
+              <input
+                type="text"
+                id="licenseNumber"
+                name="licenseNumber"
+                formControlName="licenseNumber"
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+                required
+              />
+              <!-- Agregar mensaje de error para el campo licenseNumber -->
+              <div
+                *ngIf="
+                  updateForm.get('licenseNumber').invalid &&
+                  (updateForm.get('licenseNumber').dirty ||
+                    updateForm.get('licenseNumber').touched)
+                "
+              >
+                <div *ngIf="updateForm.get('licenseNumber').errors.required">
+                  License Number is required.
+                </div>
+              </div>
+
+              <label for="address">Address:</label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                formControlName="address"
+                class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 mb-3"
+                required
+              />
+              <!-- Agregar mensaje de error para el campo address -->
+              <div
+                *ngIf="
+                  updateForm.get('address').invalid &&
+                  (updateForm.get('address').dirty ||
+                    updateForm.get('address').touched)
+                "
+              >
+                <div *ngIf="updateForm.get('address').errors.required">
+                  Address is required.
+                </div>
+              </div>
+
+              <div class="flex space-x-4">
+                <label class="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    name="morning"
+                    formControlName="morning"
+                    class="form-checkbox rounded text-primary focus:ring-primary-dark"
+                  />
+                  <span>Morning</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    name="afternoon"
+                    formControlName="afternoon"
+                    class="form-checkbox rounded text-primary focus:ring-primary-dark"
+                  />
+                  <span>Afternoon</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    name="night"
+                    formControlName="night"
+                    class="form-checkbox rounded text-primary focus:ring-primary-dark"
+                  />
+                  <span>Night</span>
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="bg-yellow-200 px-4 py-2 rounded-xl">
+              Submit
+            </button>
+          </form>
+        </app-popup>
+      </div>
+      <!--  -->
+    </div>
+    <div class="flex flex-col gap-14">
+      <div class="flex flex-col gap-3">
+        <h1 class="text-[#065DB4] font-bold text-4xl">
+          Dr. {{ doctor.firstName }} {{ doctor.lastName }}
+        </h1>
+        <h2 class="lowercase text-[#FF9D2B] text-xl">
+          Medico {{ doctor.specialty }}
+        </h2>
+        <div class="grid grid-cols-2 gap-5 mt-6">
+          <div class="flex flex-col gap-3">
+            <p class="flex gap-2 items-center text-[#063463]">
+              <span class="icon icon-phone"></span>{{ doctor.phoneNumber }}
+            </p>
+            <p class="flex gap-2 items-center text-[#063463]">
+              <span class="icon icon-email"></span>{{ doctor.email }}
+            </p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <p class="flex gap-2 items-center text-[#063463]">
+              <span class="icon icon-address"></span>{{ doctor.address }}
+            </p>
+            <p class="flex gap-2 items-center text-[#063463]">
+              <span class="icon icon-license"></span>N° Matrícula
+              {{ doctor.licenseNumber }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h1 class="text-[#FF9D2B] mb-6 font-bold text-2xl">Agenda</h1>
+        <div class="border border-blue-400 w-full mb-4"></div>
+
+        <div class="flex flex-col gap-2">
+          <p class="my-3">
+            Aquí puedes consultar tus turnos agendados para el día:
+          </p>
+          <select
+            class="w-5/6 border h-10 border-[#DDE1EB] rounded-md"
+            [(ngModel)]="selectedDay"
+            (ngModelChange)="selectDay($event)"
+          >
+            <option value='' selected>Seleccione el dia</option>
+            <option *ngFor="let day of upcomingDays" [value]="day">
+              {{ day }}
+            </option>
+          </select>
+          <!-- <div *ngIf="selectedDay !== null" class="text-green-500">
+            Has seleccionado el día: {{ selectedDay }}
+          </div>
+         -->
+          <div
+            class="w-full mx-auto  bg-white shadow-lg rounded-lg overflow-hidden"
+            style="box-shadow:  0 4px 6px rgba(117, 165, 255, 0.5)"
+          >
+            <div class="px-6 py-4">
+              <!-- <p class="text-gray-700 text-base mb-4">
+                <span class="font-bold">Día seleccionado:</span>
+                {{ selectedDay }}
+              </p> -->
+              <div *ngIf="selectedAppointment" class="flex justify-between items-center">
+                <p class="text-xl font-bold text-[#063463]">
+                  <span class="text-xl font-bold text-[#063463]">Paciente:</span>
+                  {{ selectedAppointment.patient }}
+                </p>
+                <p class="text-gray-700 text-base">
+                  <span class="font-bold">Hora:</span>
+                  {{ selectedAppointment.hour }}
+                </p>
+
+                <!-- <p class="text-green-500 text-base">
+                ¡Cita encontrada para el día {{ selectedDay }} a las {{ selectedAppointment.hour }}!
+              </p> -->
+              </div>
+              <div *ngIf="!selectedAppointment">
+                <p class="text-base">
+                  No hay citas para el día seleccionado.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<ng-template #loading>
+  <p>Loading doctor details...</p>
+</ng-template>
+
+<!-- End to doctor component -->
+<div class="bg-calme-light-blue h-[8.25rem] rounded-t-3xl">
+  <shared-footer></shared-footer>
+</div>

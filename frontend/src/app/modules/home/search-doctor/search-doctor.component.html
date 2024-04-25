@@ -1,0 +1,62 @@
+<div
+  style="
+    height: 900px;
+    background-image: radial-gradient(
+      circle at 8% -8%,
+      #ffdeb766 15%,
+      #ffffff 22%
+    );
+  "
+>
+  <div
+    style="
+      background-color: #75a5ff;
+      background-image: radial-gradient(
+        circle at 15% -10%,
+        #ffdeb766 4%,
+        #ffffff15 24%
+      );
+    "
+    class="rounded-b-3xl"
+  >
+    <shared-navbar></shared-navbar>
+  </div>
+  <div class="justify-center flex">
+    <app-search-bar class="mt-20"></app-search-bar>
+  </div>
+
+  <div class="search mt-20 mr-4">
+    <div>
+      <app-search-filters
+        [title]="'Especialidad'"
+        [options]="[
+          'PSIQUIATRÍA',
+          'TRAUMATOLOGÍA',
+          'NEUROLOGÍA',
+          'CARDIOLOGÍA',
+          'RADIOLOGÍA',
+          'PEDIATRÍA',
+          'GERIATRÍA',
+          'DERMATOLOGÍA',
+          'HEMATOLOGÍA'
+        ]"
+        (applyFilter)="applySpecialtyFilter($event)"
+      ></app-search-filters>
+      <app-search-filters
+        [title]="'Disponibilidad'"
+        [options]="['Mañana', 'Tarde', 'Noche']"
+        (applyFilter)="applyAvailabilityFilter($event)"
+      ></app-search-filters>
+    </div>
+    <div class="doctors">
+      <app-doctor-search-card
+        [selectedSpecialtyFilter]="selectedSpecialtyFilter"
+        [selectedAvailabilityFilter]="selectedAvailabilityFilter"
+      ></app-doctor-search-card>
+    </div>
+  </div>
+
+  <div class="bg-calme-light-blue h-[8.25rem] rounded-t-3xl footer mt-4">
+    <shared-footer></shared-footer>
+  </div>
+</div>

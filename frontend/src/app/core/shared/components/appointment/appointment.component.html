@@ -1,0 +1,55 @@
+<div class="appointment-box">
+  <h2
+    class="mt-6 mb-8"
+    style="
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 48px;
+      color: #ff9d2b;
+    "
+  >
+    Mi turno
+  </h2>
+  <div class="flex ml-8">
+    <img src="../../../../../assets/icons-svg/dr-turn-icon.svg" />
+    <h3 class="option">
+      Dr. {{ doctorData.firstName }} {{ doctorData.secondName }}
+      {{ doctorData.lastName }}
+    </h3>
+  </div>
+
+  <p
+    class="mb-4"
+    style="
+      margin-left: 19%;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #063463;
+    "
+  >
+    {{ doctorData.specialty }}
+  </p>
+  <div class="flex mb-4 ml-8">
+    <img src="../../../../../assets/icons-svg/day-turn-icon.svg" />
+    <h3 class="option">{{ obtenerDia() }}</h3>
+  </div>
+  <div class="flex mb-4 ml-8">
+    <img src="../../../../../assets/icons-svg/clock-turn-icon.svg" />
+    <h3 class="option">{{ obtenerHora() }} Hs.</h3>
+  </div>
+  <div class="flex mb-10 ml-8">
+    <img src="../../../../../assets/icons-svg/location-turn-icon.svg" />
+    <h3 class="option">{{ doctorData.address }}</h3>
+  </div>
+  <div
+    class="flex"
+    style="display: flex; justify-content: center; align-items: center"
+  >
+    <img src="../../../../../assets/icons-svg/edit-turn-icon.svg" />
+    <button class="ml-2">Modificar fecha y hora</button>
+  </div>
+</div>

@@ -1,0 +1,419 @@
+<section class="min-h-screen bg_blue_shadow">
+  <shared-navbar [showOptions]="false"></shared-navbar>
+  <section class="content_register flex items-center justify-center flex-col">
+    <section class="neumorphic flex justify-center items-center gap-5 p-8">
+      <section class="flex flex-col gap-3">
+        <article class="flex flex-col gap-3">
+          <h1 class="text-white text-4xl">Registrarme como profesional</h1>
+          <div class="flex">
+            <div
+              class="flex items-center justify-center text-white p-2 cursor-pointer bg-transparent shadow-4xl"
+              (click)="goToStep(1)"
+            >
+              Datos personales
+            </div>
+            <div
+              class="flex items-center justify-center text-white p-2 cursor-pointer bg-transparent shadow-4xl"
+              (click)="goToStep(2)"
+            >
+              Datos profesionales
+            </div>
+          </div>
+
+          <form
+            [formGroup]="currentStep === 1 ? formDataStep1 : formDataStep2"
+            (ngSubmit)="submitForm()"
+          >
+            <div *ngIf="currentStep === 1" class="flex flex-col gap-3">
+              <!-- Paso 1 -->
+              <div class="flex flex-col gap-2 neumorphic p-5">
+                <div class="flex gap-3">
+                  <div class="flex flex-col gap-1 w-full">
+                    <label for="firstName">Primer nombre:</label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      formControlName="firstName"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep1.controls.firstName.invalid &&
+                        formDataStep1.controls.firstName.touched
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          formDataStep1.controls.firstName.errors?.required
+                        "
+                        >Primer nombre es requerido.</span
+                      >
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col gap-1 w-full">
+                    <label for="secondName">Segundo nombre:</label>
+                    <input
+                      type="text"
+                      id="secondName"
+                      formControlName="secondName"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep1.controls.secondName.invalid &&
+                        formDataStep1.controls.secondName.touched
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          formDataStep1.controls.secondName.errors?.required
+                        "
+                        >Segundo nombre es requerido.</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex gap-3">
+                  <div class="flex flex-col gap-1 w-full">
+                    <label for="lastName">Apellidos:</label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      formControlName="lastName"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep1.controls.lastName.invalid &&
+                        formDataStep1.controls.lastName.touched
+                      "
+                    >
+                      <span
+                        *ngIf="formDataStep1.controls.lastName.errors?.required"
+                        >Los apellidos son requeridos.</span
+                      >
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-1 w-full">
+                    <label for="DNI">DNI:</label>
+                    <input
+                      type="text"
+                      id="DNI"
+                      formControlName="DNI"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep1.controls.DNI.invalid &&
+                        formDataStep1.controls.DNI.touched
+                      "
+                    >
+                      <span *ngIf="formDataStep1.controls.DNI.errors?.required"
+                        >El DNI es requerido.</span
+                      >
+                      <span *ngIf="formDataStep1.controls.DNI.errors?.pattern"
+                        >DNI tiene que tener 7 digitos.</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="flex flex-col gap-1">
+                  <label for="dateOfBirth">Dia de cumpleaños:</label>
+                  <input
+                    type="date"
+                    id="dateOfBirth"
+                    formControlName="dateOfBirth"
+                    class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                  />
+                  <div
+                    *ngIf="
+                      formDataStep1.controls.dateOfBirth.invalid &&
+                      formDataStep1.controls.dateOfBirth.touched
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        formDataStep1.controls.dateOfBirth.errors?.required
+                      "
+                      >Dia de cumpleaños es requerido.</span
+                    >
+                  </div>
+                </div>
+                <div class="flex flex-col gap-1">
+                  <label for="address">Direccion:</label>
+                  <input
+                    type="text"
+                    id="address"
+                    formControlName="address"
+                    class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                  />
+                  <div
+                    *ngIf="
+                      formDataStep1.controls.address.invalid &&
+                      formDataStep1.controls.address.touched
+                    "
+                  >
+                    <span
+                      *ngIf="formDataStep1.controls.address.errors?.required"
+                      >Direccion es requerido.</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-center items-center">
+                <button
+                  (click)="goToStep(2)"
+                  class="w-[220px] h-10 border border-gray-300 rounded-lg bg-[#FFCD93]"
+                >
+                  Siguiente
+                </button>
+              </div>
+            </div>
+            <!-- Step 2  -->
+            <div *ngIf="currentStep === 2" class="flex flex-col gap-3">
+              <!-- Paso 2 -->
+              <div class="neumorphic p-5 flex flex-col gap-3">
+                <div class="flex gap-3 w-full">
+                  <div class="flex flex-col gap-2 w-3/6">
+                    <label for="email">Email:</label>
+                    <input
+                      type="email"
+                      id="email"
+                      formControlName="email"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep2.controls.email.invalid &&
+                        formDataStep2.controls.email.touched
+                      "
+                    >
+                      <span
+                        *ngIf="formDataStep2.controls.email.errors?.required"
+                        >Email is required.</span
+                      >
+                      <span *ngIf="formDataStep2.controls.email.errors?.email"
+                        >Invalid email format.</span
+                      >
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-2 w-3/6">
+                    <label for="password">Contraseña:</label>
+                    <input
+                      type="password"
+                      id="password"
+                      formControlName="password"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep2.controls.password.invalid &&
+                        formDataStep2.controls.password.touched
+                      "
+                    >
+                      <span
+                        *ngIf="formDataStep2.controls.password.errors?.required"
+                        >Contraseña es requerida.</span
+                      >
+                      <span
+                        *ngIf="
+                          formDataStep2.controls.password.errors?.minlength
+                        "
+                        >contraseña tiene que ser de minimo 6 caracteres</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <!--  -->
+                <div class="flex gap-3 w-full">
+                  <div class="flex flex-col gap-2 w-3/6">
+                    <label for="phoneNumber">Celular:</label>
+                    <input
+                      type="text"
+                      id="phoneNumber"
+                      formControlName="phoneNumber"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep2.controls.phoneNumber.invalid &&
+                        formDataStep2.controls.phoneNumber.touched
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          formDataStep2.controls.phoneNumber.errors?.required
+                        "
+                        >Numero telefonico es requerido.</span
+                      >
+                      <span
+                        *ngIf="
+                          formDataStep2.controls.phoneNumber.errors?.pattern
+                        "
+                        >Tiene que ser formato numerico.</span
+                      >
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-2 w-3/6">
+                    <label for="postalCode">Codigo postal:</label>
+                    <input
+                      type="text"
+                      id="postalCode"
+                      formControlName="postalCode"
+                      class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                    />
+                    <div
+                      *ngIf="
+                        formDataStep2.controls.postalCode.invalid &&
+                        formDataStep2.controls.postalCode.touched
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          formDataStep2.controls.postalCode.errors?.required
+                        "
+                        >Postal Code is required.</span
+                      >
+                      <span
+                        *ngIf="
+                          formDataStep2.controls.postalCode.errors?.pattern
+                        "
+                        >Invalid postal code format.</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!--  -->
+                <div class="flex flex-col gap-2">
+                  <label for="specialty">Especialidad:</label>
+                  <select
+                    id="specialty"
+                    formControlName="specialty"
+                    class="w-full h-10 border px-2 border-gray-300 rounded-lg"
+                  >
+                    <option value="" disabled selected>
+                      Selecciona una especialidad
+                    </option>
+                    <option value="CARDIOLOGY">Cardiología</option>
+                    <option value="DERMATOLOGY">Dermatología</option>
+                    <option value="ENDOCRINOLOGY">Endocrinología</option>
+                    <option value="GASTROENTEROLOGY">Gastroenterología</option>
+                    <option value="GERIATRICS">Geriatría</option>
+                    <option value="GYNECOLOGY">Ginecología</option>
+                    <option value="HEMATOLOGY">Hematología</option>
+                    <option value="INTERNAL_MEDICINE">Medicina Interna</option>
+                    <option value="NEPHROLOGY">Nefrología</option>
+                    <option value="NEUROLOGY">Neurología</option>
+                    <option value="OPHTHALMOLOGY">Oftalmología</option>
+                    <option value="ONCOLOGY">Oncología</option>
+                    <option value="ORTHOPEDICS">Ortopedia</option>
+                    <option value="OTOLARYNGOLOGY">Otorrinolaringología</option>
+                    <option value="PEDIATRICS">Pediatría</option>
+                    <option value="PSYCHIATRY">Psiquiatría</option>
+                    <option value="RADIOLOGY">Radiología</option>
+                    <option value="RHEUMATOLOGY">Reumatología</option>
+                    <option value="TRAUMATOLOGY">Traumatología</option>
+                    <option value="UROLOGY">Urología</option>
+                  </select>
+                  <div
+                    *ngIf="
+                      formDataStep2.controls.specialty.invalid &&
+                      formDataStep2.controls.specialty.touched
+                    "
+                  >
+                    <span
+                      *ngIf="formDataStep2.controls.specialty.errors?.required"
+                      >Especialidad es requerido</span
+                    >
+                  </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label for="licenseNumber">Numero de licencia:</label>
+                  <input
+                    type="text"
+                    id="licenseNumber"
+                    formControlName="licenseNumber"
+                    class="w-[445px] h-10 border px-2 border-gray-300 rounded-lg"
+                  />
+                  <div
+                    *ngIf="
+                      formDataStep2.controls.licenseNumber.invalid &&
+                      formDataStep2.controls.licenseNumber.touched
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        formDataStep2.controls.licenseNumber.errors?.required
+                      "
+                      >Numero de licencia es requerido</span
+                    >
+                    <span
+                      *ngIf="
+                        formDataStep2.controls.licenseNumber.errors?.pattern
+                      "
+                      >Tiene que ser de formato numerico</span
+                    >
+                  </div>
+                </div>
+                <div class="flex flex-col gap-4">
+                  <h1 class="text-md">
+                    Disponibilidad
+                  </h1>
+                  <div class="flex justify-between">
+                    <div class="flex items-center">
+                      <input
+                        type="checkbox"
+                        id="morning"
+                        formControlName="morning"
+                        class="form-checkbox rounded-full h-5 w-5 text-primary focus:ring-primary-dark"
+                      />
+                      <label for="morning" class="ml-2">Mañana</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input
+                        type="checkbox"
+                        id="afternoon"
+                        formControlName="afternoon"
+                        class="form-checkbox rounded-full h-5 w-5 text-primary focus:ring-primary-dark"
+                      />
+                      <label for="afternoon" class="ml-2">Tarde</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input
+                        type="checkbox"
+                        id="night"
+                        formControlName="night"
+                        class="form-checkbox rounded-full h-5 w-5 text-primary focus:ring-primary-dark"
+                      />
+                      <label for="night" class="ml-2">Noche</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!--  -->
+              </div>
+              <div class="flex justify-center items-center">
+                <button
+                  type="submit"
+                  class="w-[220px] h-10 border border-gray-300 rounded-full bg-[#FFCD93]"
+                >
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </form>
+        </article>
+      </section>
+      <img
+        src="../../../../../assets/image-png/equipo-profesionales-salud.png"
+        alt="logo-team-pro"
+        class="hidden lg:block h-64"
+      />
+    </section>
+  </section>
+</section>
+
+<router-outlet></router-outlet>

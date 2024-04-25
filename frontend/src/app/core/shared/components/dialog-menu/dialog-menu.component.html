@@ -1,0 +1,89 @@
+<ng-container *ngIf="doctor">
+  <ng-container *ngIf="!doctor.imageUrl">
+    <img
+      (click)="isOpen = !isOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin"
+      src="../../../../assets/image-png/user.png"
+      alt="Foto de perfil"
+      class="w-10 cursor-pointer bg-white rounded-full"
+    />
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="trigger"
+      [cdkConnectedOverlayOpen]="isOpen"
+    >
+    <div class="bg-white w-40 p-4 rounded-md flex flex-col gap-y-2 shadow-md">
+      <p class="mb-4 text-center text-primary-dark">¡Hola, {{ doctor.firstName }}!</p>
+      <a *ngIf="roled === '[ASSISTENT]'" class="cursor-pointer text-primary-dark hover:font-bold" routerLink="/dashboard/profile-patient" routerLinkActive="text-primary-dark font-bold">Perfil Asistente</a>
+      <a *ngIf="roled === '[DOCTOR]'" class="cursor-pointer text-primary-dark hover:font-bold" routerLink="/dashboard/profile-doctor" routerLinkActive="text-primary-dark font-bold">Perfil Doctor</a>
+      <a class="cursor-pointer text-primary-dark hover:font-bold" (click)="logout()">Cerrar Sesión</a>
+    </div>
+    </ng-template>
+  </ng-container>
+  <ng-container *ngIf="doctor.imageUrl">
+  <img
+    (click)="isOpen = !isOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin"
+    [src]="doctor.imageUrl" alt="Foto de perfil"
+    alt="Foto de perfil"
+    class="w-10 cursor-pointer"
+  />
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="trigger"
+    [cdkConnectedOverlayOpen]="isOpen"
+  >
+  <div class="bg-white w-40 p-4 rounded-md flex flex-col gap-y-2 shadow-md">
+    <p class="mb-4 text-center text-primary-dark">¡Hola, {{ doctor.firstName }}!</p>
+    <a *ngIf="roled === '[ASSISTENT]'" class="cursor-pointer text-primary-dark hover:font-bold" routerLink="/dashboard/profile-patient" routerLinkActive="text-primary-dark font-bold">Perfil Asistente</a>
+    <a *ngIf="roled === '[DOCTOR]'" class="cursor-pointer text-primary-dark hover:font-bold" routerLink="/dashboard/profile-doctor" routerLinkActive="text-primary-dark font-bold">Perfil Doctor</a>
+    <a class="cursor-pointer text-primary-dark hover:font-bold" (click)="logout()">Cerrar Sesión</a>
+  </div>
+  </ng-template>
+</ng-container>
+</ng-container>
+
+<ng-container *ngIf="assistent">
+  <ng-container *ngIf="!assistent.imageUrl">
+    <img
+      (click)="isOpen = !isOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin"
+      src="../../../../assets/image-png/user.png"
+      alt="Foto de perfil"
+      class="w-10 cursor-pointer bg-white rounded-full"
+    />
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="trigger"
+      [cdkConnectedOverlayOpen]="isOpen"
+    >
+    <div class="bg-white w-40 p-4 rounded-md flex flex-col gap-y-2 shadow-md">
+      <p class="mb-4 text-center text-primary-dark">¡Hola, {{ assistent.firstName }}!</p>
+      <a *ngIf="roled === '[ASSISTENT]'" class="cursor-pointer text-primary-dark hover:font-bold" routerLink="/dashboard/profile-patient" routerLinkActive="text-primary-dark font-bold">Perfil Asistente</a>
+      <a *ngIf="roled === '[DOCTOR]'" class="cursor-pointer text-primary-dark hover:font-bold" routerLink="/dashboard/profile-doctor" routerLinkActive="text-primary-dark font-bold">Perfil Doctor</a>
+      <a class="cursor-pointer text-primary-dark hover:font-bold" (click)="logout()">Cerrar Sesión</a>
+    </div>
+    </ng-template>
+  </ng-container>
+  <ng-container *ngIf="assistent.imageUrl">
+  <img
+    (click)="isOpen = !isOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin"
+    [src]="assistent.imageUrl" alt="Foto de perfil"
+    alt="Foto de perfil"
+    class="w-10 cursor-pointer"
+  />
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="trigger"
+    [cdkConnectedOverlayOpen]="isOpen"
+  >
+  <div class="bg-white w-40 p-4 rounded-md flex flex-col gap-y-2 shadow-md">
+    <p class="mb-4 text-center text-primary-dark">¡Hola, {{ assistent.firstName }}!</p>
+    <a *ngIf="roled === '[ASSISTENT]'" class="cursor-pointer text-primary-dark hover:font-bold" routerLink="/dashboard/profile-patient" routerLinkActive="text-primary-dark font-bold">Perfil Asistente</a>
+    <a *ngIf="roled === '[DOCTOR]'" class="cursor-pointer text-primary-dark hover:font-bold" routerLink="/dashboard/profile-doctor" routerLinkActive="text-primary-dark font-bold">Perfil Doctor</a>
+    <a class="cursor-pointer text-primary-dark hover:font-bold" (click)="logout()">Cerrar Sesión</a>
+  </div>
+  </ng-template>
+</ng-container>
+</ng-container>
+
+
+
+

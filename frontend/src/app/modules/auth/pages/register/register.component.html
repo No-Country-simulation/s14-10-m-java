@@ -1,0 +1,55 @@
+<section class="min-h-screen bg_blue_shadow">
+  <shared-navbar [showOptions]="false"></shared-navbar>
+  <section class="content_register flex items-center justify-center flex-col">
+    <section class="flex flex-col gap-6 text-white">
+      <h1 class="text-center text-4xl">Crea una cuenta</h1>
+      <section class="flex gap-10 flex-wrap justify-center items-center">
+        <article
+          class="neumorphic rounded-lg w-[420px] border border-white font-poppins flex flex-col p-9 items-center gap-8 cursor-pointer"
+          (click)="navegar('/auth/register-patient')"
+        >
+          <div
+            class="w-28 h-28 p-3 rounded-full bg-[#FFD6A6] flex justify-center items-center shadow-lg"
+          >
+            <img
+              src="../../../../../assets/icons-svg/icon_person.svg"
+              alt="icon_person"
+              class="w-14 h-14"
+            />
+          </div>
+
+          <div class="flex flex-col justify-center items-center gap-3">
+            <p class="text-3xl">Paciente</p>
+            <p class="text-center text-sm">
+              Reserva tus turnos médicos con <br />
+              nuestros especialistas calificados
+            </p>
+          </div>
+        </article>
+        <article
+          class="neumorphic rounded-lg w-[420px] border border-white font-poppins flex flex-col p-9 items-center gap-8 cursor-pointer"
+          (click)="navegar('/auth/register-doctor')"
+        >
+          <div
+            class="w-28 h-28 p-5 rounded-full bg-[#FFD6A6] flex justify-center items-center shadow-lg"
+          >
+            <img
+              src="../../../../../assets/icons-svg/icon_stethoscope.svg"
+              alt="icon_person"
+              class="w-14 h-14"
+            />
+          </div>
+          <div class="flex flex-col justify-center items-center gap-3">
+            <p class="text-3xl">Profesional</p>
+            <p class="text-center text-sm">
+              Administra tu agenda de pacientes <br />
+              online de manera rápida
+            </p>
+          </div>
+        </article>
+      </section>
+    </section>
+  </section>
+</section>
+
+<router-outlet></router-outlet>

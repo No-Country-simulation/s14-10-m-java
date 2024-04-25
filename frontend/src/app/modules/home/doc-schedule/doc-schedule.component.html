@@ -1,0 +1,117 @@
+<div
+  style="
+    height: 900px;
+    background-image: radial-gradient(
+      circle at 8% -8%,
+      #ffdeb766 15%,
+      #ffffff 22%
+    );
+  "
+>
+  <div
+    style="
+      background-color: #75a5ff;
+      background-image: radial-gradient(
+        circle at 15% -10%,
+        #ffdeb766 4%,
+        #ffffff15 24%
+      );
+    "
+    class="rounded-b-3xl"
+  >
+    <shared-navbar></shared-navbar>
+  </div>
+  <div class="container w-11/12 max-w-[1300px] m-auto mt-5">
+    <a
+      routerLink="/search-doctor"
+      class="mr-6 cursor-pointer flex items-center justify-center align-center rounded-full outline-none h-[3.37rem] w-[3.37rem]"
+      ><img
+        class="w-9 h-9 object-contain"
+        src="./assets/icons-svg/arrow.svg"
+        alt="calme arrow"
+    /></a>
+  </div>
+  <div class="container w-11/12 max-w-[1050px] m-auto">
+    <div class="flex flex-col mt-1">
+      <h3
+        class="font-bold"
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-size: 32px;
+          line-height: 48px;
+          color: #ff9d2b;
+        "
+      >
+        Reserva un turno con el Dr. {{ doctor?.lastName }}
+      </h3>
+      <div class="flex mt-4">
+        <div class="shrink-0 h-auto w-[8.125rem] flex items-center">
+          <ng-container *ngIf="!doctor?.imageUrl">
+            <img
+            style="
+              height: 117px;
+              border-radius: 50%;
+              box-shadow: -10px 10px 20px #6a9effcc;
+            "
+            src="./assets/image-png/user.png"
+            alt="doc-img"
+          />
+          </ng-container>
+          <ng-container *ngIf="doctor?.imageUrl">
+            <img
+            style="
+              height: 117px;
+              border-radius: 50%;
+              box-shadow: -10px 10px 20px #6a9effcc;
+            "
+            [src]="doctor?.imageUrl"
+            alt="doc-img"
+          />
+          </ng-container>
+        </div>
+        <div class="flex-1 h-auto flex items-center">
+          <div class="text-calme-dark-blue mx-5 w-full">
+            <div class="font-bold text-3xl flex justify-between">
+              <div>Dr. {{ doctor?.firstName }} {{ doctor?.lastName }}</div>
+              <div class="font-normal text-2xl flex flex-row items-center">
+                <img
+                  class="w-6 h-6 object-contain"
+                  src="./assets/icons-svg/phone.svg"
+                  alt="calme phone"
+                />
+                <span>{{ doctor?.phoneNumber }}</span>
+              </div>
+            </div>
+            <div class="font-normal text-2xl flex justify-between">
+              <div>{{ doctor?.specialty }}</div>
+              <div class="flex flex-row items-center">
+                <img
+                  class="w-6 h-6 object-contain"
+                  src="./assets/icons-svg/email.svg"
+                  alt="calme email"
+                />
+                <span>{{ doctor?.email }}</span>
+              </div>
+            </div>
+            <p class="font-normal text-2xl">N. Matrícula: {{ doctor?.DNI }}</p>
+            <p class="font-normal text-2xl">{{ doctor?.address }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-6">
+      <ejs-schedule
+        width="100%"
+        height="550px"
+        #scheduleObj
+        [currentView]="currView"
+        [eventSettings]="eventSettings"
+        (select)="onDateSelect($event)"
+      >
+        <e-views>
+          <e-view option="WorkWeek" startHour="09:30" endHour="18:00"></e-view>
+        </e-views>
+      </ejs-schedule>
+    </div>
+  </div>
+</div>
