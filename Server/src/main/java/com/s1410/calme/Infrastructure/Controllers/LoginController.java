@@ -30,20 +30,4 @@ public class LoginController {
         return ResponseEntity.status(HttpStatus.OK).body(
                 this.authenticationService.login(requestLogin));
     }
-
-    @PutMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
-        String result = authenticationService.forgotPassword(email);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    @PutMapping("/set-password")
-    public ResponseEntity<String> setPassword(@RequestParam String email, @RequestParam String newPassword) {
-
-        String result = authenticationService.setPassword(email, newPassword);
-
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
 }

@@ -38,6 +38,7 @@ public class SecurityConfig {
     private final AuthenticationProvider authProvider;
 
     private static final String[] FREE_ENDPOINTS = {
+            "/", // Permitir acceso a la página principal sin autenticación
             "/api/v1/company/create",
             "/v2/api-docs",
             "/swagger-resources",
@@ -67,7 +68,14 @@ public class SecurityConfig {
             "/doctor/findByPostalCode",
             "/actuator/**",
             "/db/**",
-            "/email/emailValidation/**"
+            "/email/emailValidation/**",
+            //thymeleaf
+            "/forgot-password",
+            "/resetPassword/**",
+            "/set-password/**",
+            "/resources/**",
+            "forget-passwordHtml",
+            "/olvido-contra/**"
     };
 
     private static final String[] DOCTOR_ENDPOINTS = {

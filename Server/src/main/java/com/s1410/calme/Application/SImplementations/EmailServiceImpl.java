@@ -3,6 +3,7 @@ package com.s1410.calme.Application.SImplementations;
 import com.s1410.calme.Domain.Entities.Appointment;
 import com.s1410.calme.Domain.Entities.Assistent;
 import com.s1410.calme.Domain.Entities.Doctor;
+import com.s1410.calme.Domain.Entities.User;
 import com.s1410.calme.Domain.Repositories.AppointmentRepository;
 import com.s1410.calme.Domain.Repositories.AssistentRepository;
 import com.s1410.calme.Domain.Repositories.DoctorRepository;
@@ -101,7 +102,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendPasswordRecoveryMail(String email) {
+    public void sendPasswordRecoveryMail(String email, User user) {
 
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -112,9 +113,10 @@ public class EmailServiceImpl implements EmailService {
 
             Context context = new Context();
             // Agregar variables de contexto para la plantilla Thymeleaf
-            // context.setVariable("message", "CLICK aqui para recuperar contresena " + " \"http://localhost:8080/verify-password?token=\"" + email);
-            context.setVariable("messageRecovery", "CLICK aquí para recuperar contraseña: <a href=\"http://localhost:8080/login/set-password?email=" + email + "\">Recuperar contraseña</a>");
 
+            context.setVariable("nameUsuario", user.getFirstName() + " " + user.getLastName() + " " + user.getSecondName() );
+            String jwtCode = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9";
+            context.setVariable("messageRecovery", "http://localhost:8080/resetPassword?email=" + email + "&jwt=" + jwtCode);
             // Procesar la plantilla Thymeleaf
             String htmlBody = templateEngine.process("templateForgetPassword", context);
 

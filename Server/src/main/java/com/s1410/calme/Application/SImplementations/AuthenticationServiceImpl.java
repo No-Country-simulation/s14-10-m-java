@@ -60,7 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     public String forgotPassword(String email) {
         User user = findUserByEmail(email);
-        emailService.sendPasswordRecoveryMail(email);
+        emailService.sendPasswordRecoveryMail(email, user);
         return "Por favor, revise su correo electrónico para establecer una nueva contraseña para su cuenta";
     }
 
@@ -84,7 +84,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             assistentRepository.save(assistent);
             return "Nueva contraseña establecida con éxito, por favor inicie sesión";
         }
-        throw new RuntimeException("Usuario no encontradocon este email:" + email);
+        throw new RuntimeException("Usuario no encontrado con este email:" + email);
     }
 
     private User findUserByEmail(String email) {
@@ -98,6 +98,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return doctorOptional.get();
         }
 
-        throw new RuntimeException("No se ha encontrado este email relacionado a una cuenta de asistente o doctor: " + email);
+        throw new RuntimeException("No se ha encontrado una cuenta existente con: " + email);
     }
 }
