@@ -36,7 +36,7 @@ public class AssistedServiceImpl implements AssistedService {
     @Override //Assistent role needed.
     public ResponseAssisted createAssisted(RequestCreateAssisted requestCreateAssisted) {
 
-        roleValidation.checkAssistentRole();
+        //roleValidation.checkAssistentRole();
         Long assistantId = requestCreateAssisted.AssistantID();
 
         // Search if the assistant user exists in DB to link with assisted, otherwise launch an exception.
@@ -115,7 +115,7 @@ public class AssistedServiceImpl implements AssistedService {
     @Transactional
     @Override //Assistent role needed.
     public ResponseAssisted updateAssisted(RequestEditAssisted requestEditAssisted) {
-        roleValidation.checkAssistentRole();
+        //roleValidation.checkAssistentRole();
 
         Assisted assisted = this.assistedRepository.findById(requestEditAssisted.id())
                 .orElseThrow(() -> new EntityNotFoundException(requestEditAssisted.id().toString()));
@@ -149,7 +149,7 @@ public class AssistedServiceImpl implements AssistedService {
     @Transactional
     @Override //Assistent role needed.
     public boolean updateRelationAA(Long assistantId, Long assistedId, RelationType relationType){
-        roleValidation.checkAssistentRole();
+        //roleValidation.checkAssistentRole();
         Assisted assisted = this.assistedRepository.findById(assistedId)
                 .orElseThrow(() -> new EntityNotFoundException(assistedId.toString()));
         Assistent assistant = this.assistentRepository.findById(assistantId)
@@ -166,7 +166,7 @@ public class AssistedServiceImpl implements AssistedService {
     @Transactional
     @Override //Assistent role needed.
     public Boolean unlinkAssistedFromAssistant(Long assistantId, Long assistedId) {
-        roleValidation.checkAssistentRole();
+        //roleValidation.checkAssistentRole();
 
         // Get relation between Assisted and Assistant.
         RelationAA relation = this.relationAARepository.findByAssistentIdAndAssistedId(assistantId, assistedId)

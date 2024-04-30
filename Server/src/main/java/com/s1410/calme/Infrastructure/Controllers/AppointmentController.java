@@ -19,7 +19,7 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
-    @PostMapping("/")
+    @PostMapping("/register")
     public ResponseEntity<ResponseAppointment> createAppointment(@RequestBody RequestCreateAppointment requestCreateAppointment){
         return appointmentService.createAppointment(requestCreateAppointment);
     }

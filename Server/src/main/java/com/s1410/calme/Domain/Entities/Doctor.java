@@ -7,9 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+
+import java.util.*;
 
 @Entity
 @Data
@@ -35,9 +34,8 @@ public class Doctor extends User {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority authority = new SimpleGrantedAuthority(RolesEnum.DOCTOR.name());
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(authority);
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.toString()));
         return authorities;
     }
 

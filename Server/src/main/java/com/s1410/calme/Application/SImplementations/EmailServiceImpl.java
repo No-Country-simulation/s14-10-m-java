@@ -147,7 +147,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
 
-    /*
+    /* Juan, acostumbrate a borrar los comentarios, porfa! xD
     * 1. se registra exitosamente.
     * 2. generar token dentro de confirmationEmail() y se manda el mail.
     * 3. el usuario ve el email y toca el boton con un url personalizado.

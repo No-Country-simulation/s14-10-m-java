@@ -79,7 +79,7 @@ public class DoctorServiceImpl implements DoctorService {
         Doctor doctor = doctorRepository.findById(requestEditDoctor.id()).orElseThrow(()->
                 new EntityNotFoundException(requestEditDoctor.id().toString()));
 
-        roleValidation.checkDoctorRole();
+        //roleValidation.checkDoctorRole();
         selfValidation.checkSelfValidation(requestEditDoctor.id());
 
         if (doctor.getActive()){
@@ -123,7 +123,7 @@ public class DoctorServiceImpl implements DoctorService {
         Doctor doctor = doctorRepository.findById(id).orElseThrow(
                 ()-> new EntityNotFoundException("Could not find the doctor with id: "+id));
 
-        roleValidation.checkDoctorRole();
+        //roleValidation.checkDoctorRole();
         selfValidation.checkSelfValidation(id);
 
         doctor.setActive(!doctor.getActive());

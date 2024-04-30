@@ -97,7 +97,7 @@ public class AssistentServiceImpl implements AssistentService {
     public ResponseAssistent updateAssistent(RequestEditAssistent requestEditAssistent,
                                              String tokenUser) {
 
-        roleValidation.checkAssistentRole();
+        //roleValidation.checkAssistentRole();
         selfValidation.checkSelfValidation(requestEditAssistent.id());
 
         Assistent assistent = this.assistentRepository.findById(requestEditAssistent.id())
@@ -131,7 +131,7 @@ public class AssistentServiceImpl implements AssistentService {
     @Transactional
     @Override // Assistent role needed.
     public Boolean toogleDeleteAssistent(Long id,String tokenUser) {
-        roleValidation.checkAssistentRole();
+        //roleValidation.checkAssistentRole();
         selfValidation.checkSelfValidation(id);
 
         Assistent assistent = this.assistentRepository.findById(id)
