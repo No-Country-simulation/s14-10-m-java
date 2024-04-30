@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssistentService } from 'src/app/core/shared/services/assistent.service';
+import { NotifyService } from '../../auth/services/notify.service';
 
 @Component({
   selector: 'app-appointment-form',
@@ -17,7 +18,7 @@ export class AppointmentFormComponent implements OnInit {
   turnDate?: string | null;
   showPopup: boolean = false; // Variable para controlar la visibilidad del popup
 
-  constructor(private route: ActivatedRoute,private assistentService :AssistentService, private router: Router) { }
+  constructor(private route: ActivatedRoute,private assistentService :AssistentService, private router: Router, private notifyService: NotifyService) { }
 
   
   ngOnInit(): void {
@@ -95,11 +96,17 @@ export class AppointmentFormComponent implements OnInit {
     () => {
       // Si la confirmación fue exitosa, navega a la página de confirmación
       this.router.navigate(['/appointment-confirmation'], { queryParams: { doctorData: JSON.stringify(this.doctorData) } });
+      this.notifyService.showSuccess("");
     },
     error => {
       console.error('Error al confirmar el turno:', error);
-      // Si la confirmación no fue exitosa, puedes mostrar un mensaje de error o
-      // tomar otras acciones según tus necesidades, pero no navegas a la página de confirmación
+      if (error && error.error && error.error.errorMessage) {
+        // Si hay un mensaje de error específico en la respuesta del backend, mostrarlo en la notificación
+        this.notifyService.showError(error.error.errorMessage);
+      } else {
+        // Si no se puede determinar un mensaje de error específico, mostrar un mensaje genérico
+        this.notifyService.showError('Ha ocurrido un error al procesar tu solicitud. Por favor, inténtalo nuevamente.');
+      }
     }
   );
 

@@ -55,30 +55,6 @@ export class LoginComponent {
         this.router.navigate(['/']);
       }
     );
-
-    /* this.loginService.Login(this.loginForm.value).subscribe({
-          next: () => {
-              this.showPassword
-              title: '¡Ingreso exitoso!',
-              text: `¡Hola, bienvenido a esta iniciativa ambiental!`,
-              icon: 'success',
-            }).then(() => {
-              this.loginForm.reset();
-              this.router.navigate(['/home']);
-            });
-          },
-          error: (error) => {
-            Swal.fire({
-              title: 'Ha ocurrido un error...',
-              text: error.error,
-              icon: 'error',
-            });
-          },
-        }); */
-
-    // handleShowPassword(): void {
-    //   this.showPassword = !this.showPassword;
-    // }
   }
 }
 
