@@ -1,0 +1,189 @@
+<ng-container *ngIf="!(combinedDoctors$ | async)?.length">
+  <ng-container *ngFor="let doctor of doctors" >
+    <div
+    *ngIf="doctor.imageUrl"
+    class="doctor-search-card flex mr-20 mb-10"
+    style="box-shadow: 0px 4px 20px #91b7ff52; border-radius: 16px"
+  >
+    <div class="m-10 flex" style="display: flex; justify-content: space-between">
+      <div class="image ml-4">
+        <ng-container *ngIf="!doctor.imageUrl">
+          <img
+          style="
+            height: 117px;
+            border-radius: 50%;
+            box-shadow: -10px 10px 20px #6a9effcc;
+          "
+          src="../../../assets/image-png/user.png"
+        />
+        </ng-container>
+        <ng-container *ngIf="doctor.imageUrl">
+          <img
+          style="
+            height: 117px;
+            border-radius: 50%;
+            box-shadow: -10px 10px 20px #6a9effcc;
+          "
+          [src]="doctor.imageUrl"
+        />
+        </ng-container>
+      </div>
+      <div>
+        <div
+          class="info ml-20 mb-2"
+          style="
+            font-family: 'Inter';
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 29.05px;
+            color: #063463;
+          "
+        >
+          <p>
+            {{ doctor.firstName }} {{ doctor.secondName }} {{ doctor.lastName }}
+          </p>
+        </div>
+        <div
+          class="info ml-20"
+          style="
+            font-family: 'Inter';
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 24.2px;
+            color: #063463;
+          "
+        >
+          <p>Especialidad: {{ doctor.specialty }}</p>
+          <p>Dirección: {{ doctor.address }}</p>
+          <p>Código postal: {{ doctor.postalCode }}</p>
+          <span>Disponibilidad: </span>
+          <span *ngIf="doctor.morning">mañana </span>
+          <span *ngIf="doctor.afternoon">tarde </span>
+          <span *ngIf="doctor.night">noche</span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="button flex m-20"
+      style="
+        margin-left: auto;
+        border: 3px solid #063463;
+        border-radius: 30px;
+        height: 35px;
+        width: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <button (click)="redirectToAppointmentConfirmation(doctor)"
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 24px;
+          color: #063463;
+        "
+      >
+        Agendar turno
+      </button>
+    </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="combinedDoctors$ | async as combinedDoctors">
+  <ng-container *ngIf="combinedDoctors.length > 0">
+    <ng-container *ngFor="let doctor of combinedDoctors">
+      <div
+      *ngIf="doctor.imageUrl"
+      class="doctor-search-card flex mr-20 mb-10"
+      style="box-shadow: 0px 4px 20px #91b7ff52; border-radius: 16px"
+    >
+      <div class="m-10 flex" style="display: flex; justify-content: space-between">
+        <div class="image ml-4">
+          <ng-container *ngIf="!doctor.imageUrl">
+            <img
+            style="
+              height: 117px;
+              border-radius: 50%;
+              box-shadow: -10px 10px 20px #6a9effcc;
+            "
+            src="../../../assets/image-png/user.png"
+          />
+          </ng-container>
+          <ng-container *ngIf="doctor.imageUrl">
+            <img
+            style="
+              height: 117px;
+              border-radius: 50%;
+              box-shadow: -10px 10px 20px #6a9effcc;
+            "
+            [src]="doctor.imageUrl"
+          />
+          </ng-container>
+        </div>
+        <div>
+          <div
+            class="info ml-20 mb-2"
+            style="
+              font-family: 'Inter';
+              font-weight: 600;
+              font-size: 24px;
+              line-height: 29.05px;
+              color: #063463;
+            "
+          >
+            <p>
+              {{ doctor.firstName }} {{ doctor.secondName }} {{ doctor.lastName }}
+            </p>
+          </div>
+          <div
+            class="info ml-20"
+            style="
+              font-family: 'Inter';
+              font-weight: 400;
+              font-size: 20px;
+              line-height: 24.2px;
+              color: #063463;
+            "
+          >
+            <p>{{ doctor.specialty }}</p>
+            <p>{{ doctor.address }}</p>
+            <p>Código postal: {{ doctor.postalCode }}</p>
+            <span>Disponibilidad: </span>
+            <span *ngIf="doctor.morning">mañana </span>
+            <span *ngIf="doctor.afternoon">tarde </span>
+            <span *ngIf="doctor.night">noche</span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="button flex m-20"
+        style="
+          margin-left: auto;
+          border: 3px solid #063463;
+          border-radius: 30px;
+          height: 35px;
+          width: 150px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <button (click)="redirectToAppointmentConfirmation(doctor)"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+            color: #063463;
+          "
+        >
+          Agendar turno
+        </button>
+      </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>

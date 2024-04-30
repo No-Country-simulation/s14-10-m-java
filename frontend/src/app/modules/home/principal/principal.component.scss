@@ -1,0 +1,28 @@
+h5 {
+    overflow: hidden;
+    width: 80%; /* Ajusta el ancho según tu diseño */
+    flex-wrap: wrap;
+  }
+
+.text-h{
+  font-family: 'Poppins', sans-serif; // Utiliza la fuente Poppins
+    font-weight: 600; // Peso de la fuente 400
+    font-size: 26px; // Tamaño de la fuente 24px
+    line-height: 39px; // Altura de línea 36px
+    color:#063463;
+}
+
+  .shadow-blue-light {
+    box-shadow: 0px 0px 10px 10px #87B1FF25,0px 0px 20px 20px #9cbfff0e;
+  }
+
+  .home-principal{
+    background-color: #75a5ff;
+      border-radius: 0% 0% 40% 40% / 0% 0% 10% 10%;
+      
+      .home-secondary{
+        border-bottom-right-radius:100%;
+        border-bottom-left-radius:100%;
+      }
+  }
+  

@@ -20,7 +20,7 @@ public class EmailController {
     /*/emailValidation/token=askjdajs/email=lalala@gmail.com*/
     String EmailValidation(@PathVariable("token") String token, @PathVariable("email") String email) throws Exception {
         emailService.validateToken(token, email);
-        return "Gracias por validarte";
+        return emailService.validateToken(token, email);
     }
 
 }

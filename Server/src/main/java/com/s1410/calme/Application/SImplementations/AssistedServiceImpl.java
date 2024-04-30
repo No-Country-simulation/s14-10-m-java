@@ -17,9 +17,12 @@ import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -93,7 +96,7 @@ public class AssistedServiceImpl implements AssistedService {
     }
 
     @Override
-    public Page<ResponseAssisted> readAllAssistedFromAssistant(Long assistantId, Pageable pageable) {
+    public Page<ResponseAssisted> readAllAssistedFromAssistant(Long assistantId, Pageable pageable, Boolean actives) {
 
         // Get assistant from db.
         Assistent assistant = this.assistentRepository.findById(assistantId)
@@ -102,14 +105,19 @@ public class AssistedServiceImpl implements AssistedService {
         // Validate if the assistant is active.
         if (!assistant.getActive()) throw new IllegalArgumentException("Assistant with ID " + assistantId + " is inactive.");
 
-        //Set assisted page for response.
-        /*Se espera una lista de respuesta de assisted. Se mapea a través del mapstruct
-        entre ambas listas buscando en el repo de relaciónAA todas las relaciones del assistant
-        y luego... stream() permite transformar la lista, map() funciona como el for, y collect()
-        lo hace lista. */
-        return this.relationAARepository
-                .findByAssistentId(assistantId, pageable)
-                .map(assistedMapper::assistedToResponse);
+        // Get all the assisted from an assistant
+        Page<RelationAA> allAssistedPage = this.relationAARepository.findByAssistentId(assistantId, pageable);
+
+        // Filter assisted by active (by default) or inactive (parameter condition)
+        List<ResponseAssisted> filteredAssisteds = allAssistedPage
+                .getContent()
+                .stream()
+                .filter(relationAA -> relationAA.getActive() == actives)
+                .map(relation -> assistedMapper.assistedToResponse(relation.getAssisted()))
+                .toList();
+
+        // Return a Page of assisted with the filter applied
+        return new PageImpl<>(filteredAssisteds, pageable, allAssistedPage.getTotalElements());
     }
 
     @Transactional
@@ -134,6 +142,15 @@ public class AssistedServiceImpl implements AssistedService {
            }
 
            if (requestEditAssisted.DNI() != null) {
+
+               //Verify that there is no other assisted with the same DNI.
+               if
+               (this.assistedRepository.findByDNI(requestEditAssisted.DNI()).isPresent()
+                       &&
+                       !Objects.equals(assisted.getDNI(), requestEditAssisted.DNI())
+               )
+                   throw new EntityExistsException("There is already an assisted with the DNI " + requestEditAssisted.DNI());
+
                assisted.setDNI(requestEditAssisted.DNI());
            }
 

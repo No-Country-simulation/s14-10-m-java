@@ -1,0 +1,41 @@
+section {
+  background-image: url("../../../../../assets/image-png/bg_blue.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+input {
+  border-radius: 5px 5px 5px 5px;
+  color: black;
+}
+
+/* Define the base font family for all headings, paragraphs, and links */
+
+h1,
+p,
+input,
+h2,
+a {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Add the italic style specifically for h1 elements with the .poppins-medium-italic class */
+
+h1.poppins-medium-italic {
+  font-style: italic;
+}
+
+img {
+  height: 480px;
+  width: 480px;
+}
+
+button {
+  flex-direction: center;
+  align-items: center;
+}
+
+span {
+  color: red;
+}

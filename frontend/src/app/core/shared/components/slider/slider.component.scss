@@ -1,0 +1,43 @@
+.contenedor-imagenes {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+  
+    @for $i from 8 through 14 {
+      > .flex-shrink-0:nth-child(#{$i}) {
+        display: none;
+      }
+    }
+  }
+  
+  .specialty-image {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+  }
+  
+  .carrusel  {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+  
+  
+  
+  .background-image{
+    background-image: radial-gradient(ellipse farthest-corner at 120% 20% , #ffffff 12%,#93b9ff7a 80%, #87b1ff 100%);
+      border-radius: 50%;
+  }
+  
+    
+    
+    .specialty-name {
+      display: none;
+    }
+  
+    .center-element {
+      transform: scale(1.22); 
+      transition: transform 0.5s ease; /* Aplica una transición suave */
+      background-image: radial-gradient(ellipse farthest-corner at 120% 20% , #b7d0ff2e 30%, #ffcd937b 80%);
+     
+    }
+    

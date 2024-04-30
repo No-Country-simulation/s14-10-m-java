@@ -1,0 +1,14 @@
+<div class="container-fluid mt-10 shadow-blue-light" style="border-radius: 40px; height: 355px;">
+  <div class="p-7 flex" style="height: 355px; border-radius: 40px; background-image: radial-gradient(ellipse farthest-corner at 0px 0px, #ffffff 20%, #e0eafecc 82%);">
+      <div class="mr-20 ml-10 mt-1">
+          <img src="../../../../assets/image-png/especialidades.png" alt="Descripción de la imagen" style="max-width: 300px;">
+      </div>
+      <div class="specialties-list flex-grow-1 grid-list"> <!-- Cambiamos la clase a grid-list -->
+          <ul>
+              <li *ngFor="let doctor of filteredDoctors" class="mb-1 text-h" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 20px; line-height: 47px; color: #063463;">
+                <a [routerLink]="['/scheduler/',doctor.id]">Dr. {{ doctor.firstName}} {{doctor.secondName}} {{doctor.lastName}}</a>
+            </li>
+          </ul>
+      </div>
+  </div>
+</div>

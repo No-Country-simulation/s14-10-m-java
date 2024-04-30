@@ -1,0 +1,35 @@
+<header
+  class="flex flex-wrap justify-between py-8 w-11/12 max-w-[1440px] m-auto"
+>
+  <div>
+    <a routerLink="/"
+      ><img
+        class="w-[8.81rem] object-contain"
+        [src]="showLogo"
+        alt="calme logo"
+    /></a>
+  </div>
+  <div class="flex flex-row" *ngIf="showOptions">
+    <ul class="flex flex-wrap items-center mt-3 sm:mt-0">
+      <li *ngFor="let item of navItems">
+        <a
+          class="mr-4 text-base font-medium text-white md:mr-6 cursor-pointer"
+          [ngClass]="{ 'text-calme-dark-blue': activeBlue }"
+          routerLink={{item.ruta}}
+          >{{ item.name }}</a
+        >
+      </li>
+    </ul>
+
+    <app-button
+      color="primary"
+      buttonType="button"
+      (click)="onLogin()"
+      *ngIf="!isLogged"
+      >Inicia Sesión</app-button
+    >
+    <ng-container *ngIf="isLogged">
+      <app-dialog-menu></app-dialog-menu>
+    </ng-container>
+  </div>
+</header>

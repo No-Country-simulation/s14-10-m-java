@@ -1,0 +1,223 @@
+<div
+  style="
+    height: 900px;
+    background-image: radial-gradient(
+      circle at 8% -8%,
+      #ffdeb766 15%,
+      #ffffff 22%
+    );
+  "
+>
+  <div
+    style="
+      background-color: #75a5ff;
+      border-radius: 0px 0px 24px 24px;
+      background-image: radial-gradient(
+        circle at 12% -10%,
+        #ffdeb766 4%,
+        #ffffff15 24%
+      );
+    "
+  >
+    <shared-navbar class="mt-10"></shared-navbar>
+  </div>
+  <div class="flex">
+    <div class="appointment-form">
+      <h3
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 700;
+          font-size: 32px;
+          line-height: 48px;
+          color: #ff9d2b;
+        "
+      >
+        Datos de la consulta
+      </h3>
+      <p
+        class="mt-4"
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          color: #000000;
+        "
+      >
+        Has seleccionado un turno con el Dr. {{ doctorData.firstName }}
+        {{ doctorData.secondName }} {{ doctorData.lastName }} {{ doctorData.id
+        }}<br />
+        Lee con atención la siguiente información y completa <br />los campos
+        requeridos para confirmar tu turno:
+      </p>
+      <div class="flex mt-10">
+        <h3
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 36px;
+            color: #063463;
+          "
+        >
+          Motivo de la consulta
+        </h3>
+        <p
+          class="m-3"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 18px;
+            color: #5b5b5b;
+          "
+        >
+          (Máximo 160 caracteres)
+        </p>
+      </div>
+      <input
+        class="mt-1"
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          width: 418px;
+          height: 56px;
+          border-radius: 8px;
+          border: 1px solid #dde1eb;
+        "
+        type="text"
+        placeholder="  Ingresa el motivo de tu turno"
+        [(ngModel)]="motivoConsulta"
+      />
+      <h3
+        class="mt-6"
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 36px;
+          color: #063463;
+        "
+      >
+        ¿Este turno es para vos?
+      </h3>
+      <div class="mt-2 flex">
+        <label class="radio-label" style="margin-right: 10%">
+          <input
+            type="radio"
+            name="opcion"
+            value="opcion1"
+            (change)="toggleForSelf($event)"
+            checked
+          />
+          Si
+        </label>
+        <label class="radio-label">
+          <input
+            type="radio"
+            name="opcion"
+            value="opcion2"
+            (change)="toggleForSelf($event)"
+          />
+          No, es para alguien más
+        </label>
+      </div>
+
+      <h3
+        *ngIf="!isForSelf"
+        class="mt-6"
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 36px;
+          color: #063463;
+        "
+      >
+        Selecciona quien es el titular del turno
+      </h3>
+      <select
+        *ngIf="!isForSelf"
+        class="mt-2"
+        [ngModel]="titularSeleccionado"
+        (ngModelChange)="seleccionarTitular($event)"
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          width: 418px;
+          height: 56px;
+          border-radius: 8px;
+          border: 1px solid #dde1eb;
+        "
+      >
+        <option value="">Selecciona una persona</option>
+        <!-- Aquí debes iterar sobre tu lista de personas y mostrarlas como opciones -->
+        <option *ngFor="let assisted of assistedList" [value]="assisted.id">
+          {{ assisted.firstName }}
+        </option>
+        <option value="new">Agregar nuevo asistido</option>
+      </select>
+
+      <h3
+        class="mt-6"
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 36px;
+          color: #063463;
+        "
+      >
+        Ingresa un teléfono de contacto
+      </h3>
+      <input
+        class="mt-2"
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          width: 418px;
+          height: 56px;
+          border-radius: 8px;
+          border: 1px solid #dde1eb;
+        "
+        type="text"
+        placeholder="  Código de área + número de celular sin el 15"
+        [(ngModel)]="telefonoContacto"
+      />
+      <div
+        class="py-2 w-[252px] mt-10 rounded-full flex justify-center"
+        [ngClass]="{
+          'bg-accent-light': isFormComplete(),
+          'bg-gray-300': !isFormComplete()
+        }"
+      >
+        <button (click)="confirmFormData()" [disabled]="!isFormComplete()">
+          <p
+            style="
+              font-family: 'Poppins', sans-serif;
+              font-weight: 500;
+              font-size: 22px;
+              line-height: 33px;
+              color: #224c76;
+            "
+          >
+            Confirmar turno
+          </p>
+        </button>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div>
+      <app-appointment [doctorData]="doctorData"></app-appointment>
+    </div>
+  </div>
+  <app-add-assisted-form (close)="this.showPopup=false" *ngIf="showPopup"></app-add-assisted-form>
+  
+
+</div>

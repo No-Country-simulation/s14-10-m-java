@@ -1,0 +1,25 @@
+.bg_blue_shadow {
+  background-image: url("../../../../../assets/image-png/bg_blue.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.neumorphic {
+  border-radius: 1rem;
+  // background: var(--color);
+  // Opacify any color with pure CSS
+  animation: 1s -0.3s 1 paused opacify;
+  backdrop-filter: blur(1.5rem);
+  border: 1px solid rgba(#fff, 0.2);
+  box-shadow: -0.25rem -0.25rem 0.5rem rgba(#fff, 0.07),
+    0.25rem 0.25rem 0.5rem rgba(#000, 0.12),
+    -0.75rem -0.75rem 1.75rem rgba(#fff, 0.07),
+    0.75rem 0.75rem 1.75rem rgba(#000, 0.12),
+    inset 8rem 8rem 8rem rgba(#000, 0.05),
+    inset -8rem -8rem 8rem rgba(#fff, 0.05);
+}
+
+.content_register {
+  height: calc(100vh - 180px);
+}

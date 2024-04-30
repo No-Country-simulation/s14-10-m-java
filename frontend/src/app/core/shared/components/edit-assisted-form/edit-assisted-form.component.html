@@ -1,0 +1,179 @@
+<!-- popup.component.html -->
+<div class="popup">
+    <div class="popup-content">
+      <h1 style="
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 40px;
+      line-height: 60px;
+      color: #065DB4;
+    ">Editar Asistido</h1>
+      <!-- Tu formulario aquí -->
+      <form>
+        <div class="flex mt-4">
+          <h3
+
+            style="
+              font-family: 'Poppins', sans-serif;
+              font-weight: 400;
+              font-size: 24px;
+              line-height: 36px;
+              color: #063463;
+            "
+          >
+            Numero de DNI
+          </h3>
+        </div>
+        <input
+        [(ngModel)]="NumDNI"
+        name="DNI"
+          class="mt-1"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            width: 418px;
+            height: 56px;
+            border-radius: 8px;
+            border: 1px solid #dde1eb;
+          "
+          type="text"
+          placeholder="  dni"
+        />
+        <div *ngIf="NumDNI !== undefined && (NumDNI.toString().length < 8 || NumDNI.toString().length > 9)" style="color: red;">El número de DNI debe tener entre 8 y 9 dígitos.</div>
+        <div class="flex">
+          <h3
+            style="
+              font-family: 'Poppins', sans-serif;
+              font-weight: 400;
+              font-size: 24px;
+              line-height: 36px;
+              color: #063463;
+            "
+          >
+            Nombre
+          </h3>
+        </div>
+        <input
+        [(ngModel)]="FirsName"
+        name="firstName"
+          class="mt-1"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            width: 418px;
+            height: 56px;
+            border-radius: 8px;
+            border: 1px solid #dde1eb;
+          "
+          type="text"
+          placeholder="  nombre"
+        />
+        <div class="flex">
+          <h3
+            style="
+              font-family: 'Poppins', sans-serif;
+              font-weight: 400;
+              font-size: 24px;
+              line-height: 36px;
+              color: #063463;
+            "
+          >
+            Segundo nombre
+          </h3>
+        </div>
+        <input
+        [(ngModel)]="SecondName"
+        name="secondName"
+          class="mt-1"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            width: 418px;
+            height: 56px;
+            border-radius: 8px;
+            border: 1px solid #dde1eb;
+          "
+          type="text"
+          placeholder="  segundo nombre"
+        />
+        <div class="flex">
+          <h3
+            style="
+              font-family: 'Poppins', sans-serif;
+              font-weight: 400;
+              font-size: 24px;
+              line-height: 36px;
+              color: #063463;
+            "
+          >
+            Apellido
+          </h3>
+        </div>
+        <input
+        [(ngModel)]="LastName"
+        name="lastName"
+          class="mt-1"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            width: 418px;
+            height: 56px;
+            border-radius: 8px;
+            border: 1px solid #dde1eb;
+          "
+          type="text"
+          placeholder="  apellido"
+        />
+        <div class="flex">
+          <h3
+            style="
+              font-family: 'Poppins', sans-serif;
+              font-weight: 400;
+              font-size: 24px;
+              line-height: 36px;
+              color: #063463;
+            "
+          >
+            Fecha de nacimiento
+          </h3>
+        </div>
+        <input
+        [(ngModel)]="DateOfBirth"
+        name="dateOfBirth"
+          class="mt-1"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            width: 418px;
+            height: 56px;
+            border-radius: 8px;
+            border: 1px solid #dde1eb;
+          "
+          type="text"
+          placeholder="  fecha de nacimiento"
+        />
+        <div *ngIf="!isDateOfBirthValid()" style="color: red;">El formato de fecha de nacimiento debe ser yyyy-mm-dd.</div>
+      </form>
+      <div class="flex  justify-center mt-4">
+        <div>
+        <button class="button" (click)="confirmFormData(); closePopup()" [disabled]="!isFormComplete()">Editar asistido</button>
+      </div>
+      <div style="margin-right: 30%;">
+
+      </div>
+      <div>
+      <button class="button" (click)="closePopup()">Cerrar</button>
+    </div>
+    </div>
+    </div>
+  </div>

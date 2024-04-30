@@ -8,6 +8,7 @@ public record ResponseAssisted(
         String firstName,
         String secondName,
         String lastName,
-        LocalDate dateOfBirth
+        LocalDate dateOfBirth,
+        String imageUrl
 ) {
 }

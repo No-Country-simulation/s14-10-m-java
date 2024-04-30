@@ -1,0 +1,15 @@
+<button
+  [ngClass]="{
+    'px-5 py-3 rounded-full flex items-center justify-center gap-3 bg-accent-light text-primary-dark font-poppins text-base font-semibold':
+      color === 'primary',
+    'w-[196px] h-[51px] bg-[#75A5FF] rounded-2xl border-[#ffff] text-[#FFFF]':
+      color === 'secondary',
+    'bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded':
+      color === 'danger'
+  }"
+  [type]="buttonType"
+  [routerLink]="routerLink"
+>
+  <ng-content></ng-content>
+  <i *ngIf="endIcon" [ngClass]="endIconClass"></i>
+</button>

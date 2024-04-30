@@ -1,0 +1,39 @@
+<div class="flex">
+  <div
+    *ngFor="let card of cardList"
+    class="borde-dinamic max-w-sm rounded overflow-hidden flex flex-col mb-8 mx-4"
+    style="height: 280px; width: 300px"
+  >
+    <header class="flex px-6 pt-3">
+      <div class="container flex items-center">
+        <div
+        class="w-14 h-14 object-contain"
+        style="
+        border-radius: 50%;
+        box-shadow: 0px 0px 20px #75a5fff1;
+        background-image: radial-gradient(
+          ellipse farthest-corner at 50% 50%,
+          #6a9effa6 80%,
+          #87b1ff36 36%
+        );
+      ">
+          <img
+          class="w-12 h-12 m-1"
+          src="../../../../../assets/icons-svg/{{ card.image }}"
+          alt="Atardecer más frío"
+        /></div>
+
+      </div>
+      <h1 class="text-end">
+        <br />{{ card.id }}<br />
+        <p style="color: #a7c4fa" class="text-end">___________</p>
+      </h1>
+    </header>
+    <div class="px-6 py-4 flex-grow align-self-stretch">
+      <div class="font-semibold text-xl mb-2">{{ card.title }}</div>
+      <p class="text-gray-700 text-base">
+        {{ card.description }}
+      </p>
+    </div>
+  </div>
+</div>
