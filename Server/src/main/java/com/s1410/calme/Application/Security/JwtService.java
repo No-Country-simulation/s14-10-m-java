@@ -22,10 +22,7 @@ public class JwtService {
 
     public String getToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        String authorities = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
-        claims.put("roles", authorities);
+        claims.put("role", userDetails.getAuthorities().stream().findFirst().get().getAuthority());
         return Jwts
                 .builder()
                 .setClaims(claims)

@@ -25,7 +25,7 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
-
+    @PostMapping("/register")
     @Operation(summary = "Create an appointment", description = "Creates an appointment and stores it in the database. Must pass a series of checks in backend.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully created appointment"),
@@ -47,7 +47,6 @@ public class AppointmentController {
                     )}
             )
     })
-    @PostMapping("/")
     public ResponseEntity<ResponseAppointment> createAppointment(@RequestBody RequestCreateAppointment requestCreateAppointment){
         return appointmentService.createAppointment(requestCreateAppointment);
     }

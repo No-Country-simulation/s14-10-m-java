@@ -90,8 +90,8 @@ public class SecurityConfig {
             "/assisted/all/**",
             "/assisted/update",
             "/assisted/updateRelation",
-            "/assisted/deleteRelation/**/**",
-            "/appoinment/",
+            "/assisted/deleteRelation/**",
+            "/appointment/register",
             "/appointment/all",
             "/appointment/betweenDates",
             "/appointment/assistent/**",
@@ -105,8 +105,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable).cors((cors) -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(FREE_ENDPOINTS).permitAll()
-                                //.requestMatchers(DOCTOR_ENDPOINTS).hasRole("DOCTOR")
-                                //.requestMatchers(ASSISTENT_ENDPOINTS).hasRole("ASSISTENT")
+                                .requestMatchers(DOCTOR_ENDPOINTS).hasRole("DOCTOR")
+                                .requestMatchers(ASSISTENT_ENDPOINTS).hasRole("ASSISTENT")
                                 .anyRequest().authenticated()
                 )
                 //authRequest.anyRequest().permitAll())
