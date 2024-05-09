@@ -1,0 +1,17 @@
+.search {
+    display: flex; // Utilizamos Flexbox para alinear los divs en línea
+  }
+  
+  .filter, .doctors {
+    flex: 1; // Ambos divs ocupan el mismo espacio disponible
+  }
+  
+  .filter {
+    margin-left: 60px;
+    margin-right: 40px;
+    background-color: lightblue; // Color de fondo para el div de filtro
+    height: 734px;
+    max-width: 280px;
+
+  }
+  

@@ -1,0 +1,128 @@
+<section class="min-h-screen fondo-bg">
+  <shared-navbar [showOptions]="false"></shared-navbar>
+  <div class="flex flex-col px-40 py-5">
+    <div
+      class="flex w-full items-center justify-center lg:justify-between border border-x-stone-300 bg-gradient-to-br from-gray-10 to-gray-50 -14"
+    >
+      <!-- Right column container with form -->
+      <div
+        class="sm:w-5/6 md:w-8/12 lg:w-8/12 flex-wrap items-center flex-justify-center"
+      >
+        <h1
+          class="text-center justify-center text-white font-bold text-5xl mb-12"
+        >
+          Inicia sesión
+        </h1>
+        <form
+          class="md:w-6/12 lg:w-10/12 flex-wrap items-center flex-justify-center pl-20"
+          [formGroup]="loginForm"
+          (ngSubmit)="login()"
+        >
+          <!-- Email input -->
+          <div class="relative mb-6" data-twe-input-wrapper-init>
+            <h2 class="md:w-1/5 text-blue-900 font-semibold text-xl pb-2">
+              E-mail
+            </h2>
+            <input
+              type="email"
+              class="peer block min-h-[auto] sm:w-24 md:w-48 lg:w-full rounded border-10 bg-white px-3 py-[4px] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-100"
+              id="email"
+              formControlName="email"
+              name="required"
+              placeholder="Correo electronico"
+            />
+            <span
+              class="form-text text-red-600"
+              *ngIf="
+                loginForm.controls['email'].getError('required') &&
+                loginForm.controls['email'].touched
+              "
+              class="form-text"
+              >El email es obligatorio.
+            </span>
+            <span
+              *ngIf="
+                loginForm.controls['email'].getError('email') &&
+                loginForm.controls['email'].touched
+              "
+              class="form-text"
+              >Ingresa correo electronico valido
+            </span>
+          </div>
+
+          <!-- Password input -->
+          <div class="relative mb-6 pb-10" data-twe-input-wrapper-init>
+            <h2 class="md:w-1/5 text-blue-900 font-semibold text-xl pb-2">
+              Contraseña
+            </h2>
+            <input
+              type="password"
+              class="peer block min-h-[auto] sm:w-24 md:w-48 lg:w-full rounded border-10 bg-white px-3 py-[4px] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-100"
+              id="password"
+              formControlName="password"
+              name="required"
+              placeholder="Contraseña"
+            />
+            <span
+              *ngIf="
+                loginForm.controls['password'].getError('minLength(8)') &&
+                loginForm.controls['password'].touched
+              "
+              class="form-text"
+              >La contraseña debe tener al menos 8 caracteres.
+            </span>
+            <span
+              *ngIf="
+                loginForm.controls['password'].getError('required') &&
+                loginForm.controls['password'].touched
+              "
+              class="form-text"
+              >La contraseña es obligatoria.</span
+            >
+            <p class="text-end text-blue-800 font-light text-sm">
+              Olvidaste tu contraseña?
+              <a href="#" class="font-bold text-black-600 hover:text-white-400">
+                Recuperala aqui
+              </a>
+            </p>
+          </div>
+          <div class="flex justify-center">
+            <button
+              type="submit"
+              class="w-56 bg-stone-300 hover:bg-yellow-400 text-blue-800 font-bold py-2 rounded-full mb-6"
+            >
+              INGRESAR
+            </button>
+          </div>
+          <!-- Remember me checkbox -->
+          <div class="mb-9 pt-6 items-justify-between">
+            <div class="mb-[0.125rem] block max-h-[1.5rem]">
+              <p
+                class="w-full font-light text-blue-800 text-lg items-justify-between focus:outline-none dark:text-primary-400"
+              >
+                ¿Aun no tienes una cuenta?
+                <a
+                  routerLink="../register"
+                  id="register"
+                  class="text-primary font-extrabold focus:outline-none dark:text-primary-400"
+                  >Registrarte aqui
+                </a>
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div
+        class="md:hidden sm:hidden s:hidden lg:block bg-cover bg-no-repeat pt-40 pb-40"
+      >
+        <img
+          src="assets/image-png/TaeAugust07-removebg-preview 1.png"
+          alt="Image Description"
+        />
+      </div>
+      <div>
+        <!-- Left column container with background-->
+      </div>
+    </div>
+  </div>
+</section>

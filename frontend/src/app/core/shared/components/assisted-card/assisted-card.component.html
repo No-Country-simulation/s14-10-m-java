@@ -1,0 +1,338 @@
+<div *ngIf="assistedList.length > 0">
+  <div class="mb-4" *ngFor="let assisted of assistedList; let i = index">
+    <div
+      style="
+        height: 2px;
+        background-color: #75a5ff;
+        margin-top: 5%;
+        margin-bottom: 5%;
+      "
+    ></div>
+    <div class="assisted-item flex">
+      <ng-container *ngIf="!assisted.imageUrl">
+        <img
+        style="height: 128px; width: 128px"
+        src="../../../../../assets/image-png/user.png"
+        alt="Imagen de Asistido"
+      />
+    </ng-container>
+      <ng-container *ngIf="assisted.imageUrl">
+        <img
+        style="height: 128px; width: 128px"
+        [src]="assisted.imageUrl"
+        alt="Imagen de Asistido"
+      />
+    </ng-container>
+      <div class="info ml-4">
+        <p
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 26px;
+            line-height: 39px;
+            color: #063463;
+          "
+        >
+          {{ assisted.firstName }} {{ assisted.secondName }}
+          {{ assisted.lastName }}
+        </p>
+        <!-- Desplegable de turnos -->
+        <p
+          class="mt-1"
+          style="
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 36px;
+            color: #063463;
+          "
+        >
+          Familiar asistido
+        </p>
+
+        <div class="dropdown">
+          <button
+            class="desplegable mt-4"
+            (click)="toggleDropdown(i); getAssistedTurns(assisted.id)"
+          >
+            {{ dropdownStates[i] ? "Ocultar" : "Turnos" }}
+          </button>
+        </div>
+      </div>
+      <div class="flex flex-col ml-auto d-flex align-items-center">
+        <button class="edit btn btn-primary" style="margin-left: 70%;" (click)="toggleEditAssisted()">Editar</button>
+        <button class="delete" style="margin-top: 22%;" (click)="toggleCancelPopup()"> Desvincular de mi cuenta</button>
+      </div>
+    </div>
+    <div *ngIf="dropdownStates[i]">
+      <!-- Contenido del desplegable -->
+      <!-- Por ejemplo, aquí podrías listar los turnos del asistido -->
+      <div *ngIf="assistedAppointmentsMap[assisted.id] && assistedAppointmentsMap[assisted.id].length > 0">
+        <div
+          class="card mt-6 mb-8"
+          *ngFor="let appointment of  assistedAppointmentsMap[assisted.id]"
+        >
+          <div class="grid grid-cols-2">
+            <div style="width: 882px">
+              <!-- Ajustar alineación de la primera columna -->
+              <ul>
+                <li
+                  class="mb-4"
+                  style="
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 600;
+                    font-size: 30px;
+                    line-height: 44px;
+                    color: #063463;
+                  "
+                >
+                  Dr.
+                  {{ appointment.doctor.firstName }}
+                  {{ appointment.doctor.secondName }}
+                  {{ appointment.doctor.lastName }}
+                </li>
+                <li
+                  class="mb-4"
+                  style="
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 400;
+                    font-size: 22px;
+                    line-height: 32px;
+                    color: #063463;
+                  "
+                >
+                  {{ appointment.doctor.specialty }}
+                </li>
+                <li
+                  class="mb-4"
+                  style="
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 400;
+                    font-size: 22px;
+                    line-height: 32px;
+                    color: #063463;
+                  "
+                >
+                  {{ appointment.doctor.address }}
+                </li>
+              </ul>
+            </div>
+            <div>
+              <!-- Ajustar alineación de la segunda columna -->
+              <ul>
+                <li
+                  style="
+                    margin-left: 35%;
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 500;
+                    font-size: 24px;
+                    line-height: 36px;
+                    color: #063463;
+                  "
+                >
+                  {{ appointment.date }}
+                </li>
+                <button (click)="toggleCancelTurnPopup()"
+                  style="
+                    margin-left: 55%;
+                    margin-top: 17%;
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 500;
+                    font-size: 24px;
+                    line-height: 36px;
+                    color: #f81313;
+                    text-decoration: underline;
+                  "
+                >
+                  Cancelar turno
+              </button>
+              </ul>
+            </div>
+          </div>
+
+
+          <div *ngIf="showCancelTurnPopup" class="alert-container">
+            <div class="alert">
+              <div>
+                <h3
+                  style="
+                    margin-top: 8%;
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 400;
+                    font-size: 24px;
+                    line-height: 36px;
+                    color: #065db4;
+                  "
+                >
+                  ¿Está seguro/a de que quiere cancelar el turno<br />
+                  asignado para el día
+                  <span style="font-weight: bold"
+              >{{ obtenerDia(appointment.date) }}, a las
+              {{ obtenerHora(appointment.date) }}Hs.?</span
+                  >
+                </h3>
+              </div>
+              <div>
+                <p
+                  style="
+                    margin-top: 2%;
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 300;
+                    font-size: 16px;
+                    line-height: 24px;
+                    color: #065db4;
+                  "
+                >
+                  Recuerde que los turnos sólo pueden ser cancelados 24 horas antes.
+                </p>
+              </div>
+              <div>
+                <button
+                (click)="deleteAssistedAppointment(appointment.id)"
+                  style="
+                    margin-top: 30%;
+                    width: 252px;
+                    height: 48px;
+                    background-color: #f81313;
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 500;
+                    font-size: 22px;
+                    line-height: 33px;
+                    color: #ffffff;
+                    border-radius: 30px;
+                  "
+                >
+                  Cancelar turno
+                </button>
+              </div>
+              <div>
+                <button
+                  (click)="toggleCancelTurnPopup()"
+                  style="
+                    margin-top: 8%;
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 300;
+                    font-size: 16px;
+                    line-height: 24px;
+                    color: #063463;
+                    text-decoration: underline;
+                  "
+                >
+                  Quiero mantener mi turno
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+    <div *ngIf="assistedAppointmentsMap[assisted.id]?.length === 0 && dropdownStates[i]">
+      <p
+        style="
+          margin-top: 6%;
+          margin-bottom: 6%;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 36px;
+          color: #000000;
+        "
+      >
+        Agenda un turno para tener una consulta con tu médico de preferencia. ¡Solo
+        te tomará 5 minutos!
+      </p>
+      <button class="añadir" [routerLink]="['/search-doctor']">Añadir nuevo</button>
+
+    </div>
+    <app-edit-assisted-form (close)="this.editAssisted=false" *ngIf="editAssisted" [assistedId]="assisted.id"></app-edit-assisted-form>
+    <div *ngIf="assistedList.length === 0">
+      <p
+        style="
+          margin-top: 6%;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 36px;
+          color: #000000;
+        "
+      >
+        ¿Necesitas sacar un turno médico para alguien más?<br />
+        Podes agregar familiares a tu perfil y así gestionar sus consultas.
+      </p>
+    </div>
+    <div *ngIf="showCancelPopup" class="alert-container">
+      <div class="alert" >
+        <div>
+          <h3 style="
+          margin-top: 8%;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 36px;
+          color: #065DB4;
+        ">¿Está seguro/a de que quiere cancelar la relacion con este asistido:<br><span style="font-weight: bold;">{{ assisted.firstName }} {{ assisted.secondName }}
+              {{ assisted.lastName }}</span>?</h3>
+        </div>
+        <div>
+          <p style="
+          margin-top: 2%;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 300;
+          font-size: 16px;
+          line-height: 24px;
+          color: #065DB4;
+        ">Recuerde que al desvincular un asistido ya no se lo verá en su lista de asistidos. </p>
+        </div>
+        <div>
+      <button (click)="deleteAssisted(assisted.id)" style="
+      margin-top: 30%;
+      width: 252px;
+      height: 48px;
+      background-color: #f81313;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 33px;
+      color: #FFFFFF;
+      border-radius: 30px;
+      ">
+        Desvincular Asistido
+      </button>
+      </div>
+      <div>
+        <button (click)="toggleCancelPopup()" style="
+        margin-top: 8%;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 24px;
+        color: #063463;
+        text-decoration: underline;
+        ">Quiero mantener este asistido</button>
+      </div>
+      </div>
+      </div>
+  </div>
+</div>
+

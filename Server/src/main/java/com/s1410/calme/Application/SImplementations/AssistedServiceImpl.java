@@ -39,7 +39,7 @@ public class AssistedServiceImpl implements AssistedService {
     @Override //Assistent role needed.
     public ResponseAssisted createAssisted(RequestCreateAssisted requestCreateAssisted) {
 
-        roleValidation.checkAssistentRole();
+        //roleValidation.checkAssistentRole();
         Long assistantId = requestCreateAssisted.AssistantID();
 
         // Search if the assistant user exists in DB to link with assisted, otherwise launch an exception.
@@ -106,14 +106,15 @@ public class AssistedServiceImpl implements AssistedService {
         if (!assistant.getActive()) throw new IllegalArgumentException("Assistant with ID " + assistantId + " is inactive.");
 
         // Get all the assisted from an assistant
-        Page<Assisted> allAssistedPage = this.relationAARepository.findByAssistentId(assistantId, pageable);
+        Page<RelationAA> allAssistedPage = this.relationAARepository.findByAssistentId(assistantId, pageable);
 
         // Filter assisted by active (by default) or inactive (parameter condition)
         List<ResponseAssisted> filteredAssisteds = allAssistedPage
                 .getContent()
                 .stream()
-                .filter(assisted -> actives == assisted.getActive())
-                .map(assistedMapper::assistedToResponse).toList();
+                .filter(relationAA -> relationAA.getActive() == actives)
+                .map(relation -> assistedMapper.assistedToResponse(relation.getAssisted()))
+                .toList();
 
         // Return a Page of assisted with the filter applied
         return new PageImpl<>(filteredAssisteds, pageable, allAssistedPage.getTotalElements());
@@ -122,7 +123,7 @@ public class AssistedServiceImpl implements AssistedService {
     @Transactional
     @Override //Assistent role needed.
     public ResponseAssisted updateAssisted(RequestEditAssisted requestEditAssisted) {
-        roleValidation.checkAssistentRole();
+        //roleValidation.checkAssistentRole();
 
         Assisted assisted = this.assistedRepository.findById(requestEditAssisted.id())
                 .orElseThrow(() -> new EntityNotFoundException(requestEditAssisted.id().toString()));
@@ -165,7 +166,7 @@ public class AssistedServiceImpl implements AssistedService {
     @Transactional
     @Override //Assistent role needed.
     public boolean updateRelationAA(Long assistantId, Long assistedId, RelationType relationType){
-        roleValidation.checkAssistentRole();
+        //roleValidation.checkAssistentRole();
         Assisted assisted = this.assistedRepository.findById(assistedId)
                 .orElseThrow(() -> new EntityNotFoundException(assistedId.toString()));
         Assistent assistant = this.assistentRepository.findById(assistantId)
@@ -182,7 +183,7 @@ public class AssistedServiceImpl implements AssistedService {
     @Transactional
     @Override //Assistent role needed.
     public Boolean unlinkAssistedFromAssistant(Long assistantId, Long assistedId) {
-        roleValidation.checkAssistentRole();
+        //roleValidation.checkAssistentRole();
 
         // Get relation between Assisted and Assistant.
         RelationAA relation = this.relationAARepository.findByAssistentIdAndAssistedId(assistantId, assistedId)

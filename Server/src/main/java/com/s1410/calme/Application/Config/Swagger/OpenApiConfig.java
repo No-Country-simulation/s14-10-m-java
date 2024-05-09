@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
     @Configuration
     @OpenAPIDefinition(
             servers = {
-                    @Server(url = "https://s14-10-m-java-production.up.railway.app/", description = "Prod Server")
+                    @Server(url = "https://s14-10-m-java.onrender.com/", description = "Prod Server")
             }
     )
     public class OpenApiConfig {

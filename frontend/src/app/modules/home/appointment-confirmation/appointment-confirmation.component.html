@@ -1,0 +1,140 @@
+<div
+  style="
+    height: 900px;
+    background-image: radial-gradient(
+      circle at 8% -8%,
+      #ffdeb766 15%,
+      #ffffff 22%
+    );
+  "
+>
+  <div
+    style="
+      background-color: #75a5ff;
+      border-radius: 0px 0px 24px 24px;
+      background-image: radial-gradient(
+        circle at 12% -10%,
+        #ffdeb766 4%,
+        #ffffff15 24%
+      );
+    "
+  >
+    <shared-navbar class="mt-10"></shared-navbar>
+  </div>
+  <div class="flex flex-col items-center mt-20">
+    <div class="text-center mt-4">
+      <img
+        style="
+          box-shadow: 0px 0px 30px 0 #87b1ff60;
+          border-radius: 50%;
+          height: 88px;
+          margin-left: 40%;
+          margin-bottom: 10%;
+          background-color: #b9cdfb;
+        "
+        src="../../../../assets/icons-svg/check.svg"
+      />
+      <h3
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 36px;
+          color: #000000;
+          margin-bottom: 2%;
+        "
+      >
+        Has reservado un turno con el Dr. {{ doctorData?.firstName }}
+        {{ doctorData?.secondName }} {{ doctorData?.lastName }} para
+      </h3>
+      <h2
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 600;
+          font-size: 32px;
+          line-height: 48px;
+          color: #6a9eff;
+          margin-bottom: 5%;
+        "
+      >
+        {{ obtenerDia() }} - {{ obtenerHora() }}
+      </h2>
+      <p
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          color: #000000;
+          margin-bottom: 10%;
+        "
+      >
+        En unos minutos recibirás la confirmación en tu casilla de mails o a tu
+        celular. <br />
+        Si no recibes la confirmación, ponte en contacto con nuestro equipo de
+        soporte.
+      </p>
+    </div>
+    <div
+      class="py-2 w-[270px] mb-10 rounded-full bg-accent-light flex justify-center"
+    >
+      <button [routerLink]="['/dashboard/profile-patient']"
+        style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 500;
+          font-size: 22px;
+          line-height: 33px;
+          color: #224c76;
+        "
+      >
+        Volver a Mis Turnos
+      </button>
+    </div>
+  </div>
+  <div>
+    <h3
+      class="mb-4 mt-8"
+      style="
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 36px;
+        color: #ff9d2b;
+        margin-left: 10%;
+      "
+    >
+      Importante:
+    </h3>
+    <p
+      class="mb-10"
+      style="
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 30px;
+        color: #000000;
+        margin-left: 10%;
+      "
+    >
+      Si deseas cancelar puedes hacerlo desde “Mis turnos” hasta 24 hs antes de
+      tu consulta<br />
+      Si deseas reprogramar tu turno comunicate al siguiente número:
+    </p>
+    <div class="flex" style="display: flex; justify-content: center">
+      <img src="../../../../assets/icons-svg/phone.svg" />
+      <h2
+        style="
+          margin-left: 10px;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 600;
+          font-size: 24px;
+          line-height: 36px;
+          color: #063463;
+          text-align: center;
+        "
+      >
+        0800-0000-0000
+      </h2>
+    </div>
+  </div>
+</div>
